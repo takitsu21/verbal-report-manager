@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 public class XMLTest {
     public static void main(String[] args) {
+        System.out.println("hello world");
         try {
             File file = new File("some path");
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
@@ -36,4 +37,6 @@ public class XMLTest {
         }
         return children;
     }
+
 }
+
