@@ -16,11 +16,21 @@ import java.nio.file.Paths;
 public class XMLTest {
     public static void main(String[] args) {
         try {
-            File f = new File("../pomme.csv");
-            if (f.createNewFile())
-                System.out.println("File created");
-            else
-                System.out.println("File already exists");
+            File f = new File("/pomme.csv");
+            try {
+                if (f.createNewFile()) {
+                    System.out.println("File created");
+                }
+                else {
+                    System.out.println("File already exists");
+                }
+
+
+
+            }
+            catch(Exception e){
+                //oups
+            }
 
 
             File file = new File("../data.xml");
@@ -44,8 +54,6 @@ public class XMLTest {
                 //String c = "\"" + element.getElementsByTagName("credits").item(0).getTextContent() + "\",";
 
                 str += (a+b);
-
-
 
             }
 
@@ -98,10 +106,6 @@ public class XMLTest {
             // oups, pas normal
         }
     }
-
-
-
-    // Extrait la liste des fils de l'élément item dont le tag est name
     private static List<Element> getChildren(Element item, String name) {
         NodeList nodeList = item.getChildNodes();
         List<Element> children = new ArrayList<>();
@@ -122,4 +126,7 @@ public class XMLTest {
         }
         return children;
     }
+
+
+
 }         
