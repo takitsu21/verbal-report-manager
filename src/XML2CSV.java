@@ -36,14 +36,15 @@ public class XML2CSV {
         return element.getElementsByTagName(tag).item(i).getTextContent();
     }
 
-    public void write () throws IOException {
+    public void converte () throws IOException {
 
         List<Element> program= getChildren(root,"program");
+        List<String> programid= new ArrayList<>();
         List<String> str= new ArrayList<>();
 
         for (int i=0;i<program.size();i++){
-
-            created("/"+read(program.get(i),"identifier",0));
+            programid.add(read(program.get(i),"identifier",0));
+            created("../"+programid.get(i)+".csv");
 
             str.add("\"N° Étudiant\",\"Nom\",\"Prénom\",");
 
@@ -65,18 +66,21 @@ public class XML2CSV {
             st+=(a+b);
 
         }
-        for (String s:str) {
-            str.set(program.indexOf(s), str.get(program.indexOf(s))+st+"\n");
+        for (int i=0; i<str.size();i++) {
+
+            str.set(i, str.get(i)+st+"\n");
+            System.out.println(str.get(i));
+
         }
 
         for (Element element : listStudents){
 
-            String a = "\"" + read(element, "identifiere",0) +"\",";
+            String a = "\"" + read(element, "identifier",0) +"\",";
             String b = "\"" + read(element, "name",0) + "\",";
             String c = "\"" + read(element, "surname",0) + "\",";
 
             String d="";
-            List<Element> listStudMat = getChildren(element, "grade");
+            List<Element> listStudMat = getChildren(element, "grade"); //liste des matiere d'un etudient
 
             String matiere[] = new String[listCourses.size()];
             for (int i=0; i<listStudMat.size(); i++){
@@ -88,8 +92,8 @@ public class XML2CSV {
                     j+=1;
                 }
 
-                matiere[j]=read(listCourses.get(i), "value",0);
-                System.out.println(matiere[0]);
+                matiere[j]=read(listStudMat.get(i), "value",0);
+
             }
 
             for (String s: matiere){
@@ -100,17 +104,20 @@ public class XML2CSV {
                     d+="\"" + "\",";
                 }
             }
-            String prog = read(element, "program",0);
-            str.set(program.indexOf(prog), str.get(program.indexOf(prog))+(a+b+c+d+"\n"));
+            String prog = read(element, "program",0); //programme de l'etudient
+            System.out.println(program.get(0));
+            str.set(programid.indexOf(prog), str.get(programid.indexOf(prog))+(a+b+c+d+"\n"));
 
         }
 
-        System.out.println(str);
+
 
 
         for (int i=0; i<str.size(); i++) {
+            System.out.println(str.get(i));
             byte[] bs = str.get(i).getBytes();
-            Path path = Paths.get("/"+program.get(i));
+            Path path = Paths.get("../"+programid.get(i)+".csv");
+
             Path writtenFilePath = Files.write(path, bs);
         }
 

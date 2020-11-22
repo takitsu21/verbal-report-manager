@@ -8,6 +8,6 @@ public class Test {
         System.out.println("test1");
         XML2CSV a=new XML2CSV("../data.xml");
         System.out.println("test");
-        a.write();
+        a.converte();
     }
 }
