@@ -78,7 +78,7 @@ public class XMLTest {
                     }
 
                     matiere[j]=listStudMat.get(i).getElementsByTagName("value").item(0).getTextContent();
-                    System.out.println(matiere[0]);
+
                 }
 
                 for (String s: matiere){
@@ -93,7 +93,7 @@ public class XMLTest {
                 str += (a+b+c+d+"\n");
             }
 
-            System.out.println(str);
+
 
             byte[] bs = str.getBytes();
             Path writtenFilePath = Files.write(path, bs);

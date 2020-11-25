@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import java.nio.file.Files;
@@ -18,105 +19,110 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class XML2CSV {
-    Element root;
+    private Element root;
+    private String path_fichier;
 
-    public XML2CSV (String data) throws ParserConfigurationException, IOException, SAXException {
-        File file = new File(data);
+    public XML2CSV (String path_data, String path_fichier) throws ParserConfigurationException, IOException, SAXException {
+        File file = new File(path_data);
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
         Document doc = dBuilder.parse(file); // ouverture et lecture du fichier XML
         doc.getDocumentElement().normalize(); // normalise le contenu du fichier, opération très conseillée
-        root = doc.getDocumentElement(); // la racine de l'arbre XML
+        this.root = doc.getDocumentElement(); // la racine de l'arbre XML
+        this.path_fichier=path_fichier;
 
     }
 
+    private List<List<Element>> list_student (List<String> programid){
+        List<Element> listStudents = getChildren(root,"student");
+        List<List<Element>> listStudentsFinal = new ArrayList<>();
+        for (int i=0;i<programid.size();i++) {
+            List<Element> studProg = new ArrayList<>();
+            for (Element student : listStudents) {
 
+                if(programid.get(i).equals(read(student, "program", 0))){
+                    studProg.add(student);
 
-    public String read(Element element, String tag, int i){
-        return element.getElementsByTagName(tag).item(i).getTextContent();
+                }
+
+            }
+            //trié la liste d'eleve
+            listStudentsFinal.add(studProg);
+        }
+        return listStudentsFinal;
     }
+
 
     public void converte () throws IOException {
 
         List<Element> program= getChildren(root,"program");
         List<String> programid= new ArrayList<>();
-        List<String> str= new ArrayList<>();
+
+        List<String> data= new ArrayList<>();
+
+
+        List<Element> listCourses = getChildren(root,"course");
+
+        List<List<String>> listCoursesProg = new ArrayList<>();
 
         for (int i=0;i<program.size();i++){
             programid.add(read(program.get(i),"identifier",0));
-            created("../"+programid.get(i)+".csv");
+            created(path_fichier+programid.get(i)+".csv");
 
-            str.add("\"N° Étudiant\",\"Nom\",\"Prénom\",");
-
-        }
-
-        List<Element> listStudents = getChildren(root,"student");
-        List<Element> listCourses = getChildren(root,"course");
-
-        String st="";
-        for (Element element : listCourses){
-
-            String a = "\"" + read(element, "identifier",0);
-            String b = " - " + read(element, "name",0) + "\",";
-            //String c = "\"" + element.getElementsByTagName("credits").item(0).getTextContent() + "\",";
-
-            /*String prog = read(element, "program",0);
-            System.out.println(prog);
-            str.set(program.indexOf(prog), str.get(program.indexOf(prog))+(a+b));*/
-            st+=(a+b);
-
-        }
-        for (int i=0; i<str.size();i++) {
-
-            str.set(i, str.get(i)+st+"\n");
-            System.out.println(str.get(i));
+            data.add("\"N° Étudiant\",\"Nom\",\"Prénom\",");
+            listCoursesProg.add(list_Courses_Prog(program, programid.get(i)));
 
         }
 
-        for (Element element : listStudents){
 
-            String a = "\"" + read(element, "identifier",0) +"\",";
-            String b = "\"" + read(element, "name",0) + "\",";
-            String c = "\"" + read(element, "surname",0) + "\",";
 
-            String d="";
-            List<Element> listStudMat = getChildren(element, "grade"); //liste des matiere d'un etudient
+        for (int i=0; i<data.size();i++) {
+            String cours = string_courses_prog(listCourses, listCoursesProg.get(i));
 
-            String matiere[] = new String[listCourses.size()];
-            for (int i=0; i<listStudMat.size(); i++){
-                int j=0;
+            data.set(i, data.get(i) + cours + "\n");
+            //System.out.println(data.get(i));
 
-                String mat=read(listStudMat.get(i), "item",0);
+        }
 
-                while (!mat.equals(read(listCourses.get(j), "identifier",0))) {
-                    j+=1;
+        List<List<Element>> listStudents = list_student(programid);
+
+        for (List<Element> liste: listStudents) {
+            System.out.println(liste.size());
+            for (Element element : liste) {
+                String programStud = read(element, "program", 0);
+                String a = "\"" + read(element, "identifier", 0) + "\",";
+                String b = "\"" + read(element, "name", 0) + "\",";
+                String c = "\"" + read(element, "surname", 0) + "\",";
+
+
+                String d = "";
+                List<Element> listStudMat = getChildren(element, "grade"); //liste des matiere d'un etudient
+
+
+                String note[] = list_note_stu(listCoursesProg.get(programid.indexOf(programStud)), listStudMat);
+
+
+                for (String s : note) {
+                    if (s != null) {
+                        d += "\"" + s + "\",";
+                    } else {
+                        d += "\"" + "\",";
+                    }
                 }
+                String prog = read(element, "program", 0); //programme de l'etudient
 
-                matiere[j]=read(listStudMat.get(i), "value",0);
+                data.set(programid.indexOf(prog), data.get(programid.indexOf(prog)) + (a + b + c + d + "\n"));
 
             }
-
-            for (String s: matiere){
-                if (s!=null){
-                    d+="\"" + s + "\",";
-                }
-                else{
-                    d+="\"" + "\",";
-                }
-            }
-            String prog = read(element, "program",0); //programme de l'etudient
-            System.out.println(program.get(0));
-            str.set(programid.indexOf(prog), str.get(programid.indexOf(prog))+(a+b+c+d+"\n"));
-
         }
 
 
 
 
-        for (int i=0; i<str.size(); i++) {
-            System.out.println(str.get(i));
-            byte[] bs = str.get(i).getBytes();
-            Path path = Paths.get("../"+programid.get(i)+".csv");
+        for (int i=0; i<data.size(); i++) {
+            //System.out.println(data.get(i));
+            byte[] bs = data.get(i).getBytes();
+            Path path = Paths.get(path_fichier+programid.get(i)+".csv");
 
             Path writtenFilePath = Files.write(path, bs);
         }
@@ -125,7 +131,7 @@ public class XML2CSV {
 
 
 
-    public void created (String path) {
+    private void created (String path) {
         File f = new File(path);
         try {
             if (f.createNewFile()) {
@@ -162,5 +168,111 @@ public class XML2CSV {
             }
         }
         return children;
+    }
+
+    private String read(Element element, String tag, int i){
+        return element.getElementsByTagName(tag).item(i).getTextContent();
+    }
+
+    private String string_courses_prog(List<Element> listCourses, List<String> listCoursesProg){
+        String cours="";
+        for (String s : listCoursesProg) {
+            for (Element element : listCourses) {
+
+                if(s.charAt(0) == '$'){
+
+                    cours+=("\"" + s.substring(1, s.length()) + "\",");
+                    break;
+                }
+
+                else if (s.equals(read(element, "identifier", 0))) {
+                    String a = "\"" + read(element, "identifier", 0);
+                    String b = " - " + read(element, "name", 0) + "\",";
+                    cours += (a + b);
+                }
+
+            }
+        }
+
+
+
+        return cours;
+    }
+
+    private String[] list_note_stu (List<String> listProg, List<Element> listStudMat){
+
+        String note[] = new String[listProg.size()];
+
+        for (int i=0; i<listStudMat.size(); i++){
+            int j=0;
+
+
+            String mat=read(listStudMat.get(i), "item",0);
+
+            //System.out.println(listProg.get(j));
+
+            while (!mat.equals(listProg.get(j))) {  //listProg.get(j)!="$" &&
+                j+=1;
+            }
+
+            note[j]=read(listStudMat.get(i), "value",0);
+
+
+        }
+        for (int i=0;i<note.length;i++){  //rajouté les note des ct et option
+            if (note[i]==null && listProg.get(i).charAt(0)=='$'){
+                System.out.println("ok");
+                //note[i]=Math.max();
+            }
+            else{
+                System.out.println("normal");
+            }
+        }
+
+
+        return note;
+    }
+
+    private List<String> list_Courses_Prog (List<Element> program, String programid){
+        List<String> item = new ArrayList<>();
+
+
+        List<Element> composite = new ArrayList<>();
+        List<Element> option = new ArrayList<>();
+
+        for (int i=0; i<program.size();i++){
+            if (read(program.get(i), "identifier", 0).equals(programid)){
+                List<Element> item1=getChildren(program.get(i), "item");
+                for (Element el: item1){
+                    item.add(el.getTextContent());
+                }
+                composite=getChildren(program.get(i), "composite");
+                option=getChildren(program.get(i), "option");
+            }
+        }
+
+
+
+        for (int i=0; i<option.size();i++) {
+            List<Element> item2 = getChildren(option.get(i), "item");
+            item.add("$" + read(option.get(i),"identifier",0) + " - " + read(option.get(i),"name",0));
+
+            for (Element el: item2){
+                item.add(el.getTextContent());
+            }
+        }
+
+        for (int i=0; i<composite.size();i++) {
+            List<Element> item3 = getChildren(composite.get(i), "item");
+            item.add("$" + read(composite.get(i),"identifier",0) + " - " + read(composite.get(i),"name",0));
+
+            for (Element el: item3){
+                item.add(el.getTextContent());
+            }
+        }
+
+
+
+        return item;
     }
 }
