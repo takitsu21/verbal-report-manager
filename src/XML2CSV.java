@@ -9,6 +9,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -19,8 +20,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class XML2CSV {
-    private Element root;
-    private String path_fichier;
+    private final Element root;
+    private final String path_fichier;
 
     public XML2CSV (String path_data, String path_fichier) throws ParserConfigurationException, IOException, SAXException {
         File file = new File(path_data);
@@ -46,8 +47,22 @@ public class XML2CSV {
                 }
 
             }
-            //trié la liste d'eleve
-            listStudentsFinal.add(studProg);
+            //trié la liste d'eleve studProg
+            String student[]=new String[studProg.size()];
+            List<Element> studProgFinal = new ArrayList<>();
+            for(int j=0; j<studProg.size();j++){
+                student[j]=read(studProg.get(j), "name",0);
+                //System.out.println(student[j]);
+            }
+            Arrays.sort(student);
+            for (int k=0; k<studProg.size();k++){
+                int l=0;
+                while(!read(studProg.get(l), "name",0).equals(student[k])) {
+                    l+=1;
+                }
+                studProgFinal.add(studProg.get(l));
+            }
+            listStudentsFinal.add(studProgFinal);
         }
         return listStudentsFinal;
     }
@@ -69,7 +84,7 @@ public class XML2CSV {
             programid.add(read(program.get(i),"identifier",0));
             created(path_fichier+programid.get(i)+".csv");
 
-            data.add("\"N° Étudiant\",\"Nom\",\"Prénom\",");
+            data.add("\"N° Étudiant\",\"Nom\",\"Prénom\",\""+programid.get(i)+" - "+read(program.get(i),"name",0)+"\",");
             listCoursesProg.add(list_Courses_Prog(program, programid.get(i)));
 
         }
@@ -95,12 +110,13 @@ public class XML2CSV {
                 String c = "\"" + read(element, "surname", 0) + "\",";
 
 
+
                 String d = "";
                 List<Element> listStudMat = getChildren(element, "grade"); //liste des matiere d'un etudient
 
 
                 String note[] = list_note_stu(listCoursesProg.get(programid.indexOf(programStud)), listStudMat);
-
+                String moyenne="\""+"\",";
 
                 for (String s : note) {
                     if (s != null) {
@@ -111,7 +127,7 @@ public class XML2CSV {
                 }
                 String prog = read(element, "program", 0); //programme de l'etudient
 
-                data.set(programid.indexOf(prog), data.get(programid.indexOf(prog)) + (a + b + c + d + "\n"));
+                data.set(programid.indexOf(prog), data.get(programid.indexOf(prog)) + (a + b + c + moyenne + d + "\n"));
 
             }
         }
@@ -179,7 +195,7 @@ public class XML2CSV {
         for (String s : listCoursesProg) {
             for (Element element : listCourses) {
 
-                if(s.charAt(0) == '$'){
+                if(s.charAt(0) == '$' || s.charAt(0) == '*'){
 
                     cours+=("\"" + s.substring(1, s.length()) + "\",");
                     break;
@@ -220,12 +236,65 @@ public class XML2CSV {
 
         }
         for (int i=0;i<note.length;i++){  //rajouté les note des ct et option
-            if (note[i]==null && listProg.get(i).charAt(0)=='$'){
-                System.out.println("ok");
-                //note[i]=Math.max();
-            }
-            else{
-                System.out.println("normal");
+
+            if (note[i]==null) {
+                if (listProg.get(i).charAt(0)==('*')) {
+
+                    int a=i+1;
+
+                    while(a<listProg.size()-1 && listProg.get(a).charAt(0)!=('*') && listProg.get(a).charAt(0)!=('$')){
+                        //System.out.println(listProg.get(a));
+
+                        //System.out.println(a);
+
+
+                        if(note[a]!=null){
+
+                            //System.out.println(note[a]);
+                            note[i]=note[a];
+
+                            //break;
+                        }
+
+                        a+=1;
+
+                    }
+
+                }
+
+                else if (listProg.get(i).charAt(0)==('$')) {
+                    //System.out.println(listProg.get(i));
+                    //System.out.println(listProg.get(i));
+                    int a=i+1;
+                    double acc=0;
+                    int nb=0;
+                    while(a<listProg.size()-1 && listProg.get(a).charAt(0)!=('*') && listProg.get(a).charAt(0)!=('$')){
+                        //System.out.println(listProg.get(a));
+
+
+
+                        if(note[a]!=null){
+                            if(note[a].equals("ABI")){
+                                acc+=0;
+
+                            }
+                            //System.out.println("ok");
+                            //System.out.println(note[a]);
+                            else {
+                                acc += Double.parseDouble(note[a]);
+                            }
+                            nb+=1;
+
+                        }
+
+                        a+=1;
+                    }
+                    //System.out.println(""+acc/nb);
+                    note[i]= String.format("%.3f",(double)(acc/nb)).replace(",", ".");
+
+                    System.out.println(note[i]);
+
+                }
             }
         }
 
@@ -255,7 +324,7 @@ public class XML2CSV {
 
         for (int i=0; i<option.size();i++) {
             List<Element> item2 = getChildren(option.get(i), "item");
-            item.add("$" + read(option.get(i),"identifier",0) + " - " + read(option.get(i),"name",0));
+            item.add("*" + read(option.get(i),"identifier",0) + " - " + read(option.get(i),"name",0));
 
             for (Element el: item2){
                 item.add(el.getTextContent());
