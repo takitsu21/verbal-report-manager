@@ -34,37 +34,35 @@ public class XML2CSV {
 
     }
 
-    private List<List<Element>> list_student (List<String> programid){
-        List<Element> listStudents = getChildren(root,"student");
-        List<List<Element>> listStudentsFinal = new ArrayList<>();
-        for (int i=0;i<programid.size();i++) {
-            List<Element> studProg = new ArrayList<>();
-            for (Element student : listStudents) {
+    public String moyenne(List<Element> listCourse, List<String> listCourses, String note[]){
+        String coef[]=new String[listCourses.size()];
+        double acc=0;
+        int nb=0;
+        String moyenne;
 
-                if(programid.get(i).equals(read(student, "program", 0))){
-                    studProg.add(student);
+        for (int i=0; i<listCourses.size();i++){
 
+            for (int j=0; j<listCourse.size();j++){
+
+                if(listCourses.get(i).equals(read(listCourse.get(j), "identifier", 0))){
+                    coef[i]=read(listCourse.get(j),"credits",0);
                 }
-
             }
-            //trié la liste d'eleve studProg
-            String student[]=new String[studProg.size()];
-            List<Element> studProgFinal = new ArrayList<>();
-            for(int j=0; j<studProg.size();j++){
-                student[j]=read(studProg.get(j), "name",0);
-                //System.out.println(student[j]);
-            }
-            Arrays.sort(student);
-            for (int k=0; k<studProg.size();k++){
-                int l=0;
-                while(!read(studProg.get(l), "name",0).equals(student[k])) {
-                    l+=1;
-                }
-                studProgFinal.add(studProg.get(l));
-            }
-            listStudentsFinal.add(studProgFinal);
         }
-        return listStudentsFinal;
+        //faire la moyenne
+        for (int i=0; i<note.length; i++){
+            if(coef[i] != null && note[i] != null) {
+                //System.out.println(note[i]);
+                if(!note[i].equals("ABI")){
+                    acc += (Double.parseDouble(note[i]) * Integer.parseInt(coef[i]));
+                }
+
+                nb += Integer.parseInt(coef[i]);
+            }
+        }
+        moyenne=String.format("%.3f",(double)(acc/nb)).replace(",", ".");
+
+        return moyenne;
     }
 
 
@@ -102,7 +100,7 @@ public class XML2CSV {
         List<List<Element>> listStudents = list_student(programid);
 
         for (List<Element> liste: listStudents) {
-            System.out.println(liste.size());
+
             for (Element element : liste) {
                 String programStud = read(element, "program", 0);
                 String a = "\"" + read(element, "identifier", 0) + "\",";
@@ -116,7 +114,8 @@ public class XML2CSV {
 
 
                 String note[] = list_note_stu(listCoursesProg.get(programid.indexOf(programStud)), listStudMat);
-                String moyenne="\""+"\",";
+                String moyenne="\""+moyenne(listCourses, listCoursesProg.get(programid.indexOf(programStud)), note)+"\",";
+
 
                 for (String s : note) {
                     if (s != null) {
@@ -235,7 +234,7 @@ public class XML2CSV {
 
 
         }
-        for (int i=0;i<note.length;i++){  //rajouté les note des ct et option
+        for (int i=0;i<note.length;i++){
 
             if (note[i]==null) {
                 if (listProg.get(i).charAt(0)==('*')) {
@@ -292,7 +291,7 @@ public class XML2CSV {
                     //System.out.println(""+acc/nb);
                     note[i]= String.format("%.3f",(double)(acc/nb)).replace(",", ".");
 
-                    System.out.println(note[i]);
+
 
                 }
             }
@@ -343,5 +342,38 @@ public class XML2CSV {
 
 
         return item;
+    }
+
+    private List<List<Element>> list_student (List<String> programid){
+        List<Element> listStudents = getChildren(root,"student");
+        List<List<Element>> listStudentsFinal = new ArrayList<>();
+        for (int i=0;i<programid.size();i++) {
+            List<Element> studProg = new ArrayList<>();
+            for (Element student : listStudents) {
+
+                if(programid.get(i).equals(read(student, "program", 0))){
+                    studProg.add(student);
+
+                }
+
+            }
+
+            String student[]=new String[studProg.size()];
+            List<Element> studProgFinal = new ArrayList<>();
+            for(int j=0; j<studProg.size();j++){
+                student[j]=read(studProg.get(j), "name",0);
+                //System.out.println(student[j]);
+            }
+            Arrays.sort(student);
+            for (int k=0; k<studProg.size();k++){
+                int l=0;
+                while(!read(studProg.get(l), "name",0).equals(student[k])) {
+                    l+=1;
+                }
+                studProgFinal.add(studProg.get(l));
+            }
+            listStudentsFinal.add(studProgFinal);
+        }
+        return listStudentsFinal;
     }
 }
