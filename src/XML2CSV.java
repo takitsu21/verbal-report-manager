@@ -9,10 +9,8 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import java.nio.file.Files;
@@ -34,37 +32,80 @@ public class XML2CSV {
 
     }
 
-    public String moyenne(List<Element> listCourse, List<String> listCourses, String note[]){
-        String coef[]=new String[listCourses.size()];
-        double acc=0;
-        int nb=0;
-        String moyenne;
+    public String ecart_type(String[][] notes, int j){
+        double[] note=new double[notes.length];
+        int n= notes.length;
+        double moyenne=0;
+        double variance=0;
+        double ecart_type;
 
-        for (int i=0; i<listCourses.size();i++){
+        for (int i=0; i<notes.length; i++){
+            if(notes[i]!=null) {
+                if (notes[i][j] != null) {
+                    if(!notes[i][j].equals("ABI")) {
+                        note[i] = Double.parseDouble(notes[i][j]);
+                    }
 
-            for (int j=0; j<listCourse.size();j++){
-
-                if(listCourses.get(i).equals(read(listCourse.get(j), "identifier", 0))){
-                    coef[i]=read(listCourse.get(j),"credits",0);
                 }
             }
         }
-        //faire la moyenne
+
+        for (double value : note) {
+            moyenne += value;
+        }
+        moyenne /= n;
+
         for (int i=0; i<note.length; i++){
-            if(coef[i] != null && note[i] != null) {
-                //System.out.println(note[i]);
-                if(!note[i].equals("ABI")){
-                    acc += (Double.parseDouble(note[i]) * Integer.parseInt(coef[i]));
-                }
-
-                nb += Integer.parseInt(coef[i]);
-            }
+            note[i]-=moyenne;
+            note[i]*=note[i];
         }
-        moyenne=String.format("%.3f",(double)(acc/nb)).replace(",", ".");
 
-        return moyenne;
+        for (double value : note) {
+            variance += value;
+        }
+        variance/=(n-1);
+        ecart_type=Math.sqrt(variance);
+
+
+        return String.format("%.3f",ecart_type).replace(",", ".");
     }
 
+    public String ecart_type(String[] notes){
+        double[] note=new double[notes.length];
+        int n= notes.length;
+        double moyenne=0;
+        double variance=0;
+        double ecart_type;
+
+        for (int i=0; i<notes.length; i++){
+            if(notes[i]!=null) {
+                if (notes[i] != null) {
+                    if(!notes[i].equals("ABI")) {
+                        note[i] = Double.parseDouble(notes[i]);
+                    }
+
+                }
+            }
+        }
+
+        for (double value : note) {
+            moyenne += value;
+        }
+        moyenne /= n;
+
+        for (int i=0; i<note.length; i++){
+            note[i]-=moyenne;
+            note[i]*=note[i];
+        }
+
+        for (double value : note) {
+            variance += value;
+        }
+        variance/=(n-1);
+        ecart_type=Math.sqrt(variance);
+
+        return String.format("%.3f",ecart_type).replace(",", ".");
+    }
 
     public void converte () throws IOException {
 
@@ -77,6 +118,8 @@ public class XML2CSV {
         List<Element> listCourses = getChildren(root,"course");
 
         List<List<String>> listCoursesProg = new ArrayList<>();
+
+
 
         for (int i=0;i<program.size();i++){
             programid.add(read(program.get(i),"identifier",0));
@@ -98,6 +141,8 @@ public class XML2CSV {
         }
 
         List<List<Element>> listStudents = list_student(programid);
+        String[][][] notes= new String[programid.size()][listStudents.get(0).size()][];
+        String[][] moyennes= new String[programid.size()][listStudents.get(0).size()];
 
         for (List<Element> liste: listStudents) {
 
@@ -113,8 +158,13 @@ public class XML2CSV {
                 List<Element> listStudMat = getChildren(element, "grade"); //liste des matiere d'un etudient
 
 
-                String note[] = list_note_stu(listCoursesProg.get(programid.indexOf(programStud)), listStudMat);
-                String moyenne="\""+moyenne(listCourses, listCoursesProg.get(programid.indexOf(programStud)), note)+"\",";
+                String[] note = list_note_stu(listCoursesProg.get(programid.indexOf(programStud)), listStudMat);
+                notes[programid.indexOf(programStud)][listStudents.get(programid.indexOf(programStud)).indexOf(element)] = note;
+                //System.out.println(notes[programid.indexOf(programStud)][listStudents.get(programid.indexOf(programStud)).indexOf(element)][0]);
+
+                String moyenne=moyenne(listCourses, listCoursesProg.get(programid.indexOf(programStud)), note);
+                moyennes[programid.indexOf(programStud)][listStudents.get(programid.indexOf(programStud)).indexOf(element)]=moyenne;
+                moyenne="\"" + moyenne + "\",";
 
 
                 for (String s : note) {
@@ -131,7 +181,25 @@ public class XML2CSV {
             }
         }
 
+        for (int i=0; i<programid.size();i++){
+            String note_max="\"" + note_max(moyennes[i]) + "\",";
+            String note_min="\"" + note_min(moyennes[i]) + "\",";
+            String note_moyenne="\"" + note_moyenne(moyennes[i]) + "\",";
+            String ecart_type="\"" + ecart_type(moyennes[i]) + "\",";
 
+            for (int j=0; j<listCoursesProg.get(i).size(); j++) {
+                note_max+= ("\"" + note_max(notes[i], j) + "\",");
+                note_min+= ("\"" + note_min(notes[i], j) + "\",");
+                note_moyenne+= ("\"" + note_moyenne(notes[i], j) + "\",");
+                ecart_type+= ("\"" + ecart_type(notes[i], j) + "\",");
+
+            }
+
+            data.set(i, data.get(i) + "\"" + "Note max" + "\"," + "\"" + "\"," + "\"" + "\"," + note_max + "\n");
+            data.set(i, data.get(i) + "\"" + "Note min" + "\"," + "\"" + "\"," + "\"" + "\"," + note_min + "\n");
+            data.set(i, data.get(i) + "\"" + "Note moyenne" + "\"," + "\"" + "\"," + "\"" + "\"," + note_moyenne + "\n");
+            data.set(i, data.get(i) + "\"" + "Écart-type" + "\"," + "\"" + "\"," + "\"" + "\"," + ecart_type + "\n");
+        }
 
 
         for (int i=0; i<data.size(); i++) {
@@ -375,5 +443,146 @@ public class XML2CSV {
             listStudentsFinal.add(studProgFinal);
         }
         return listStudentsFinal;
+    }
+
+    public String moyenne(List<Element> listCourse, List<String> listCourses, String note[]){
+        String coef[]=new String[listCourses.size()];
+        double acc=0;
+        int nb=0;
+        String moyenne;
+
+        for (int i=0; i<listCourses.size();i++){
+
+            for (int j=0; j<listCourse.size();j++){
+
+                if(listCourses.get(i).equals(read(listCourse.get(j), "identifier", 0))){
+                    coef[i]=read(listCourse.get(j),"credits",0);
+                }
+            }
+        }
+        //faire la moyenne
+        for (int i=0; i<note.length; i++){
+            if(coef[i] != null && note[i] != null) {
+                //System.out.println(note[i]);
+                if(!note[i].equals("ABI")){
+                    acc += (Double.parseDouble(note[i]) * Integer.parseInt(coef[i]));
+                }
+
+                nb += Integer.parseInt(coef[i]);
+            }
+        }
+        moyenne=String.format("%.3f",(double)(acc/nb)).replace(",", ".");
+
+        return moyenne;
+    }
+
+    public double note_max(String[][] notes, int j){
+        double acc=0;
+
+        for (int i=0; i<notes.length; i++){
+
+            if(notes[i]!=null) {
+
+
+                if (notes[i][j] != null && !notes[i][j].equals("ABI") && acc < Double.parseDouble(notes[i][j])) {
+                    acc = Double.parseDouble(notes[i][j]);
+                }
+
+            }
+        }
+        return acc;
+    }
+
+    public double note_max(String[] notes){
+        double acc=0;
+
+        for (int i=0; i<notes.length; i++){
+
+            if(notes[i]!=null) {
+
+
+                if (notes[i] != null && !notes[i].equals("ABI") && acc < Double.parseDouble(notes[i])) {
+                    acc = Double.parseDouble(notes[i]);
+                }
+
+            }
+        }
+        return acc;
+    }
+
+    public double note_min(String[][] notes, int j){
+        double acc=20;
+
+        for (int i=0; i<notes.length; i++){
+
+            if(notes[i]!=null) {
+
+
+                if (notes[i][j] != null && !notes[i][j].equals("ABI") && acc > Double.parseDouble(notes[i][j])) {
+                    acc = Double.parseDouble(notes[i][j]);
+                }
+
+            }
+        }
+        return acc;
+    }
+
+    public double note_min(String[] notes){
+        double acc=20;
+
+        for (int i=0; i<notes.length; i++){
+
+            if(notes[i]!=null) {
+
+
+                if (notes[i] != null && !notes[i].equals("ABI") && acc > Double.parseDouble(notes[i])) {
+                    acc = Double.parseDouble(notes[i]);
+                }
+
+            }
+        }
+        return acc;
+    }
+
+    public String note_moyenne(String[][] notes, int j){
+        double acc=0;
+        int nb=0;
+
+        for (int i=0; i<notes.length; i++){
+
+            if(notes[i]!=null) {
+                if (notes[i][j] != null) {
+                    if(!notes[i][j].equals("ABI")) {
+                        acc += Double.parseDouble(notes[i][j]);
+                        nb+=1;
+                    }
+
+                }
+
+            }
+        }
+        System.out.println(acc/nb);
+        return String.format("%.3f",(double)(acc/nb)).replace(",", ".");
+    }
+
+    public String note_moyenne(String[] notes){
+        double acc=0;
+        int nb=0;
+
+
+        for (int i=0; i<notes.length; i++){
+
+            if(notes[i]!=null) {
+
+                if(!notes[i].equals("ABI")) {
+                    acc += Double.parseDouble(notes[i]);
+                    nb+=1;
+                }
+
+
+
+            }
+        }
+        return String.format("%.3f",(double)(acc/nb)).replace(",", ".");
     }
 }
