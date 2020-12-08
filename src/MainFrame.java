@@ -33,7 +33,7 @@ public class MainFrame {
 
         try {
             Path writtenFilePath = Files.write(path, bs);
-            System.out.println("save "+name);
+            System.out.println("save: "+name);
         }
         catch (Exception e){
             System.out.println("Erreur: "+e);
@@ -84,9 +84,8 @@ public class MainFrame {
 
 
         displayCsv = new Table(path);  //ouverture du csv
-
-        Container content = frame.getContentPane();
         csv = displayCsv.csv;
+        Container content = frame.getContentPane();
         content.add(displayCsv.Jscroll);
 
         JButton button = new JButton("Save");
