@@ -11,11 +11,13 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+
 
 public class XML2CSV {
     private final Element root;
@@ -41,10 +43,10 @@ public class XML2CSV {
         List<List<String>> listCoursesProg = new ArrayList<>();
 
         for (int i=0;i<program.size();i++){
-            programid.add(read(program.get(i),"identifier",0));
-            created(path_fichier+programid.get(i)+".csv");
+            programid.add(read(program.get(i),"identifier"));
+            //created(path_fichier+programid.get(i)+".csv");
 
-            data.add("\"N° Étudiant\",\"Nom\",\"Prénom\",\""+programid.get(i)+" - "+read(program.get(i),"name",0)+"\",");
+            data.add("\"N° Étudiant\",\"Nom\",\"Prénom\",\""+programid.get(i)+" - "+read(program.get(i),"name")+"\",");
             listCoursesProg.add(list_Courses_Prog(program, programid.get(i)));
 
         }
@@ -60,14 +62,14 @@ public class XML2CSV {
 
         for (List<Element> liste: listStudents) {
             for (Element element : liste) {
-                String programStud = read(element, "program", 0);
+                String programStud = read(element, "program");
                 StringBuilder a = new StringBuilder();
                 StringBuilder b = new StringBuilder();
                 StringBuilder c = new StringBuilder();
 
-                a.append("\"").append(read(element, "identifier", 0)).append("\",");
-                b.append("\"").append(read(element, "name", 0)).append("\",");
-                c.append("\"").append(read(element, "surname", 0)).append("\",");
+                a.append("\"").append(read(element, "identifier")).append("\",");
+                b.append("\"").append(read(element, "name")).append("\",");
+                c.append("\"").append(read(element, "surname")).append("\",");
 
                 StringBuilder d = new StringBuilder();
                 List<Element> listStudMat = getChildren(element, "grade"); //liste des matiere d'un etudient
@@ -86,9 +88,9 @@ public class XML2CSV {
                         d.append("\"").append("\",");
                     }
                 }
-                //String prog = read(element, "program", 0); //programme de l'etudient
 
-                data.set(programid.indexOf(programStud), data.get(programid.indexOf(programStud)) + (a.toString() + b.toString() + c.toString() + moyenne + d + "\n"));
+
+                data.set(programid.indexOf(programStud), data.get(programid.indexOf(programStud)) + (a.toString() + b.toString() + c.toString() + moyenne + d.substring(0,d.length()-1) + "\n"));
 
             }
         }
@@ -107,23 +109,26 @@ public class XML2CSV {
 
             }
 
-            data.set(i, data.get(i) + "\"" + "Note max" + "\"," + "\"" + "\"," + "\"" + "\"," + note_max + "\n");
-            data.set(i, data.get(i) + "\"" + "Note min" + "\"," + "\"" + "\"," + "\"" + "\"," + note_min + "\n");
-            data.set(i, data.get(i) + "\"" + "Note moyenne" + "\"," + "\"" + "\"," + "\"" + "\"," + note_moyenne + "\n");
-            data.set(i, data.get(i) + "\"" + "Écart-type" + "\"," + "\"" + "\"," + "\"" + "\"," + ecart_type + "\n");
+            data.set(i, data.get(i) + "\"" + "Note max" + "\"," + "\"" + "\"," + "\"" + "\"," + note_max.substring(0,note_max.length()-1) + "\n");
+            data.set(i, data.get(i) + "\"" + "Note min" + "\"," + "\"" + "\"," + "\"" + "\"," + note_min.substring(0,note_min.length()-1) + "\n");
+            data.set(i, data.get(i) + "\"" + "Note moyenne" + "\"," + "\"" + "\"," + "\"" + "\"," + note_moyenne.substring(0,note_moyenne.length()-1) + "\n");
+            data.set(i, data.get(i) + "\"" + "Écart-type" + "\"," + "\"" + "\"," + "\"" + "\"," + ecart_type.substring(0,ecart_type.length()-1) + "\n");
         }
 
 
         for (int i=0; i<data.size(); i++) {
 
-            byte[] bs = data.get(i).getBytes();
-            Path path = Paths.get(path_fichier+programid.get(i)+".csv");
-
-            Path writtenFilePath = Files.write(path, bs);
+            save(data.get(i), programid.get(i)+".csv");
         }
 
     }
 
+    private void save(String data, String name) throws IOException {
+        byte[] bs = data.getBytes();
+        Path path = Paths.get(path_fichier+name);
+
+        Path writtenFilePath = Files.write(path, bs);
+    }
 
 
     private void created (String path) {
@@ -157,8 +162,45 @@ public class XML2CSV {
         return children;
     }
 
-    private String read(Element element, String tag, int i){
-        return element.getElementsByTagName(tag).item(i).getTextContent();
+    private String read(Element element, String tag){
+        return element.getElementsByTagName(tag).item(0).getTextContent();
+    }
+
+    private List<String> list_Courses_Prog (List<Element> program, String programid){
+        List<String> item = new ArrayList<>();
+        List<Element> composite = new ArrayList<>();
+        List<Element> option = new ArrayList<>();
+
+        for (Element element1 : program) {
+            if (read(element1, "identifier").equals(programid)) {
+                List<Element> item1 = getChildren(element1, "item");
+                for (Element el : item1) {
+                    item.add(el.getTextContent());
+                }
+                composite = getChildren(element1, "composite");
+                option = getChildren(element1, "option");
+            }
+        }
+
+        for (Element value : option) {
+            List<Element> item2 = getChildren(value, "item");
+            item.add("*" + read(value, "identifier") + " - " + read(value, "name"));
+
+            for (Element el : item2) {
+                item.add(el.getTextContent());
+            }
+        }
+
+        for (Element element : composite) {
+            List<Element> item3 = getChildren(element, "item");
+            item.add("$" + read(element, "identifier") + " - " + read(element, "name"));
+
+            for (Element el : item3) {
+                item.add(el.getTextContent());
+            }
+        }
+
+        return item;
     }
 
     private String string_courses_prog(List<Element> listCourses, List<String> listCoursesProg){
@@ -168,36 +210,53 @@ public class XML2CSV {
 
                 if(s.charAt(0) == '$' || s.charAt(0) == '*'){
 
-                    cours.append("\"").append(s.substring(1, s.length())).append("\",");
+                    cours.append("\"").append(s.substring(1)).append("\",");
                     break;
                 }
 
-                else if (s.equals(read(element, "identifier", 0))) {
-                    String a = "\"" + read(element, "identifier", 0);
-                    String b = " - " + read(element, "name", 0) + "\",";
+                else if (s.equals(read(element, "identifier"))) {
+                    String a = "\"" + read(element, "identifier");
+                    String b = " - " + read(element, "name") + "\",";
                     cours.append(a).append(b);
                 }
 
             }
         }
+        String cours_finale=cours.substring(0,cours.length()-1);
+        //System.out.println(cours_finale);
+        return cours_finale;
+    }
 
+    private List<List<Element>> list_student (List<String> programid){
+        List<Element> listStudents = getChildren(root,"student");
+        List<List<Element>> listStudentsFinal = new ArrayList<>();
+        for (String s : programid) {
+            List<Element> studProg = new ArrayList<>();
+            for (Element student : listStudents) { //reparti les eleves selon leur program
+                if (s.equals(read(student, "program"))) {
+                    studProg.add(student);
+                }
+            }
 
+            studProg.sort(Comparator.comparing(o -> read(o, "name"))); //tri les eleves dans l'ordre alphabetique
 
-        return cours.toString();
+            listStudentsFinal.add(studProg);
+        }
+        return listStudentsFinal;
     }
 
     private String[] list_note_stu (List<String> listProg, List<Element> listStudMat){
-        String note[] = new String[listProg.size()];
+        String[] note = new String[listProg.size()];
 
         for (Element element : listStudMat) {
             int j = 0;
 
-            String mat = read(element, "item", 0);
+            String mat = read(element, "item");
 
             while (!mat.equals(listProg.get(j))) {
                 j += 1;
             }
-            note[j] = read(element, "value", 0);
+            note[j] = read(element, "value");
         }
         for (int i=0;i<note.length;i++){
             if (note[i]==null) {
@@ -227,103 +286,25 @@ public class XML2CSV {
                         }
                         a+=1;
                     }
-                    note[i]= String.format("%.3f",(double)(acc/nb)).replace(",", ".");
+                    note[i]= String.format("%.3f", acc/nb).replace(",", ".");
                 }
             }
         }
-
-
         return note;
     }
 
-    private List<String> list_Courses_Prog (List<Element> program, String programid){
-        List<String> item = new ArrayList<>();
-
-
-        List<Element> composite = new ArrayList<>();
-        List<Element> option = new ArrayList<>();
-
-        for (int i=0; i<program.size();i++){
-            if (read(program.get(i), "identifier", 0).equals(programid)){
-                List<Element> item1=getChildren(program.get(i), "item");
-                for (Element el: item1){
-                    item.add(el.getTextContent());
-                }
-                composite=getChildren(program.get(i), "composite");
-                option=getChildren(program.get(i), "option");
-            }
-        }
-
-
-
-        for (int i=0; i<option.size();i++) {
-            List<Element> item2 = getChildren(option.get(i), "item");
-            item.add("*" + read(option.get(i),"identifier",0) + " - " + read(option.get(i),"name",0));
-
-            for (Element el: item2){
-                item.add(el.getTextContent());
-            }
-        }
-
-        for (int i=0; i<composite.size();i++) {
-            List<Element> item3 = getChildren(composite.get(i), "item");
-            item.add("$" + read(composite.get(i),"identifier",0) + " - " + read(composite.get(i),"name",0));
-
-            for (Element el: item3){
-                item.add(el.getTextContent());
-            }
-        }
-
-
-
-        return item;
-    }
-
-    private List<List<Element>> list_student (List<String> programid){
-        List<Element> listStudents = getChildren(root,"student");
-        List<List<Element>> listStudentsFinal = new ArrayList<>();
-        for (int i=0;i<programid.size();i++) {
-            List<Element> studProg = new ArrayList<>();
-            for (Element student : listStudents) {
-
-                if(programid.get(i).equals(read(student, "program", 0))){
-                    studProg.add(student);
-
-                }
-
-            }
-
-            String student[]=new String[studProg.size()];
-            List<Element> studProgFinal = new ArrayList<>();
-            for(int j=0; j<studProg.size();j++){
-                student[j]=read(studProg.get(j), "name",0);
-                //System.out.println(student[j]);
-            }
-            Arrays.sort(student);
-            for (int k=0; k<studProg.size();k++){
-                int l=0;
-                while(!read(studProg.get(l), "name",0).equals(student[k])) {
-                    l+=1;
-                }
-                studProgFinal.add(studProg.get(l));
-            }
-            listStudentsFinal.add(studProgFinal);
-        }
-        return listStudentsFinal;
-    }
-
-    public String moyenne(List<Element> listCourse, List<String> listCourses, String note[]){
-        String coef[]=new String[listCourses.size()];
+    private String moyenne(List<Element> listCourse, List<String> listCourses, String[] note){
+        String[] coef =new String[listCourses.size()];
         double acc=0;
         int nb=0;
         String moyenne;
 
         for (int i=0; i<listCourses.size();i++){
 
-            for (int j=0; j<listCourse.size();j++){
+            for (Element element : listCourse) {
 
-                if(listCourses.get(i).equals(read(listCourse.get(j), "identifier", 0))){
-                    coef[i]=read(listCourse.get(j),"credits",0);
+                if (listCourses.get(i).equals(read(element, "identifier"))) {
+                    coef[i] = read(element, "credits");
                 }
             }
         }
@@ -338,25 +319,25 @@ public class XML2CSV {
                 nb += Integer.parseInt(coef[i]);
             }
         }
-        moyenne=String.format("%.3f",(double)(acc/nb)).replace(",", ".");
+        moyenne=String.format("%.3f", acc/nb).replace(",", ".");
 
         return moyenne;
     }
 
-    public double note_min_max(String[] notes, int M){
+    private double note_min_max(String[] notes, int M){
         double acc=M==1?0:20;
 
-        for (int i=0; i<notes.length; i++){
-            if(notes[i]!=null) {
-                if (notes[i] != null && !notes[i].equals("ABI") && (acc*M) < (Double.parseDouble(notes[i])*M)) {
-                    acc = Double.parseDouble(notes[i]);
+        for (String note : notes) {
+            if (note != null) {
+                if (!note.equals("ABI") && acc * M < Double.parseDouble(note) * M) {
+                    acc = Double.parseDouble(note);
                 }
             }
         }
         return acc;
     }
 
-    public double note(String[][] notes, int j, int M){
+    private double note(String[][] notes, int j, int M){
         String[] note=new String[notes.length];
 
         for (int i=0; i<notes.length; i++){
@@ -375,22 +356,22 @@ public class XML2CSV {
 
 
 
-    public double note_moyenne(String[] notes){
+    private double note_moyenne(String[] notes){
         double acc=0;
         int nb=0;
 
-        for (int i=0; i<notes.length; i++){
-            if(notes[i]!=null) {
-                if(!notes[i].equals("ABI")) {
-                    acc += Double.parseDouble(notes[i]);
-                    nb+=1;
+        for (String note : notes) {
+            if (note != null) {
+                if (!note.equals("ABI")) {
+                    acc += Double.parseDouble(note);
+                    nb += 1;
                 }
             }
         }
-        return Double.parseDouble(String.format("%.3f",(double)(acc/nb)).replace(",", "."));
+        return Double.parseDouble(String.format("%.3f", acc/nb).replace(",", "."));
     }
 
-    public double ecart_type(String[] notes){
+    private double ecart_type(String[] notes){
         double[] note=new double[notes.length];
         int n= notes.length;
         double moyenne=0;
