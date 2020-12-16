@@ -2,6 +2,8 @@ import org.xml.sax.SAXException;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileSystemView;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import javax.xml.parsers.ParserConfigurationException;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -18,63 +20,61 @@ public class MainFrame extends JPanel {
     private String path; //= "../minutes_info.csv";
     public JFrame frame;
     private Table displayCsv;
-    private String csv;
     private Container content;
-    //    private List<JScrollPane> tables = new ArrayList<>();
-    private JScrollPane oldTable = null;
-//    private JComboBox<String> comboBox;
-    private Map<String, String> data = new HashMap<>();
-    private String dataString = "";
+    private JComboBox<String> comboBox = new JComboBox<>();
+    private Map<String, String> data;
+    private boolean isFirstFile = true;
 
 
     private void fileListener(ActionEvent event) {
-        //JOptionPane.showMessageDialog( frame, "New File invoked" );
         JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
         int returnValue = jfc.showOpenDialog(null);
-//         int returnValue = jfc.showSaveDialog(null);
+
 
         if (returnValue == JFileChooser.APPROVE_OPTION) {
             File selectedFile = jfc.getSelectedFile();
             path = selectedFile.getAbsolutePath();
             try {
-                this.frame.getContentPane().setVisible(false);
-
-                this.displayCsv = new Table();
-                if (path.substring(path.length() - 4).equals(".csv")) {
+                displayCsv = new Table();
+                if (path.endsWith(".csv")) {
 
                     displayCsv.TableCSV(path);
                     System.out.println("csv");
                 } else {
                     XML2CSV a = new XML2CSV(path);
                     a.converte();
-                    data = a.dicoData;
-                    System.out.println(data);
 
-                    //ajouté le menu defilant
-                    JComboBox<Object> comboBox = new JComboBox<>();
-                    for (String key : data.keySet()) {
+                    Data.dataSet = a.dicoData;
+                    displayCsv.TableXML(path, Data.dataSet.get(Data.dataSet.entrySet().iterator().next().getKey()));
+
+                    System.out.println(comboBox.getItemCount());
+
+                    if (comboBox.getItemCount() > 0) {
+                        comboBox = new JComboBox<>();
+                        isFirstFile = false;
+                    }
+                    for (String key : Data.dataSet.keySet()) {
                         comboBox.addItem(key);
                     }
-                    comboBox.addActionListener(new ChooseProgram());
-                    frame.add(comboBox);
-
-                    System.out.println(data.entrySet().iterator().next().getKey());
-                    dataString = data.get(data.entrySet().iterator().next().getKey());
-
-                    displayCsv.TableXML(path, dataString);
-                    System.out.println("xml");
+                    comboBox.addActionListener(this::comboBoxListener);
+                    if (isFirstFile) {
+                        frame.add(comboBox);
+                    }
                 }
 
-                content = frame.getContentPane();
-//                content.removeAll();
-                removeOldTable();
+                if (isFirstFile) {
+                    content = frame.getContentPane();
+                    content.add(displayCsv.Jscroll);
+                    content.setVisible(true);
+                } else {
+                    System.out.println(Data.dataSet.entrySet().iterator().next().getKey());
+                    String[][] newArr = Table.sDataToArray(
+                            Data.dataSet.get(Data.dataSet.entrySet().iterator().next().getKey()));
+                    displayCsv.table.setModel(
+                            new DefaultTableModel(Arrays.copyOfRange(newArr, 1, newArr.length), newArr[0]));
+                }
 
-                content.add(displayCsv.Jscroll);
-                oldTable = displayCsv.Jscroll;
-//                tables.add();
-
-
-                this.frame.getContentPane().setVisible(true);
+                frame.setVisible(true);
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -87,16 +87,36 @@ public class MainFrame extends JPanel {
         return data;
     }
 
-    public void removeOldTable() {
-        if (oldTable != null) {
-            content.remove(oldTable);
-            oldTable = null;
-        }
-
+    public void setData(Map<String, String> data) {
+        this.data = data;
     }
 
-    public String getCsv() {
-        return csv;
+//    public void removeOldTable() {
+//        if (!Data.oldScroll.isEmpty()) {
+//            for (JScrollPane t : Data.oldScroll) {
+//                content.remove(t);
+//                content.revalidate();
+//
+//                Data.oldScroll.remove(t);
+//                System.out.println("scrollpane");
+////            }
+//            }
+//        }
+//
+//        if (!Data.oldTable.isEmpty()) {
+//            for (JTable t : Data.oldTable) {
+//                content.remove(t);
+//                content.revalidate();
+//
+//                Data.oldTable.remove(Data.oldTable);
+//                System.out.println("tablepane");
+//            }
+//        }
+//        repaint();
+//    }
+
+    public Table getDisplayCsv() {
+        return displayCsv;
     }
 
     private void save(String data, String name) {
@@ -112,9 +132,7 @@ public class MainFrame extends JPanel {
     }
 
 
-    private void save_file_chooser(ActionEvent e) {
-
-
+    private void saveFileChooser(ActionEvent e) {
         JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
         jfc.setDialogTitle("Choose a directory to save your file: ");
         jfc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
@@ -128,6 +146,14 @@ public class MainFrame extends JPanel {
                 //save(csv, ""+jfc.getSelectedFile());
             }
         }
+    }
+
+    public void comboBoxListener(ActionEvent e) {
+        JComboBox combo = (JComboBox) e.getSource();
+        String[][] newArr = Table.sDataToArray(
+                Data.dataSet.get(Objects.requireNonNull(combo.getSelectedItem()).toString()));
+        TableModel tm = new DefaultTableModel(Arrays.copyOfRange(newArr, 1, newArr.length), newArr[0]);
+        displayCsv.table.setModel(tm);
     }
 
 
@@ -171,9 +197,10 @@ public class MainFrame extends JPanel {
 
 
         JButton button = new JButton("Save csv");
-        button.addActionListener(this::save_file_chooser);
+        button.addActionListener(this::saveFileChooser);
         button.setBounds(30, 40, 20, 30);
         frame.add(button);
+        comboBox.addActionListener(this::comboBoxListener);
 
 
     }

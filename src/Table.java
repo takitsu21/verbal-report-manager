@@ -10,7 +10,7 @@ import java.util.HashMap;
 
 public class Table {
     private String csv = "";
-    private JTable table;
+    public JTable table;
     public JScrollPane Jscroll;
 
     public String getCsv() {

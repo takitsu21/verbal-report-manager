@@ -1,6 +1,8 @@
 import org.xml.sax.SAXException;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import javax.xml.parsers.ParserConfigurationException;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -16,22 +18,10 @@ public class ChooseProgram extends MainFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-//        if (e.get)
-        JComboBox combo = (JComboBox)e.getSource();
-        System.out.println(combo.getName());
-        System.out.println(getData().get(combo.getName()));
-        String[][] arr = Table.sDataToArray(getData().get(combo.getName()));
-//        frame.getContentPane().add();
-        JTable table = new JTable(Arrays.copyOfRange(arr, 1, arr.length), arr[0]);
-        table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-        JScrollPane Jscroll = new JScrollPane(table);
-        removeOldTable();
-        frame.getContentPane().add(Jscroll);
-        frame.getContentPane().setVisible(true);
-        repaint();
+        JComboBox combo = (JComboBox) e.getSource();
+        String[][] arr = Table.sDataToArray(Data.dataSet.get(combo.getSelectedItem().toString()));
+        TableModel tm = new DefaultTableModel(Arrays.copyOfRange(arr, 1, arr.length), arr[0]);
+        getDisplayCsv().table.setModel(tm);
     }
 
-    public void chooseProgram(HashMap<String, String> xmlData) {
-
-    }
 }
