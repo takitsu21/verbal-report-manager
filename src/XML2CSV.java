@@ -9,10 +9,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -21,16 +18,19 @@ import java.nio.file.Paths;
 
 public class XML2CSV {
     private final Element root;
-    private final String path_fichier;
 
-    public XML2CSV (String path_data, String path_fichier) throws ParserConfigurationException, IOException, SAXException {
+    public HashMap<String, String> dicoData = new HashMap<String, String>();
+    //private final String path_fichier;
+
+
+    public XML2CSV (String path_data) throws ParserConfigurationException, IOException, SAXException {
         File file = new File(path_data);
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
         Document doc = dBuilder.parse(file); // ouverture et lecture du fichier XML
         doc.getDocumentElement().normalize(); // normalise le contenu du fichier, opération très conseillée
         this.root = doc.getDocumentElement(); // la racine de l'arbre XML
-        this.path_fichier=path_fichier;
+        //this.path_fichier=path_fichier;
 
     }
 
@@ -38,7 +38,8 @@ public class XML2CSV {
     public void converte () throws IOException {
         List<Element> program= getChildren(root,"program");
         List<String> programid= new ArrayList<>();
-        List<String> data= new ArrayList<>();
+        List<String> data = new ArrayList<>();
+
         List<Element> listCourses = getChildren(root,"course");
         List<List<String>> listCoursesProg = new ArrayList<>();
 
@@ -116,18 +117,36 @@ public class XML2CSV {
         }
 
 
-        for (int i=0; i<data.size(); i++) {
+        /*for (int i=0; i<data.size(); i++) {
 
-            save(data.get(i), programid.get(i)+".csv");
+            //save(data.get(i), programid.get(i)+".csv");
+        }*/
+
+
+
+        for (int i=0; i<programid.size(); i++) {
+            dicoData.put(programid.get(i), data.get(i));
         }
+
 
     }
 
-    private void save(String data, String name) throws IOException {
-        byte[] bs = data.getBytes();
-        Path path = Paths.get(path_fichier+name);
+    void save(String path_fichier) throws IOException {
+        /*for (int i=0; i<data.size(); i++) {
 
-        Path writtenFilePath = Files.write(path, bs);
+            byte[] bs = data.get(i).getBytes();
+            Path path = Paths.get(path_fichier + name[i] + ".csv");
+
+            Path writtenFilePath = Files.write(path, bs);
+        }*/
+
+
+        for (String i : dicoData.keySet()) {
+            byte[] bs = dicoData.get(i).getBytes();
+            Path path = Paths.get(path_fichier + i + ".csv");
+            Path writtenFilePath = Files.write(path, bs);
+
+        }
     }
 
 
