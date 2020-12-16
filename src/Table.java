@@ -13,12 +13,13 @@ public class Table {
     JTable table ;
     JScrollPane Jscroll;
 
-    public void TableXML(String path, String prog) throws IOException, SAXException, ParserConfigurationException {
+    public void TableXML(String path, String data) throws IOException, SAXException, ParserConfigurationException {
         XML2CSV a=new XML2CSV(path);
         a.converte();
 
         HashMap<String, String> dicoData = a.dicoData;
-        csv=dicoData.get(prog);
+
+        csv=data;
 
         String[] ligne;
 

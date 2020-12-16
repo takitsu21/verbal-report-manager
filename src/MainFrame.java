@@ -1,3 +1,4 @@
+import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
 
 import javax.swing.*;
@@ -11,7 +12,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-
+import java.util.*;
+import java.util.List;
 
 
 public class MainFrame extends JPanel {
@@ -19,6 +21,8 @@ public class MainFrame extends JPanel {
     public JFrame frame;
     private Table displayCsv;
     private String csv;
+    private Container content;
+
 
     private void fileListener(ActionEvent event)  {
         //JOptionPane.showMessageDialog( frame, "New File invoked" );
@@ -30,16 +34,34 @@ public class MainFrame extends JPanel {
             File selectedFile = jfc.getSelectedFile();
             path = selectedFile.getAbsolutePath();
             try{this.frame.getContentPane().setVisible(false);
+
                 this.displayCsv = new Table();
                 if (path.substring(path.length() - 4).equals(".csv")) {
+
                     displayCsv.TableCSV(path);
                     System.out.println("csv");
                 }
                 else{
-                    displayCsv.TableXML(path, "SLINF3 180");
+                    XML2CSV a=new XML2CSV(path);
+                    a.converte();
+                    HashMap<String, String> dicoData = a.dicoData;
+
+                    /*List<String> programs=new ArrayList<>(dicoData.size());
+                    programs.addAll(dicoData.keySet());
+                    String[] arr = (String[]) programs.toArray();
+                    JComboBox progs=new JComboBox(arr);
+                    frame.add(progs);*/
+
+                    //ajouté le menu defilant
+
+                    String prog="SLINF3 180";
+                    String data=dicoData.get(prog);
+
+                    displayCsv.TableXML(path, data);
                     System.out.println("xml");
                 }
-                Container content = frame.getContentPane();
+
+                content = frame.getContentPane();
                 content.add(displayCsv.Jscroll);
                 this.frame.getContentPane().setVisible(true);
 
@@ -115,7 +137,7 @@ public class MainFrame extends JPanel {
         displayCsv = new Table();
 
 
-        Container content = frame.getContentPane();
+        content = frame.getContentPane();
         if(displayCsv.Jscroll!=null) {
             content.add(displayCsv.Jscroll);
         }
