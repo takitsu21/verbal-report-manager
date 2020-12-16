@@ -1,4 +1,3 @@
-import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
 
 import javax.swing.*;
@@ -13,7 +12,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
-import java.util.List;
 
 
 public class MainFrame extends JPanel {
@@ -22,55 +20,83 @@ public class MainFrame extends JPanel {
     private Table displayCsv;
     private String csv;
     private Container content;
+    //    private List<JScrollPane> tables = new ArrayList<>();
+    private JScrollPane oldTable = null;
+//    private JComboBox<String> comboBox;
+    private Map<String, String> data = new HashMap<>();
+    private String dataString = "";
 
 
-    private void fileListener(ActionEvent event)  {
+    private void fileListener(ActionEvent event) {
         //JOptionPane.showMessageDialog( frame, "New File invoked" );
         JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
         int returnValue = jfc.showOpenDialog(null);
-        // int returnValue = jfc.showSaveDialog(null);
+//         int returnValue = jfc.showSaveDialog(null);
 
         if (returnValue == JFileChooser.APPROVE_OPTION) {
             File selectedFile = jfc.getSelectedFile();
             path = selectedFile.getAbsolutePath();
-            try{this.frame.getContentPane().setVisible(false);
+            try {
+                this.frame.getContentPane().setVisible(false);
 
                 this.displayCsv = new Table();
                 if (path.substring(path.length() - 4).equals(".csv")) {
 
                     displayCsv.TableCSV(path);
                     System.out.println("csv");
-                }
-                else{
-                    XML2CSV a=new XML2CSV(path);
+                } else {
+                    XML2CSV a = new XML2CSV(path);
                     a.converte();
-                    HashMap<String, String> dicoData = a.dicoData;
-
-                    /*List<String> programs=new ArrayList<>(dicoData.size());
-                    programs.addAll(dicoData.keySet());
-                    String[] arr = (String[]) programs.toArray();
-                    JComboBox progs=new JComboBox(arr);
-                    frame.add(progs);*/
+                    data = a.dicoData;
+                    System.out.println(data);
 
                     //ajouté le menu defilant
+                    JComboBox<Object> comboBox = new JComboBox<>();
+                    for (String key : data.keySet()) {
+                        comboBox.addItem(key);
+                    }
+                    comboBox.addActionListener(new ChooseProgram());
+                    frame.add(comboBox);
 
-                    String prog="SLINF3 180";
-                    String data=dicoData.get(prog);
+                    System.out.println(data.entrySet().iterator().next().getKey());
+                    dataString = data.get(data.entrySet().iterator().next().getKey());
 
-                    displayCsv.TableXML(path, data);
+                    displayCsv.TableXML(path, dataString);
                     System.out.println("xml");
                 }
 
                 content = frame.getContentPane();
+//                content.removeAll();
+                removeOldTable();
+
                 content.add(displayCsv.Jscroll);
+                oldTable = displayCsv.Jscroll;
+//                tables.add();
+
+
                 this.frame.getContentPane().setVisible(true);
 
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
             this.repaint();
         }
+    }
+
+    public Map<String, String> getData() {
+        return data;
+    }
+
+    public void removeOldTable() {
+        if (oldTable != null) {
+            content.remove(oldTable);
+            oldTable = null;
+        }
+
+    }
+
+    public String getCsv() {
+        return csv;
     }
 
     private void save(String data, String name) {
@@ -79,10 +105,9 @@ public class MainFrame extends JPanel {
 
         try {
             Path writtenFilePath = Files.write(path, bs);
-            System.out.println("save "+name);
-        }
-        catch (Exception e){
-            System.out.println("Erreur: "+e);
+            System.out.println("save " + name);
+        } catch (Exception e) {
+            System.out.println("Erreur: " + e);
         }
     }
 
@@ -97,7 +122,7 @@ public class MainFrame extends JPanel {
         int returnValue = jfc.showSaveDialog(null);
         if (returnValue == JFileChooser.APPROVE_OPTION) {
             //System.out.println(jfc.getSelectedFile());
-            save(displayCsv.csv, ""+jfc.getSelectedFile());
+            save(displayCsv.getCsv(), "" + jfc.getSelectedFile());
             if (jfc.getSelectedFile().isDirectory()) {
                 System.out.println("You selected the directory: " + jfc.getSelectedFile());
                 //save(csv, ""+jfc.getSelectedFile());
@@ -106,12 +131,9 @@ public class MainFrame extends JPanel {
     }
 
 
-
-
-
     public MainFrame() throws IOException, ParserConfigurationException, SAXException {
         frame = new JFrame("Jalon 2 ");
-        frame.setSize(800,600);
+        frame.setSize(800, 600);
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -123,7 +145,7 @@ public class MainFrame extends JPanel {
         menu.add(file);
         JMenuItem ouvrir = new JMenuItem("Ouvrir...");
         ouvrir.setMnemonic('O');
-        ouvrir.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O,KeyEvent.CTRL_DOWN_MASK));
+        ouvrir.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, KeyEvent.CTRL_DOWN_MASK));
         ouvrir.addActionListener(this::fileListener);
         file.add(ouvrir);
 
@@ -138,7 +160,7 @@ public class MainFrame extends JPanel {
 
 
         content = frame.getContentPane();
-        if(displayCsv.Jscroll!=null) {
+        if (displayCsv.Jscroll != null) {
             content.add(displayCsv.Jscroll);
         }
         content.setLayout(new FlowLayout());
@@ -152,8 +174,6 @@ public class MainFrame extends JPanel {
         button.addActionListener(this::save_file_chooser);
         button.setBounds(30, 40, 20, 30);
         frame.add(button);
-
-
 
 
     }
