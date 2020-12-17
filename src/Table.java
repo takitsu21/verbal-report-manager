@@ -1,7 +1,10 @@
 import org.xml.sax.SAXException;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import javax.xml.parsers.ParserConfigurationException;
+import java.awt.*;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -31,7 +34,8 @@ public class Table {
         }
 
         tableau[0][0] = tableau[0][0].replace("\"", "");
-        tableau[tableau.length - 1][tableau[0].length - 1] = tableau[tableau.length - 1][tableau[0].length - 1].replace("\"", "");
+        tableau[tableau.length - 1][tableau[0].length - 1] =
+                tableau[tableau.length - 1][tableau[0].length - 1].replace("\"", "");
         return tableau;
     }
 
@@ -42,7 +46,9 @@ public class Table {
         setCsv(data);
         String[][] tableau = sDataToArray(data);
 
-        table = new JTable(Arrays.copyOfRange(tableau, 1, tableau.length), tableau[0]);
+
+        TableModel tm = new DefaultTableModel(Arrays.copyOfRange(tableau, 1, tableau.length), tableau[0]);
+        table = new JTable(tm);
         table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         Jscroll = new JScrollPane(table);
 

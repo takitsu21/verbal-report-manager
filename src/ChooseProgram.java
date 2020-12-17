@@ -13,7 +13,7 @@ import java.util.HashMap;
 
 public class ChooseProgram extends MainFrame implements ActionListener {
 
-    public ChooseProgram() throws IOException, ParserConfigurationException, SAXException {
+    public ChooseProgram() {
     }
 
     @Override

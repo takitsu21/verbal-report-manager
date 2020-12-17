@@ -48,7 +48,7 @@ public class MainFrame extends JPanel {
                     displayCsv.TableXML(path, Data.dataSet.get(Data.dataSet.entrySet().iterator().next().getKey()));
 
                     System.out.println(comboBox.getItemCount());
-
+                    JPanel panel_north = new JPanel();
                     if (comboBox.getItemCount() > 0) {
                         comboBox = new JComboBox<>();
                         isFirstFile = false;
@@ -58,10 +58,10 @@ public class MainFrame extends JPanel {
                     }
                     comboBox.addActionListener(this::comboBoxListener);
                     if (isFirstFile) {
-                        frame.add(comboBox);
+                        panel_north.add(comboBox);
+                        content.add(panel_north, BorderLayout.NORTH);
                     }
                 }
-
                 if (isFirstFile) {
                     content = frame.getContentPane();
                     content.add(displayCsv.Jscroll);
@@ -79,7 +79,6 @@ public class MainFrame extends JPanel {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            this.repaint();
         }
     }
 
@@ -154,10 +153,11 @@ public class MainFrame extends JPanel {
                 Data.dataSet.get(Objects.requireNonNull(combo.getSelectedItem()).toString()));
         TableModel tm = new DefaultTableModel(Arrays.copyOfRange(newArr, 1, newArr.length), newArr[0]);
         displayCsv.table.setModel(tm);
+        repaint();
     }
 
 
-    public MainFrame() throws IOException, ParserConfigurationException, SAXException {
+    public MainFrame() {
         frame = new JFrame("Jalon 2 ");
         frame.setSize(800, 600);
         frame.setLocationRelativeTo(null);
@@ -180,27 +180,19 @@ public class MainFrame extends JPanel {
         menu.add(help);
         JMenuItem about = new JMenuItem("A propos");
         help.add(about);
-
-
         displayCsv = new Table();
 
 
         content = frame.getContentPane();
-        if (displayCsv.Jscroll != null) {
-            content.add(displayCsv.Jscroll);
-        }
-        content.setLayout(new FlowLayout());
-
-
-        JButton bout = new JButton("Save xml");
-        frame.add(bout, BorderLayout.SOUTH);
-
-
-        JButton button = new JButton("Save csv");
-        button.addActionListener(this::saveFileChooser);
-        button.setBounds(30, 40, 20, 30);
-        frame.add(button);
-        comboBox.addActionListener(this::comboBoxListener);
+        JPanel panel_south = new JPanel();
+        panel_south.setLayout(new FlowLayout(FlowLayout.RIGHT));
+        JButton saveXmlButton = new JButton("Save xml");
+        panel_south.add(saveXmlButton, BorderLayout.SOUTH);
+        JButton saveCsvButton = new JButton("Save csv");
+        saveCsvButton.addActionListener(this::saveFileChooser);
+        saveCsvButton.setBounds(30, 40, 20, 30);
+        panel_south.add(saveCsvButton);
+        content.add(panel_south);
 
 
     }
