@@ -1,15 +1,12 @@
-import org.xml.sax.SAXException;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileSystemView;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
-import javax.xml.parsers.ParserConfigurationException;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.io.File;
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -19,7 +16,10 @@ import java.util.*;
 public class MainFrame extends JPanel {
     private String path; //= "../minutes_info.csv";
     public JFrame frame;
+    private final JPanel southPanel;
+    private final JPanel northPanel;
     private Table displayCsv;
+
     private Container content;
     private JComboBox<String> comboBox = new JComboBox<>();
     private Map<String, String> data;
@@ -48,7 +48,6 @@ public class MainFrame extends JPanel {
                     displayCsv.TableXML(path, Data.dataSet.get(Data.dataSet.entrySet().iterator().next().getKey()));
 
                     System.out.println(comboBox.getItemCount());
-                    JPanel panel_north = new JPanel();
                     if (comboBox.getItemCount() > 0) {
                         comboBox = new JComboBox<>();
                         isFirstFile = false;
@@ -58,13 +57,13 @@ public class MainFrame extends JPanel {
                     }
                     comboBox.addActionListener(this::comboBoxListener);
                     if (isFirstFile) {
-                        panel_north.add(comboBox);
-                        content.add(panel_north, BorderLayout.NORTH);
+                        northPanel.add(comboBox);
+
                     }
                 }
                 if (isFirstFile) {
                     content = frame.getContentPane();
-                    content.add(displayCsv.Jscroll);
+                    content.add(displayCsv.Jscroll,BorderLayout.CENTER);
                     content.setVisible(true);
                 } else {
                     System.out.println(Data.dataSet.entrySet().iterator().next().getKey());
@@ -180,24 +179,37 @@ public class MainFrame extends JPanel {
         menu.add(help);
         JMenuItem about = new JMenuItem("A propos");
         help.add(about);
+
+        southPanel = new JPanel();
+        northPanel = new JPanel();
+
+        southPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
+        northPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
         displayCsv = new Table();
 
 
         content = frame.getContentPane();
-        JPanel panel_south = new JPanel();
-        panel_south.setLayout(new FlowLayout(FlowLayout.RIGHT));
-        JButton saveXmlButton = new JButton("Save xml");
-        panel_south.add(saveXmlButton, BorderLayout.SOUTH);
-        JButton saveCsvButton = new JButton("Save csv");
-        saveCsvButton.addActionListener(this::saveFileChooser);
-        saveCsvButton.setBounds(30, 40, 20, 30);
-        panel_south.add(saveCsvButton);
-        content.add(panel_south);
+
+
+        if (displayCsv.Jscroll != null) {
+            content.add(displayCsv.Jscroll,BorderLayout.CENTER);
+        }
+
+        JButton bout = new JButton("Save xml");
+        southPanel.add(bout);
+
+
+        JButton button = new JButton("Save csv");
+        button.addActionListener(this::saveFileChooser);
+        button.setBounds(30, 40, 20, 30);
+        southPanel.add(button);
+        content.add(northPanel,BorderLayout.NORTH);
+        content.add(southPanel,BorderLayout.SOUTH);
 
 
     }
 
-    public static void main(String[] args) throws IOException, ParserConfigurationException, SAXException {
+    public static void main(String[] args){
         try {
             UIManager.setLookAndFeel((UIManager.getSystemLookAndFeelClassName()));
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ignored) {
