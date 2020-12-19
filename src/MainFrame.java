@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.filechooser.FileSystemView;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
@@ -64,7 +65,7 @@ public class MainFrame extends JPanel {
                 }
                 if (isFirstFile) {
                     content = frame.getContentPane();
-                    content.add(displayCsv.Jscroll,BorderLayout.CENTER);
+                    content.add(displayCsv.Jscroll, BorderLayout.CENTER);
                     content.setVisible(true);
                 } else {
                     System.out.println(Data.dataSet.entrySet().iterator().next().getKey());
@@ -117,6 +118,7 @@ public class MainFrame extends JPanel {
     public Table getDisplayCsv() {
         return displayCsv;
     }
+
     private void save(String data, String name) {
         byte[] bs = data.getBytes();
         Path path = Paths.get(name);
@@ -131,9 +133,22 @@ public class MainFrame extends JPanel {
 
 
     private void saveFileChooser(ActionEvent e) {
-        JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
-        jfc.setDialogTitle("Choose a directory to save your file: ");
-        jfc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+//        JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
+        File userDir;
+        if (comboBox.getItemCount() > 0) {
+            String formatedFileName = String.join("_",
+                    ((String) Objects.requireNonNull(comboBox.getSelectedItem())).split(" "));
+            userDir = new File(formatedFileName + ".csv");
+        } else {
+            return;
+        }
+        JFileChooser jfc = new JFileChooser(userDir);
+        jfc.setCurrentDirectory(new File(System.getProperty("user.dir")));
+        jfc.setSelectedFile(userDir);
+        jfc.setFileFilter(new FileNameExtensionFilter(".csv", "csv"));
+
+        jfc.setDialogTitle("Choississez un endroit pour sauvegarder votre fichier: ");
+        jfc.setFileSelectionMode(JFileChooser.FILES_ONLY);
 
         int returnValue = jfc.showSaveDialog(null);
         if (returnValue == JFileChooser.APPROVE_OPTION) {
@@ -162,7 +177,6 @@ public class MainFrame extends JPanel {
         frame.setSize(800, 600);
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
 
 
         JMenuBar menu = new JMenuBar();
@@ -195,7 +209,7 @@ public class MainFrame extends JPanel {
 
 
         if (displayCsv.Jscroll != null) {
-            content.add(displayCsv.Jscroll,BorderLayout.CENTER);
+            content.add(displayCsv.Jscroll, BorderLayout.CENTER);
         }
 
         JButton bout = new JButton("Save xml");
@@ -206,11 +220,11 @@ public class MainFrame extends JPanel {
         button.addActionListener(this::saveFileChooser);
         button.setBounds(30, 40, 20, 30);
         southPanel.add(button);
-        content.add(northPanel,BorderLayout.NORTH);
-        content.add(southPanel,BorderLayout.SOUTH);
+        content.add(northPanel, BorderLayout.NORTH);
+        content.add(southPanel, BorderLayout.SOUTH);
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
         try {
             UIManager.setLookAndFeel((UIManager.getSystemLookAndFeelClassName()));
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ignored) {
