@@ -107,7 +107,6 @@ public class Table {
         Jscroll = new JScrollPane(table);
 
 
+
     }
-
-
 }

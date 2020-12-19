@@ -10,7 +10,6 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
-
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -18,7 +17,6 @@ import java.nio.file.Paths;
 
 public class XML2CSV {
     private final Element root;
-
     public HashMap<String, String> dicoData = new HashMap<String, String>();
     //private final String path_fichier;
 
@@ -32,6 +30,7 @@ public class XML2CSV {
         this.root = doc.getDocumentElement(); // la racine de l'arbre XML
         //this.path_fichier=path_fichier;
 
+
     }
 
 
@@ -39,7 +38,6 @@ public class XML2CSV {
         List<Element> program= getChildren(root,"program");
         List<String> programid= new ArrayList<>();
         List<String> data = new ArrayList<>();
-
         List<Element> listCourses = getChildren(root,"course");
         List<List<String>> listCoursesProg = new ArrayList<>();
 
@@ -115,15 +113,6 @@ public class XML2CSV {
             data.set(i, data.get(i) + "\"" + "Note moyenne" + "\"," + "\"" + "\"," + "\"" + "\"," + note_moyenne.substring(0,note_moyenne.length()-1) + "\n");
             data.set(i, data.get(i) + "\"" + "Écart-type" + "\"," + "\"" + "\"," + "\"" + "\"," + ecart_type.substring(0,ecart_type.length()-1) + "\n");
         }
-
-
-        /*for (int i=0; i<data.size(); i++) {
-
-            //save(data.get(i), programid.get(i)+".csv");
-        }*/
-
-
-
         for (int i=0; i<programid.size(); i++) {
             dicoData.put(programid.get(i), data.get(i));
         }

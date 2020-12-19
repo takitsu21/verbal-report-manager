@@ -1,2 +1,2 @@
 # projet-java
-de Dylann, Marg & Ant
+de Dyl, Marg & Ant

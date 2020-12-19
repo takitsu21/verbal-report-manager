@@ -1,12 +1,13 @@
-
 import javax.swing.*;
 import javax.swing.filechooser.FileSystemView;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.io.File;
+
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -116,7 +117,6 @@ public class MainFrame extends JPanel {
     public Table getDisplayCsv() {
         return displayCsv;
     }
-
     private void save(String data, String name) {
         byte[] bs = data.getBytes();
         Path path = Paths.get(name);
@@ -146,6 +146,7 @@ public class MainFrame extends JPanel {
         }
     }
 
+
     public void comboBoxListener(ActionEvent e) {
         JComboBox combo = (JComboBox) e.getSource();
         String[][] newArr = Table.sDataToArray(
@@ -161,6 +162,7 @@ public class MainFrame extends JPanel {
         frame.setSize(800, 600);
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
 
 
         JMenuBar menu = new JMenuBar();
@@ -179,6 +181,7 @@ public class MainFrame extends JPanel {
         menu.add(help);
         JMenuItem about = new JMenuItem("A propos");
         help.add(about);
+
 
         southPanel = new JPanel();
         northPanel = new JPanel();
@@ -205,8 +208,6 @@ public class MainFrame extends JPanel {
         southPanel.add(button);
         content.add(northPanel,BorderLayout.NORTH);
         content.add(southPanel,BorderLayout.SOUTH);
-
-
     }
 
     public static void main(String[] args){
