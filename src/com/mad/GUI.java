@@ -1,7 +1,9 @@
 package com.mad;
 
 import com.mad.listener.OpenFileListener;
+import com.mad.listener.ResetTableListener;
 import com.mad.listener.SaveFileListener;
+import com.mad.listener.TestListener;
 import com.mad.util.Table;
 
 import javax.swing.*;
@@ -59,11 +61,15 @@ public class GUI {
 //        JButton saveXmlFile = new JButton("Save xml");
 //        Application.getSouthPanel().add(saveXmlFile);
 //
-//        JButton saveCsvFile = new JButton("Save csv");
-//        saveCsvFile.addActionListener(new SaveFileListener());
-//        saveCsvFile.setBounds(30, 40, 20, 30);
-//        Application.getSouthPanel().add(saveCsvFile);
-//
+        JButton test = new JButton("Test");
+        test.addActionListener(new TestListener());
+        test.setBounds(30, 40, 20, 30);
+        Application.getSouthPanel().add(test);
+
+        JButton resetTable = new JButton("Reset table");
+        resetTable.addActionListener(new ResetTableListener());
+        Application.getSouthPanel().add(resetTable);
+
        Application.getContent().add(Application.getNorthPanel(), BorderLayout.NORTH);
        Application.getContent().add(Application.getSouthPanel(), BorderLayout.SOUTH);
 

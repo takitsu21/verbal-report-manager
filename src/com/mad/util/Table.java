@@ -36,9 +36,10 @@ public class Table {
         tableau[0][0] = tableau[0][0].replace("\"", "");
         tableau[tableau.length - 1][tableau[0].length - 1] =
                 tableau[tableau.length - 1][tableau[0].length - 1].replace("\"", "");
+        Data.setDataArray(tableau);
         return tableau;
     }
-    
+
     public void TableXML(String path, String data) throws IOException, SAXException, ParserConfigurationException {
         XML2CSV xmlConverter = new XML2CSV(path);
         xmlConverter.convert();
@@ -94,5 +95,15 @@ public class Table {
         table = new JTable(data, column);
         table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         Jscroll = new JScrollPane(table);
+    }
+
+    public static void setNewModelTable(JTable table, String[][] newTableData) {
+        TableModel tm = new DefaultTableModel(
+                Arrays.copyOfRange(newTableData, 1, newTableData.length), newTableData[0]);
+        table.setModel(tm);
+    }
+
+    public int[] getSelectedRows() {
+        return table.getSelectedRows();
     }
 }
