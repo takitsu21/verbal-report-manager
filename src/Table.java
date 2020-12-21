@@ -4,15 +4,13 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.xml.parsers.ParserConfigurationException;
-import java.awt.*;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.HashMap;
 
 public class Table {
-    private String csv = "";
+    private String csv;
     public JTable table;
     public JScrollPane Jscroll;
 
@@ -40,13 +38,10 @@ public class Table {
     }
 
     public void TableXML(String path, String data) throws IOException, SAXException, ParserConfigurationException {
-        XML2CSV a = new XML2CSV(path);
-        a.converte();
-
+        XML2CSV xmlConverter = new XML2CSV(path);
+        xmlConverter.convert();
         setCsv(data);
         String[][] tableau = sDataToArray(data);
-
-
         TableModel tm = new DefaultTableModel(Arrays.copyOfRange(tableau, 1, tableau.length), tableau[0]);
         table = new JTable(tm);
         table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
@@ -59,7 +54,6 @@ public class Table {
         FileReader fr = new FileReader(path);
         FileReader fr_count = new FileReader(path);
         BufferedReader br = new BufferedReader(fr);
-
         BufferedReader br_count = new BufferedReader(fr_count);
 
 
@@ -70,8 +64,6 @@ public class Table {
             ln = br_count.readLine();
         }
         br_count.close();
-
-
         String line = br.readLine();
         csv += (line + "\n");
 
@@ -100,13 +92,8 @@ public class Table {
             }
 
         }
-
-
         table = new JTable(data, column);
         table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         Jscroll = new JScrollPane(table);
-
-
-
     }
 }

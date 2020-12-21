@@ -21,10 +21,8 @@ public class MainFrame extends JPanel {
     private final JPanel southPanel;
     private final JPanel northPanel;
     private Table displayCsv;
-
     private Container content;
     private JComboBox<String> comboBox = new JComboBox<>();
-    private Map<String, String> data;
     private boolean isFirstFile = true;
 
 
@@ -32,24 +30,21 @@ public class MainFrame extends JPanel {
         JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
         int returnValue = jfc.showOpenDialog(null);
 
-
         if (returnValue == JFileChooser.APPROVE_OPTION) {
             File selectedFile = jfc.getSelectedFile();
             path = selectedFile.getAbsolutePath();
             try {
-                displayCsv = new Table();
                 if (path.endsWith(".csv")) {
 
                     displayCsv.TableCSV(path);
                     System.out.println("csv");
                 } else {
-                    XML2CSV a = new XML2CSV(path);
-                    a.converte();
+                    XML2CSV xmlConverter = new XML2CSV(path);
+                    xmlConverter.convert();
 
-                    Data.dataSet = a.dicoData;
+                    Data.dataSet = xmlConverter.dicoData;
                     displayCsv.TableXML(path, Data.dataSet.get(Data.dataSet.entrySet().iterator().next().getKey()));
 
-                    System.out.println(comboBox.getItemCount());
                     if (comboBox.getItemCount() > 0) {
                         comboBox = new JComboBox<>();
                         isFirstFile = false;
@@ -57,22 +52,23 @@ public class MainFrame extends JPanel {
                     for (String key : Data.dataSet.keySet()) {
                         comboBox.addItem(key);
                     }
-                    comboBox.addActionListener(this::comboBoxListener);
-                    if (isFirstFile) {
-                        northPanel.add(comboBox);
 
+                    if (isFirstFile) {
+                        comboBox.addActionListener(this::comboBoxListener);
+                        northPanel.add(comboBox);
                     }
                 }
                 if (isFirstFile) {
                     content = frame.getContentPane();
                     content.add(displayCsv.Jscroll, BorderLayout.CENTER);
-                    content.setVisible(true);
                 } else {
-                    System.out.println(Data.dataSet.entrySet().iterator().next().getKey());
                     String[][] newArr = Table.sDataToArray(
                             Data.dataSet.get(Data.dataSet.entrySet().iterator().next().getKey()));
                     displayCsv.table.setModel(
                             new DefaultTableModel(Arrays.copyOfRange(newArr, 1, newArr.length), newArr[0]));
+//                    content.remove(displayCsv.table);
+//                    content.add(displayCsv.Jscroll, BorderLayout.CENTER);
+                    System.out.println("else first file");
                 }
 
                 frame.setVisible(true);
@@ -82,38 +78,6 @@ public class MainFrame extends JPanel {
             }
         }
     }
-
-    public Map<String, String> getData() {
-        return data;
-    }
-
-    public void setData(Map<String, String> data) {
-        this.data = data;
-    }
-
-//    public void removeOldTable() {
-//        if (!Data.oldScroll.isEmpty()) {
-//            for (JScrollPane t : Data.oldScroll) {
-//                content.remove(t);
-//                content.revalidate();
-//
-//                Data.oldScroll.remove(t);
-//                System.out.println("scrollpane");
-////            }
-//            }
-//        }
-//
-//        if (!Data.oldTable.isEmpty()) {
-//            for (JTable t : Data.oldTable) {
-//                content.remove(t);
-//                content.revalidate();
-//
-//                Data.oldTable.remove(Data.oldTable);
-//                System.out.println("tablepane");
-//            }
-//        }
-//        repaint();
-//    }
 
     public Table getDisplayCsv() {
         return displayCsv;
@@ -153,7 +117,7 @@ public class MainFrame extends JPanel {
         int returnValue = jfc.showSaveDialog(null);
         if (returnValue == JFileChooser.APPROVE_OPTION) {
             //System.out.println(jfc.getSelectedFile());
-            save(displayCsv.getCsv(), "" + jfc.getSelectedFile());
+            save(Data.dataSet.get(comboBox.getSelectedItem()), "" + jfc.getSelectedFile());
             if (jfc.getSelectedFile().isDirectory()) {
                 System.out.println("You selected the directory: " + jfc.getSelectedFile());
                 //save(csv, ""+jfc.getSelectedFile());
@@ -168,7 +132,6 @@ public class MainFrame extends JPanel {
                 Data.dataSet.get(Objects.requireNonNull(combo.getSelectedItem()).toString()));
         TableModel tm = new DefaultTableModel(Arrays.copyOfRange(newArr, 1, newArr.length), newArr[0]);
         displayCsv.table.setModel(tm);
-        repaint();
     }
 
 
