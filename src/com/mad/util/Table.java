@@ -20,6 +20,10 @@ public class Table {
         return csv.toString();
     }
 
+    public void setCsv(String csv) {
+        this.csv = new StringBuilder(csv);
+    }
+
     public static String[][] sDataToArray(String data) {
         String[] ligne;
         ligne = data.split("\"\n\"");
@@ -34,12 +38,7 @@ public class Table {
                 tableau[tableau.length - 1][tableau[0].length - 1].replace("\"", "");
         return tableau;
     }
-
-    public void setCsv(String csv) {
-        this.csv = new StringBuilder(csv);
-        ;
-    }
-
+    
     public void TableXML(String path, String data) throws IOException, SAXException, ParserConfigurationException {
         XML2CSV xmlConverter = new XML2CSV(path);
         xmlConverter.convert();

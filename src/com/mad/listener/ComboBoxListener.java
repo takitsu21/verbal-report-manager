@@ -15,7 +15,7 @@ import java.util.Objects;
 public class ComboBoxListener extends Application implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
-        JComboBox combo = (JComboBox) e.getSource();
+        JComboBox<?> combo = (JComboBox<?>) e.getSource();
         String[][] newArr = Table.sDataToArray(
                 Data.dataSet.get(Objects.requireNonNull(combo.getSelectedItem()).toString()));
         TableModel tm = new DefaultTableModel(Arrays.copyOfRange(newArr, 1, newArr.length), newArr[0]);
