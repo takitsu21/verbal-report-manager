@@ -13,11 +13,10 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
-public class XML2CSV {
+public class XmlToCsv {
     private final Element root;
-    public HashMap<String, String> dicoData = new HashMap<>();
 
-    public XML2CSV(String path_data) throws ParserConfigurationException, IOException, SAXException {
+    public XmlToCsv(String path_data) throws ParserConfigurationException, IOException, SAXException {
         File file = new File(path_data);
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
@@ -98,7 +97,7 @@ public class XML2CSV {
             data.set(i, data.get(i) + "\"" + "Écart-type" + "\"," + "\"" + "\"," + "\"" + "\"," + ecartType.substring(0, ecartType.length() - 1) + "\n");
         }
         for (int i = 0; i < programid.size(); i++) {
-            dicoData.put(programid.get(i), data.get(i));
+            Data.dataSet.put(programid.get(i), data.get(i));
         }
 
 

@@ -82,4 +82,12 @@ public abstract class Application extends JPanel {
     public static void setIsFirstFile(boolean isFirstFile) {
         Application.isFirstFile = isFirstFile;
     }
+
+    public void clearJTables() {
+        for (Component c : getContent().getComponents()) {
+            if (c instanceof JTable || c instanceof JScrollPane) {
+                getContent().remove(c);
+            }
+        }
+    }
 }
