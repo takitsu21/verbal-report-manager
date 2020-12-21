@@ -1,3 +1,5 @@
+package com.mad.util;
+
 import org.xml.sax.SAXException;
 
 import javax.swing.*;
@@ -10,16 +12,12 @@ import java.io.IOException;
 import java.util.Arrays;
 
 public class Table {
-    private String csv;
+    private StringBuilder csv = new StringBuilder();
     public JTable table;
     public JScrollPane Jscroll;
 
     public String getCsv() {
-        return csv;
-    }
-
-    public void setCsv(String csv) {
-        this.csv = csv;
+        return csv.toString();
     }
 
     public static String[][] sDataToArray(String data) {
@@ -37,6 +35,11 @@ public class Table {
         return tableau;
     }
 
+    public void setCsv(String csv) {
+        this.csv = new StringBuilder(csv);
+        ;
+    }
+
     public void TableXML(String path, String data) throws IOException, SAXException, ParserConfigurationException {
         XML2CSV xmlConverter = new XML2CSV(path);
         xmlConverter.convert();
@@ -46,16 +49,14 @@ public class Table {
         table = new JTable(tm);
         table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         Jscroll = new JScrollPane(table);
-
     }
 
-    public void TableCSV(String path) throws IOException {
 
+    public void TableCSV(String path) throws IOException {
         FileReader fr = new FileReader(path);
         FileReader fr_count = new FileReader(path);
         BufferedReader br = new BufferedReader(fr);
         BufferedReader br_count = new BufferedReader(fr_count);
-
 
         String ln = br_count.readLine();
         int nbline = 1;
@@ -65,7 +66,8 @@ public class Table {
         }
         br_count.close();
         String line = br.readLine();
-        csv += (line + "\n");
+        csv.append(line)
+                .append('\n');
 
         String[] column = line.split("\",\"");
         column[0] = column[0].replace("\"", "");
@@ -76,11 +78,9 @@ public class Table {
 
         String[] temp = line.split("\",\"");
         while (line != null) {
-            csv += (line + "\n");
-            for (int j = 0; j < temp.length; j++) {
-                data[i][j] = temp[j];
-
-            }
+            csv.append(line)
+                    .append('\n');
+            System.arraycopy(temp, 0, data[i], 0, temp.length);
             data[i][temp.length - 1] = data[i][temp.length - 1].replace("\"", "");
             data[i][0] = data[i][0].replace("\"", "");
             line = br.readLine();

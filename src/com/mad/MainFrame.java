@@ -1,3 +1,9 @@
+package com.mad;
+
+import com.mad.util.Data;
+import com.mad.util.Table;
+import com.mad.util.XML2CSV;
+
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.filechooser.FileSystemView;
@@ -6,7 +12,6 @@ import javax.swing.table.TableModel;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
 import java.io.File;
 
 import java.nio.file.Files;
@@ -16,32 +21,96 @@ import java.util.*;
 
 
 public class MainFrame extends JPanel {
-    private String path; //= "../minutes_info.csv";
-    public JFrame frame;
-    private final JPanel southPanel;
-    private final JPanel northPanel;
+    private String path;
+    private JFrame frame;
+    private JPanel southPanel;
+    private JPanel northPanel;
     private Table displayCsv;
     private Container content;
     private JComboBox<String> comboBox = new JComboBox<>();
     private boolean isFirstFile = true;
 
+    public MainFrame() {
+    }
 
-    private void fileListener(ActionEvent event) {
+    public JFrame getFrame() {
+        return frame;
+    }
+
+    public void setFrame(JFrame frame) {
+        this.frame = frame;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
+
+    public void setSouthPanel(JPanel southPanel) {
+        this.southPanel = southPanel;
+    }
+
+    public void setNorthPanel(JPanel northPanel) {
+        this.northPanel = northPanel;
+    }
+
+    public JPanel getSouthPanel() {
+        return southPanel;
+    }
+
+    public JPanel getNorthPanel() {
+        return northPanel;
+    }
+
+    public void setDisplayCsv(Table displayCsv) {
+        this.displayCsv = displayCsv;
+    }
+
+    public Table getDisplayCsv() {
+        return displayCsv;
+    }
+
+    public Container getContent() {
+        return content;
+    }
+
+    public void setContent(Container content) {
+        this.content = content;
+    }
+
+    public JComboBox<String> getComboBox() {
+        return comboBox;
+    }
+
+    public void setComboBox(JComboBox<String> comboBox) {
+        this.comboBox = comboBox;
+    }
+
+    public boolean isFirstFile() {
+        return isFirstFile;
+    }
+
+    public void setFirstFile(boolean firstFile) {
+        isFirstFile = firstFile;
+    }
+
+
+    public void fileListener(ActionEvent event) {
         JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
         int returnValue = jfc.showOpenDialog(null);
 
         if (returnValue == JFileChooser.APPROVE_OPTION) {
             File selectedFile = jfc.getSelectedFile();
-            path = selectedFile.getAbsolutePath();
+            setPath(selectedFile.getAbsolutePath());
             try {
                 if (path.endsWith(".csv")) {
-
                     displayCsv.TableCSV(path);
-                    System.out.println("csv");
                 } else {
                     XML2CSV xmlConverter = new XML2CSV(path);
                     xmlConverter.convert();
-
                     Data.dataSet = xmlConverter.dicoData;
                     displayCsv.TableXML(path, Data.dataSet.get(Data.dataSet.entrySet().iterator().next().getKey()));
 
@@ -70,7 +139,6 @@ public class MainFrame extends JPanel {
 //                    content.add(displayCsv.Jscroll, BorderLayout.CENTER);
                     System.out.println("else first file");
                 }
-
                 frame.setVisible(true);
 
             } catch (Exception e) {
@@ -79,9 +147,6 @@ public class MainFrame extends JPanel {
         }
     }
 
-    public Table getDisplayCsv() {
-        return displayCsv;
-    }
 
     private void save(String data, String name) {
         byte[] bs = data.getBytes();
@@ -96,7 +161,7 @@ public class MainFrame extends JPanel {
     }
 
 
-    private void saveFileChooser(ActionEvent e) {
+    public void saveFileChooser(ActionEvent e) {
 //        JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
         File userDir;
         if (comboBox.getItemCount() > 0) {
@@ -135,68 +200,4 @@ public class MainFrame extends JPanel {
     }
 
 
-    public MainFrame() {
-        frame = new JFrame("Jalon 2 ");
-        frame.setSize(800, 600);
-        frame.setLocationRelativeTo(null);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-
-        JMenuBar menu = new JMenuBar();
-        frame.setJMenuBar(menu);
-        JMenu file = new JMenu("Fichiers");
-        file.setMnemonic('F');
-        menu.add(file);
-        JMenuItem ouvrir = new JMenuItem("Ouvrir...");
-        ouvrir.setMnemonic('O');
-        ouvrir.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, KeyEvent.CTRL_DOWN_MASK));
-        ouvrir.addActionListener(this::fileListener);
-        file.add(ouvrir);
-
-
-        JMenu help = new JMenu("help");
-        menu.add(help);
-        JMenuItem about = new JMenuItem("A propos");
-        help.add(about);
-
-
-        southPanel = new JPanel();
-        northPanel = new JPanel();
-
-        southPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
-        northPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-        displayCsv = new Table();
-
-
-        content = frame.getContentPane();
-
-
-        if (displayCsv.Jscroll != null) {
-            content.add(displayCsv.Jscroll, BorderLayout.CENTER);
-        }
-
-        JButton bout = new JButton("Save xml");
-        southPanel.add(bout);
-
-
-        JButton button = new JButton("Save csv");
-        button.addActionListener(this::saveFileChooser);
-        button.setBounds(30, 40, 20, 30);
-        southPanel.add(button);
-        content.add(northPanel, BorderLayout.NORTH);
-        content.add(southPanel, BorderLayout.SOUTH);
-    }
-
-    public static void main(String[] args) {
-        try {
-            UIManager.setLookAndFeel((UIManager.getSystemLookAndFeelClassName()));
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ignored) {
-            System.out.println("aïe something went wrong");
-        }
-        MainFrame fra = new MainFrame();
-
-        fra.frame.setVisible(true);
-
-
-    }
 }

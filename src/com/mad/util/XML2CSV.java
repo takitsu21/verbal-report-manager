@@ -1,3 +1,5 @@
+package com.mad.util;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -10,9 +12,6 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
 
 public class XML2CSV {
     private final Element root;
@@ -53,13 +52,6 @@ public class XML2CSV {
         for (List<Element> liste : listStudents) {
             for (Element element : liste) {
                 String programStud = read(element, "program");
-                StringBuilder a = new StringBuilder();
-                StringBuilder b = new StringBuilder();
-                StringBuilder c = new StringBuilder();
-
-                a.append("\"").append(read(element, "identifier")).append("\",");
-                b.append("\"").append(read(element, "name")).append("\",");
-                c.append("\"").append(read(element, "surname")).append("\",");
 
                 StringBuilder d = new StringBuilder();
                 List<Element> listStudMat = getChildren(element, "grade"); //liste des matiere d'un etudient
@@ -80,8 +72,9 @@ public class XML2CSV {
                 }
 
                 data.set(programid.indexOf(programStud),
-                        data.get(programid.indexOf(programStud)) + (a.toString() +
-                                b.toString() + c.toString() + moyenne + d.substring(0, d.length() - 1) + "\n"));
+                        data.get(programid.indexOf(programStud)) + ("\"" + read(element, "identifier") + "\"," +
+                                "\"" + read(element, "name") + "\"," + "\"" + read(element, "surname") + "\"," + moyenne + d.substring(0, d.length() - 1) + "\n" //liste des matiere d'un etudient //liste des matiere d'un etudient //liste des matiere d'un etudient
+                        ));
             }
         }
 
@@ -111,19 +104,19 @@ public class XML2CSV {
 
     }
 
-    void save(String path_fichier) {
-        /*for (int i=0; i<data.size(); i++) {
-
-            byte[] bs = data.get(i).getBytes();
-            Path path = Paths.get(path_fichier + name[i] + ".csv");
-
-            Path writtenFilePath = Files.write(path, bs);
-        }*/
-        for (String i : dicoData.keySet()) {
-            byte[] bs = dicoData.get(i).getBytes();
-            Path path = Paths.get(path_fichier + i + ".csv");
-        }
-    }
+//    void save(String path_fichier) {
+//        /*for (int i=0; i<data.size(); i++) {
+//
+//            byte[] bs = data.get(i).getBytes();
+//            Path path = Paths.get(path_fichier + name[i] + ".csv");
+//
+//            Path writtenFilePath = Files.write(path, bs);
+//        }*/
+//        for (String i : dicoData.keySet()) {
+//            byte[] bs = dicoData.get(i).getBytes();
+//            Paths.get(path_fichier + i + ".csv");
+//        }
+//    }
 
     private static List<Element> getChildren(Element item, String name) {
         NodeList nodeList = item.getChildNodes();

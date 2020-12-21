@@ -1,3 +1,5 @@
+package com.mad.util;
+
 import java.util.Map;
 
 public class Data {
