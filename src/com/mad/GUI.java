@@ -1,5 +1,7 @@
 package com.mad;
 
+import com.mad.listener.OpenFileListener;
+import com.mad.listener.SaveFileListener;
 import com.mad.util.Table;
 
 import javax.swing.*;
@@ -10,53 +12,52 @@ public class GUI {
     public static void main(String[] args) {
         try {
             UIManager.setLookAndFeel((UIManager.getSystemLookAndFeelClassName()));
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ignored) {
-            System.out.println("aïe something went wrong");
+        } catch (Exception ignored) {
+            ignored.printStackTrace();
         }
-        MainFrame application = new MainFrame();
-        application.setFrame(new JFrame("MAD"));
-        application.getFrame().setSize(800, 600);
-        application.getFrame().setLocationRelativeTo(null);
-        application.getFrame().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        Application.setFrame(new JFrame("MAD"));
+        Application.getFrame().setSize(800, 600);
+        Application.getFrame().setLocationRelativeTo(null);
+        Application.getFrame().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         JMenuBar menu = new JMenuBar();
-        application.getFrame().setJMenuBar(menu);
+        Application.getFrame().setJMenuBar(menu);
         JMenu file = new JMenu("Fichiers");
         file.setMnemonic('F');
         menu.add(file);
         JMenuItem ouvrir = new JMenuItem("Ouvrir...");
         ouvrir.setMnemonic('O');
         ouvrir.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, KeyEvent.CTRL_DOWN_MASK));
-        ouvrir.addActionListener(application::fileListener);
+        ouvrir.addActionListener(new OpenFileListener());
         file.add(ouvrir);
-        JMenu help = new JMenu("help");
+        JMenu help = new JMenu("Help");
         menu.add(help);
         JMenuItem about = new JMenuItem("A propos");
         help.add(about);
-        application.setSouthPanel(new JPanel());
-        application.setNorthPanel(new JPanel());
+        Application.setSouthPanel(new JPanel());
+        Application.setNorthPanel(new JPanel());
 
-        application.getSouthPanel().setLayout(new FlowLayout(FlowLayout.RIGHT));
-        application.getNorthPanel().setLayout(new FlowLayout(FlowLayout.LEFT));
-        application.setDisplayCsv(new Table());
+        Application.getSouthPanel().setLayout(new FlowLayout(FlowLayout.RIGHT));
+        Application.getNorthPanel().setLayout(new FlowLayout(FlowLayout.LEFT));
+        Application.setDisplayCsv(new Table());
 
-        application.setContent(application.getFrame().getContentPane());
+        Application.setContent(Application.getFrame().getContentPane());
 
-        if (application.getDisplayCsv().Jscroll != null) {
-            application.getContent().add(application.getDisplayCsv().Jscroll, BorderLayout.CENTER);
+        if (Application.getDisplayCsv().Jscroll != null) {
+            Application.getContent().add(Application.getDisplayCsv().Jscroll, BorderLayout.CENTER);
         }
 
         JButton saveXmlFile = new JButton("Save xml");
-        application.getSouthPanel().add(saveXmlFile);
+        Application.getSouthPanel().add(saveXmlFile);
 
         JButton saveCsvFile = new JButton("Save csv");
-        saveCsvFile.addActionListener(application::saveFileChooser);
+        saveCsvFile.addActionListener(new SaveFileListener());
         saveCsvFile.setBounds(30, 40, 20, 30);
-        application.getSouthPanel().add(saveCsvFile);
+        Application.getSouthPanel().add(saveCsvFile);
 
-        application.getContent().add(application.getNorthPanel(), BorderLayout.NORTH);
-        application.getContent().add(application.getSouthPanel(), BorderLayout.SOUTH);
+        Application.getContent().add(Application.getNorthPanel(), BorderLayout.NORTH);
+        Application.getContent().add(Application.getSouthPanel(), BorderLayout.SOUTH);
 
-        application.getFrame().setVisible(true);
+        Application.getFrame().setVisible(true);
     }
 }
