@@ -25,12 +25,21 @@ public class GUI {
         JMenu file = new JMenu("Fichiers");
         file.setMnemonic('F');
         menu.add(file);
+        JMenu export = new JMenu("Exporter");
+        export.setMnemonic('E');
+        JMenuItem xmlItem = new JMenuItem("xml");
+        JMenuItem csvItem = new JMenuItem("csv");
+        csvItem.addActionListener(new SaveFileListener());
+        file.add(export);
+        export.add(xmlItem);
+        export.add(csvItem);
         JMenuItem ouvrir = new JMenuItem("Ouvrir...");
         ouvrir.setMnemonic('O');
         ouvrir.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, KeyEvent.CTRL_DOWN_MASK));
         ouvrir.addActionListener(new OpenFileListener());
         file.add(ouvrir);
         JMenu help = new JMenu("Help");
+        help.setMnemonic('H');
         menu.add(help);
         JMenuItem about = new JMenuItem("A propos");
         help.add(about);
@@ -47,16 +56,16 @@ public class GUI {
             Application.getContent().add(Application.getDisplayCsv().Jscroll, BorderLayout.CENTER);
         }
 
-        JButton saveXmlFile = new JButton("Save xml");
-        Application.getSouthPanel().add(saveXmlFile);
-
-        JButton saveCsvFile = new JButton("Save csv");
-        saveCsvFile.addActionListener(new SaveFileListener());
-        saveCsvFile.setBounds(30, 40, 20, 30);
-        Application.getSouthPanel().add(saveCsvFile);
-
-        Application.getContent().add(Application.getNorthPanel(), BorderLayout.NORTH);
-        Application.getContent().add(Application.getSouthPanel(), BorderLayout.SOUTH);
+//        JButton saveXmlFile = new JButton("Save xml");
+//        Application.getSouthPanel().add(saveXmlFile);
+//
+//        JButton saveCsvFile = new JButton("Save csv");
+//        saveCsvFile.addActionListener(new SaveFileListener());
+//        saveCsvFile.setBounds(30, 40, 20, 30);
+//        Application.getSouthPanel().add(saveCsvFile);
+//
+       Application.getContent().add(Application.getNorthPanel(), BorderLayout.NORTH);
+       Application.getContent().add(Application.getSouthPanel(), BorderLayout.SOUTH);
 
         Application.getFrame().setVisible(true);
     }
