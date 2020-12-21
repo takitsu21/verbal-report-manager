@@ -2,17 +2,14 @@ package com.mad.listener;
 
 import com.mad.Application;
 import com.mad.util.Data;
-import com.mad.util.Table;
 import com.mad.util.XML2CSV;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileSystemView;
-import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.util.Arrays;
 
 public class OpenFileListener extends Application implements ActionListener {
     @Override
@@ -28,19 +25,18 @@ public class OpenFileListener extends Application implements ActionListener {
                 if (getPath().endsWith(".csv")) {
                     if (getComboBox().getItemCount() > 0) {
                         getNorthPanel().remove(getComboBox());
-                        setComboBox(new JComboBox<>());
+                        resetComboBox();
                     }
                     getDisplayCsv().TableCSV(getPath());
                 } else {
                     XML2CSV xmlConverter = new XML2CSV(getPath());
                     xmlConverter.convert();
-                    Data.dataSet = xmlConverter.dicoData;
+//                    Data.setDataSet(xmlConverter.dicoData);
                     getDisplayCsv().TableXML(
                             getPath(), Data.dataSet.get(Data.dataSet.entrySet().iterator().next().getKey()));
 
                     if (getComboBox().getItemCount() > 0) {
-                        setComboBox(new JComboBox<>());
-                        getComboBox().setName("programs");
+                        resetComboBox();
                         setIsFirstFile(false);
                     }
                     for (String key : Data.dataSet.keySet()) {
@@ -60,7 +56,10 @@ public class OpenFileListener extends Application implements ActionListener {
                 exc.printStackTrace();
             }
         }
+    }
 
-
+    private void resetComboBox() {
+        setComboBox(new JComboBox<>());
+        getComboBox().setName("programs");
     }
 }

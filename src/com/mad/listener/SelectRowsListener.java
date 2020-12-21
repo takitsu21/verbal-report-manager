@@ -10,7 +10,7 @@ import java.awt.event.ActionListener;
 public class SelectRowsListener extends Application implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
-        int[] selectedRows = getDisplayCsv().table.getSelectedRows();
+        int[] selectedRows = getDisplayCsv().getSelectedRows();
         if (selectedRows.length > 0) {
             String[][] newModel = new String[selectedRows.length + 1][];
             newModel[0] = Data.dataArray[0];
