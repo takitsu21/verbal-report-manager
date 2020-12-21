@@ -7,7 +7,7 @@ import com.mad.util.Table;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class TestListener extends Application implements ActionListener {
+public class SelectRowsListener extends Application implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         int[] selectedRows = getDisplayCsv().table.getSelectedRows();
@@ -16,7 +16,7 @@ public class TestListener extends Application implements ActionListener {
             newModel[0] = Data.dataArray[0];
             int acc = 1;
             for (int row : selectedRows) {
-                newModel[acc++] = Data.dataArray[row];
+                newModel[acc++] = Data.dataArray[row + 1];
             }
 
             Table.setNewModelTable(getDisplayCsv().table, newModel);

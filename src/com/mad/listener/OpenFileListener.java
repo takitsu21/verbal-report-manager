@@ -24,16 +24,23 @@ public class OpenFileListener extends Application implements ActionListener {
             File selectedFile = jfc.getSelectedFile();
             setPath(selectedFile.getAbsolutePath());
             try {
+                setContent(getFrame().getContentPane());
                 if (getPath().endsWith(".csv")) {
+                    if (getComboBox().getItemCount() > 0) {
+                        getNorthPanel().remove(getComboBox());
+                        setComboBox(new JComboBox<>());
+                    }
                     getDisplayCsv().TableCSV(getPath());
                 } else {
                     XML2CSV xmlConverter = new XML2CSV(getPath());
                     xmlConverter.convert();
                     Data.dataSet = xmlConverter.dicoData;
-                    getDisplayCsv().TableXML(getPath(), Data.dataSet.get(Data.dataSet.entrySet().iterator().next().getKey()));
+                    getDisplayCsv().TableXML(
+                            getPath(), Data.dataSet.get(Data.dataSet.entrySet().iterator().next().getKey()));
 
                     if (getComboBox().getItemCount() > 0) {
                         setComboBox(new JComboBox<>());
+                        getComboBox().setName("programs");
                         setIsFirstFile(false);
                     }
                     for (String key : Data.dataSet.keySet()) {
@@ -45,21 +52,15 @@ public class OpenFileListener extends Application implements ActionListener {
                         getNorthPanel().add(getComboBox());
                     }
                 }
-                if (isIsFirstFile()) {
-                    setContent(getFrame().getContentPane());
-                    getContent().add(getDisplayCsv().Jscroll, BorderLayout.CENTER);
-                } else {
-                    String[][] newArr = Table.sDataToArray(
-                            Data.dataSet.get(Data.dataSet.entrySet().iterator().next().getKey()));
-                    getDisplayCsv().table.setModel(
-                            new DefaultTableModel(Arrays.copyOfRange(newArr, 1, newArr.length), newArr[0]));
-                    System.out.println("else first file");
-                }
+                clearJTables();
+                getContent().add(getDisplayCsv().Jscroll, BorderLayout.CENTER);
                 getFrame().setVisible(true);
 
             } catch (Exception exc) {
                 exc.printStackTrace();
             }
         }
+
+
     }
 }

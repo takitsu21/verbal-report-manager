@@ -3,7 +3,7 @@ package com.mad;
 import com.mad.listener.OpenFileListener;
 import com.mad.listener.ResetTableListener;
 import com.mad.listener.SaveFileListener;
-import com.mad.listener.TestListener;
+import com.mad.listener.SelectRowsListener;
 import com.mad.util.Table;
 
 import javax.swing.*;
@@ -62,7 +62,7 @@ public class GUI {
 //        Application.getSouthPanel().add(saveXmlFile);
 //
         JButton test = new JButton("Test");
-        test.addActionListener(new TestListener());
+        test.addActionListener(new SelectRowsListener());
         test.setBounds(30, 40, 20, 30);
         Application.getSouthPanel().add(test);
 
