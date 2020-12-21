@@ -41,7 +41,7 @@ public class Table {
     }
 
     public void TableXML(String path, String data) throws IOException, SAXException, ParserConfigurationException {
-        XML2CSV xmlConverter = new XML2CSV(path);
+        XmlToCsv xmlConverter = new XmlToCsv(path);
         xmlConverter.convert();
         setCsv(data);
         String[][] tableau = sDataToArray(data);
