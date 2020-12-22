@@ -7,12 +7,10 @@ import com.mad.util.XmlToCsv;
 import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
 
-import javax.sound.midi.Soundbank;
 import javax.xml.parsers.ParserConfigurationException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.sql.SQLOutput;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
@@ -61,12 +59,10 @@ public class SearchBarListener extends Application implements ActionListener {
 
     private void selectEtu(String etu, String path) throws IOException, SAXException, ParserConfigurationException {
         XmlToCsv xml = new XmlToCsv(path);
-        List<Element> courses = Data.getChildren(xml.getRoot(), "course");
         List<Element> listStudents = Data.getChildren(xml.getRoot(), "student");
         for (Element studs : listStudents) {
             if (etu.equalsIgnoreCase(XmlToCsv.read(studs, "identifier"))) {
                 List<Element> cours = Data.getChildren(studs, "grade");
-                String[] Collumn = new String[cours.size() + 3];
                 String[][] data = new String[2][cours.size() + 3];
                 data[0][0] = "N° Étudiant";
                 data[0][1] = "Nom";
