@@ -1,5 +1,6 @@
 package com.mad.util;
 
+import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
 
 import javax.swing.*;
@@ -10,10 +11,11 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.List;
 
 public class Table {
     private StringBuilder csv = new StringBuilder();
-    public JTable table;
+    public static JTable table;
     public JScrollPane Jscroll;
 
     public String getCsv() {
@@ -114,4 +116,39 @@ public class Table {
     public int[] getSelectedRows() {
         return table.getSelectedRows();
     }
+
+    public static void selectEtu(String etu, String path) throws IOException, SAXException, ParserConfigurationException {
+        XmlToCsv xml = new XmlToCsv(path);
+        List<Element> courses = Data.getChildren(xml.getRoot(), "course");
+        List<Element> listStudents = Data.getChildren(xml.getRoot(), "student");
+        for (Element studs : listStudents) {
+            if (etu.equalsIgnoreCase(XmlToCsv.read(studs, "identifier"))) {
+                List<Element> cours = Data.getChildren(studs, "grade");
+                String[] Collumn = new String[cours.size() + 3];
+                String[][] data = new String[2][cours.size() + 3];
+                data[0][0] = "N° Étudiant";
+                data[0][1] = "Nom";
+                data[0][2] = "Prénom";
+                for (int i = 3; i < cours.size() + 3; i++) {
+                    data[0][i] = XmlToCsv.read(cours.get(i - 3),"item");
+                }
+
+                data[1][0] = XmlToCsv.read(studs,"identifier");
+                data[1][1] = XmlToCsv.read(studs,"name");
+                data[1][2] = XmlToCsv.read(studs,"surname");
+                int j = 3;
+                for (Element c : cours) {
+                    data[1][j] = XmlToCsv.read(c,"value");
+                    j++;
+                }
+
+                Table.setNewModelTable(table, data);
+                break;
+
+            }
+        }
+
+    }
+
+
 }
