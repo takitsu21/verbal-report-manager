@@ -9,6 +9,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import java.util.Map;
@@ -36,6 +37,7 @@ public class Data {
             System.out.println("Erreur: " + e);
         }
     }
+
     public static List<Element> getChildren(Element item, String name) {
         NodeList nodeList = item.getChildNodes();
         List<Element> children = new ArrayList<>();

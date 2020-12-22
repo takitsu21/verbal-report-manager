@@ -51,15 +51,6 @@ public class GUI {
 
         Application.setContent(Application.getFrame().getContentPane());
 
-        JTextField recherche = new JTextField();
-        Dimension d = recherche.getPreferredSize();
-        recherche.setPreferredSize(new Dimension(100, (int) d.getHeight()));
-        Application.setSearchBar(recherche);
-        JButton validate = new JButton("rechercher");
-        Application.getNorthPanel().add(recherche);
-        Application.getNorthPanel().add(validate);
-        validate.addActionListener(new ResearchListener());
-
         if (Application.getDisplayCsv().Jscroll != null) {
             Application.getContent().add(Application.getDisplayCsv().Jscroll, BorderLayout.CENTER);
         }
@@ -71,8 +62,8 @@ public class GUI {
         Dimension d = recherche.getPreferredSize();
         recherche.setPreferredSize(new Dimension(100, (int) d.getHeight()));
         Application.setSearchBar(recherche);
-        JButton validate = new JButton("rechercher");
-        validate.addActionListener(new SearchListener());
+        JButton validate = new JButton("Rechercher");
+        validate.addActionListener(new SearchBarListener());
         Application.getNorthPanel().add(recherche);
         Application.getNorthPanel().add(validate);
 
