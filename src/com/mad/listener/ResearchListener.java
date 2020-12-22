@@ -12,32 +12,37 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Arrays;
 import java.util.Objects;
+import java.util.stream.Stream;
 
 public class ResearchListener extends Application implements ActionListener {
     public void actionPerformed(ActionEvent e) {
 
-        String[] names={"SLUIN501","SLUIN602 - Compilation"};
-        Data d= new Data();
-        String[][] tableau=d.dataArray;
+        String[] names = Stream.of(getSearchBar().getText().split(";")).
+                map(String::toLowerCase).toArray(String[]::new);
+        System.out.println(Arrays.toString(names));
 
-        String[][] tableau_final=new String[tableau.length][names.length+1];
+        String[][] tableau_final = new String[Data.dataArray.length][names.length + 1];
 
-        for(int i=0; i<names.length; i++) {
-            for (int j = 0; j < tableau[0].length; j++) {
-                if (tableau[0][j].equals(names[i]) || tableau[0][j].split(" - ")[0].equals(names[i]) || tableau[0][j].split(" - ")[tableau[0][j].split(" - ").length-1].equals(names[i])) {
-                    for (int k = 0; k < tableau.length; k++) {
-                        tableau_final[k][i+1] = tableau[k][j];
+        for (int i = 0; i < names.length; i++) {
+            for (int j = 0; j < Data.dataArray[0].length; j++) {
+                String currentCheck = Data.dataArray[0][j];
+                String[] splited = Stream.of(currentCheck.split(" - ")).
+                        map(String::toLowerCase).toArray(String[]::new);
+                if (currentCheck.equals(names[i]) || splited[0].equals(names[i]) || splited[splited.length - 1].
+                        equals(names[i])) {
+                    for (int k = 0; k < Data.dataArray.length; k++) {
+                        tableau_final[k][i + 1] = Data.dataArray[k][j];
                     }
                 }
             }
         }
-        tableau_final[0][0]="";
-        tableau_final[tableau_final.length-1][0]="Écart-type";
-        tableau_final[tableau_final.length-2][0]="Note moyenne";
-        tableau_final[tableau_final.length-3][0]="Note min";
-        tableau_final[tableau_final.length-4][0]="Note max";
+        final int finalTabLength = tableau_final.length;
+        tableau_final[0][0] = "";
+        tableau_final[finalTabLength - 1][0] = "Écart-type";
+        tableau_final[finalTabLength - 2][0] = "Note moyenne";
+        tableau_final[finalTabLength - 3][0] = "Note min";
+        tableau_final[finalTabLength - 4][0] = "Note max";
 
-        TableModel tm = new DefaultTableModel(Arrays.copyOfRange(tableau_final, 1, tableau.length), tableau_final[0]);
-        getDisplayCsv().table.setModel(tm);
+        Table.setNewModelTable(getDisplayCsv().table, tableau_final);
     }
 }
