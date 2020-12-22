@@ -20,8 +20,11 @@ public class SearchBarListener extends Application implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         try {
             String searchBarText = getSearchBar().getText();
-            selectEtu(searchBarText, getPath());
-//            searchCourse(searchBarText);
+            if (searchBarText.length() > 0) {
+//                selectEtu(searchBarText, getPath());
+                searchCourse(searchBarText);
+            }
+
         } catch (Exception ioException) {
             ioException.printStackTrace();
         }
