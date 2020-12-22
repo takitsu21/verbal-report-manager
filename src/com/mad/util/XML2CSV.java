@@ -209,7 +209,7 @@ public class XML2CSV {
 
             String mat = read(element, "item");
 
-            while (!mat.equals(listProg.get(j))) {
+            while (j<listProg.size()-1 && !mat.equals(listProg.get(j))) {
                 j += 1;
             }
             note[j] = read(element, "value");

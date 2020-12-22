@@ -117,20 +117,20 @@ public class Table {
             if (etu.equalsIgnoreCase(XML2CSV.read(studs, "identifier"))) {
                 List<Element> cours = Data.getChildren(studs, "grade");
                 String[] Collumn = new String[cours.size() + 3];
-
-                Collumn[0] = "N° Étudiant";
-                Collumn[1] = "Nom";
-                Collumn[2] = "Prénom";
-                for (int i = 3; i < Collumn.length; i++) {
-                    Collumn[i] = cours.get(i - 3).toString();
+                String[][] data = new String[2][cours.size() + 3];
+                data[0][0] = "N° Étudiant";
+                data[0][1] = "Nom";
+                data[0][2] = "Prénom";
+                for (int i = 3; i < cours.size() + 3; i++) {
+                    data[0][i] = XML2CSV.read(cours.get(i - 3),"item");
                 }
-                String[][] data = new String[1][Collumn.length];
-                data[0][0] = studs.getAttribute("identifier");
-                data[0][1] = studs.getAttribute("name");
-                data[0][2] = studs.getAttribute("surname");
+
+                data[1][0] = XML2CSV.read(studs,"identifier");
+                data[1][1] = XML2CSV.read(studs,"name");
+                data[1][2] = XML2CSV.read(studs,"surname");
                 int j = 3;
-                for (Element c : Data.getChildren(studs, "grade")) {
-                    data[0][j] = c.getAttribute("value");
+                for (Element c : cours) {
+                    data[1][j] = XML2CSV.read(c,"value");
                     j++;
                 }
 
