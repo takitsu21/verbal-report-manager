@@ -9,10 +9,9 @@ import java.awt.event.ActionListener;
 public class EditableComboBoxExemple {
     public static JComboBox<String> searchComboBox = new JComboBox<>();
     public EditableComboBoxExemple() {
-        //create a JTable
         JTable table = Table.table;
 
-        //create combo box as a search component
+        searchComboBox.setEditable(true);
         searchComboBox.addActionListener(createSearchActionListener(searchComboBox, table));
     }
 

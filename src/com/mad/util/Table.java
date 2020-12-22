@@ -136,6 +136,7 @@ public class Table {
             rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + Pattern.quote(searchText)));
         }
         int afterFilterRowCount = table.getRowCount();
-        return afterFilterRowCount!=0 && afterFilterRowCount != beforeFilterRowCount;    }
+        return afterFilterRowCount!=0 && afterFilterRowCount != beforeFilterRowCount;
+    }
 
 }
