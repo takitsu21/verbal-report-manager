@@ -6,12 +6,14 @@ import org.xml.sax.SAXException;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Pattern;
 
 public class Table {
     private StringBuilder csv = new StringBuilder();
@@ -73,6 +75,7 @@ public class Table {
 
         String[] column = line.split("\",\"");
         column[0] = column[0].replace("\"", "");
+        column[column.length-1] = column[column.length-1].replace("\"", "");
 
         String[][] data = new String[nbline - 2][column.length];
         int i = 0;
@@ -116,7 +119,6 @@ public class Table {
     public int[] getSelectedRows() {
         return table.getSelectedRows();
     }
-
 
 
 

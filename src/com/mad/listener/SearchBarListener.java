@@ -7,18 +7,25 @@ import com.mad.util.XmlToCsv;
 import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
 
+import javax.swing.*;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 import javax.xml.parsers.ParserConfigurationException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
 public class SearchBarListener extends Application implements ActionListener {
+
+
     @Override
     public void actionPerformed(ActionEvent e) {
         try {
+            //String searchText = (String) getSearchBar().getSelectedItem();
             String searchBarText = getSearchBar().getText();
             if (searchBarText.length() > 0) {
                 selectEtu(searchBarText.split(";"), getPath());
@@ -30,20 +37,19 @@ public class SearchBarListener extends Application implements ActionListener {
         }
     }
 
+
+
     private void searchCourse(String searchBarText) {
-        String[] names = Stream.of(searchBarText.split(";")).
-                map(String::toLowerCase).toArray(String[]::new);
-        System.out.println(Arrays.toString(names));
+        String[] names = searchBarText.split(";");
+
 
         String[][] tableau_final = new String[Data.dataArray.length][names.length + 1];
 
         for (int i = 0; i < names.length; i++) {
             for (int j = 0; j < Data.dataArray[0].length; j++) {
                 String currentCheck = Data.dataArray[0][j];
-                String[] splited = Stream.of(currentCheck.split(" - ")).
-                        map(String::toLowerCase).toArray(String[]::new);
-                if (currentCheck.equals(names[i]) || splited[0].equals(names[i]) || splited[splited.length - 1].
-                        equals(names[i])) {
+                String[] splited = currentCheck.split(" - ");   //.map(String::toLowerCase).toArray(String[]::new);
+                if (currentCheck.equals(names[i]) || splited[0].equals(names[i]) || splited[splited.length - 1].equals(names[i])) {
                     for (int k = 0; k < Data.dataArray.length; k++) {
                         tableau_final[k][i + 1] = Data.dataArray[k][j];
                     }
@@ -60,8 +66,9 @@ public class SearchBarListener extends Application implements ActionListener {
         Table.setNewModelTable(Table.table, tableau_final);
     }
 
-    private void selectEtu(String[] etu, String path) throws IOException, SAXException, ParserConfigurationException {
+    public static void selectEtu(String etu, String path) throws IOException, SAXException, ParserConfigurationException {
         XmlToCsv xml = new XmlToCsv(path);
+        List<Element> courses = Data.getChildren(xml.getRoot(), "course");
         List<Element> listStudents = Data.getChildren(xml.getRoot(), "student");
         int id = 1;
         String[][] data = new String[1][1] ;
@@ -73,11 +80,12 @@ public class SearchBarListener extends Application implements ActionListener {
                 if (id == 1) {
                     data = new String[etu.length + 1][cours.size() + 3];
                 }
+
                 data[0][0] = "N° Étudiant";
                 data[0][1] = "Nom";
                 data[0][2] = "Prénom";
                 for (int i = 3; i < cours.size() + 3; i++) {
-                    data[0][i] = XmlToCsv.read(cours.get(i - 3), "item");
+                    data[0][i] = XmlToCsv.read(cours.get(i - 3),"item");
                 }
 
                 data[id][0] = XmlToCsv.read(studs, "identifier");
@@ -97,7 +105,28 @@ public class SearchBarListener extends Application implements ActionListener {
                 break;
 
             }
-        }}
+        }
 
+    }
+
+
+    private static boolean searchInTable(JTable table, String searchText) {
+        if (searchText == null) {
+            return false;
+        }
+        int beforeFilterRowCount = table.getRowCount();
+        RowSorter<? extends TableModel> rs = table.getRowSorter();
+        if (rs == null) {
+            table.setAutoCreateRowSorter(true);
+            rs = table.getRowSorter();
+        }
+        TableRowSorter<? extends TableModel> rowSorter = (TableRowSorter<? extends TableModel>) rs;
+        if (searchText.length() == 0) {
+            rowSorter.setRowFilter(null);
+        } else {
+            rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + Pattern.quote(searchText)));
+        }
+        int afterFilterRowCount = table.getRowCount();
+        return afterFilterRowCount!=0 && afterFilterRowCount != beforeFilterRowCount;
     }
 }

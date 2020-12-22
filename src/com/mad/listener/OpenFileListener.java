@@ -1,6 +1,7 @@
 package com.mad.listener;
 
 import com.mad.Application;
+import com.mad.EditableComboBoxExemple;
 import com.mad.util.Data;
 import com.mad.util.Table;
 import com.mad.util.XmlToCsv;
@@ -34,6 +35,12 @@ public class OpenFileListener extends Application implements ActionListener {
                     getNorthPanel().remove(getComboBox());
                     resetComboBox();
                 }
+
+                clearJTables();
+                getContent().add(getDisplayCsv().Jscroll, BorderLayout.CENTER);
+                EditableComboBoxExemple editableComboBox = new EditableComboBoxExemple();
+                Application.getNorthPanel().add(editableComboBox.searchComboBox);
+                getFrame().setVisible(true);
                 getDisplayCsv().TableCSV(getPath());
             } else {
                 XmlToCsv xmlConverter = new XmlToCsv(getPath());
