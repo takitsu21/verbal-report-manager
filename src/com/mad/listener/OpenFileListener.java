@@ -84,8 +84,14 @@ public class OpenFileListener extends Application implements ActionListener {
 
         getSouthPanel().add(getResetTable());
         getSouthPanel().add(getShowSelectedLines());
+        getNorthPanel().setLayout(new GridLayout(1,8,3,0));
+        getNorthPanel().add(new JPanel());
+        getNorthPanel().add(new JPanel());
+        getNorthPanel().add(new JPanel());
+        getNorthPanel().add(new JPanel());
         getNorthPanel().add(getValidate());
         getNorthPanel().add(getSearchBar());
+
     }
 
     private static void resetComboBox() {
