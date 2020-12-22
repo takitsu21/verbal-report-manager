@@ -1,8 +1,14 @@
 package com.mad.util;
 
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class Data {
@@ -28,4 +34,20 @@ public class Data {
             System.out.println("Erreur: " + e);
         }
     }
+    public static List<Element> getChildren(Element item, String name) {
+        NodeList nodeList = item.getChildNodes();
+        List<Element> children = new ArrayList<>();
+
+        for (int i = 0; i < nodeList.getLength(); i++) {
+            Node node = nodeList.item(i);
+            if (node.getNodeType() == Node.ELEMENT_NODE) {
+                Element element = (Element) nodeList.item(i); // cas particulier pour nous où tous les noeuds sont des éléments
+                if (element.getTagName().equals(name)) {
+                    children.add(element);
+                }
+            }
+        }
+        return children;
+    }
+
 }

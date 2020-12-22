@@ -17,6 +17,10 @@ public class XML2CSV {
     private final Element root;
     public HashMap<String, String> dicoData = new HashMap<>();
 
+    public Element getRoot() {
+        return root;
+    }
+
     public XML2CSV(String path_data) throws ParserConfigurationException, IOException, SAXException {
         File file = new File(path_data);
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
@@ -27,10 +31,10 @@ public class XML2CSV {
     }
 
     public void convert() {
-        List<Element> program = getChildren(root, "program");
+        List<Element> program = Data.getChildren(root, "program");
         List<String> programid = new ArrayList<>();
         List<String> data = new ArrayList<>();
-        List<Element> listCourses = getChildren(root, "course");
+        List<Element> listCourses = Data.getChildren(root, "course");
         List<List<String>> listCoursesProg = new ArrayList<>();
 
         for (int i = 0; i < program.size(); i++) {
@@ -54,7 +58,7 @@ public class XML2CSV {
                 String programStud = read(element, "program");
 
                 StringBuilder d = new StringBuilder();
-                List<Element> listStudMat = getChildren(element, "grade"); //liste des matiere d'un etudient
+                List<Element> listStudMat = Data.getChildren(element, "grade"); //liste des matiere d'un etudient
 
                 String[] note = listNoteStu(listCoursesProg.get(programid.indexOf(programStud)), listStudMat);
                 notes[programid.indexOf(programStud)][listStudents.get(programid.indexOf(programStud)).indexOf(element)] = note;
@@ -118,23 +122,8 @@ public class XML2CSV {
 //        }
 //    }
 
-    private static List<Element> getChildren(Element item, String name) {
-        NodeList nodeList = item.getChildNodes();
-        List<Element> children = new ArrayList<>();
-
-        for (int i = 0; i < nodeList.getLength(); i++) {
-            Node node = nodeList.item(i);
-            if (node.getNodeType() == Node.ELEMENT_NODE) {
-                Element element = (Element) nodeList.item(i); // cas particulier pour nous où tous les noeuds sont des éléments
-                if (element.getTagName().equals(name)) {
-                    children.add(element);
-                }
-            }
-        }
-        return children;
-    }
-
-    private String read(Element element, String tag) {
+   
+    public static String read(Element element, String tag) {
         return element.getElementsByTagName(tag).item(0).getTextContent();
     }
 
@@ -145,17 +134,17 @@ public class XML2CSV {
 
         for (Element element1 : program) {
             if (read(element1, "identifier").equals(programid)) {
-                List<Element> item1 = getChildren(element1, "item");
+                List<Element> item1 = Data.getChildren(element1, "item");
                 for (Element el : item1) {
                     item.add(el.getTextContent());
                 }
-                composite = getChildren(element1, "composite");
-                option = getChildren(element1, "option");
+                composite = Data.getChildren(element1, "composite");
+                option = Data.getChildren(element1, "option");
             }
         }
 
         for (Element value : option) {
-            List<Element> item2 = getChildren(value, "item");
+            List<Element> item2 = Data.getChildren(value, "item");
             item.add("*" + read(value, "identifier") + " - " + read(value, "name"));
 
             for (Element el : item2) {
@@ -164,7 +153,7 @@ public class XML2CSV {
         }
 
         for (Element element : composite) {
-            List<Element> item3 = getChildren(element, "item");
+            List<Element> item3 = Data.getChildren(element, "item");
             item.add("$" + read(element, "identifier") + " - " + read(element, "name"));
 
             for (Element el : item3) {
@@ -195,7 +184,7 @@ public class XML2CSV {
     }
 
     private List<List<Element>> listStudent(List<String> programid) {
-        List<Element> listStudents = getChildren(root, "student");
+        List<Element> listStudents = Data.getChildren(root, "student");
         List<List<Element>> listStudentsFinal = new ArrayList<>();
         for (String s : programid) {
             List<Element> studProg = new ArrayList<>();

@@ -1,5 +1,6 @@
 package com.mad.util;
 
+import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
 
 import javax.swing.*;
@@ -10,6 +11,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.List;
 
 public class Table {
     private StringBuilder csv = new StringBuilder();
@@ -106,4 +108,40 @@ public class Table {
     public int[] getSelectedRows() {
         return table.getSelectedRows();
     }
+
+    public JTable selectEtu (String etu,String path) throws IOException, SAXException, ParserConfigurationException {
+        JTable newTable = null;
+        XML2CSV xml = new XML2CSV(path);
+        List<Element> listStudents = Data.getChildren(xml.getRoot(), "student");
+        for(Element studs : listStudents){
+            if( etu.equalsIgnoreCase(XML2CSV.read(studs, "identifier"))){
+                List<Element> cours = Data.getChildren(studs,"item");
+                String[] Collumn = new String[cours.size()+3];
+                Collumn[0] = "N° Étudiant";
+                Collumn[1] = "Nom";
+                Collumn[2] = "Prénom";
+                for(int i  = 3; i < Collumn.length; i++ ){
+                    Collumn[i] = cours.get(i-3).toString();
+                }
+                String[][] data  = new String[1][Collumn.length];
+                data[0][0] = studs.getAttribute("identifier");
+                data[0][1] = studs.getAttribute("name");
+                data[0][2] = studs.getAttribute("surname");
+                int j = 3;
+                for(Element c : Data.getChildren(studs,"grade") ){
+                    data[0][j] = c.getAttribute("value");
+                    j++;
+                }
+
+
+                newTable = new JTable(data,Collumn);
+                break;
+
+            }
+        }
+        return newTable;
+
+    }
+
+
 }

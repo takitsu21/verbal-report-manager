@@ -1,9 +1,6 @@
 package com.mad;
 
-import com.mad.listener.OpenFileListener;
-import com.mad.listener.ResetTableListener;
-import com.mad.listener.SaveFileListener;
-import com.mad.listener.TestListener;
+import com.mad.listener.*;
 import com.mad.util.Table;
 
 import javax.swing.*;
@@ -61,6 +58,12 @@ public class GUI {
 //        JButton saveXmlFile = new JButton("Save xml");
 //        Application.getSouthPanel().add(saveXmlFile);
 //
+        JTextField recherche = new JTextField("N°Etudiant");
+        JButton validate = new JButton("rechercher");
+        validate.addActionListener(new SearchListener(recherche.getText()));
+        Application.getNorthPanel().add(recherche);
+        Application.getNorthPanel().add(validate);
+
         JButton test = new JButton("Test");
         test.addActionListener(new TestListener());
         test.setBounds(30, 40, 20, 30);
