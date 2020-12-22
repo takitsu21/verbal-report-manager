@@ -58,9 +58,12 @@ public class GUI {
 //        JButton saveXmlFile = new JButton("Save xml");
 //        Application.getSouthPanel().add(saveXmlFile);
 //
-        JTextField recherche = new JTextField("N°Etudiant");
+        JTextField recherche = new JTextField();
+        Dimension d = recherche.getPreferredSize();
+        recherche.setPreferredSize(new Dimension(100, (int) d.getHeight()));
+        Application.setSearchBar(recherche);
         JButton validate = new JButton("rechercher");
-        validate.addActionListener(new SearchListener(recherche.getText()));
+        validate.addActionListener(new SearchListener());
         Application.getNorthPanel().add(recherche);
         Application.getNorthPanel().add(validate);
 

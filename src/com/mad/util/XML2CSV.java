@@ -357,4 +357,15 @@ public class XML2CSV {
 
         return Double.parseDouble(String.format("%.3f", ecartType).replace(",", "."));
     }
+
+    public static Element findCourseByCode(List<Element> courses, String item) {
+        Element courseRet = null;
+        for (Element course : courses) {
+            if (read(course, "identifier").equalsIgnoreCase(item)) {
+                courseRet = course;
+                break;
+            }
+        }
+        return courseRet;
+    }
 }
