@@ -75,6 +75,7 @@ public class Table {
 
         String[] column = line.split("\",\"");
         column[0] = column[0].replace("\"", "");
+        column[column.length-1] = column[column.length-1].replace("\"", "");
 
         String[][] data = new String[nbline - 2][column.length];
         int i = 0;

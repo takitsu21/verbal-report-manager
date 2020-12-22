@@ -27,12 +27,12 @@ public class SearchBarListener extends Application implements ActionListener {
         try {
 
             String searchText = (String) getSearchBar().getSelectedItem();
-            searchText = searchText.trim().toLowerCase();
-            System.out.println(searchText);
+            searchText = searchText.trim();
 //            selectEtu(searchText, getPath());
 
-//            searchCourse(searchText);
-            searchInTable(Table.table, searchText);
+            System.out.println(searchText);
+            searchCourse(searchText);
+//            searchInTable(Table.table, searchText);
 
 
         } catch (Exception ioException) {
@@ -43,19 +43,16 @@ public class SearchBarListener extends Application implements ActionListener {
 
 
     private void searchCourse(String searchBarText) {
-        String[] names = Stream.of(searchBarText.split(";")).
-                map(String::toLowerCase).toArray(String[]::new);
-        System.out.println(Arrays.toString(names));
+        String[] names = searchBarText.split(";");
+
 
         String[][] tableau_final = new String[Data.dataArray.length][names.length + 1];
 
         for (int i = 0; i < names.length; i++) {
             for (int j = 0; j < Data.dataArray[0].length; j++) {
                 String currentCheck = Data.dataArray[0][j];
-                String[] splited = Stream.of(currentCheck.split(" - ")).
-                        map(String::toLowerCase).toArray(String[]::new);
-                if (currentCheck.equals(names[i]) || splited[0].equals(names[i]) || splited[splited.length - 1].
-                        equals(names[i])) {
+                String[] splited = currentCheck.split(" - ");   //.map(String::toLowerCase).toArray(String[]::new);
+                if (currentCheck.equals(names[i]) || splited[0].equals(names[i]) || splited[splited.length - 1].equals(names[i])) {
                     for (int k = 0; k < Data.dataArray.length; k++) {
                         tableau_final[k][i + 1] = Data.dataArray[k][j];
                     }
