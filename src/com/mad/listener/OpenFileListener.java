@@ -4,7 +4,6 @@ import com.mad.Application;
 import com.mad.EditableComboBoxExemple;
 import com.mad.util.Data;
 import com.mad.util.Table;
-
 import com.mad.util.XmlToCsv;
 
 import javax.swing.*;
@@ -22,48 +21,87 @@ public class OpenFileListener extends Application implements ActionListener {
 
         if (returnValue == JFileChooser.APPROVE_OPTION) {
             File selectedFile = jfc.getSelectedFile();
-            setPath(selectedFile.getAbsolutePath());
-            try {
-                setContent(getFrame().getContentPane());
-                if (getPath().endsWith(".csv")) {
-                    if (getComboBox().getItemCount() > 0) {
-                        getNorthPanel().remove(getComboBox());
-                        resetComboBox();
-                    }
-                    getDisplayCsv().TableCSV(getPath());
-                } else {
-                    XmlToCsv xmlConverter = new XmlToCsv(getPath());
-                    xmlConverter.convert();
-//                    Data.setDataSet(xmlConverter.dicoData);
-                    getDisplayCsv().TableXML(
-                            getPath(), Data.dataSet.get(Data.dataSet.entrySet().iterator().next().getKey()));
-
-                    if (getComboBox().getItemCount() > 0) {
-                        resetComboBox();
-                        setIsFirstFile(false);
-                    }
-                    for (String key : Data.dataSet.keySet()) {
-                        getComboBox().addItem(key);
-                    }
-
-                    if (isIsFirstFile()) {
-                        getComboBox().addActionListener(new ComboBoxListener());
-                        getNorthPanel().add(getComboBox());
-                    }
-                }
-                clearJTables();
-                getContent().add(getDisplayCsv().Jscroll, BorderLayout.CENTER);
-                EditableComboBoxExemple pomme= new EditableComboBoxExemple();
-                Application.getNorthPanel().add(pomme.searchComboBox);
-                getFrame().setVisible(true);
-
-            } catch (Exception exc) {
-                exc.printStackTrace();
-            }
+            openFile(selectedFile);
         }
     }
 
-    private void resetComboBox() {
+    public static void openFile(File file) {
+        setPath(file.getPath());
+
+        try {
+            setContent(getFrame().getContentPane());
+            if (getPath().endsWith(".csv")) {
+                if (getComboBox().getItemCount() > 0) {
+                    getNorthPanel().remove(getComboBox());
+                    resetComboBox();
+                }
+
+                clearJTables();
+                getContent().add(getDisplayCsv().Jscroll, BorderLayout.CENTER);
+                EditableComboBoxExemple editableComboBox = new EditableComboBoxExemple();
+                Application.getNorthPanel().add(editableComboBox.searchComboBox);
+                getFrame().setVisible(true);
+                getDisplayCsv().TableCSV(getPath());
+            } else {
+                XmlToCsv xmlConverter = new XmlToCsv(getPath());
+                xmlConverter.convert();
+                getDisplayCsv().TableXML(
+                        getPath(), Data.dataSet.get(Data.dataSet.entrySet().iterator().next().getKey()));
+
+                if (getComboBox().getItemCount() > 0) {
+                    resetComboBox();
+                    setIsFirstFile(false);
+                }
+                for (String key : Data.dataSet.keySet()) {
+                    getComboBox().addItem(key);
+                }
+
+                if (isIsFirstFile()) {
+                    getComboBox().addActionListener(new ComboBoxListener());
+                    getNorthPanel().add(getComboBox());
+                }
+            }
+            if (getResetTable() == null && getShowSelectedLines() == null && getSearchBar() == null) {
+                initComponents();
+            }
+            clearJTables();
+            getContent().add(getDisplayCsv().Jscroll, BorderLayout.CENTER);
+            Table.table.getSelectionModel().addListSelectionListener(new EnableButtonsRowsListener());
+            getFrame().setVisible(true);
+
+        } catch (Exception exc) {
+            exc.printStackTrace();
+        }
+    }
+
+    private static void initComponents() {
+        setResetTable(new JButton("Remise à zéro du tableau"));
+        setShowSelectedLines(new JButton("Afficher ligne selectionné"));
+        setValidate(new JButton("Rechercher"));
+        setSearchBar(new JTextField());
+
+        getShowSelectedLines().setEnabled(false);
+
+        Dimension d = getSearchBar().getPreferredSize();
+        getSearchBar().setPreferredSize(new Dimension(100, (int) d.getHeight()));
+
+        getResetTable().addActionListener(new ResetTableListener());
+        getShowSelectedLines().addActionListener(new SelectRowsListener());
+        getValidate().addActionListener(new SearchBarListener());
+
+        getSouthPanel().add(getResetTable());
+        getSouthPanel().add(getShowSelectedLines());
+        getNorthPanel().setLayout(new GridLayout(1,8,3,0));
+        getNorthPanel().add(new JPanel());
+        getNorthPanel().add(new JPanel());
+        getNorthPanel().add(new JPanel());
+        getNorthPanel().add(new JPanel());
+        getNorthPanel().add(getValidate());
+        getNorthPanel().add(getSearchBar());
+
+    }
+
+    private static void resetComboBox() {
         setComboBox(new JComboBox<>());
         getComboBox().setName("programs");
     }

@@ -11,13 +11,50 @@ public abstract class Application extends JPanel {
     private static JFrame frame;
     private static JPanel southPanel;
     private static JPanel northPanel;
+    private static JButton showSelectedLines;
+    private static JButton resetTable;
+    private static JButton validate;
     private static Table displayCsv;
     private static Container content;
     private static JComboBox<String> comboBox = new JComboBox<>();
     private static boolean isFirstFile = true;
     private static JComboBox searchBar;
+    private static JLabel dragAndDrop;
+
 
     public Application() {
+    }
+
+    public static JLabel getDragAndDrop() {
+        return dragAndDrop;
+    }
+
+    public static void setDragAndDrop(JLabel dragAndDrop) {
+        Application.dragAndDrop = dragAndDrop;
+    }
+
+    public static JButton getValidate() {
+        return validate;
+    }
+
+    public static void setValidate(JButton validate) {
+        Application.validate = validate;
+    }
+
+    public static JButton getShowSelectedLines() {
+        return showSelectedLines;
+    }
+
+    public static void setShowSelectedLines(JButton showSelectedLines) {
+        Application.showSelectedLines = showSelectedLines;
+    }
+
+    public static JButton getResetTable() {
+        return resetTable;
+    }
+
+    public static void setResetTable(JButton resetTable) {
+        Application.resetTable = resetTable;
     }
 
     public static JComboBox getSearchBar() {
@@ -92,7 +129,7 @@ public abstract class Application extends JPanel {
         Application.isFirstFile = isFirstFile;
     }
 
-    public void clearJTables() {
+    public static void clearJTables() {
         for (Component c : getContent().getComponents()) {
             if (c instanceof JTable || c instanceof JScrollPane) {
                 getContent().remove(c);
