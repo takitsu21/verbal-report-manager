@@ -1,6 +1,7 @@
 package com.mad.listener;
 
 import com.mad.Application;
+import com.mad.EditableComboBoxExemple;
 import com.mad.util.Data;
 import com.mad.util.Table;
 
@@ -51,6 +52,8 @@ public class OpenFileListener extends Application implements ActionListener {
                     }
                 }
                 clearJTables();
+                EditableComboBoxExemple pomme= new EditableComboBoxExemple();
+                Application.getNorthPanel().add(pomme.searchComboBox);
                 getContent().add(getDisplayCsv().Jscroll, BorderLayout.CENTER);
                 getFrame().setVisible(true);
 

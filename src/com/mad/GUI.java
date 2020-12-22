@@ -5,10 +5,12 @@ import com.mad.util.Table;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
 public class GUI {
-    public static void main(String[] args) {
+    public static <EditableComboBoxExample> void main(String[] args) {
         try {
             UIManager.setLookAndFeel((UIManager.getSystemLookAndFeelClassName()));
         } catch (Exception ignored) {
@@ -58,14 +60,17 @@ public class GUI {
 //        JButton saveXmlFile = new JButton("Save xml");
 //        Application.getSouthPanel().add(saveXmlFile);
 //
-        JTextField recherche = new JTextField();
+        /*JTextField recherche = new JTextField();
         Dimension d = recherche.getPreferredSize();
         recherche.setPreferredSize(new Dimension(100, (int) d.getHeight()));
         Application.setSearchBar(recherche);
         JButton validate = new JButton("Rechercher");
         validate.addActionListener(new SearchBarListener());
         Application.getNorthPanel().add(recherche);
-        Application.getNorthPanel().add(validate);
+        Application.getNorthPanel().add(validate);*/
+
+
+
 
         JButton test = new JButton("Test");
         test.addActionListener(new SelectRowsListener());
@@ -82,3 +87,4 @@ public class GUI {
         Application.getFrame().setVisible(true);
     }
 }
+
