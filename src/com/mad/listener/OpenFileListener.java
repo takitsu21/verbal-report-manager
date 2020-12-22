@@ -26,6 +26,7 @@ public class OpenFileListener extends Application implements ActionListener {
 
     public static void openFile(File file) {
         setPath(file.getPath());
+
         try {
             setContent(getFrame().getContentPane());
             if (getPath().endsWith(".csv")) {
@@ -71,6 +72,8 @@ public class OpenFileListener extends Application implements ActionListener {
         setShowSelectedLines(new JButton("Afficher ligne selectionné"));
         setValidate(new JButton("Rechercher"));
         setSearchBar(new JTextField());
+
+        getShowSelectedLines().setEnabled(false);
 
         Dimension d = getSearchBar().getPreferredSize();
         getSearchBar().setPreferredSize(new Dimension(100, (int) d.getHeight()));

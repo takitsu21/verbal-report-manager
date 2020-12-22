@@ -58,8 +58,8 @@ public class GUI {
             Application.getContent().add(Application.getDisplayCsv().Jscroll, BorderLayout.CENTER);
         }
 
-       Application.getContent().add(Application.getNorthPanel(), BorderLayout.NORTH);
-       Application.getContent().add(Application.getSouthPanel(), BorderLayout.SOUTH);
+        Application.getContent().add(Application.getNorthPanel(), BorderLayout.NORTH);
+        Application.getContent().add(Application.getSouthPanel(), BorderLayout.SOUTH);
 
         Application.setDragAndDrop(new JLabel("Drag XML or CSV here.", SwingConstants.CENTER));
         DropTargetListener dtl = new DragDropListener();
