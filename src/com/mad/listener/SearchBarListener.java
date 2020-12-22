@@ -26,10 +26,12 @@ public class SearchBarListener extends Application implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         try {
             //String searchText = (String) getSearchBar().getSelectedItem();
-            String searchBarText = getSearchBar().getText();
-            if (searchBarText.length() > 0) {
-                selectEtu(searchBarText.split(";"), getPath());
+            String searchText = (String) getSearchBar().getSelectedItem();
+            searchText = searchText.trim();
+            if (searchText.length() > 0) {
+//                selectEtu(searchText.split(";"), getPath());
                 //searchCourse(searchBarText);
+                searchInTable(Table.table, searchText);
             }
 
         } catch (Exception ioException) {
@@ -66,47 +68,47 @@ public class SearchBarListener extends Application implements ActionListener {
         Table.setNewModelTable(Table.table, tableau_final);
     }
 
-    public static void selectEtu(String etu, String path) throws IOException, SAXException, ParserConfigurationException {
+    public static void selectEtu(String[] etu, String path) throws IOException, SAXException, ParserConfigurationException {
         XmlToCsv xml = new XmlToCsv(path);
         List<Element> courses = Data.getChildren(xml.getRoot(), "course");
         List<Element> listStudents = Data.getChildren(xml.getRoot(), "student");
         int id = 1;
-        String[][] data = new String[1][1] ;
-        for(String e : etu){
+        String[][] data = new String[1][1];
+        for (String e : etu) {
 //            System.out.println(e);
-        for (Element studs : listStudents) {
-            if (e.equalsIgnoreCase(XmlToCsv.read(studs, "identifier"))) {
-                List<Element> cours = Data.getChildren(studs, "grade");
-                if (id == 1) {
-                    data = new String[etu.length + 1][cours.size() + 3];
+            for (Element studs : listStudents) {
+                if (e.equalsIgnoreCase(XmlToCsv.read(studs, "identifier"))) {
+                    List<Element> cours = Data.getChildren(studs, "grade");
+                    if (id == 1) {
+                        data = new String[etu.length + 1][cours.size() + 3];
+                    }
+
+                    data[0][0] = "N° Étudiant";
+                    data[0][1] = "Nom";
+                    data[0][2] = "Prénom";
+                    for (int i = 3; i < cours.size() + 3; i++) {
+                        data[0][i] = XmlToCsv.read(cours.get(i - 3), "item");
+                    }
+
+                    data[id][0] = XmlToCsv.read(studs, "identifier");
+                    data[id][1] = XmlToCsv.read(studs, "name");
+                    data[id][2] = XmlToCsv.read(studs, "surname");
+                    int j = 3;
+                    for (Element c : cours) {
+                        data[id][j] = XmlToCsv.read(c, "value");
+                        j++;
+                    }
+
+                    if (id == etu.length) {
+                        Table.setNewModelTable(Table.table, data);
+                    }
+                    id++;
+
+                    break;
+
                 }
-
-                data[0][0] = "N° Étudiant";
-                data[0][1] = "Nom";
-                data[0][2] = "Prénom";
-                for (int i = 3; i < cours.size() + 3; i++) {
-                    data[0][i] = XmlToCsv.read(cours.get(i - 3),"item");
-                }
-
-                data[id][0] = XmlToCsv.read(studs, "identifier");
-                data[id][1] = XmlToCsv.read(studs, "name");
-                data[id][2] = XmlToCsv.read(studs, "surname");
-                int j = 3;
-                for (Element c : cours) {
-                    data[id][j] = XmlToCsv.read(c, "value");
-                    j++;
-                }
-
-                if(id == etu.length){
-                    Table.setNewModelTable(Table.table, data);
-                }
-                id++;
-
-                break;
-
             }
         }
-
     }
 
 

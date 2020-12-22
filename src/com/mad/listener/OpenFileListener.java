@@ -35,12 +35,6 @@ public class OpenFileListener extends Application implements ActionListener {
                     getNorthPanel().remove(getComboBox());
                     resetComboBox();
                 }
-
-                clearJTables();
-                getContent().add(getDisplayCsv().Jscroll, BorderLayout.CENTER);
-                EditableComboBoxExemple editableComboBox = new EditableComboBoxExemple();
-                Application.getNorthPanel().add(editableComboBox.searchComboBox);
-                getFrame().setVisible(true);
                 getDisplayCsv().TableCSV(getPath());
             } else {
                 XmlToCsv xmlConverter = new XmlToCsv(getPath());
@@ -66,7 +60,8 @@ public class OpenFileListener extends Application implements ActionListener {
             }
             clearJTables();
             getContent().add(getDisplayCsv().Jscroll, BorderLayout.CENTER);
-            Table.table.getSelectionModel().addListSelectionListener(new EnableButtonsRowsListener());
+
+//
             getFrame().setVisible(true);
 
         } catch (Exception exc) {
@@ -78,12 +73,13 @@ public class OpenFileListener extends Application implements ActionListener {
         setResetTable(new JButton("Remise à zéro du tableau"));
         setShowSelectedLines(new JButton("Afficher ligne selectionné"));
         setValidate(new JButton("Rechercher"));
-        setSearchBar(new JTextField());
+        Table.table.getSelectionModel().addListSelectionListener(new EnableButtonsRowsListener());
+        EditableComboBoxExemple editableComboBox = new EditableComboBoxExemple();
 
         getShowSelectedLines().setEnabled(false);
 
         Dimension d = getSearchBar().getPreferredSize();
-        getSearchBar().setPreferredSize(new Dimension(100, (int) d.getHeight()));
+        getSearchBar().setPreferredSize(new Dimension(150, (int) d.getHeight()));
 
         getResetTable().addActionListener(new ResetTableListener());
         getShowSelectedLines().addActionListener(new SelectRowsListener());
@@ -96,8 +92,11 @@ public class OpenFileListener extends Application implements ActionListener {
         getNorthPanel().add(new JPanel());
         getNorthPanel().add(new JPanel());
         getNorthPanel().add(new JPanel());
-        getNorthPanel().add(getValidate());
-        getNorthPanel().add(getSearchBar());
+
+        getNorthPanel().add(EditableComboBoxExemple.searchComboBox);
+//        EditableComboBoxExemple.searchComboBox.set;
+//        getNorthPanel().add(getValidate());
+//        getNorthPanel().add(getSearchBar());
 
     }
 
