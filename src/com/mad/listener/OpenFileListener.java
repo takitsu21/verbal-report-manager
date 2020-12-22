@@ -52,9 +52,8 @@ public class OpenFileListener extends Application implements ActionListener {
                     }
                 }
                 clearJTables();
-                EditableComboBoxExemple pomme= new EditableComboBoxExemple();
-                Application.getNorthPanel().add(pomme.searchComboBox);
                 getContent().add(getDisplayCsv().Jscroll, BorderLayout.CENTER);
+                Application.getNorthPanel().add(EditableComboBoxExemple.searchComboBox);
                 getFrame().setVisible(true);
 
             } catch (Exception exc) {
