@@ -15,11 +15,13 @@ import java.util.*;
 
 public class XmlToCsv {
     private final Element root;
+
     public HashMap<String, String> dicoData = new HashMap<>();
 
     public Element getRoot() {
         return root;
     }
+
 
     public XmlToCsv(String path_data) throws ParserConfigurationException, IOException, SAXException {
         File file = new File(path_data);
@@ -35,6 +37,7 @@ public class XmlToCsv {
         List<String> programid = new ArrayList<>();
         List<String> data = new ArrayList<>();
         List<Element> listCourses = Data.getChildren(root, "course");
+
         List<List<String>> listCoursesProg = new ArrayList<>();
 
         for (int i = 0; i < program.size(); i++) {
@@ -59,6 +62,7 @@ public class XmlToCsv {
 
                 StringBuilder d = new StringBuilder();
                 List<Element> listStudMat = Data.getChildren(element, "grade"); //liste des matiere d'un etudient
+
 
                 String[] note = listNoteStu(listCoursesProg.get(programid.indexOf(programStud)), listStudMat);
                 notes[programid.indexOf(programStud)][listStudents.get(programid.indexOf(programStud)).indexOf(element)] = note;
@@ -102,7 +106,7 @@ public class XmlToCsv {
             data.set(i, data.get(i) + "\"" + "Écart-type" + "\"," + "\"" + "\"," + "\"" + "\"," + ecartType.substring(0, ecartType.length() - 1) + "\n");
         }
         for (int i = 0; i < programid.size(); i++) {
-            dicoData.put(programid.get(i), data.get(i));
+            Data.dataSet.put(programid.get(i), data.get(i));
         }
 
 
@@ -121,6 +125,7 @@ public class XmlToCsv {
 //            Paths.get(path_fichier + i + ".csv");
 //        }
 //    }
+
 
    
     public static String read(Element element, String tag) {
@@ -145,6 +150,7 @@ public class XmlToCsv {
 
         for (Element value : option) {
             List<Element> item2 = Data.getChildren(value, "item");
+
             item.add("*" + read(value, "identifier") + " - " + read(value, "name"));
 
             for (Element el : item2) {
@@ -154,6 +160,7 @@ public class XmlToCsv {
 
         for (Element element : composite) {
             List<Element> item3 = Data.getChildren(element, "item");
+
             item.add("$" + read(element, "identifier") + " - " + read(element, "name"));
 
             for (Element el : item3) {
@@ -185,6 +192,7 @@ public class XmlToCsv {
 
     private List<List<Element>> listStudent(List<String> programid) {
         List<Element> listStudents = Data.getChildren(root, "student");
+
         List<List<Element>> listStudentsFinal = new ArrayList<>();
         for (String s : programid) {
             List<Element> studProg = new ArrayList<>();
@@ -210,6 +218,7 @@ public class XmlToCsv {
             String mat = read(element, "item");
 
             while (j<listProg.size()-1 && !mat.equals(listProg.get(j))) {
+
                 j += 1;
             }
             note[j] = read(element, "value");
@@ -356,16 +365,5 @@ public class XmlToCsv {
         ecartType = Math.sqrt(variance);
 
         return Double.parseDouble(String.format("%.3f", ecartType).replace(",", "."));
-    }
-
-    public static Element findCourseByCode(List<Element> courses, String item) {
-        Element courseRet = null;
-        for (Element course : courses) {
-            if (read(course, "identifier").equalsIgnoreCase(item)) {
-                courseRet = course;
-                break;
-            }
-        }
-        return courseRet;
     }
 }

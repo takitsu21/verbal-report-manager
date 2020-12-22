@@ -18,7 +18,6 @@ public class ComboBoxListener extends Application implements ActionListener {
         JComboBox<?> combo = (JComboBox<?>) e.getSource();
         String[][] newArr = Table.sDataToArray(
                 Data.dataSet.get(Objects.requireNonNull(combo.getSelectedItem()).toString()));
-        TableModel tm = new DefaultTableModel(Arrays.copyOfRange(newArr, 1, newArr.length), newArr[0]);
-        getDisplayCsv().table.setModel(tm);
+        Table.setNewModelTable(getDisplayCsv().table, newArr);
     }
 }
