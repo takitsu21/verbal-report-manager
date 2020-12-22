@@ -3,7 +3,7 @@ package com.mad.listener;
 import com.mad.Application;
 import com.mad.util.Data;
 import com.mad.util.Table;
-import com.mad.util.XML2CSV;
+import com.mad.util.XmlToCsv;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileSystemView;
@@ -27,7 +27,7 @@ public class OpenFileListener extends Application implements ActionListener {
                 if (getPath().endsWith(".csv")) {
                     getDisplayCsv().TableCSV(getPath());
                 } else {
-                    XML2CSV xmlConverter = new XML2CSV(getPath());
+                    XmlToCsv xmlConverter = new XmlToCsv(getPath());
                     xmlConverter.convert();
                     Data.dataSet = xmlConverter.dicoData;
                     getDisplayCsv().TableXML(getPath(), Data.dataSet.get(Data.dataSet.entrySet().iterator().next().getKey()));

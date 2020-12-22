@@ -13,7 +13,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
-public class XML2CSV {
+public class XmlToCsv {
     private final Element root;
     public HashMap<String, String> dicoData = new HashMap<>();
 
@@ -21,7 +21,7 @@ public class XML2CSV {
         return root;
     }
 
-    public XML2CSV(String path_data) throws ParserConfigurationException, IOException, SAXException {
+    public XmlToCsv(String path_data) throws ParserConfigurationException, IOException, SAXException {
         File file = new File(path_data);
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();

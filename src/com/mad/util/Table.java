@@ -43,7 +43,7 @@ public class Table {
     }
 
     public void TableXML(String path, String data) throws IOException, SAXException, ParserConfigurationException {
-        XML2CSV xmlConverter = new XML2CSV(path);
+        XmlToCsv xmlConverter = new XmlToCsv(path);
         xmlConverter.convert();
         setCsv(data);
         String[][] tableau = sDataToArray(data);
@@ -110,11 +110,11 @@ public class Table {
     }
 
     public static void selectEtu(String etu, String path) throws IOException, SAXException, ParserConfigurationException {
-        XML2CSV xml = new XML2CSV(path);
+        XmlToCsv xml = new XmlToCsv(path);
         List<Element> courses = Data.getChildren(xml.getRoot(), "course");
         List<Element> listStudents = Data.getChildren(xml.getRoot(), "student");
         for (Element studs : listStudents) {
-            if (etu.equalsIgnoreCase(XML2CSV.read(studs, "identifier"))) {
+            if (etu.equalsIgnoreCase(XmlToCsv.read(studs, "identifier"))) {
                 List<Element> cours = Data.getChildren(studs, "grade");
                 String[] Collumn = new String[cours.size() + 3];
                 String[][] data = new String[2][cours.size() + 3];
@@ -122,15 +122,15 @@ public class Table {
                 data[0][1] = "Nom";
                 data[0][2] = "Prénom";
                 for (int i = 3; i < cours.size() + 3; i++) {
-                    data[0][i] = XML2CSV.read(cours.get(i - 3),"item");
+                    data[0][i] = XmlToCsv.read(cours.get(i - 3),"item");
                 }
 
-                data[1][0] = XML2CSV.read(studs,"identifier");
-                data[1][1] = XML2CSV.read(studs,"name");
-                data[1][2] = XML2CSV.read(studs,"surname");
+                data[1][0] = XmlToCsv.read(studs,"identifier");
+                data[1][1] = XmlToCsv.read(studs,"name");
+                data[1][2] = XmlToCsv.read(studs,"surname");
                 int j = 3;
                 for (Element c : cours) {
-                    data[1][j] = XML2CSV.read(c,"value");
+                    data[1][j] = XmlToCsv.read(c,"value");
                     j++;
                 }
 
