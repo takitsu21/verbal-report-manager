@@ -15,16 +15,16 @@ public abstract class Application extends JPanel {
     private static Container content;
     private static JComboBox<String> comboBox = new JComboBox<>();
     private static boolean isFirstFile = true;
-    private static JTextField searchBar;
+    private static JComboBox searchBar;
 
     public Application() {
     }
 
-    public static JTextField getSearchBar() {
+    public static JComboBox getSearchBar() {
         return searchBar;
     }
 
-    public static void setSearchBar(JTextField searchBar) {
+    public static void setSearchBar(JComboBox searchBar) {
         Application.searchBar = searchBar;
     }
 

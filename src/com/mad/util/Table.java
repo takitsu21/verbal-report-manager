@@ -119,24 +119,6 @@ public class Table {
         return table.getSelectedRows();
     }
 
-    public static boolean searchInTable(JTable table, String searchText) {
-        if (searchText == null) {
-            return false;
-        }
-        int beforeFilterRowCount = table.getRowCount();
-        RowSorter<? extends TableModel> rs = table.getRowSorter();
-        if (rs == null) {
-            table.setAutoCreateRowSorter(true);
-            rs = table.getRowSorter();
-        }
-        TableRowSorter<? extends TableModel> rowSorter = (TableRowSorter<? extends TableModel>) rs;
-        if (searchText.length() == 0) {
-            rowSorter.setRowFilter(null);
-        } else {
-            rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + Pattern.quote(searchText)));
-        }
-        int afterFilterRowCount = table.getRowCount();
-        return afterFilterRowCount!=0 && afterFilterRowCount != beforeFilterRowCount;
-    }
+
 
 }
