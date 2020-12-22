@@ -66,7 +66,7 @@ public class SearchBarListener extends Application implements ActionListener {
         int id = 1;
         String[][] data = new String[1][1] ;
         for(String e : etu){
-            System.out.println(e);
+//            System.out.println(e);
         for (Element studs : listStudents) {
             if (e.equalsIgnoreCase(XmlToCsv.read(studs, "identifier"))) {
                 List<Element> cours = Data.getChildren(studs, "grade");
