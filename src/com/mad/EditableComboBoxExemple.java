@@ -13,11 +13,7 @@ public class EditableComboBoxExemple {
         JTable table = Table.table;
 
         //create combo box as a search component
-        searchComboBox.setEditable(true);
         searchComboBox.addActionListener(createSearchActionListener(searchComboBox, table));
-        System.out.println("ok");
-
-
     }
 
     private static ActionListener createSearchActionListener(JComboBox<String> comboBox, JTable table) {
