@@ -92,6 +92,14 @@ public class Table {
             }
 
         }
+
+        String[][] tableau = new String[data.length+1][];
+        tableau[0]=column;
+        for(int j = 0 ; j < data.length; j++)
+            tableau[j+1]=data[j];
+
+        Data.setDataArray(tableau);
+
         table = new JTable(data, column);
         table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         Jscroll = new JScrollPane(table);
