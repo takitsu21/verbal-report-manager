@@ -5,6 +5,8 @@ import com.mad.util.Table;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.dnd.DropTarget;
+import java.awt.dnd.DropTargetListener;
 import java.awt.event.KeyEvent;
 
 public class GUI {
@@ -36,6 +38,7 @@ public class GUI {
         ouvrir.setMnemonic('O');
         ouvrir.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, KeyEvent.CTRL_DOWN_MASK));
         ouvrir.addActionListener(new OpenFileListener());
+
         file.add(ouvrir);
         JMenu help = new JMenu("Help");
         help.setMnemonic('H');
@@ -55,29 +58,13 @@ public class GUI {
             Application.getContent().add(Application.getDisplayCsv().Jscroll, BorderLayout.CENTER);
         }
 
-//        JButton saveXmlFile = new JButton("Save xml");
-//        Application.getSouthPanel().add(saveXmlFile);
-//
-        JTextField recherche = new JTextField();
-        Dimension d = recherche.getPreferredSize();
-        recherche.setPreferredSize(new Dimension(100, (int) d.getHeight()));
-        Application.setSearchBar(recherche);
-        JButton validate = new JButton("Rechercher");
-        validate.addActionListener(new SearchBarListener());
-        Application.getNorthPanel().add(recherche);
-        Application.getNorthPanel().add(validate);
+        Application.getContent().add(Application.getNorthPanel(), BorderLayout.NORTH);
+        Application.getContent().add(Application.getSouthPanel(), BorderLayout.SOUTH);
 
-        JButton test = new JButton("Test");
-        test.addActionListener(new SelectRowsListener());
-        test.setBounds(30, 40, 20, 30);
-        Application.getSouthPanel().add(test);
-
-        JButton resetTable = new JButton("Reset table");
-        resetTable.addActionListener(new ResetTableListener());
-        Application.getSouthPanel().add(resetTable);
-
-       Application.getContent().add(Application.getNorthPanel(), BorderLayout.NORTH);
-       Application.getContent().add(Application.getSouthPanel(), BorderLayout.SOUTH);
+        Application.setDragAndDrop(new JLabel("Drag XML or CSV here.", SwingConstants.CENTER));
+        DropTargetListener dtl = new DragDropListener();
+        new DropTarget(Application.getFrame(), dtl);
+        Application.getFrame().add(BorderLayout.CENTER, Application.getDragAndDrop());
 
         Application.getFrame().setVisible(true);
     }
