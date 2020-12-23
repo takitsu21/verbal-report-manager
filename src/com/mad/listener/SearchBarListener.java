@@ -28,10 +28,11 @@ public class SearchBarListener extends Application implements ActionListener {
             //String searchText = (String) getSearchBar().getSelectedItem();
             String searchText = (String) getSearchBar().getSelectedItem();
             searchText = searchText.trim();
+
             if (searchText.length() > 0) {
-//                selectEtu(searchText.split(";"), getPath());
+                selectEtu(searchText.split(";"), getPath());
                 //searchCourse(searchBarText);
-                searchInTable(Table.table, searchText);
+                //searchInTable(Table.table, searchText);
             }
 
         } catch (Exception ioException) {
@@ -70,6 +71,7 @@ public class SearchBarListener extends Application implements ActionListener {
 
     public static void selectEtu(String[] etu, String path) {
         List<Element> listStudents = Data.getChildren(Data.root, "student");
+        List<Element> listCourses = Data.getChildren(Data.root,"course");
         int id = 1;
         String[][] data = new String[1][1];
         for (String e : etu) {
@@ -85,7 +87,9 @@ public class SearchBarListener extends Application implements ActionListener {
                     data[0][1] = "Nom";
                     data[0][2] = "Prénom";
                     for (int i = 3; i < cours.size() + 3; i++) {
-                        data[0][i] = XmlToCsv.read(cours.get(i - 3), "item");
+                        String item = XmlToCsv.read(cours.get(i - 3), "item");
+                        String courseName =XmlToCsv.read(XmlToCsv.findCourseByCode(listCourses,XmlToCsv.read(cours.get(i - 3), "item")),"name") ;
+                        data[0][i] = String.format("%s - %s",item,courseName);//XmlToCsv.read(cours.get(i - 3), "item");
                     }
 
                     data[id][0] = XmlToCsv.read(studs, "identifier");
