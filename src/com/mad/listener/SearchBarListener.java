@@ -59,19 +59,26 @@ public class SearchBarListener extends Application implements ActionListener {
             String[] ligne = searchInTable(Table.table, listText[0]);
             for (int j=1; j<listText.length;j++) {
                 String[] etu = searchInTable(Table.table, listText[j]);
-
+                int oldLength = ligne.length;
                 ligne = Arrays.copyOf(ligne,(ligne.length+etu.length));
                 for (int i=0;i<etu.length;i++){
-                    ligne[ligne.length+i-1]=etu[i];
+                    ligne[oldLength+i]=etu[i];
                 }
 
             }
 
             System.out.println(ligne.length);
+            if(ligne.length == 0 ){
+                searchCourse(listText);
+            }
+            else{
+            for(String s : ligne){
+                System.out.println(s);
+            }
 
             if (getPath().endsWith(".xml")) {
                 selectEtu(ligne);
-            }
+            }}
 
         } catch (Exception ioException) {
             ioException.printStackTrace();
