@@ -41,7 +41,6 @@ public class SearchBarListener extends Application implements ActionListener {
                 for (String s : listText) {
                     if ((s.length() != 8) || !(s.startsWith("2"))) {
                         isListStuds = false;
-                       break;
                     }
                 }
                 if (isListStuds) {
