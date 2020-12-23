@@ -23,9 +23,34 @@ public class SearchBarListener extends Application implements ActionListener {
             //String searchText = (String) getSearchBar().getSelectedItem();
             String searchText = (String) getSearchBar().getSelectedItem();
             searchText = searchText.trim();
+            String[] listText = searchText.split(";");
+            boolean isListStuds = true;
+            if (listText.length == 1) {
+                if (listText[0].startsWith("2") && listText[0].length() < 8) {
+                    searchInTable(Table.table, listText[0]);
+                }
+                if (listText[0].startsWith("2") && listText[0].length() == 8) {
+                    selectEtu(listText);
+                }
+                else {
+                    System.out.println("ici");
+                    searchCourse(listText);
+                }
 
-            if (searchText.length() > 0) {
-                selectEtu(searchText.split(";"));
+            } else if (listText.length > 1) {
+                for (String s : listText) {
+                    if ((s.length() != 8) || !(s.startsWith("2"))) {
+                        isListStuds = false;
+                       break;
+                    }
+                }
+                if (isListStuds) {
+                    selectEtu(listText);
+                }
+                else {
+                    System.out.println("ici");
+                    searchCourse(listText);
+                }
                 //searchCourse(searchBarText);
                 //searchInTable(Table.table, searchText);
             }
@@ -36,10 +61,7 @@ public class SearchBarListener extends Application implements ActionListener {
     }
 
 
-    private void searchCourse(String searchBarText) {
-        String[] names = searchBarText.split(";");
-
-
+    private void searchCourse(String[] names) {
         String[][] tableau_final = new String[Data.dataArray.length][names.length + 1];
 
         for (int i = 0; i < names.length; i++) {
@@ -48,13 +70,15 @@ public class SearchBarListener extends Application implements ActionListener {
                 String[] splited = currentCheck.split(" - ");   //.map(String::toLowerCase).toArray(String[]::new);
                 if (currentCheck.equals(names[i]) || splited[0].equals(names[i]) || splited[splited.length - 1].equals(names[i])) {
                     for (int k = 0; k < Data.dataArray.length; k++) {
-                        tableau_final[k][i + 1] = Data.dataArray[k][j];
+                        if(! Data.dataArray[k][j].isEmpty()) {
+                            tableau_final[k][i + 1] = Data.dataArray[k][j];
+                        }
                     }
                 }
             }
         }
         final int finalTabLength = tableau_final.length;
-        tableau_final[0][0] = "";
+        tableau_final[0][0] = "Statistiques";
         tableau_final[finalTabLength - 1][0] = "Écart-type";
         tableau_final[finalTabLength - 2][0] = "Note moyenne";
         tableau_final[finalTabLength - 3][0] = "Note min";
