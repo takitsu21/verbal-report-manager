@@ -25,36 +25,11 @@ public class SearchBarListener extends Application implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         try {
-            //String searchText = (String) getSearchBar().getSelectedItem();
+
             String searchText = (String) getSearchBar().getSelectedItem();
             searchText = searchText.trim();
             String[] listText = searchText.split(";");
 
-            /*boolean isListStuds = true;
-            if (listText.length == 1) {
-                if (listText[0].startsWith("2") && listText[0].length() < 8) {
-                    searchInTable(Table.table, listText[0]);
-                }
-                if (listText[0].startsWith("2") && listText[0].length() == 8) {
-                    selectEtu(listText);
-                }
-                else {
-                    searchCourse(listText);
-                }
-
-            } else if (listText.length > 1) {
-                for (String s : listText) {
-                    if ((s.length() != 8) || !(s.startsWith("2"))) {
-                        isListStuds = false;
-                    }
-                }
-                if (isListStuds) {
-                    selectEtu(listText);
-                }
-                else {
-                    searchCourse(listText);
-                }
-            }*/
 
             String[] ligne = searchInTable(Table.table, listText[0]);
             for (int j=1; j<listText.length;j++) {
@@ -71,14 +46,9 @@ public class SearchBarListener extends Application implements ActionListener {
             if(ligne.length == 0 ){
                 searchCourse(listText);
             }
-            else{
-            for(String s : ligne){
-                System.out.println(s);
-            }
-
-            if (getPath().endsWith(".xml")) {
+            else if (getPath().endsWith(".xml")) {
                 selectEtu(ligne);
-            }}
+            }
 
         } catch (Exception ioException) {
             ioException.printStackTrace();
