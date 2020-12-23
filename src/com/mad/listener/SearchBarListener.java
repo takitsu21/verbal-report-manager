@@ -33,7 +33,6 @@ public class SearchBarListener extends Application implements ActionListener {
                     selectEtu(listText);
                 }
                 else {
-                    System.out.println("ici");
                     searchCourse(listText);
                 }
 
@@ -47,11 +46,8 @@ public class SearchBarListener extends Application implements ActionListener {
                     selectEtu(listText);
                 }
                 else {
-                    System.out.println("ici");
                     searchCourse(listText);
                 }
-                //searchCourse(searchBarText);
-                //searchInTable(Table.table, searchText);
             }
 
         } catch (Exception ioException) {
