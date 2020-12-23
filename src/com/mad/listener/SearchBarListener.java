@@ -5,10 +5,12 @@ import com.mad.util.Data;
 import com.mad.util.Table;
 import com.mad.util.XmlToCsv;
 import org.w3c.dom.Element;
+import org.xml.sax.SAXException;
 
 import javax.swing.*;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
+import javax.xml.parsers.ParserConfigurationException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -27,6 +29,7 @@ public class SearchBarListener extends Application implements ActionListener {
             String searchText = (String) getSearchBar().getSelectedItem();
             searchText = searchText.trim();
             String[] listText = searchText.split(";");
+            String[] etu;
             boolean isListStuds = true;
             if (listText.length == 1) {
                 if (listText[0].startsWith("2") && listText[0].length() < 8) {
@@ -85,6 +88,7 @@ public class SearchBarListener extends Application implements ActionListener {
         Table.setNewModelTable(Table.table, tableau_final);
     }
 
+
     public static void selectEtu(String[] etu) {
         List<Element> listStudents = Data.getChildren(Data.root, "student");
         List<Element> listCourses = Data.getChildren(Data.root, "course");
@@ -102,21 +106,13 @@ public class SearchBarListener extends Application implements ActionListener {
 
                     List<Element> cours = Data.getChildren(studs, "grade");
 
-                    data[j][0] = XmlToCsv.read(studs, "identifier");
-                    data[j][1] = XmlToCsv.read(studs, "name");
-                    data[j][2] = XmlToCsv.read(studs, "surname");
-                    data[j][3] = Data.dataArray[j][3];
-
-                    for(int id = 3;id<data[0].length;id++) {
-                        String code= data[0][id].split(" - ")[0];
-                        data[j][id] = Data.dataArray[j][id];
-                        /*for (Element cour : cours) {
-                            if (code.equals(XmlToCsv.read(cour, "item"))) {
-                                data[j][id] = XmlToCsv.read(cour, "value");
-                                break;
-                            }
-                        }*/
+                    for(int id=0;id<Data.dataArray.length;id++){
+                        if(etu[j - 1].equals(Data.dataArray[id][0])){
+                            data[j]=Data.dataArray[id];
+                            break;
+                        }
                     }
+
 
                     for (Element cour : cours) {
                         String coursTest = XmlToCsv.read(cour, "item");
