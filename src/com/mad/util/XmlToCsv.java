@@ -24,6 +24,10 @@ public class XmlToCsv {
         Data.root = doc.getDocumentElement();
     }
 
+    public XmlToCsv() {
+
+    }
+
     public void convert() {
         List<Element> program = Data.getChildren(Data.root, "program");
         List<String> programid = new ArrayList<>();

@@ -97,6 +97,7 @@ public class OpenFileListener extends Application implements ActionListener {
         getNorthPanel().add(new JPanel());
 //        getNorthPanel().add(new JPanel());
         getNorthPanel().add(getShowTree());
+        Table.table.addFocusListener(new MyFocusListener());
         getNorthPanel().add(EditableComboBoxExemple.searchComboBox);
 //        EditableComboBoxExemple.searchComboBox.set;
 //        getNorthPanel().add(getValidate());
