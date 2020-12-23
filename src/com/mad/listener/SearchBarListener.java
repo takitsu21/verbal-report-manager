@@ -11,6 +11,9 @@ import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.io.Serializable;
+import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -85,53 +88,76 @@ public class SearchBarListener extends Application implements ActionListener {
     public static void selectEtu(String[] etu) {
         List<Element> listStudents = Data.getChildren(Data.root, "student");
         List<Element> listCourses = Data.getChildren(Data.root, "course");
-        int id = 1;
+        //int id = 1;
         String[][] data = new String[1][1];
-        for (String e : etu) {
-//            System.out.println(e);
+        data = new String[etu.length + 1][Data.dataArray[0].length];
+        for (int i=0;i<Data.dataArray[0].length;i++){
+            data[0][i]=Data.dataArray[0][i];
+        }
+
+
+        for (int j=1; j<etu.length+1;j++) {
             for (Element studs : listStudents) {
-                if (e.equalsIgnoreCase(XmlToCsv.read(studs, "identifier"))) {
+                if (etu[j-1].equalsIgnoreCase(XmlToCsv.read(studs, "identifier"))) {
+
                     List<Element> cours = Data.getChildren(studs, "grade");
-                    if (id == 1) {
-                        data = new String[etu.length + 1][cours.size() + 3];
+
+                    data[j][0] = XmlToCsv.read(studs, "identifier");
+                    data[j][1] = XmlToCsv.read(studs, "name");
+                    data[j][2] = XmlToCsv.read(studs, "surname");
+                    data[j][3] = Data.dataArray[j][3];
+
+                    for(int id = 3;id<data[0].length;id++) {
+                        String code= data[0][id].split(" - ")[0];
+                        data[j][id] = Data.dataArray[j][id];
+                        /*for (Element cour : cours) {
+                            if (code.equals(XmlToCsv.read(cour, "item"))) {
+                                data[j][id] = XmlToCsv.read(cour, "value");
+                                break;
+                            }
+                        }*/
                     }
 
-                    data[0][0] = "N° Étudiant";
-                    data[0][1] = "Nom";
-                    data[0][2] = "Prénom";
-                    for (int i = 3; i < cours.size() + 3; i++) {
-                        String item = XmlToCsv.read(cours.get(i - 3), "item");
-                        String courseName = XmlToCsv.read(XmlToCsv.findCourseByCode(listCourses, XmlToCsv.read(cours.get(i - 3), "item")), "name");
-                        data[0][i] = String.format("%s - %s", item, courseName);
+                    for (Element cour : cours) {
+                        String coursTest = XmlToCsv.read(cour, "item");
+                        int trouver = 0;
+                        for (int m = 3; m < data[0].length; m++) {
+                            if (coursTest.equals(data[0][m].split(" - ")[0])) {
+                                trouver = 1;
+                                break;
+                            }
+                        }
+                        if (trouver == 0) {
+                            for (int i=0;i<data.length;i++) {
+                                data[i] = Arrays.copyOf(data[i], data[i].length + 1);
+                            }
+                            for (Element element : listCourses) {
+                                if (coursTest.equals(XmlToCsv.read(element, "identifier"))) {
+                                    data[0][data[0].length - 1] = coursTest + " - " + XmlToCsv.read(element, "name");
+                                    break;
+                                }
+                            }
+
+                            data[j][data[0].length - 1] = XmlToCsv.read(cour, "value");
+                            System.out.println(data[0][data[0].length - 1]);
+                        }
                     }
 
-                    data[id][0] = XmlToCsv.read(studs, "identifier");
-                    data[id][1] = XmlToCsv.read(studs, "name");
-                    data[id][2] = XmlToCsv.read(studs, "surname");
-                    int j = 3;
-                    for (Element c : cours) {
-                        data[id][j] = XmlToCsv.read(c, "value");
-                        j++;
-                    }
-
-                    if (id == etu.length) {
-                        Table.setNewModelTable(Table.table, data);
-                    }
-                    id++;
 
                     break;
 
                 }
             }
         }
+        Table.setNewModelTable(Table.table, data);
     }
 
 
-    private static boolean searchInTable(JTable table, String searchText) {
-        if (searchText == null) {
-            return false;
-        }
-        int beforeFilterRowCount = table.getRowCount();
+
+    private static String[] searchInTable(JTable table, String searchText) {
+        String [] num = null;
+
+
         RowSorter<? extends TableModel> rs = table.getRowSorter();
         if (rs == null) {
             table.setAutoCreateRowSorter(true);
@@ -142,8 +168,16 @@ public class SearchBarListener extends Application implements ActionListener {
             rowSorter.setRowFilter(null);
         } else {
             rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + Pattern.quote(searchText)));
+            //System.out.println(rowSorter.getModel().getValueAt(0,1));
+            num = new String[table.getRowCount()];
+
+            for(int row = 0; row < table.getRowCount(); row++) {
+                num[row] = (String) table.getModel().getValueAt(table.convertRowIndexToModel(row), 0);
+            }
+
         }
-        int afterFilterRowCount = table.getRowCount();
-        return afterFilterRowCount != 0 && afterFilterRowCount != beforeFilterRowCount;
+
+
+        return num;
     }
 }
