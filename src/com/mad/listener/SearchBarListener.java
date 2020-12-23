@@ -5,6 +5,7 @@ import com.mad.util.Data;
 import com.mad.util.Table;
 import com.mad.util.XmlToCsv;
 import org.w3c.dom.Element;
+
 import javax.swing.*;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
@@ -33,7 +34,6 @@ public class SearchBarListener extends Application implements ActionListener {
             ioException.printStackTrace();
         }
     }
-
 
 
     private void searchCourse(String searchBarText) {
@@ -65,7 +65,7 @@ public class SearchBarListener extends Application implements ActionListener {
 
     public static void selectEtu(String[] etu) {
         List<Element> listStudents = Data.getChildren(Data.root, "student");
-        List<Element> listCourses = Data.getChildren(Data.root,"course");
+        List<Element> listCourses = Data.getChildren(Data.root, "course");
         int id = 1;
         String[][] data = new String[1][1];
         for (String e : etu) {
@@ -82,8 +82,8 @@ public class SearchBarListener extends Application implements ActionListener {
                     data[0][2] = "Prénom";
                     for (int i = 3; i < cours.size() + 3; i++) {
                         String item = XmlToCsv.read(cours.get(i - 3), "item");
-                        String courseName =XmlToCsv.read(XmlToCsv.findCourseByCode(listCourses,XmlToCsv.read(cours.get(i - 3), "item")),"name") ;
-                        data[0][i] = String.format("%s - %s",item,courseName);//XmlToCsv.read(cours.get(i - 3), "item");
+                        String courseName = XmlToCsv.read(XmlToCsv.findCourseByCode(listCourses, XmlToCsv.read(cours.get(i - 3), "item")), "name");
+                        data[0][i] = String.format("%s - %s", item, courseName);
                     }
 
                     data[id][0] = XmlToCsv.read(studs, "identifier");
@@ -125,6 +125,6 @@ public class SearchBarListener extends Application implements ActionListener {
             rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + Pattern.quote(searchText)));
         }
         int afterFilterRowCount = table.getRowCount();
-        return afterFilterRowCount!=0 && afterFilterRowCount != beforeFilterRowCount;
+        return afterFilterRowCount != 0 && afterFilterRowCount != beforeFilterRowCount;
     }
 }
