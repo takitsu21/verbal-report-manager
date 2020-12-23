@@ -7,6 +7,8 @@ import com.mad.util.Table;
 import com.mad.util.XmlToCsv;
 
 import javax.swing.*;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.filechooser.FileSystemView;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -29,7 +31,10 @@ public class OpenFileListener extends Application implements ActionListener {
         setPath(file.getPath());
 
         try {
-            setContent(getFrame().getContentPane());
+            if (getContent() == null) {
+                setContent(getFrame().getContentPane());
+            }
+
             if (getPath().endsWith(".csv")) {
                 if (getComboBox().getItemCount() > 0) {
                     getNorthPanel().remove(getComboBox());
@@ -54,6 +59,7 @@ public class OpenFileListener extends Application implements ActionListener {
                     getComboBox().addActionListener(new ComboBoxListener());
                     getNorthPanel().add(getComboBox());
                 }
+                Table.table.getModel().addTableModelListener(new TableChangedListener());
             }
             if (getResetTable() == null && getShowSelectedLines() == null && getSearchBar() == null) {
                 initComponents();
@@ -97,8 +103,11 @@ public class OpenFileListener extends Application implements ActionListener {
         getNorthPanel().add(new JPanel());
 //        getNorthPanel().add(new JPanel());
         getNorthPanel().add(getShowTree());
-        Table.table.addFocusListener(new MyFocusListener());
+//        Table.table.addFocusListener(new MyFocusListener());
+//        Table.table.getModel().addTableModelListener(new TableChangedListener());
         getNorthPanel().add(EditableComboBoxExemple.searchComboBox);
+        Table.table.getModel().addTableModelListener(new TableChangedListener());
+
 //        EditableComboBoxExemple.searchComboBox.set;
 //        getNorthPanel().add(getValidate());
 //        getNorthPanel().add(getSearchBar());

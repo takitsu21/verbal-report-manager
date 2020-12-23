@@ -15,13 +15,19 @@ import java.util.List;
 
 public class XmlToCsv {
 
-    public XmlToCsv(String path_data) throws ParserConfigurationException, IOException, SAXException {
-        File file = new File(path_data);
-        DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-        Document doc = dBuilder.parse(file); // ouverture et lecture du fichier XML
-        doc.getDocumentElement().normalize(); // normalise le contenu du fichier, opération très conseillée
-        Data.root = doc.getDocumentElement();
+    public XmlToCsv(String path_data){
+        try {
+            File file = new File(path_data);
+            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+            Data.doc = dBuilder.parse(file); // ouverture et lecture du fichier XML
+            Data.doc.getDocumentElement().normalize(); // normalise le contenu du fichier, opération très conseillée
+            Data.root = Data.doc.getDocumentElement();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     public XmlToCsv() {
