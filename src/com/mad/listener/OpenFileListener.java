@@ -73,6 +73,9 @@ public class OpenFileListener extends Application implements ActionListener {
         setResetTable(new JButton("Remise à zéro du tableau"));
         setShowSelectedLines(new JButton("Afficher ligne selectionné"));
         setValidate(new JButton("Rechercher"));
+        setShowHierarchicTree(new JTree());
+        setShowTree(new JButton("Vue hiérarchisé"));
+
         Table.table.getSelectionModel().addListSelectionListener(new EnableButtonsRowsListener());
         EditableComboBoxExemple editableComboBox = new EditableComboBoxExemple();
 
@@ -84,6 +87,7 @@ public class OpenFileListener extends Application implements ActionListener {
         getResetTable().addActionListener(new ResetTableListener());
         getShowSelectedLines().addActionListener(new SelectRowsListener());
         getValidate().addActionListener(new SearchBarListener());
+        getShowTree().addActionListener(new HierarchicalListener());
 
         getSouthPanel().add(getResetTable());
         getSouthPanel().add(getShowSelectedLines());
@@ -91,8 +95,8 @@ public class OpenFileListener extends Application implements ActionListener {
         getNorthPanel().add(new JPanel());
         getNorthPanel().add(new JPanel());
         getNorthPanel().add(new JPanel());
-        getNorthPanel().add(new JPanel());
-
+//        getNorthPanel().add(new JPanel());
+        getNorthPanel().add(getShowTree());
         getNorthPanel().add(EditableComboBoxExemple.searchComboBox);
 //        EditableComboBoxExemple.searchComboBox.set;
 //        getNorthPanel().add(getValidate());

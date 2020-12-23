@@ -68,10 +68,8 @@ public class SearchBarListener extends Application implements ActionListener {
         Table.setNewModelTable(Table.table, tableau_final);
     }
 
-    public static void selectEtu(String[] etu, String path) throws IOException, SAXException, ParserConfigurationException {
-        XmlToCsv xml = new XmlToCsv(path);
-        List<Element> courses = Data.getChildren(xml.getRoot(), "course");
-        List<Element> listStudents = Data.getChildren(xml.getRoot(), "student");
+    public static void selectEtu(String[] etu, String path) {
+        List<Element> listStudents = Data.getChildren(Data.root, "student");
         int id = 1;
         String[][] data = new String[1][1];
         for (String e : etu) {

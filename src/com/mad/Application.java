@@ -20,9 +20,27 @@ public abstract class Application extends JPanel {
     private static boolean isFirstFile = true;
     private static JComboBox searchBar;
     private static JLabel dragAndDrop;
+    private static JTree showHierarchicTree;
+    private static JButton showTree;
 
 
     public Application() {
+    }
+
+    public static JButton getShowTree() {
+        return showTree;
+    }
+
+    public static void setShowTree(JButton showTree) {
+        Application.showTree = showTree;
+    }
+
+    public static JTree getShowHierarchicTree() {
+        return showHierarchicTree;
+    }
+
+    public static void setShowHierarchicTree(JTree showHierarchicTree) {
+        Application.showHierarchicTree = showHierarchicTree;
     }
 
     public static JLabel getDragAndDrop() {

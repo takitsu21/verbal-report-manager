@@ -11,18 +11,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
 
 public class XmlToCsv {
-    private final Element root;
-
-    public HashMap<String, String> dicoData = new HashMap<>();
-
-    public Element getRoot() {
-        return root;
-    }
-
 
     public XmlToCsv(String path_data) throws ParserConfigurationException, IOException, SAXException {
         File file = new File(path_data);
@@ -30,14 +21,14 @@ public class XmlToCsv {
         DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
         Document doc = dBuilder.parse(file); // ouverture et lecture du fichier XML
         doc.getDocumentElement().normalize(); // normalise le contenu du fichier, opération très conseillée
-        this.root = doc.getDocumentElement(); // la racine de l'arbre XML
+        Data.root = doc.getDocumentElement();
     }
 
     public void convert() {
-        List<Element> program = Data.getChildren(root, "program");
+        List<Element> program = Data.getChildren(Data.root, "program");
         List<String> programid = new ArrayList<>();
         List<String> data = new ArrayList<>();
-        List<Element> listCourses = Data.getChildren(root, "course");
+        List<Element> listCourses = Data.getChildren(Data.root, "course");
 
         List<List<String>> listCoursesProg = new ArrayList<>();
 
@@ -191,7 +182,7 @@ public class XmlToCsv {
     }
 
     private List<List<Element>> listStudent(List<String> programid) {
-        List<Element> listStudents = Data.getChildren(root, "student");
+        List<Element> listStudents = Data.getChildren(Data.root, "student");
 
         List<List<Element>> listStudentsFinal = new ArrayList<>();
         for (String s : programid) {
@@ -365,5 +356,17 @@ public class XmlToCsv {
         ecartType = Math.sqrt(variance);
 
         return Double.parseDouble(String.format("%.3f", ecartType).replace(",", "."));
+    }
+
+    public static Element findCourseByCode(List<Element> courses, String item) {
+        Element courseRet = null;
+        for (Element course : courses) {
+//            System.out.printf("%s, %s", read(course, "identifier"), item);
+            if (read(course, "identifier").equalsIgnoreCase(item)) {
+                courseRet = course;
+                break;
+            }
+        }
+        return courseRet;
     }
 }

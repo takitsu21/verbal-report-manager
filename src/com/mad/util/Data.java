@@ -17,6 +17,7 @@ import java.util.Map;
 public class Data {
     public static Map<String, String> dataSet = new HashMap<>();
     public static String[][] dataArray = null;
+    public static Element root;
 
     public static void setDataSet(Map<String, String> dataSet) {
         Data.dataSet = dataSet;
