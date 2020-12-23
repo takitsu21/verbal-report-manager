@@ -29,8 +29,8 @@ public class SearchBarListener extends Application implements ActionListener {
             String searchText = (String) getSearchBar().getSelectedItem();
             searchText = searchText.trim();
             String[] listText = searchText.split(";");
-            String[] etu;
-            boolean isListStuds = true;
+
+            /*boolean isListStuds = true;
             if (listText.length == 1) {
                 if (listText[0].startsWith("2") && listText[0].length() < 8) {
                     searchInTable(Table.table, listText[0]);
@@ -54,6 +54,23 @@ public class SearchBarListener extends Application implements ActionListener {
                 else {
                     searchCourse(listText);
                 }
+            }*/
+
+            String[] ligne = searchInTable(Table.table, listText[0]);
+            for (int j=1; j<listText.length;j++) {
+                String[] etu = searchInTable(Table.table, listText[j]);
+
+                ligne = Arrays.copyOf(ligne,(ligne.length+etu.length));
+                for (int i=0;i<etu.length;i++){
+                    ligne[ligne.length+i-1]=etu[i];
+                }
+
+            }
+
+            System.out.println(ligne.length);
+
+            if (getPath().endsWith(".xml")) {
+                selectEtu(ligne);
             }
 
         } catch (Exception ioException) {
@@ -135,7 +152,6 @@ public class SearchBarListener extends Application implements ActionListener {
                             }
 
                             data[j][data[0].length - 1] = XmlToCsv.read(cour, "value");
-                            System.out.println(data[0][data[0].length - 1]);
                         }
                     }
 
