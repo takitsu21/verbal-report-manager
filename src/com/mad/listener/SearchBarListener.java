@@ -5,19 +5,13 @@ import com.mad.util.Data;
 import com.mad.util.Table;
 import com.mad.util.XmlToCsv;
 import org.w3c.dom.Element;
-import org.xml.sax.SAXException;
-
 import javax.swing.*;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
-import javax.xml.parsers.ParserConfigurationException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Pattern;
-import java.util.stream.Stream;
 
 public class SearchBarListener extends Application implements ActionListener {
 
@@ -30,7 +24,7 @@ public class SearchBarListener extends Application implements ActionListener {
             searchText = searchText.trim();
 
             if (searchText.length() > 0) {
-                selectEtu(searchText.split(";"), getPath());
+                selectEtu(searchText.split(";"));
                 //searchCourse(searchBarText);
                 //searchInTable(Table.table, searchText);
             }
@@ -69,7 +63,7 @@ public class SearchBarListener extends Application implements ActionListener {
         Table.setNewModelTable(Table.table, tableau_final);
     }
 
-    public static void selectEtu(String[] etu, String path) {
+    public static void selectEtu(String[] etu) {
         List<Element> listStudents = Data.getChildren(Data.root, "student");
         List<Element> listCourses = Data.getChildren(Data.root,"course");
         int id = 1;
