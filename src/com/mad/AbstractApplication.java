@@ -15,6 +15,7 @@ public abstract class AbstractApplication extends JPanel {
     protected static JButton showSelectedLines;
     protected static JButton resetTable;
     protected static JButton showTree;
+    protected static JButton addCourse;
     protected static Table displayCsv;
     protected static Container content;
     protected static JComboBox<String> comboBox = new JComboBox<>();
@@ -27,6 +28,14 @@ public abstract class AbstractApplication extends JPanel {
 
 
     public AbstractApplication() {
+    }
+
+    public static JButton getAddCourse() {
+        return addCourse;
+    }
+
+    public static void setAddCourse(JButton addCourse) {
+        AbstractApplication.addCourse = addCourse;
     }
 
     public static String getPath() {
