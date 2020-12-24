@@ -8,6 +8,7 @@ import com.mad.util.XmlWriter;
 import javax.swing.*;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.swing.event.TableModelListener;
 import java.awt.*;
 import java.awt.event.*;
 
@@ -62,7 +63,11 @@ public class GUI {
 
         if (Application.getDisplayCsv().Jscroll != null) {
             Application.getContent().add(Application.getDisplayCsv().Jscroll, BorderLayout.CENTER);
+            //Table.table.getModel().addTableModelListener((TableModelListener) new EnableButtonsRowsListener());
+
         }
+
+
 
         Application.getContent().add(Application.getNorthPanel(), BorderLayout.NORTH);
         Application.getContent().add(Application.getSouthPanel(), BorderLayout.SOUTH);
