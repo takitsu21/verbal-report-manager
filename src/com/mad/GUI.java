@@ -4,6 +4,7 @@ import com.mad.listener.*;
 import com.mad.util.Table;
 
 import javax.swing.*;
+import javax.swing.event.TableModelListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -59,7 +60,11 @@ public class GUI {
 
         if (Application.getDisplayCsv().Jscroll != null) {
             Application.getContent().add(Application.getDisplayCsv().Jscroll, BorderLayout.CENTER);
+            //Table.table.getModel().addTableModelListener((TableModelListener) new EnableButtonsRowsListener());
+
         }
+
+
 
         Application.getContent().add(Application.getNorthPanel(), BorderLayout.NORTH);
         Application.getContent().add(Application.getSouthPanel(), BorderLayout.SOUTH);
