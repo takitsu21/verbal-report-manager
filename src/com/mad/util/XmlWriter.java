@@ -45,7 +45,7 @@ public class XmlWriter {
         }
     }
 
-    public Node getStudent(String studentId) {
+    public static Node getStudent(String studentId) {
         NodeList nodeList = Data.root.getElementsByTagName("student");
         for (int i = 0; i < nodeList.getLength(); i++) {
             Node node = nodeList.item(i);
@@ -60,7 +60,7 @@ public class XmlWriter {
         throw new StudentNotFoundException(String.format("%s N'a pas été trouvé", studentId));
     }
 
-    public boolean deleteStudent(String studentId) {
+    public static boolean deleteStudent(String studentId) {
         try {
             Data.root.removeChild(getStudent(studentId));
             return true;
@@ -237,7 +237,7 @@ public class XmlWriter {
         return program;
     }
 
-    public boolean save(String dst) {
+    public static boolean save(String dst) {
         System.out.printf("saving at %s", dst);
         try {
             Transformer transformer = TransformerFactory.newInstance().newTransformer();

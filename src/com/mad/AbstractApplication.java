@@ -13,6 +13,8 @@ public abstract class AbstractApplication extends JPanel {
     protected static JPanel southPanel;
     protected static JPanel northPanel;
     protected static JButton showSelectedLines;
+    protected static JButton deleteLines;
+    protected static JButton addStudent;
     protected static JButton resetTable;
     protected static JButton showTree;
     protected static Table displayCsv;
@@ -93,6 +95,21 @@ public abstract class AbstractApplication extends JPanel {
         AbstractApplication.resetTable = resetTable;
     }
 
+    public static JButton getDeleteLines() {
+        return deleteLines;
+    }
+
+    public static void setDeleteLines(JButton deleteLines) {
+        AbstractApplication.deleteLines = deleteLines;
+    }
+
+    public static JButton getAddStudent() {
+        return addStudent;
+    }
+
+    public static void setAddStudent(JButton addStudent) {
+        AbstractApplication.addStudent = addStudent;
+    }
 
     public static JFrame getFrame() {
         return frame;
