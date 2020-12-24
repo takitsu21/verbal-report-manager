@@ -22,11 +22,20 @@ public abstract class AbstractApplication extends JPanel {
     protected static JComboBox<String> searchComboBox;
     protected static JLabel dragAndDrop;
     protected static JTree showHierarchicTree;
+    protected static JButton addProgramButton;
 
     protected static XmlWriter xmlEditor = new XmlWriter();
 
 
     public AbstractApplication() {
+    }
+
+    public static JButton getAddProgramButton() {
+        return addProgramButton;
+    }
+
+    public static void setAddProgramButton(JButton addProgramButton) {
+        AbstractApplication.addProgramButton = addProgramButton;
     }
 
     public static String getPath() {

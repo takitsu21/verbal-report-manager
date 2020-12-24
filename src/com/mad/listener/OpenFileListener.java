@@ -113,6 +113,9 @@ public class OpenFileListener extends AbstractApplication implements ActionListe
 //        getNorthPanel().add(new JPanel());
 //        getNorthPanel().add(new JPanel());
 //        getNorthPanel().add(new JPanel());
+        setAddProgramButton(new JButton("Ajouter un programme"));
+        getAddProgramButton().addActionListener(new AddProgramListener());
+        getSouthPanel().add(getAddProgramButton());
 
 
         getNorthPanel().add(getSearchComboBox());
