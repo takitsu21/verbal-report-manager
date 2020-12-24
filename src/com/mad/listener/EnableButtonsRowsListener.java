@@ -1,16 +1,12 @@
 package com.mad.listener;
 
-import com.mad.Application;
-import com.mad.util.Data;
-import com.mad.util.Table;
-import com.mad.util.XmlWriter;
+import com.mad.AbstractApplication;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import java.util.Arrays;
 
-public class EnableButtonsRowsListener extends Application implements ListSelectionListener {
+public class EnableButtonsRowsListener extends AbstractApplication implements ListSelectionListener {
     @Override
     public void valueChanged(ListSelectionEvent e) {
         SwingUtilities.invokeLater(

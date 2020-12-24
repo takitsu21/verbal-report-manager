@@ -1,6 +1,6 @@
 package com.mad.listener;
 
-import com.mad.Application;
+import com.mad.AbstractApplication;
 
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
@@ -8,7 +8,7 @@ import java.awt.dnd.*;
 import java.io.File;
 import java.util.List;
 
-public class DragDropListener extends Application implements DropTargetListener {
+public class DragDropListener extends AbstractApplication implements DropTargetListener {
 
     @Override
     public void dragEnter(DropTargetDragEvent dtde) {

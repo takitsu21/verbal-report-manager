@@ -1,13 +1,13 @@
 package com.mad.listener;
 
-import com.mad.Application;
+import com.mad.AbstractApplication;
 import com.mad.util.Data;
 import com.mad.util.Table;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class SelectRowsListener extends Application implements ActionListener {
+public class SelectRowsListener extends AbstractApplication implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         int[] selectedRows = getDisplayCsv().getSelectedRows();
@@ -19,7 +19,7 @@ public class SelectRowsListener extends Application implements ActionListener {
                 newModel[acc++] = Data.dataArray[row + 1];
             }
 
-            Table.setNewModelTable(getDisplayCsv().table, newModel);
+            Table.setNewModelTable(Table.table, newModel);
             Table.table.getModel().addTableModelListener(new TableChangedListener());
         }
     }

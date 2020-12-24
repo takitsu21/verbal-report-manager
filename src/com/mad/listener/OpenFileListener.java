@@ -1,21 +1,18 @@
 package com.mad.listener;
 
-import com.mad.Application;
-import com.mad.EditableComboBoxExemple;
+import com.mad.AbstractApplication;
 import com.mad.util.Data;
 import com.mad.util.Table;
 import com.mad.util.XmlToCsv;
 
 import javax.swing.*;
-import javax.swing.event.TableModelEvent;
-import javax.swing.event.TableModelListener;
 import javax.swing.filechooser.FileSystemView;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 
-public class OpenFileListener extends Application implements ActionListener {
+public class OpenFileListener extends AbstractApplication implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
@@ -29,6 +26,7 @@ public class OpenFileListener extends Application implements ActionListener {
 
     public static void openFile(File file) {
         setPath(file.getPath());
+
 
         try {
             if (getContent() == null) {
@@ -61,7 +59,7 @@ public class OpenFileListener extends Application implements ActionListener {
                 }
                 Table.table.getModel().addTableModelListener(new TableChangedListener());
             }
-            if (getResetTable() == null && getShowSelectedLines() == null && getSearchBar() == null) {
+            if (getResetTable() == null && getShowSelectedLines() == null && getSearchComboBox() == null) {
                 initComponents();
             }
             clearJTables();
@@ -78,40 +76,43 @@ public class OpenFileListener extends Application implements ActionListener {
     private static void initComponents() {
         setResetTable(new JButton("Remise à zéro du tableau"));
         setShowSelectedLines(new JButton("Afficher ligne selectionné"));
-        setValidate(new JButton("Rechercher"));
         setShowHierarchicTree(new JTree());
         setShowTree(new JButton("Vue hiérarchisé"));
 
-        Table.table.getSelectionModel().addListSelectionListener(new EnableButtonsRowsListener());
-        EditableComboBoxExemple editableComboBox = new EditableComboBoxExemple();
+        String[] blocs = new String[Data.dataArray[0].length - 3];
 
-        getShowSelectedLines().setEnabled(false);
+        if (blocs.length >= 0) System.arraycopy(Data.dataArray[0], 3, blocs, 0, blocs.length);
 
-        Dimension d = getSearchBar().getPreferredSize();
-        getSearchBar().setPreferredSize(new Dimension(150, (int) d.getHeight()));
+        setSearchComboBox(new JComboBox<>(blocs));
+        getSearchComboBox().setEditable(true);
+        getSearchComboBox().addActionListener(new SearchBarListener());
+
+
+        Dimension d = getSearchComboBox().getPreferredSize();
+        getSearchComboBox().setPreferredSize(new Dimension(150, (int) d.getHeight()));
 
         getResetTable().addActionListener(new ResetTableListener());
         getShowSelectedLines().addActionListener(new SelectRowsListener());
-        getValidate().addActionListener(new SearchBarListener());
         getShowTree().addActionListener(new HierarchicalListener());
+        Table.table.getSelectionModel().addListSelectionListener(new EnableButtonsRowsListener());
+
 
         getSouthPanel().add(getResetTable());
         getSouthPanel().add(getShowSelectedLines());
-        getNorthPanel().setLayout(new GridLayout(1,8,3,0));
+        getNorthPanel().setLayout(new GridLayout(1, 8, 3, 0));
         getNorthPanel().add(new JPanel());
         getNorthPanel().add(new JPanel());
         getNorthPanel().add(new JPanel());
 //        getNorthPanel().add(new JPanel());
         getNorthPanel().add(getShowTree());
-//        Table.table.addFocusListener(new MyFocusListener());
-//        Table.table.getModel().addTableModelListener(new TableChangedListener());
-        getNorthPanel().add(EditableComboBoxExemple.searchComboBox);
-        Table.table.getModel().addTableModelListener(new TableChangedListener());
-        getDragAndDrop().setVisible(false);
-//        EditableComboBoxExemple.searchComboBox.set;
-//        getNorthPanel().add(getValidate());
-//        getNorthPanel().add(getSearchBar());
 
+
+
+        getNorthPanel().add(getSearchComboBox());
+        Table.table.getModel().addTableModelListener(new TableChangedListener());
+        getShowSelectedLines().setEnabled(false);
+        getDragAndDrop().setVisible(false);
+        Table.table.setAutoCreateRowSorter(true);
     }
 
     private static void resetComboBox() {

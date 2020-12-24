@@ -1,6 +1,6 @@
 package com.mad.listener;
 
-import com.mad.Application;
+import com.mad.AbstractApplication;
 import com.mad.util.Data;
 import com.mad.util.XmlToCsv;
 import org.w3c.dom.Element;
@@ -11,7 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
-public class HierarchicalListener extends Application implements ActionListener {
+public class HierarchicalListener extends AbstractApplication implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         JFrame tmp = new JFrame("Vue hiérarchisé");
@@ -28,7 +28,7 @@ public class HierarchicalListener extends Application implements ActionListener 
             }
         }
         DefaultMutableTreeNode programTree = new DefaultMutableTreeNode(String.format("%s - %s",
-                XmlToCsv.read(currentProgram, "identifier"), XmlToCsv.read(currentProgram, "name")));
+                comboBox.getSelectedItem(), XmlToCsv.read(currentProgram, "name")));
         List<Element> courses = Data.getChildren(Data.root, "course");
         List<Element> options = Data.getChildren(currentProgram, "option");
         List<Element> composites = Data.getChildren(currentProgram, "composite");

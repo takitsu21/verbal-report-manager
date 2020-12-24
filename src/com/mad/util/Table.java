@@ -1,19 +1,12 @@
 package com.mad.util;
 
-import org.w3c.dom.Element;
-import org.xml.sax.SAXException;
-
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
-import javax.swing.table.TableRowSorter;
-import javax.xml.parsers.ParserConfigurationException;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.List;
-import java.util.regex.Pattern;
 
 public class Table {
     private StringBuilder csv = new StringBuilder();
@@ -44,7 +37,7 @@ public class Table {
         return tableau;
     }
 
-    public void TableXML(String path, String data) throws IOException, SAXException, ParserConfigurationException {
+    public void TableXML(String path, String data) {
         XmlToCsv xmlConverter = new XmlToCsv(path);
         xmlConverter.convert();
         setCsv(data);
@@ -75,7 +68,7 @@ public class Table {
 
         String[] column = line.split("\",\"");
         column[0] = column[0].replace("\"", "");
-        column[column.length-1] = column[column.length-1].replace("\"", "");
+        column[column.length - 1] = column[column.length - 1].replace("\"", "");
 
         String[][] data = new String[nbline - 2][column.length];
         int i = 0;
@@ -100,8 +93,7 @@ public class Table {
 
         String[][] tableau = new String[data.length + 1][];
         tableau[0] = column;
-        for (int j = 0; j < data.length; j++)
-            tableau[j + 1] = data[j];
+        System.arraycopy(data, 0, tableau, 1, data.length);
 
         Data.setDataArray(tableau);
 
@@ -119,7 +111,6 @@ public class Table {
     public int[] getSelectedRows() {
         return table.getSelectedRows();
     }
-
 
 
 }

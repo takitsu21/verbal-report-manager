@@ -4,103 +4,29 @@ import com.mad.util.Table;
 import com.mad.util.XmlWriter;
 
 import javax.swing.*;
-import javax.swing.text.Document;
 import java.awt.*;
 
 
-public abstract class Application extends JPanel {
-    private static String path;
-    private static JFrame frame;
-    private static JPanel southPanel;
-    private static JPanel northPanel;
-    private static JButton showSelectedLines;
-    private static JButton resetTable;
-    private static JButton validate;
-    private static Table displayCsv;
-    private static Container content;
-    private static JComboBox<String> comboBox = new JComboBox<>();
-    private static boolean isFirstFile = true;
-    private static JComboBox searchBar;
-    private static JLabel dragAndDrop;
-    private static JTree showHierarchicTree;
-    private static JButton showTree;
-    private static XmlWriter xmlEditor = new XmlWriter();
-    private static Document doc;
+public abstract class AbstractApplication extends JPanel {
+    protected static String path;
+    protected static JFrame frame;
+    protected static JPanel southPanel;
+    protected static JPanel northPanel;
+    protected static JButton showSelectedLines;
+    protected static JButton resetTable;
+    protected static JButton showTree;
+    protected static Table displayCsv;
+    protected static Container content;
+    protected static JComboBox<String> comboBox = new JComboBox<>();
+    protected static boolean isFirstFile = true;
+    protected static JComboBox<String> searchComboBox;
+    protected static JLabel dragAndDrop;
+    protected static JTree showHierarchicTree;
+
+    protected static XmlWriter xmlEditor = new XmlWriter();
 
 
-    public Application() {
-    }
-
-    public static Document getDoc() {
-        return doc;
-    }
-
-    public static void setDoc(Document doc) {
-        Application.doc = doc;
-    }
-
-    public static XmlWriter getXmlEditor() {
-        return xmlEditor;
-    }
-
-    public static void setXmlEditor(XmlWriter xmlEditor) {
-        Application.xmlEditor = xmlEditor;
-    }
-
-    public static JButton getShowTree() {
-        return showTree;
-    }
-
-    public static void setShowTree(JButton showTree) {
-        Application.showTree = showTree;
-    }
-
-    public static JTree getShowHierarchicTree() {
-        return showHierarchicTree;
-    }
-
-    public static void setShowHierarchicTree(JTree showHierarchicTree) {
-        Application.showHierarchicTree = showHierarchicTree;
-    }
-
-    public static JLabel getDragAndDrop() {
-        return dragAndDrop;
-    }
-
-    public static void setDragAndDrop(JLabel dragAndDrop) {
-        Application.dragAndDrop = dragAndDrop;
-    }
-
-    public static JButton getValidate() {
-        return validate;
-    }
-
-    public static void setValidate(JButton validate) {
-        Application.validate = validate;
-    }
-
-    public static JButton getShowSelectedLines() {
-        return showSelectedLines;
-    }
-
-    public static void setShowSelectedLines(JButton showSelectedLines) {
-        Application.showSelectedLines = showSelectedLines;
-    }
-
-    public static JButton getResetTable() {
-        return resetTable;
-    }
-
-    public static void setResetTable(JButton resetTable) {
-        Application.resetTable = resetTable;
-    }
-
-    public static JComboBox getSearchBar() {
-        return searchBar;
-    }
-
-    public static void setSearchBar(JComboBox searchBar) {
-        Application.searchBar = searchBar;
+    public AbstractApplication() {
     }
 
     public static String getPath() {
@@ -108,15 +34,72 @@ public abstract class Application extends JPanel {
     }
 
     public static void setPath(String path) {
-        Application.path = path;
+        AbstractApplication.path = path;
     }
+
+    public static JComboBox<String> getSearchComboBox() {
+        return searchComboBox;
+    }
+
+    public static void setSearchComboBox(JComboBox<String> searchComboBox) {
+        AbstractApplication.searchComboBox = searchComboBox;
+    }
+
+    public static XmlWriter getXmlEditor() {
+        return xmlEditor;
+    }
+
+    public static void setXmlEditor(XmlWriter xmlEditor) {
+        AbstractApplication.xmlEditor = xmlEditor;
+    }
+
+    public static JButton getShowTree() {
+        return showTree;
+    }
+
+    public static void setShowTree(JButton showTree) {
+        AbstractApplication.showTree = showTree;
+    }
+
+    public static JTree getShowHierarchicTree() {
+        return showHierarchicTree;
+    }
+
+    public static void setShowHierarchicTree(JTree showHierarchicTree) {
+        AbstractApplication.showHierarchicTree = showHierarchicTree;
+    }
+
+    public static JLabel getDragAndDrop() {
+        return dragAndDrop;
+    }
+
+    public static void setDragAndDrop(JLabel dragAndDrop) {
+        AbstractApplication.dragAndDrop = dragAndDrop;
+    }
+
+    public static JButton getShowSelectedLines() {
+        return showSelectedLines;
+    }
+
+    public static void setShowSelectedLines(JButton showSelectedLines) {
+        AbstractApplication.showSelectedLines = showSelectedLines;
+    }
+
+    public static JButton getResetTable() {
+        return resetTable;
+    }
+
+    public static void setResetTable(JButton resetTable) {
+        AbstractApplication.resetTable = resetTable;
+    }
+
 
     public static JFrame getFrame() {
         return frame;
     }
 
     public static void setFrame(JFrame frame) {
-        Application.frame = frame;
+        AbstractApplication.frame = frame;
     }
 
     public static JPanel getSouthPanel() {
@@ -124,7 +107,7 @@ public abstract class Application extends JPanel {
     }
 
     public static void setSouthPanel(JPanel southPanel) {
-        Application.southPanel = southPanel;
+        AbstractApplication.southPanel = southPanel;
     }
 
     public static JPanel getNorthPanel() {
@@ -132,7 +115,7 @@ public abstract class Application extends JPanel {
     }
 
     public static void setNorthPanel(JPanel northPanel) {
-        Application.northPanel = northPanel;
+        AbstractApplication.northPanel = northPanel;
     }
 
     public static Table getDisplayCsv() {
@@ -140,7 +123,7 @@ public abstract class Application extends JPanel {
     }
 
     public static void setDisplayCsv(Table displayCsv) {
-        Application.displayCsv = displayCsv;
+        AbstractApplication.displayCsv = displayCsv;
     }
 
     public static Container getContent() {
@@ -148,7 +131,7 @@ public abstract class Application extends JPanel {
     }
 
     public static void setContent(Container content) {
-        Application.content = content;
+        AbstractApplication.content = content;
     }
 
     public static JComboBox<String> getComboBox() {
@@ -156,7 +139,7 @@ public abstract class Application extends JPanel {
     }
 
     public static void setComboBox(JComboBox<String> comboBox) {
-        Application.comboBox = comboBox;
+        AbstractApplication.comboBox = comboBox;
     }
 
     public static boolean isIsFirstFile() {
@@ -164,7 +147,7 @@ public abstract class Application extends JPanel {
     }
 
     public static void setIsFirstFile(boolean isFirstFile) {
-        Application.isFirstFile = isFirstFile;
+        AbstractApplication.isFirstFile = isFirstFile;
     }
 
     public static void clearJTables() {

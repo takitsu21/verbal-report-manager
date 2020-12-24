@@ -1,6 +1,6 @@
 package com.mad.listener;
 
-import com.mad.Application;
+import com.mad.AbstractApplication;
 import com.mad.util.Data;
 
 import javax.swing.*;
@@ -10,7 +10,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.Objects;
 
-public class SaveFileListener extends Application implements ActionListener {
+public class SaveFileListener extends AbstractApplication implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         File userDir;

@@ -1,13 +1,13 @@
 package com.mad.listener;
 
-import com.mad.Application;
+import com.mad.AbstractApplication;
 import com.mad.util.Table;
 
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import java.io.File;
 
-public class TableChangedListener extends Application implements TableModelListener {
+public class TableChangedListener extends AbstractApplication implements TableModelListener {
 
     @Override
     public void tableChanged(TableModelEvent e) {
@@ -17,9 +17,6 @@ public class TableChangedListener extends Application implements TableModelListe
             String courseId = String.valueOf(Table.table.getModel().getColumnName(col)).split(" ")[0];
             String newVal = (String) Table.table.getModel().getValueAt(e.getFirstRow(), e.getColumn());
             String numEtu = (String) Table.table.getModel().getValueAt(e.getFirstRow(), 0);
-            System.out.println(newVal);
-            System.out.println((String) Table.table.getModel().getValueAt(e.getLastRow(), e.getColumn()));
-
             updateCell(newVal, numEtu, courseId);
             getXmlEditor().save("./xml-editor.tmp.xml");
             Table.table.getModel().removeTableModelListener(new TableChangedListener());
@@ -38,7 +35,6 @@ public class TableChangedListener extends Application implements TableModelListe
                     }
                 }
             } catch (NumberFormatException exc) {
-                System.out.println(newVal);
                 if (newVal.equalsIgnoreCase("abi") || newVal.equalsIgnoreCase("abj")) {
                     if (!getXmlEditor().modifyCourse(numEtu, courseId, newVal.toUpperCase())) {
                         getXmlEditor().addCourse(numEtu, courseId, newVal.toUpperCase());

@@ -1,6 +1,5 @@
 package com.mad.util;
 
-import com.mad.Application;
 import com.mad.util.exceptions.StudentNotFoundException;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -14,25 +13,6 @@ import java.util.List;
 
 
 public class XmlWriter {
-
-//    public XmlWriter() {
-//        loadXml();
-//    }
-//
-//    private void loadXml() {
-//        try {
-//            File file = new File("./data.xml");
-//            Data.documentBuilderFactory dbFactory = Data.documentBuilderFactory.newInstance();
-//            Data.documentBuilder dBuilder = dbFactory.newData.documentBuilder();
-//            Data.doc = dBuilder.parse(file); // ouverture et lecture du fichier XML
-//            Data.doc.getData.documentElement().normalize(); // normalise le contenu du fichier, opération très conseillée
-//            Data.root = Data.doc.getData.documentElement();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//
-//    }
-
     public static void main(String[] args) {
         try {
             XmlWriter xml = new XmlWriter();

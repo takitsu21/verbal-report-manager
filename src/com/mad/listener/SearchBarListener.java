@@ -1,52 +1,50 @@
 package com.mad.listener;
 
-import com.mad.Application;
+import com.mad.AbstractApplication;
 import com.mad.util.Data;
 import com.mad.util.Table;
 import com.mad.util.XmlToCsv;
 import org.w3c.dom.Element;
-import org.xml.sax.SAXException;
 
 import javax.swing.*;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
-import javax.xml.parsers.ParserConfigurationException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
-import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Pattern;
 
-public class SearchBarListener extends Application implements ActionListener {
+public class SearchBarListener extends AbstractApplication implements ActionListener {
 
 
     @Override
     public void actionPerformed(ActionEvent e) {
         try {
 
-            String searchText = (String) getSearchBar().getSelectedItem();
-            searchText = searchText.trim();
+            String searchText = (String) getSearchComboBox().getSelectedItem();
+            try {
+                searchText = searchText.trim();
+            } catch (NullPointerException exc) {
+                return;
+            }
+
             String[] listText = searchText.split(";");
 
 
             String[] ligne = searchInTable(Table.table, listText[0]);
-            for (int j=1; j<listText.length;j++) {
+            for (int j = 1; j < listText.length; j++) {
                 String[] etu = searchInTable(Table.table, listText[j]);
                 int oldLength = ligne.length;
-                ligne = Arrays.copyOf(ligne,(ligne.length+etu.length));
-                for (int i=0;i<etu.length;i++){
-                    ligne[oldLength+i]=etu[i];
-                }
+                ligne = Arrays.copyOf(ligne, (ligne.length + etu.length));
+                System.arraycopy(etu, 0, ligne, oldLength, etu.length);
 
             }
 
             System.out.println(ligne.length);
-            if(ligne.length == 0 ){
+            if (ligne.length == 0) {
                 searchCourse(listText);
-            }
-            else if (getPath().endsWith(".xml")) {
+            } else if (getPath().endsWith(".xml")) {
                 selectEtu(ligne);
             }
 
@@ -63,9 +61,9 @@ public class SearchBarListener extends Application implements ActionListener {
             for (int j = 0; j < Data.dataArray[0].length; j++) {
                 String currentCheck = Data.dataArray[0][j];
                 String[] splited = currentCheck.split(" - ");   //.map(String::toLowerCase).toArray(String[]::new);
-                if (currentCheck.equals(names[i]) || splited[0].equals(names[i]) || splited[splited.length - 1].equals(names[i])) {
+                if (currentCheck.equalsIgnoreCase(names[i]) || splited[0].equalsIgnoreCase(names[i]) || splited[splited.length - 1].equalsIgnoreCase(names[i])) {
                     for (int k = 0; k < Data.dataArray.length; k++) {
-                        if(! Data.dataArray[k][j].isEmpty()) {
+                        if (!Data.dataArray[k][j].isEmpty()) {
                             tableau_final[k][i + 1] = Data.dataArray[k][j];
                         }
                     }
@@ -86,23 +84,20 @@ public class SearchBarListener extends Application implements ActionListener {
     public static void selectEtu(String[] etu) {
         List<Element> listStudents = Data.getChildren(Data.root, "student");
         List<Element> listCourses = Data.getChildren(Data.root, "course");
-        //int id = 1;
-        String[][] data = new String[1][1];
-        data = new String[etu.length + 1][Data.dataArray[0].length];
-        for (int i=0;i<Data.dataArray[0].length;i++){
-            data[0][i]=Data.dataArray[0][i];
+        String[][] data = new String[etu.length + 1][Data.dataArray[0].length];
+        for (int i = 0; i < Data.dataArray[0].length; i++) {
+            data[0][i] = Data.dataArray[0][i];
         }
 
-
-        for (int j=1; j<etu.length+1;j++) {
+        for (int j = 1; j < etu.length + 1; j++) {
             for (Element studs : listStudents) {
-                if (etu[j-1].equalsIgnoreCase(XmlToCsv.read(studs, "identifier"))) {
+                if (etu[j - 1].equalsIgnoreCase(XmlToCsv.read(studs, "identifier"))) {
 
                     List<Element> cours = Data.getChildren(studs, "grade");
 
-                    for(int id=0;id<Data.dataArray.length;id++){
-                        if(etu[j - 1].equals(Data.dataArray[id][0])){
-                            data[j]=Data.dataArray[id];
+                    for (int id = 0; id < Data.dataArray.length; id++) {
+                        if (etu[j - 1].equals(Data.dataArray[id][0])) {
+                            data[j] = Data.dataArray[id];
                             break;
                         }
                     }
@@ -118,7 +113,7 @@ public class SearchBarListener extends Application implements ActionListener {
                             }
                         }
                         if (trouver == 0) {
-                            for (int i=0;i<data.length;i++) {
+                            for (int i = 0; i < data.length; i++) {
                                 data[i] = Arrays.copyOf(data[i], data[i].length + 1);
                             }
                             for (Element element : listCourses) {
@@ -142,11 +137,8 @@ public class SearchBarListener extends Application implements ActionListener {
     }
 
 
-
     private static String[] searchInTable(JTable table, String searchText) {
-        String [] num = null;
-
-
+        String[] num = new String[0];
         RowSorter<? extends TableModel> rs = table.getRowSorter();
         if (rs == null) {
             table.setAutoCreateRowSorter(true);
@@ -157,10 +149,9 @@ public class SearchBarListener extends Application implements ActionListener {
             rowSorter.setRowFilter(null);
         } else {
             rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + Pattern.quote(searchText)));
-            //System.out.println(rowSorter.getModel().getValueAt(0,1));
             num = new String[table.getRowCount()];
 
-            for(int row = 0; row < table.getRowCount(); row++) {
+            for (int row = 0; row < table.getRowCount(); row++) {
                 num[row] = (String) table.getModel().getValueAt(table.convertRowIndexToModel(row), 0);
             }
 

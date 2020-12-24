@@ -23,13 +23,13 @@ public class GUI {
         } catch (Exception ignored) {
             ignored.printStackTrace();
         }
-        Application.setFrame(new JFrame("MAD"));
-        Application.getFrame().setSize(800, 600);
-        Application.getFrame().setLocationRelativeTo(null);
-        Application.getFrame().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        AbstractApplication.setFrame(new JFrame("MAD"));
+        AbstractApplication.getFrame().setSize(800, 600);
+        AbstractApplication.getFrame().setLocationRelativeTo(null);
+        AbstractApplication.getFrame().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         JMenuBar menu = new JMenuBar();
-        Application.getFrame().setJMenuBar(menu);
+        AbstractApplication.getFrame().setJMenuBar(menu);
         JMenu file = new JMenu("Fichiers");
         file.setMnemonic('F');
         menu.add(file);
@@ -52,32 +52,33 @@ public class GUI {
         menu.add(help);
         JMenuItem about = new JMenuItem("A propos");
         help.add(about);
-        Application.setSouthPanel(new JPanel());
-        Application.setNorthPanel(new JPanel());
+        AbstractApplication.setSouthPanel(new JPanel());
+        AbstractApplication.setNorthPanel(new JPanel());
 
-        Application.getSouthPanel().setLayout(new FlowLayout(FlowLayout.RIGHT));
-        Application.getNorthPanel().setLayout(new FlowLayout(FlowLayout.LEFT));
-        Application.setDisplayCsv(new Table());
+        AbstractApplication.getSouthPanel().setLayout(new FlowLayout(FlowLayout.RIGHT));
+        AbstractApplication.getNorthPanel().setLayout(new FlowLayout(FlowLayout.LEFT));
+        AbstractApplication.setDisplayCsv(new Table());
 
-        Application.setContent(Application.getFrame().getContentPane());
+        AbstractApplication.setContent(AbstractApplication.getFrame().getContentPane());
 
-        if (Application.getDisplayCsv().Jscroll != null) {
-            Application.getContent().add(Application.getDisplayCsv().Jscroll, BorderLayout.CENTER);
+        if (AbstractApplication.getDisplayCsv().Jscroll != null) {
+            AbstractApplication.getContent().add(AbstractApplication.getDisplayCsv().Jscroll, BorderLayout.CENTER);
             //Table.table.getModel().addTableModelListener((TableModelListener) new EnableButtonsRowsListener());
 
         }
 
 
 
-        Application.getContent().add(Application.getNorthPanel(), BorderLayout.NORTH);
-        Application.getContent().add(Application.getSouthPanel(), BorderLayout.SOUTH);
+        AbstractApplication.getContent().add(AbstractApplication.getNorthPanel(), BorderLayout.NORTH);
+        AbstractApplication.getContent().add(AbstractApplication.getSouthPanel(), BorderLayout.SOUTH);
 
-        Application.setDragAndDrop(new JLabel("Drag XML or CSV here.", SwingConstants.CENTER));
+        AbstractApplication.setDragAndDrop(new JLabel("Drag XML or CSV here.", SwingConstants.CENTER));
         DropTargetListener dtl = new DragDropListener();
-        new DropTarget(Application.getFrame(), dtl);
-        Application.getFrame().add(BorderLayout.CENTER, Application.getDragAndDrop());
+        new DropTarget(AbstractApplication.getFrame(), dtl);
 
-        Application.getFrame().addWindowListener(new WindowAdapter() {
+        AbstractApplication.getFrame().add(BorderLayout.CENTER, AbstractApplication.getDragAndDrop());
+
+        AbstractApplication.getFrame().addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
                 try{
@@ -87,16 +88,16 @@ public class GUI {
                     Data.doc = dBuilder.parse(file); // ouverture et lecture du fichier XML
                     Data.doc.getDocumentElement().normalize(); // normalise le contenu du fichier, opération très conseillée
                     Data.root = Data.doc.getDocumentElement();
-                    Application.getXmlEditor().save("./data.xml");
+                    AbstractApplication.getXmlEditor().save("./data.xml");
                     file.delete();
                     System.out.println("Overwriting data.xml");
                 } catch (Exception exc) {
-
+                    System.out.println("Cannot save");
                 }
 
             }
         });
-        Application.getFrame().setVisible(true);
+        AbstractApplication.getFrame().setVisible(true);
     }
 }
 
