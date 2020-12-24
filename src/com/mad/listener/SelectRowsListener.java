@@ -20,6 +20,7 @@ public class SelectRowsListener extends Application implements ActionListener {
             }
 
             Table.setNewModelTable(getDisplayCsv().table, newModel);
+            Table.table.getModel().addTableModelListener(new TableChangedListener());
         }
     }
 }

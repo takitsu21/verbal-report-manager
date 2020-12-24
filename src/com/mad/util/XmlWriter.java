@@ -107,26 +107,17 @@ public class XmlWriter {
         }
     }
 
-
-//    <grade>
-//            <item>SLUIN603</item>
-//            <value>8.106</value>
-//        </grade>
     public boolean modifyCourse(String studentId, String courseId, String val) {
         Element student = (Element) getStudent(studentId);
         List<Element> grades = Data.getChildren(student, "grade");
         for (Element e : grades) {
-
             if (XmlToCsv.read(e, "item").equalsIgnoreCase(courseId)) {
-                System.out.printf("modify course %b\n", XmlToCsv.read(e, "item").equalsIgnoreCase(courseId));
-                Data.root.removeChild(student);
                 student.removeChild(e);
                 List<Element> values = Data.getChildren(e, "value");
                 for (Element v : values) {
                     v.setTextContent(val);
                 }
                 student.appendChild(e);
-                Data.root.appendChild(student);
                 return true;
             }
         }
@@ -149,15 +140,18 @@ public class XmlWriter {
 
     public boolean addCourse(String studentId, String courseId, String note) {
         Element student = (Element) getStudent(studentId);
-        List<Element> grades = Data.getChildren(student, "grade");
-        for (Element e : grades) {
-            System.out.printf("%s, %s\n", XmlToCsv.read(e, "item"), courseId);
-            if (XmlToCsv.read(e, "item").equalsIgnoreCase(courseId)) {
+        List<Element> courses = Data.getChildren(Data.root, "course");
+        for (Element e : courses) {
+            if (XmlToCsv.read(e, "identifier").equalsIgnoreCase(courseId)) {
                 Node composante = Data.doc.createElement("item");
                 Node value = Data.doc.createElement("value");
+                Node grade = Data.doc.createElement("grade");
                 composante.appendChild(Data.doc.createTextNode(courseId));
                 value.appendChild(Data.doc.createTextNode(note));
-                Data.root.appendChild(student);
+                grade.appendChild(composante);
+                grade.appendChild(value);
+
+                student.appendChild(grade);
                 return true;
             }
         }

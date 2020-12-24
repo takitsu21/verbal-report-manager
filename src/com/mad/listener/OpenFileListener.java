@@ -107,7 +107,7 @@ public class OpenFileListener extends Application implements ActionListener {
 //        Table.table.getModel().addTableModelListener(new TableChangedListener());
         getNorthPanel().add(EditableComboBoxExemple.searchComboBox);
         Table.table.getModel().addTableModelListener(new TableChangedListener());
-
+        getDragAndDrop().setVisible(false);
 //        EditableComboBoxExemple.searchComboBox.set;
 //        getNorthPanel().add(getValidate());
 //        getNorthPanel().add(getSearchBar());
