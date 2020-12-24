@@ -15,13 +15,23 @@ import java.util.List;
 
 public class XmlToCsv {
 
-    public XmlToCsv(String path_data) throws ParserConfigurationException, IOException, SAXException {
-        File file = new File(path_data);
-        DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-        Document doc = dBuilder.parse(file); // ouverture et lecture du fichier XML
-        doc.getDocumentElement().normalize(); // normalise le contenu du fichier, opération très conseillée
-        Data.root = doc.getDocumentElement();
+    public XmlToCsv(String path_data){
+        try {
+            File file = new File(path_data);
+            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+            Data.doc = dBuilder.parse(file); // ouverture et lecture du fichier XML
+            Data.doc.getDocumentElement().normalize(); // normalise le contenu du fichier, opération très conseillée
+            Data.root = Data.doc.getDocumentElement();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public XmlToCsv() {
+
     }
 
     public void convert() {
@@ -230,7 +240,7 @@ public class XmlToCsv {
                     int nb = 0;
                     while (a < listProg.size() - 1 && listProg.get(a).charAt(0) != ('*') && listProg.get(a).charAt(0) != ('$')) {
                         if (note[a] != null) {
-                            if (note[a].equals("ABI")) {
+                            if (note[a].equals("ABI") || note[a].equals("ABJ")) {
                                 acc += 0;
                             } else {
                                 acc += Double.parseDouble(note[a]);
@@ -264,7 +274,7 @@ public class XmlToCsv {
 
         for (int i = 0; i < note.length; i++) {
             if (coef[i] != null && note[i] != null) {
-                if (!note[i].equalsIgnoreCase("ABI")) {
+                if (!note[i].equalsIgnoreCase("ABI") && !note[i].equalsIgnoreCase("ABJ")) {
                     acc += (Double.parseDouble(note[i]) * Integer.parseInt(coef[i]));
                 }
 
@@ -281,7 +291,7 @@ public class XmlToCsv {
 
         for (String note : notes) {
             if (note != null) {
-                if (!note.equals("ABI") && acc * M < Double.parseDouble(note) * M) {
+                if (!note.equals("ABI") && !note.equals("ABJ") && acc * M < Double.parseDouble(note) * M) {
                     acc = Double.parseDouble(note);
                 }
             }
@@ -312,7 +322,7 @@ public class XmlToCsv {
 
         for (String note : notes) {
             if (note != null) {
-                if (!note.equals("ABI")) {
+                if (!note.equals("ABI") && !note.equals("ABJ")) {
                     acc += Double.parseDouble(note);
                     nb += 1;
                 }
@@ -331,7 +341,7 @@ public class XmlToCsv {
         for (int i = 0; i < notes.length; i++) {
             if (notes[i] != null) {
                 if (notes[i] != null) {
-                    if (!notes[i].equals("ABI")) {
+                    if (!notes[i].equals("ABI") && !notes[i].equals("ABJ")) {
                         note[i] = Double.parseDouble(notes[i]);
                     }
 

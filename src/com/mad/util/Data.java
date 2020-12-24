@@ -1,5 +1,6 @@
 package com.mad.util;
 
+import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -8,16 +9,13 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
-import java.util.Map;
+import java.util.*;
 
 public class Data {
     public static Map<String, String> dataSet = new HashMap<>();
     public static String[][] dataArray = null;
     public static Element root;
+    public static Document doc;
 
     public static void setDataSet(Map<String, String> dataSet) {
         Data.dataSet = dataSet;

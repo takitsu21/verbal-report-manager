@@ -1,10 +1,14 @@
 package com.mad.listener;
 
 import com.mad.Application;
+import com.mad.util.Data;
+import com.mad.util.Table;
+import com.mad.util.XmlWriter;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import java.util.Arrays;
 
 public class EnableButtonsRowsListener extends Application implements ListSelectionListener {
     @Override
@@ -17,6 +21,8 @@ public class EnableButtonsRowsListener extends Application implements ListSelect
                         } else {
                             getShowSelectedLines().setEnabled(false);
                         }
+
+
                     }
                 }
         );

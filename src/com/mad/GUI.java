@@ -1,17 +1,20 @@
 package com.mad;
 
 import com.mad.listener.*;
+import com.mad.util.Data;
 import com.mad.util.Table;
+import com.mad.util.XmlWriter;
 
 import javax.swing.*;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 import javax.swing.event.TableModelListener;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 
 import java.awt.dnd.DropTarget;
 import java.awt.dnd.DropTargetListener;
-import java.awt.event.KeyEvent;
+import java.io.File;
 
 public class GUI {
     public static void main(String[] args) {
@@ -74,6 +77,25 @@ public class GUI {
         new DropTarget(Application.getFrame(), dtl);
         Application.getFrame().add(BorderLayout.CENTER, Application.getDragAndDrop());
 
+        Application.getFrame().addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                try{
+                    File file = new File("./xml-editor.tmp.xml");
+                    DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+                    DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+                    Data.doc = dBuilder.parse(file); // ouverture et lecture du fichier XML
+                    Data.doc.getDocumentElement().normalize(); // normalise le contenu du fichier, opération très conseillée
+                    Data.root = Data.doc.getDocumentElement();
+                    Application.getXmlEditor().save("./data.xml");
+                    file.delete();
+                    System.out.println("Overwriting data.xml");
+                } catch (Exception exc) {
+
+                }
+
+            }
+        });
         Application.getFrame().setVisible(true);
     }
 }

@@ -1,8 +1,10 @@
 package com.mad;
 
 import com.mad.util.Table;
+import com.mad.util.XmlWriter;
 
 import javax.swing.*;
+import javax.swing.text.Document;
 import java.awt.*;
 
 
@@ -22,9 +24,27 @@ public abstract class Application extends JPanel {
     private static JLabel dragAndDrop;
     private static JTree showHierarchicTree;
     private static JButton showTree;
+    private static XmlWriter xmlEditor = new XmlWriter();
+    private static Document doc;
 
 
     public Application() {
+    }
+
+    public static Document getDoc() {
+        return doc;
+    }
+
+    public static void setDoc(Document doc) {
+        Application.doc = doc;
+    }
+
+    public static XmlWriter getXmlEditor() {
+        return xmlEditor;
+    }
+
+    public static void setXmlEditor(XmlWriter xmlEditor) {
+        Application.xmlEditor = xmlEditor;
     }
 
     public static JButton getShowTree() {
