@@ -36,6 +36,7 @@ public class OpenFileListener extends AbstractApplication implements ActionListe
             if (getPath().endsWith(".csv")) {
                 if (getComboBox().getItemCount() > 0) {
                     getNorthPanel().remove(getComboBox());
+                    getNorthPanel().remove(getShowTree());
                     resetComboBox();
                 }
                 getDisplayCsv().TableCSV(getPath());
@@ -47,6 +48,10 @@ public class OpenFileListener extends AbstractApplication implements ActionListe
 
                 if (getComboBox().getItemCount() > 0) {
                     resetComboBox();
+                    setShowHierarchicTree(new JTree());
+                    setShowTree(new JButton("Vue hiérarchisé"));
+                    getShowTree().addActionListener(new HierarchicalListener());
+                    getNorthPanel().add(getShowTree());
                     setIsFirstFile(false);
                 }
                 for (String key : Data.dataSet.keySet()) {
@@ -56,7 +61,12 @@ public class OpenFileListener extends AbstractApplication implements ActionListe
                 if (isIsFirstFile()) {
                     getComboBox().addActionListener(new ComboBoxListener());
                     getNorthPanel().add(getComboBox());
+                    setShowHierarchicTree(new JTree());
+                    setShowTree(new JButton("Vue hiérarchisé"));
+                    getShowTree().addActionListener(new HierarchicalListener());
+                    getNorthPanel().add(getShowTree());
                 }
+
                 Table.table.getModel().addTableModelListener(new TableChangedListener());
             }
             if (getResetTable() == null && getShowSelectedLines() == null && getSearchComboBox() == null) {
@@ -76,8 +86,7 @@ public class OpenFileListener extends AbstractApplication implements ActionListe
     private static void initComponents() {
         setResetTable(new JButton("Remise à zéro du tableau"));
         setShowSelectedLines(new JButton("Afficher ligne selectionné"));
-        setShowHierarchicTree(new JTree());
-        setShowTree(new JButton("Vue hiérarchisé"));
+
 
         String[] blocs = new String[Data.dataArray[0].length - 3];
 
@@ -89,23 +98,21 @@ public class OpenFileListener extends AbstractApplication implements ActionListe
 
 
         Dimension d = getSearchComboBox().getPreferredSize();
-        getSearchComboBox().setPreferredSize(new Dimension(150, (int) d.getHeight()));
+        getSearchComboBox().setPreferredSize(new Dimension(250, (int) d.getHeight()));
 
         getResetTable().addActionListener(new ResetTableListener());
         getShowSelectedLines().addActionListener(new SelectRowsListener());
-        getShowTree().addActionListener(new HierarchicalListener());
+
         Table.table.getSelectionModel().addListSelectionListener(new EnableButtonsRowsListener());
 
 
         getSouthPanel().add(getResetTable());
         getSouthPanel().add(getShowSelectedLines());
-        getNorthPanel().setLayout(new GridLayout(1, 8, 3, 0));
-        getNorthPanel().add(new JPanel());
-        getNorthPanel().add(new JPanel());
-        getNorthPanel().add(new JPanel());
+//        getNorthPanel().setLayout(new GridLayout(1, 8, 3, 0));
 //        getNorthPanel().add(new JPanel());
-        getNorthPanel().add(getShowTree());
-
+//        getNorthPanel().add(new JPanel());
+//        getNorthPanel().add(new JPanel());
+//        getNorthPanel().add(new JPanel());
 
 
         getNorthPanel().add(getSearchComboBox());
@@ -118,5 +125,7 @@ public class OpenFileListener extends AbstractApplication implements ActionListe
     private static void resetComboBox() {
         setComboBox(new JComboBox<>());
         getComboBox().setName("programs");
+        getNorthPanel().remove(getShowTree());
+
     }
 }
