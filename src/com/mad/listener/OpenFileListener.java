@@ -110,7 +110,14 @@ public class OpenFileListener extends AbstractApplication implements ActionListe
 
         Table.table.getSelectionModel().addListSelectionListener(new EnableButtonsRowsListener());
 
+
         getSouthPanel().add(getAddStudent());
+
+        setAddCourse(new JButton("Ajouter Cours"));
+        getAddCourse().addActionListener(new AddCourseListener());
+        getSouthPanel().add(getAddCourse());
+
+
         getSouthPanel().add(getResetTable());
         getSouthPanel().add(getShowSelectedLines());
         getSouthPanel().add(getDeleteLines());

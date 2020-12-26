@@ -1,16 +1,13 @@
-<?xml version="1.0" encoding="UTF-8"?><data>
-    <course>
-        <identifier>poire</identifier>
-        <name>Dylann le meilleur</name>
-        <credits>6</credits>
-    </course>
-    
+
+<?xml version="1.0" encoding="UTF-8"?>
+<data>
+
+
     <course>
         <identifier>pomme</identifier>
         <name>Antoine le meilleur</name>
         <credits>6</credits>
     </course>
-    
     <course>
         <identifier>SLUIN501</identifier>
         <name>Automates et langages</name>
@@ -14524,4 +14521,9 @@
             <value>6.665</value>
         </grade>
     </student>
+    <course>
+        <identifier>eeeeeeee</identifier>
+        <name>ezzeezezez</name>
+        <credits>ezezezezez</credits>
+    </course>
 </data>

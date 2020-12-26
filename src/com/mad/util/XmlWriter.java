@@ -138,6 +138,27 @@ public class XmlWriter {
         return false;
     }
 
+    public boolean addCourseGeneral(String CourseName, String courseId, String coef) {
+        ///Element student = (Element) getStudent(studentId);
+        try {
+            Node newCourse = Data.doc.createElement("course");
+            Node identifier = Data.doc.createElement("identifier");
+            Node name = Data.doc.createElement("name");
+            Node coefNode = Data.doc.createElement("credits");
+
+            identifier.appendChild(Data.doc.createTextNode(courseId));
+            newCourse.appendChild(identifier);
+            name.appendChild(Data.doc.createTextNode(CourseName));
+            newCourse.appendChild(name);
+            coefNode.appendChild(Data.doc.createTextNode(coef));
+            newCourse.appendChild(coefNode);
+            Data.root.appendChild(newCourse);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
 
     private static void breakLine(Node node) {
         node.appendChild(Data.doc.createTextNode("\n"));
