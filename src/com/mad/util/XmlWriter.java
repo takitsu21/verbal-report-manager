@@ -69,7 +69,7 @@ public class XmlWriter {
         }
     }
 
-    public boolean addStudent(Node newStudent) {
+    public static boolean addStudent(Node newStudent) {
         try {
             Data.root.appendChild(newStudent);
             return true;
@@ -139,11 +139,11 @@ public class XmlWriter {
     }
 
 
-    private void breakLine(Node node) {
+    private static void breakLine(Node node) {
         node.appendChild(Data.doc.createTextNode("\n"));
     }
 
-    public Node generateStudentNode(String[][] dataset) {
+    public static Node generateStudentNode(String[][] dataset) {
         /*
         new String[][]{
                     {"identifier", "11111111"}, {"name", "dylannTest"},
@@ -159,27 +159,30 @@ public class XmlWriter {
         for (String[] s : dataset) {
             Node item;
             String nodeType = s[0];
-            switch (nodeType) {
-                case "identifier":
-                case "name":
-                case "surname":
-                case "program":
-                    item = Data.doc.createElement(s[0]);
-                    item.appendChild(Data.doc.createTextNode(s[1]));
-                    student.appendChild(item);
-                    breakLine(student);
-                    break;
-                case "grade":
-                    item = Data.doc.createElement(s[0]);
-                    Node composante = Data.doc.createElement("item");
-                    Node value = Data.doc.createElement("value");
-                    composante.appendChild(Data.doc.createTextNode(s[1]));
-                    value.appendChild(Data.doc.createTextNode(s[2]));
-                    item.appendChild(composante);
-                    item.appendChild(value);
-                    student.appendChild(item);
-                    breakLine(student);
-                    break;
+
+            if(nodeType!=null) {
+                switch (nodeType) {
+                    case "identifier":
+                    case "name":
+                    case "surname":
+                    case "program":
+                        item = Data.doc.createElement(s[0]);
+                        item.appendChild(Data.doc.createTextNode(s[1]));
+                        student.appendChild(item);
+                        breakLine(student);
+                        break;
+                    case "grade":
+                        item = Data.doc.createElement(s[0]);
+                        Node composante = Data.doc.createElement("item");
+                        Node value = Data.doc.createElement("value");
+                        composante.appendChild(Data.doc.createTextNode(s[1]));
+                        value.appendChild(Data.doc.createTextNode(s[2]));
+                        item.appendChild(composante);
+                        item.appendChild(value);
+                        student.appendChild(item);
+                        breakLine(student);
+                        break;
+                }
             }
         }
         return student;
