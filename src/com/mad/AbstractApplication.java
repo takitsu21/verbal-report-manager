@@ -38,8 +38,10 @@ public abstract class AbstractApplication extends JPanel {
     public static JButton getAddProgramButton() {
         return addProgramButton;
     }
+
     public static void setAddProgramButton(JButton addProgramButton) {
         AbstractApplication.addProgramButton = addProgramButton;
+    }
 
     public static JButton getAddCourse() {
         return addCourse;
