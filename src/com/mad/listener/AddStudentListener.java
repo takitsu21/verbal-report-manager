@@ -15,10 +15,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AddStudentListener extends AbstractApplication implements ActionListener {
-    JTextField studNum;
-    JTextField name;
-    JTextField surname;
-    JComboBox program;
+    private JTextField studNum;
+    private JTextField name;
+    private JTextField surname;
+    private JComboBox program;
 
     public JTextField getStudNumfield() {
         return studNum;
