@@ -32,8 +32,10 @@ public class XmlWriter {
                     {"item", "1"},
                     {"item", "2"},
                     {"option", "3", "OPTION 4", "SL8666", "SL8666"},
+                    {"option", "4", "OPTION 5", "123", "456"},
                     {"item", "3"}
             }));
+
 //            xml.deleteCourse("21232189", "SLUIN502");
 //            xml.deleteCourse("21674833", "SLUIN501");
             xml.modifyCourse("21674833", "SLUIN501", "15.5555");
