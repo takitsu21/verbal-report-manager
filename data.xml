@@ -1,12 +1,13 @@
+
 <?xml version="1.0" encoding="UTF-8"?>
 <data>
+
 
     <course>
         <identifier>pomme</identifier>
         <name>Antoine le meilleur</name>
         <credits>6</credits>
     </course>
-
     <course>
         <identifier>SLUIN501</identifier>
         <name>Automates et langages</name>
@@ -2767,6 +2768,10 @@
         <name>Fagot</name>
         <surname>Germain</surname>
         <program>SLINF3 180</program>
+        <grade>
+            <item>poire</item>
+            <value>0.0</value>
+        </grade>
         <grade>
             <item>SLUIN501</item>
             <value>13.173</value>
