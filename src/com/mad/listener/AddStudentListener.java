@@ -20,32 +20,40 @@ public class AddStudentListener implements ActionListener {
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setVisible(true);
-        frame.setLayout(new GridLayout(2, 2));
+        frame.setLayout(new BorderLayout());
 
-        JPanel pnl = new JPanel();
+        JPanel pnl = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        JPanel stdNum = new JPanel();
+        JPanel namePanel = new JPanel();
+        JPanel sureNamePane = new JPanel();
+        JPanel prog = new JPanel();
         //pnl.setLayout(new BorderLayout());
 
-        JTextField studNum=new JTextField("Student number");
+        JTextField studNum=new JTextField("Student number",14);
         studNum.setSize(60, 30);
-        pnl.add(new JLabel("Student number:"));
-        pnl.add(studNum);
+        stdNum.add(new JLabel("Student number:"));
+        stdNum.add(studNum);
+        pnl.add(stdNum);
 
-        JTextField name=new JTextField("Name");
+        JTextField name=new JTextField("Name",14);
         name.setSize(60, 30);
-        pnl.add(new JLabel("Name:"));
-        pnl.add(name);
+        namePanel.add(new JLabel("Name:"));
+        namePanel.add(name);
+        pnl.add(namePanel);
 
-        JTextField surname=new JTextField("Surname");
+        JTextField surname=new JTextField("Surname",14);
         surname.setSize(60, 30);
-        pnl.add(new JLabel("Surname:"));
-        pnl.add(surname);
+        sureNamePane.add(new JLabel("Surname:"));
+        sureNamePane.add(surname);
+        pnl.add(sureNamePane);
 
-        JTextField program=new JTextField("Program");
+        JTextField program=new JTextField("Program",14);
         surname.setSize(60, 30);
-        pnl.add(new JLabel("Program:"));
-        pnl.add(program);
+        prog.add(new JLabel("Program:"));
+        prog.add(program);
+        pnl.add(prog);
 
-        frame.add(pnl, BorderLayout.NORTH);
+        frame.add(pnl,BorderLayout.NORTH);
 
         List<Element> listCourses = Data.getChildren(Data.root, "course");
 
@@ -55,17 +63,17 @@ public class AddStudentListener implements ActionListener {
         container.add(new CheckBoxGroup("OPTIONS", cours), BorderLayout.SOUTH);
         container.add(new CheckBoxGroup("COMPOSANTES", cours), BorderLayout.SOUTH);*/
 
-        frame.getContentPane().add(new CheckBoxGroup("COURS", cours), BorderLayout.CENTER);
+        frame.add(new CheckBoxGroup("COURS", cours),BorderLayout.CENTER);
         JLabel l = new JLabel("Ce cours peut être ajouté mais ne fait pas parti du programme courant");
         l.setForeground(Color.decode("0xf27e11"));
-        frame.getContentPane().add(l,BorderLayout.SOUTH);
-
+        frame.add(l,BorderLayout.SOUTH);
         Container container = new Container();
-        container.add(new JLabel("test"));
-//        name.add(new JTextField());
-        frame.getContentPane().add(container);
+//        container.add(new JLabel("test"));
+////        name.add(new JTextField());
+//        frame.getContentPane().add(container);
+//
 
-
+    frame.setVisible(true);
 
 
     }
