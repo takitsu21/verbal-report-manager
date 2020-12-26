@@ -60,7 +60,7 @@ public class SearchBarListener extends AbstractApplication implements ActionList
         for (int i = 0; i < names.length; i++) {
             for (int j = 0; j < Data.dataArray[0].length; j++) {
                 String currentCheck = Data.dataArray[0][j];
-                String[] splited = currentCheck.split(" - ");   //.map(String::toLowerCase).toArray(String[]::new);
+                String[] splited = currentCheck.split(" - "); //.map(String::toLowerCase).toArray(String[]::new);
                 if (currentCheck.equalsIgnoreCase(names[i]) || splited[0].equalsIgnoreCase(names[i]) || splited[splited.length - 1].equalsIgnoreCase(names[i])) {
                     for (int k = 0; k < Data.dataArray.length; k++) {
                         if (!Data.dataArray[k][j].isEmpty()) {

@@ -68,6 +68,7 @@ public class OpenFileListener extends AbstractApplication implements ActionListe
                 }
 
                 Table.table.getModel().addTableModelListener(new TableChangedListener());
+
             }
             if (getResetTable() == null && getShowSelectedLines() == null && getSearchComboBox() == null) {
                 initComponents();
@@ -86,6 +87,8 @@ public class OpenFileListener extends AbstractApplication implements ActionListe
     private static void initComponents() {
         setResetTable(new JButton("Remise à zéro du tableau"));
         setShowSelectedLines(new JButton("Afficher ligne selectionné"));
+        setDeleteLines(new JButton("Supprimer ligne selectionné"));
+        setAddStudent(new JButton("Ajouter un élève"));
 
 
         String[] blocs = new String[Data.dataArray[0].length - 3];
@@ -102,12 +105,22 @@ public class OpenFileListener extends AbstractApplication implements ActionListe
 
         getResetTable().addActionListener(new ResetTableListener());
         getShowSelectedLines().addActionListener(new SelectRowsListener());
+        getDeleteLines().addActionListener(new DeleteRowListener());
+        getAddStudent().addActionListener(new AddStudentListener());
 
         Table.table.getSelectionModel().addListSelectionListener(new EnableButtonsRowsListener());
 
 
+        getSouthPanel().add(getAddStudent());
+
+        setAddCourse(new JButton("Ajouter Cours"));
+        getAddCourse().addActionListener(new AddCourseListener());
+        getSouthPanel().add(getAddCourse());
+
+
         getSouthPanel().add(getResetTable());
         getSouthPanel().add(getShowSelectedLines());
+        getSouthPanel().add(getDeleteLines());
 //        getNorthPanel().setLayout(new GridLayout(1, 8, 3, 0));
 //        getNorthPanel().add(new JPanel());
 //        getNorthPanel().add(new JPanel());
@@ -121,6 +134,7 @@ public class OpenFileListener extends AbstractApplication implements ActionListe
         getNorthPanel().add(getSearchComboBox());
         Table.table.getModel().addTableModelListener(new TableChangedListener());
         getShowSelectedLines().setEnabled(false);
+        getDeleteLines().setEnabled(false);
         getDragAndDrop().setVisible(false);
         Table.table.setAutoCreateRowSorter(true);
     }

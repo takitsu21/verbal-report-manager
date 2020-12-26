@@ -47,7 +47,7 @@ public class XmlWriter {
         }
     }
 
-    public Node getStudent(String studentId) {
+    public static Node getStudent(String studentId) {
         NodeList nodeList = Data.root.getElementsByTagName("student");
         for (int i = 0; i < nodeList.getLength(); i++) {
             Node node = nodeList.item(i);
@@ -62,7 +62,7 @@ public class XmlWriter {
         throw new StudentNotFoundException(String.format("%s N'a pas été trouvé", studentId));
     }
 
-    public boolean deleteStudent(String studentId) {
+    public static boolean deleteStudent(String studentId) {
         try {
             Data.root.removeChild(getStudent(studentId));
             return true;
@@ -71,7 +71,7 @@ public class XmlWriter {
         }
     }
 
-    public boolean addStudent(Node newStudent) {
+    public static boolean addStudent(Node newStudent) {
         try {
             Data.root.appendChild(newStudent);
             return true;
@@ -140,12 +140,33 @@ public class XmlWriter {
         return false;
     }
 
+    public boolean addCourseGeneral(String CourseName, String courseId, String coef) {
+        ///Element student = (Element) getStudent(studentId);
+        try {
+            Node newCourse = Data.doc.createElement("course");
+            Node identifier = Data.doc.createElement("identifier");
+            Node name = Data.doc.createElement("name");
+            Node coefNode = Data.doc.createElement("credits");
 
-    private void breakLine(Node node) {
+            identifier.appendChild(Data.doc.createTextNode(courseId));
+            newCourse.appendChild(identifier);
+            name.appendChild(Data.doc.createTextNode(CourseName));
+            newCourse.appendChild(name);
+            coefNode.appendChild(Data.doc.createTextNode(coef));
+            newCourse.appendChild(coefNode);
+            Data.root.appendChild(newCourse);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+
+    private static void breakLine(Node node) {
         node.appendChild(Data.doc.createTextNode("\n"));
     }
 
-    public Node generateStudentNode(String[][] dataset) {
+    public static Node generateStudentNode(String[][] dataset) {
         /*
         new String[][]{
                     {"identifier", "11111111"}, {"name", "dylannTest"},
@@ -161,27 +182,30 @@ public class XmlWriter {
         for (String[] s : dataset) {
             Node item;
             String nodeType = s[0];
-            switch (nodeType) {
-                case "identifier":
-                case "name":
-                case "surname":
-                case "program":
-                    item = Data.doc.createElement(s[0]);
-                    item.appendChild(Data.doc.createTextNode(s[1]));
-                    student.appendChild(item);
-                    breakLine(student);
-                    break;
-                case "grade":
-                    item = Data.doc.createElement(s[0]);
-                    Node composante = Data.doc.createElement("item");
-                    Node value = Data.doc.createElement("value");
-                    composante.appendChild(Data.doc.createTextNode(s[1]));
-                    value.appendChild(Data.doc.createTextNode(s[2]));
-                    item.appendChild(composante);
-                    item.appendChild(value);
-                    student.appendChild(item);
-                    breakLine(student);
-                    break;
+
+            if(nodeType!=null) {
+                switch (nodeType) {
+                    case "identifier":
+                    case "name":
+                    case "surname":
+                    case "program":
+                        item = Data.doc.createElement(s[0]);
+                        item.appendChild(Data.doc.createTextNode(s[1]));
+                        student.appendChild(item);
+                        breakLine(student);
+                        break;
+                    case "grade":
+                        item = Data.doc.createElement(s[0]);
+                        Node composante = Data.doc.createElement("item");
+                        Node value = Data.doc.createElement("value");
+                        composante.appendChild(Data.doc.createTextNode(s[1]));
+                        value.appendChild(Data.doc.createTextNode(s[2]));
+                        item.appendChild(composante);
+                        item.appendChild(value);
+                        student.appendChild(item);
+                        breakLine(student);
+                        break;
+                }
             }
         }
         return student;
@@ -239,7 +263,7 @@ public class XmlWriter {
         return program;
     }
 
-    public boolean save(String dst) {
+    public static boolean save(String dst) {
         System.out.printf("saving at %s", dst);
         try {
             Transformer transformer = TransformerFactory.newInstance().newTransformer();

@@ -14,8 +14,11 @@ public abstract class AbstractApplication extends JPanel {
     protected static JPanel southPanel;
     protected static JPanel northPanel;
     protected static JButton showSelectedLines;
+    protected static JButton deleteLines;
+    protected static JButton addStudent;
     protected static JButton resetTable;
     protected static JButton showTree;
+    protected static JButton addCourse;
     protected static Table displayCsv;
     protected static Container content;
     protected static JComboBox<String> comboBox = new JComboBox<>();
@@ -31,12 +34,19 @@ public abstract class AbstractApplication extends JPanel {
     public AbstractApplication() {
     }
 
+
     public static JButton getAddProgramButton() {
         return addProgramButton;
     }
-
     public static void setAddProgramButton(JButton addProgramButton) {
         AbstractApplication.addProgramButton = addProgramButton;
+
+    public static JButton getAddCourse() {
+        return addCourse;
+    }
+
+    public static void setAddCourse(JButton addCourse) {
+        AbstractApplication.addCourse = addCourse;
     }
 
     public static String getPath() {
@@ -103,6 +113,21 @@ public abstract class AbstractApplication extends JPanel {
         AbstractApplication.resetTable = resetTable;
     }
 
+    public static JButton getDeleteLines() {
+        return deleteLines;
+    }
+
+    public static void setDeleteLines(JButton deleteLines) {
+        AbstractApplication.deleteLines = deleteLines;
+    }
+
+    public static JButton getAddStudent() {
+        return addStudent;
+    }
+
+    public static void setAddStudent(JButton addStudent) {
+        AbstractApplication.addStudent = addStudent;
+    }
 
     public static JFrame getFrame() {
         return frame;
