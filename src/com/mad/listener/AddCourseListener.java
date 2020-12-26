@@ -17,7 +17,7 @@ public class AddCourseListener extends AbstractPopUpCours implements ActionListe
         getTmp().setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setIdLabel(new JLabel("Identifiant:"));
         setIdField(new JTextField(10));
-        setCourseLabel(new JLabel("Nom:        "));
+        setCourseLabel(new JLabel("Nom:         "));
         setCourseNameFiled(new JTextField(10));
         setCoefLabel(new JLabel("coefficient:"));
         setCoefField(new JTextField(10));
