@@ -1,19 +1,20 @@
 package com.mad;
 
-import com.mad.listener.*;
+import com.mad.listener.DragDropListener;
+import com.mad.listener.OpenFileListener;
+import com.mad.listener.SaveFileListener;
 import com.mad.util.Data;
 import com.mad.util.Table;
-import com.mad.util.XmlWriter;
 
 import javax.swing.*;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.swing.event.TableModelListener;
 import java.awt.*;
-import java.awt.event.*;
-
 import java.awt.dnd.DropTarget;
 import java.awt.dnd.DropTargetListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
 
 public class GUI {
@@ -63,11 +64,7 @@ public class GUI {
 
         if (AbstractApplication.getDisplayCsv().Jscroll != null) {
             AbstractApplication.getContent().add(AbstractApplication.getDisplayCsv().Jscroll, BorderLayout.CENTER);
-            //Table.table.getModel().addTableModelListener((TableModelListener) new EnableButtonsRowsListener());
-
         }
-
-
 
         AbstractApplication.getContent().add(AbstractApplication.getNorthPanel(), BorderLayout.NORTH);
         AbstractApplication.getContent().add(AbstractApplication.getSouthPanel(), BorderLayout.SOUTH);
@@ -81,7 +78,7 @@ public class GUI {
         AbstractApplication.getFrame().addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                try{
+                try {
                     File file = new File("./xml-editor.tmp.xml");
                     DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
                     DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
@@ -89,8 +86,9 @@ public class GUI {
                     Data.doc.getDocumentElement().normalize(); // normalise le contenu du fichier, opération très conseillée
                     Data.root = Data.doc.getDocumentElement();
                     AbstractApplication.getXmlEditor().save("./data.xml");
-                    file.delete();
-                    System.out.println("Overwriting data.xml");
+                    if (file.delete()) {
+                        System.out.println("Overwriting data.xml");
+                    }
                 } catch (Exception exc) {
                     System.out.println("Cannot save");
                 }

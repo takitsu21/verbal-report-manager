@@ -8,6 +8,7 @@ import java.awt.*;
 
 
 public abstract class AbstractApplication extends JPanel {
+    public static final String TMP_PATH = "./xml-editor.tmp.xml";
     protected static String path;
     protected static JFrame frame;
     protected static JPanel southPanel;
