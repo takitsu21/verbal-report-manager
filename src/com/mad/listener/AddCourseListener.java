@@ -85,8 +85,8 @@ public class AddCourseListener extends AbstractApplication implements ActionList
 //            System.out.println(id);
 //            System.out.println(name);
 //            System.out.println(coef);
+            
             if (getXmlEditor().addCourseGeneral(name, id, coef)) {
-//                System.out.println("tnmù");
                 getXmlEditor().save("./xml-editor.tmp.xml");
                 Table.table.getModel().removeTableModelListener(new TableChangedListener());
                 OpenFileListener.openFile(new File("./xml-editor.tmp.xml"));
