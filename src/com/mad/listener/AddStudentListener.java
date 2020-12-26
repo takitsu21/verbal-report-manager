@@ -283,14 +283,14 @@ public class AddStudentListener extends AbstractApplication implements ActionLis
             student[3][1] = programmeEntry;
 
             if (XmlWriter.addStudent(XmlWriter.generateStudentNode(student))) {
-
+                tmp.dispose();
                 XmlWriter.save("../test.xml");
                 setDisplayCsv(new Table());
                 getDisplayCsv().TableXML("../test.xml", Data.dataSet.get(Data.dataSet.entrySet().iterator().next().getKey()));
                 Table.table.getModel().addTableModelListener(new TableChangedListener());
                 clearJTables();
                 getContent().add(getDisplayCsv().Jscroll, BorderLayout.CENTER);
-                tmp.dispose();
+
 
             }
 
