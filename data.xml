@@ -14516,4 +14516,9 @@
             <value>6.665</value>
         </grade>
     </student>
+    <course>
+        <identifier>eeeeeeee</identifier>
+        <name>ezzeezezez</name>
+        <credits>ezezezezez</credits>
+    </course>
 </data>
