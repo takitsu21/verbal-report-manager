@@ -95,13 +95,13 @@ public class AddStudentListener extends AbstractApplication implements ActionLis
         sud.add(l, BorderLayout.SOUTH);
         JPanel bouton = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         JButton ajouter = new JButton("Ajouter");
-        ajouter.addActionListener(new CheckboxAction(cbg,tmp));
+        ajouter.addActionListener(new CheckboxAction(cbg, tmp));
         bouton.add(ajouter, BorderLayout.SOUTH);
         sud.add(bouton);
         tmp.add(sud, BorderLayout.SOUTH);
 
 
- //       Container container = new Container();
+        //       Container container = new Container();
 //        container.add(new JLabel("test"));
 ////        name.add(new JTextField());
 //        tmp.getContentPane().add(container);
@@ -241,20 +241,20 @@ public class AddStudentListener extends AbstractApplication implements ActionLis
 
     class CheckboxAction extends AbstractApplication implements ActionListener {
         private final List<JCheckBox> checkBoxes;
-        JFrame tmp ;
+        JFrame tmp;
 //        private final String studNum;
 //        private final String name;
 //        private final String surname;
-       // private final String prog;
+        // private final String prog;
 
-           public CheckboxAction(AddStudentListener.CheckBoxGroup checkBoxes,JFrame tmp) {
-             this.checkBoxes = checkBoxes.getCheckBoxs();
-             this.tmp = tmp;
+        public CheckboxAction(AddStudentListener.CheckBoxGroup checkBoxes, JFrame tmp) {
+            this.checkBoxes = checkBoxes.getCheckBoxs();
+            this.tmp = tmp;
 //            this.studNum = studNum.getText();
 //            this.name = name.getText();
 //            this.surname = surname.getText();
 //            this.prog = prog.getText();
-       }
+        }
 
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -284,9 +284,9 @@ public class AddStudentListener extends AbstractApplication implements ActionLis
 
             if (XmlWriter.addStudent(XmlWriter.generateStudentNode(student))) {
                 tmp.dispose();
-                XmlWriter.save("../test.xml");
+                XmlWriter.save(TMP_PATH);
                 setDisplayCsv(new Table());
-                getDisplayCsv().TableXML("../test.xml", Data.dataSet.get(Data.dataSet.entrySet().iterator().next().getKey()));
+                getDisplayCsv().TableXML(TMP_PATH, Data.dataSet.get(Data.dataSet.entrySet().iterator().next().getKey()));
                 Table.table.getModel().addTableModelListener(new TableChangedListener());
                 clearJTables();
                 getContent().add(getDisplayCsv().Jscroll, BorderLayout.CENTER);

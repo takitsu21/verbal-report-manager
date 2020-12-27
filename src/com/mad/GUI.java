@@ -79,7 +79,7 @@ public class GUI {
             @Override
             public void windowClosing(WindowEvent e) {
                 try {
-                    File file = new File("./xml-editor.tmp.xml");
+                    File file = new File(AbstractApplication.TMP_PATH);
                     DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
                     DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
                     Data.doc = dBuilder.parse(file); // ouverture et lecture du fichier XML

@@ -18,9 +18,9 @@ public class TableChangedListener extends AbstractApplication implements TableMo
             String newVal = (String) Table.table.getModel().getValueAt(e.getFirstRow(), e.getColumn());
             String numEtu = (String) Table.table.getModel().getValueAt(e.getFirstRow(), 0);
             updateCell(newVal, numEtu, courseId);
-            getXmlEditor().save("./xml-editor.tmp.xml");
+            getXmlEditor().save(TMP_PATH);
             Table.table.getModel().removeTableModelListener(new TableChangedListener());
-            OpenFileListener.openFile(new File("./xml-editor.tmp.xml"));
+            OpenFileListener.openFile(new File(TMP_PATH));
         }
     }
 
