@@ -1,14 +1,17 @@
 package com.mad;
 
+import com.mad.listener.TableChangedListener;
 import com.mad.util.Table;
 import com.mad.util.XmlWriter;
 
 import javax.swing.*;
+import javax.swing.event.TableModelListener;
 import java.awt.*;
 
 
 public abstract class AbstractApplication extends JPanel {
     public static final String TMP_PATH = "./xml-editor.tmp.xml";
+    protected final TableModelListener modelListener = new TableChangedListener();
     protected static String path;
     protected static JFrame frame;
     protected static JPanel southPanel;

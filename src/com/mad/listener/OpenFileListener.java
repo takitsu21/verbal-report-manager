@@ -66,9 +66,6 @@ public class OpenFileListener extends AbstractApplication implements ActionListe
                     getShowTree().addActionListener(new HierarchicalListener());
                     getNorthPanel().add(getShowTree());
                 }
-
-                Table.table.getModel().addTableModelListener(new TableChangedListener());
-
             }
             if (getResetTable() == null && getShowSelectedLines() == null && getSearchComboBox() == null) {
                 initComponents();
@@ -84,7 +81,7 @@ public class OpenFileListener extends AbstractApplication implements ActionListe
         }
     }
 
-    private static void initComponents() {
+    public static void initComponents() {
         setResetTable(new JButton("Remise à zéro du tableau"));
         setShowSelectedLines(new JButton("Afficher ligne selectionné"));
         setDeleteLines(new JButton("Supprimer ligne selectionné"));

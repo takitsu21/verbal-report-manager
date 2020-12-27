@@ -148,7 +148,9 @@ public class SearchBarListener extends AbstractApplication implements ActionList
         if (searchText.length() == 0) {
             rowSorter.setRowFilter(null);
         } else {
+            Table.table.getModel().removeTableModelListener(new TableChangedListener());
             rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + Pattern.quote(searchText)));
+            Table.table.getModel().addTableModelListener(new TableChangedListener());
             num = new String[table.getRowCount()];
 
             for (int row = 0; row < table.getRowCount(); row++) {

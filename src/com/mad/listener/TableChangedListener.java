@@ -1,43 +1,64 @@
 package com.mad.listener;
 
 import com.mad.AbstractApplication;
+import com.mad.util.Data;
 import com.mad.util.Table;
+import com.mad.util.XmlToCsv;
+import com.mad.util.XmlWriter;
 
+import javax.swing.event.EventListenerList;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
+import javax.swing.table.TableModel;
 import java.io.File;
+import java.util.EventListener;
 
-public class TableChangedListener extends AbstractApplication implements TableModelListener {
+
+public class TableChangedListener implements TableModelListener {
 
     @Override
     public void tableChanged(TableModelEvent e) {
-        if (e.getType() == TableModelEvent.UPDATE) {
 
+        if (e.getType() == TableModelEvent.UPDATE) {
             int col = Table.table.getSelectedColumn();
             String courseId = String.valueOf(Table.table.getModel().getColumnName(col)).split(" ")[0];
             String newVal = (String) Table.table.getModel().getValueAt(e.getFirstRow(), e.getColumn());
             String numEtu = (String) Table.table.getModel().getValueAt(e.getFirstRow(), 0);
             updateCell(newVal, numEtu, courseId);
-            getXmlEditor().save(TMP_PATH);
-            Table.table.getModel().removeTableModelListener(new TableChangedListener());
-            OpenFileListener.openFile(new File(TMP_PATH));
+            Table.table.getModel().removeTableModelListener(this);
+            XmlWriter.save(AbstractApplication.TMP_PATH);
+            XmlToCsv xmlConverter = new XmlToCsv(AbstractApplication.TMP_PATH);
+            xmlConverter.convert();
+            Table.table.getModel().addTableModelListener(this);
+
+
+//            setDisplayCsv(new Table());
+//            getDisplayCsv().TableXML(TMP_PATH, Data.dataSet.get(Data.dataSet.entrySet().iterator().next().getKey()));
+//            getComboBox().addActionListener(new ComboBoxListener());
+
+
+//            OpenFileListener.openFile(new File(TMP_PATH));
+//            getDisplayCsv().TableXML(
+//                    TMP_PATH, Data.dataSet.get(Data.dataSet.entrySet().iterator().next().getKey()));
+
         }
+
     }
 
     private void updateCell(String newVal, String numEtu, String courseId) {
         if (newVal.isEmpty()) {
-            getXmlEditor().deleteCourse(numEtu, courseId);
+            XmlWriter.deleteCourse(numEtu, courseId);
         } else {
             try {
                 if (Double.parseDouble(newVal) <= 20.0 && Double.parseDouble(newVal) >= 0.0) {
-                    if (!getXmlEditor().modifyCourse(numEtu, courseId, newVal)) {
-                        getXmlEditor().addCourse(numEtu, courseId, newVal);
+                    if (!XmlWriter.modifyCourse(numEtu, courseId, newVal)) {
+                        XmlWriter.addCourse(numEtu, courseId, newVal);
                     }
                 }
             } catch (NumberFormatException exc) {
                 if (newVal.equalsIgnoreCase("abi") || newVal.equalsIgnoreCase("abj")) {
-                    if (!getXmlEditor().modifyCourse(numEtu, courseId, newVal.toUpperCase())) {
-                        getXmlEditor().addCourse(numEtu, courseId, newVal.toUpperCase());
+                    if (XmlWriter.modifyCourse(numEtu, courseId, newVal.toUpperCase())) {
+                        XmlWriter.addCourse(numEtu, courseId, newVal.toUpperCase());
                     }
                 }
             }

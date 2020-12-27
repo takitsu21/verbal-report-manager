@@ -10,17 +10,13 @@ public class EnableButtonsRowsListener extends AbstractApplication implements Li
     @Override
     public void valueChanged(ListSelectionEvent e) {
         SwingUtilities.invokeLater(
-                new Runnable() {
-                    public void run() {
-                        if (getDisplayCsv().getSelectedRows().length > 0) {
-                            getShowSelectedLines().setEnabled(true);
-                            getDeleteLines().setEnabled(true);
-                        } else {
-                            getShowSelectedLines().setEnabled(false);
-                            getDeleteLines().setEnabled(false);
-                        }
-
-
+                () -> {
+                    if (getDisplayCsv().getSelectedRows().length > 0) {
+                        getShowSelectedLines().setEnabled(true);
+                        getDeleteLines().setEnabled(true);
+                    } else {
+                        getShowSelectedLines().setEnabled(false);
+                        getDeleteLines().setEnabled(false);
                     }
                 }
         );
