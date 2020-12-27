@@ -103,7 +103,6 @@ public class XmlToCsv {
         }
         Data.setDataSet(new HashMap<>());
         for (int i = 0; i < programid.size(); i++) {
-            System.out.println(data.get(i));
             Data.dataSet.put(programid.get(i), data.get(i));
         }
 
@@ -217,13 +216,10 @@ public class XmlToCsv {
 
 
             while (j < listProg.size() - 1 && !mat.equals(listProg.get(j))) {
-                System.out.println(j+ " "+ mat + " " + listProg.get(j));
                 j += 1;
             }
-            System.out.println(j + " " + mat + " " +read(element, "value"));
             note[j] = read(element, "value");
         }
-        System.out.println(Arrays.toString(note));
         for (int i = 0; i < note.length; i++) {
             if (note[i] == null) {
                 if (listProg.get(i).charAt(0) == ('*')) {

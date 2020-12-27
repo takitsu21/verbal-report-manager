@@ -207,11 +207,12 @@ public abstract class AbstractApplication extends JPanel {
         XmlToCsv xmlConverter = new XmlToCsv(TMP_PATH);
         xmlConverter.convert();
 
-        setDisplayCsv(new Table());
-        getDisplayCsv().TableXML(TMP_PATH, Data.dataSet.get(Data.dataSet.entrySet().iterator().next().getKey()));
+//        setDisplayCsv(new Table());
+//        getDisplayCsv().TableXML(TMP_PATH, Data.dataSet.get(Data.dataSet.entrySet().iterator().next().getKey()));
         Table.table.getModel().addTableModelListener(new TableChangedListener());
         clearJTables();
         getContent().add(getDisplayCsv().Jscroll, BorderLayout.CENTER);
+        getComboBox().setSelectedItem(getComboBox().getSelectedItem());
         getFrame().setVisible(true);
 
     }

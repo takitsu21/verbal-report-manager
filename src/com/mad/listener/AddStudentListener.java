@@ -2,7 +2,6 @@ package com.mad.listener;
 
 import com.mad.AbstractApplication;
 import com.mad.util.Data;
-import com.mad.util.Table;
 import com.mad.util.XmlToCsv;
 import com.mad.util.XmlWriter;
 import org.w3c.dom.Element;
@@ -12,7 +11,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class AddStudentListener extends AbstractApplication implements ActionListener {
@@ -273,7 +271,6 @@ public class AddStudentListener extends AbstractApplication implements ActionLis
                     student[i][2] = "0.0";
                 }
             }
-            System.out.println(programmeEntry);
             student[0][0] = "identifier";
             student[0][1] = numEntry;
             student[1][0] = "name";
@@ -282,13 +279,10 @@ public class AddStudentListener extends AbstractApplication implements ActionLis
             student[2][1] = surnameEntry;
             student[3][0] = "program";
             student[3][1] = programmeEntry;
-            System.out.println(Arrays.deepToString(student));
 
             if (XmlWriter.addStudent(XmlWriter.generateStudentNode(student))) {
-                tmp.dispose();
-
                 refreshTable();
-
+                tmp.dispose();
             }
 
         }
