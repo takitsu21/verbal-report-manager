@@ -41,7 +41,6 @@ public abstract class AbstractApplication extends JPanel {
     public AbstractApplication() {
     }
 
-
     public static JButton getAddProgramButton() {
         return addProgramButton;
     }

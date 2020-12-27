@@ -17,7 +17,7 @@ public class AddStudentListener extends AbstractApplication implements ActionLis
     private JTextField studNum;
     private JTextField name;
     private JTextField surname;
-    private JComboBox program;
+    private JComboBox<?> program;
 
     public JTextField getStudNumfield() {
         return studNum;
@@ -29,10 +29,6 @@ public class AddStudentListener extends AbstractApplication implements ActionLis
 
     public JTextField getSurnamefield() {
         return surname;
-    }
-
-    public JComboBox getProgramfield() {
-        return program;
     }
 
     @Override
@@ -49,7 +45,7 @@ public class AddStudentListener extends AbstractApplication implements ActionLis
         JPanel namePanel = new JPanel();
         JPanel sureNamePane = new JPanel();
         JPanel prog = new JPanel();
-        //pnl.setLayout(new BorderLayout());
+//        pnl.setLayout(new BorderLayout());
 
         studNum = new JTextField(10);
         studNum.setSize(60, 30);
@@ -69,11 +65,11 @@ public class AddStudentListener extends AbstractApplication implements ActionLis
         sureNamePane.add(surname);
         pnl.add(sureNamePane);
 
-        /*program = getComboBox();
-        surname.setSize(60, 30);
+        program = getComboBox();
+        program.setSize(60, 30);
         prog.add(new JLabel("Program:"));
         prog.add(program);
-        pnl.add(prog);*/
+        pnl.add(prog);
 
         tmp.add(pnl, BorderLayout.NORTH);
 
@@ -81,9 +77,7 @@ public class AddStudentListener extends AbstractApplication implements ActionLis
 
         String[] cours = generateCheckboxValues(listCourses);
 
-        /*container.add(new CheckBoxGroup("COURS", cours), BorderLayout.SOUTH);
-        container.add(new CheckBoxGroup("OPTIONS", cours), BorderLayout.SOUTH);
-        container.add(new CheckBoxGroup("COMPOSANTES", cours), BorderLayout.SOUTH);*/
+        /*container.add(new CheckBoxGroup("COURS", cours),:), BorderLayout.SOUTH);*/
 
         CheckBoxGroup cbg = new CheckBoxGroup("COURS", cours);
         tmp.add(cbg, BorderLayout.CENTER);
@@ -238,9 +232,9 @@ public class AddStudentListener extends AbstractApplication implements ActionLis
 
     }
 
-    class CheckboxAction extends AbstractApplication implements ActionListener {
+    public class CheckboxAction extends AbstractApplication implements ActionListener {
         private final List<JCheckBox> checkBoxes;
-        JFrame tmp;
+        private JFrame tmp;
 //        private final String studNum;
 //        private final String name;
 //        private final String surname;
@@ -260,8 +254,9 @@ public class AddStudentListener extends AbstractApplication implements ActionLis
             String numEntry = getStudNumfield().getText();
             String nameEntry = getNamefield().getText();
             String surnameEntry = getSurnamefield().getText();
-            String programmeEntry = Data.dataSet.entrySet().iterator().next().getKey();//(String) getProgramfield().getSelectedItem();
-
+//            String programmeEntry = Data.dataSet.entrySet().iterator().next().getKey();//(String) getProgramfield().getSelectedItem();
+//            String programmeEntry = (String) getProgramfield().getSelectedItem();
+            String programmeEntry = (String) program.getSelectedItem();
 
             String[][] student = new String[checkBoxes.size() + 4][3];
             for (int i = 4; i < checkBoxes.size() + 4; i++) {
@@ -287,8 +282,6 @@ public class AddStudentListener extends AbstractApplication implements ActionLis
 
         }
     }
-
-
 }
 
 

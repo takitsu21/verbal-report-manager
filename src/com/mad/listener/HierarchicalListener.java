@@ -70,6 +70,5 @@ public class HierarchicalListener extends AbstractApplication implements ActionL
                     courseCode, XmlToCsv.read(courseName, "name"));
         }
         return String.format("%s", courseCode);
-
     }
 }

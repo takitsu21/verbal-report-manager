@@ -2,6 +2,7 @@ package com.mad.listener;
 
 import com.mad.AbstractApplication;
 import com.mad.util.Table;
+import com.mad.util.XmlWriter;
 
 import javax.swing.*;
 import java.awt.*;
@@ -80,14 +81,14 @@ public class AddCourseListener extends AbstractApplication implements ActionList
         @Override
         public void actionPerformed(ActionEvent e) {
             String id = getIdField().getText();
-            String name =  getCourseNameFiled().getText();
+            String name = getCourseNameFiled().getText();
             String coef = getCoefField().getText();
 //            System.out.println(id);
 //            System.out.println(name);
 //            System.out.println(coef);
-            
+
             if (getXmlEditor().addCourseGeneral(name, id, coef)) {
-                getXmlEditor().save(TMP_PATH);
+                XmlWriter.save(TMP_PATH);
                 Table.table.getModel().removeTableModelListener(new TableChangedListener());
                 OpenFileListener.openFile(new File(TMP_PATH));
                 tmp.dispose();

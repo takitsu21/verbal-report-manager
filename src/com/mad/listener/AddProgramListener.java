@@ -249,12 +249,9 @@ public class AddProgramListener extends AbstractApplication implements ActionLis
             setLayout(new BorderLayout());
             JPanel header = new JPanel(new FlowLayout(FlowLayout.LEFT, 1, 1));
             all = new JCheckBox("Tout sélectionner...");
-            all.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    for (JCheckBox cb : checkBoxes) {
-                        cb.setSelected(all.isSelected());
-                    }
+            all.addActionListener(e -> {
+                for (JCheckBox cb : checkBoxes) {
+                    cb.setSelected(all.isSelected());
                 }
             });
             checkBoxGroupeName.setColumns(10);
@@ -295,13 +292,10 @@ public class AddProgramListener extends AbstractApplication implements ActionLis
             add(new JScrollPane(content));
         }
 
-        public class ScrollablePane extends JPanel implements Scrollable {
+        public static class ScrollablePane extends JPanel implements Scrollable {
 
             public ScrollablePane(LayoutManager layout) {
                 super(layout);
-            }
-
-            public ScrollablePane() {
             }
 
             @Override
