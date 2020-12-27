@@ -11,6 +11,8 @@ import java.awt.event.ActionListener;
 public class ResetTableListener extends AbstractApplication implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
+        Table.table.getModel().removeTableModelListener(new TableChangedListener());
         Table.setNewModelTable(Table.table, Data.dataArray);
+        Table.table.getModel().addTableModelListener(new TableChangedListener());
     }
 }

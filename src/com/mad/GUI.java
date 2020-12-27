@@ -5,6 +5,7 @@ import com.mad.listener.OpenFileListener;
 import com.mad.listener.SaveFileListener;
 import com.mad.util.Data;
 import com.mad.util.Table;
+import com.mad.util.XmlWriter;
 
 import javax.swing.*;
 import javax.xml.parsers.DocumentBuilder;
@@ -85,7 +86,7 @@ public class GUI {
                     Data.doc = dBuilder.parse(file); // ouverture et lecture du fichier XML
                     Data.doc.getDocumentElement().normalize(); // normalise le contenu du fichier, opération très conseillée
                     Data.root = Data.doc.getDocumentElement();
-                    AbstractApplication.getXmlEditor().save("./data.xml");
+                    XmlWriter.save("./data-new.xml");
                     if (file.delete()) {
                         System.out.println("Overwriting data.xml");
                     }

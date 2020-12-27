@@ -9,9 +9,9 @@ import java.util.*;
 
 public class XmlToCsv {
 
-    public XmlToCsv(String path_data) {
+    public XmlToCsv(String dataPath) {
         try {
-            File file = new File(path_data);
+            File file = new File(dataPath);
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             Data.doc = dBuilder.parse(file); // ouverture et lecture du fichier XML

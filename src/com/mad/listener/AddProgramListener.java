@@ -2,7 +2,9 @@ package com.mad.listener;
 
 import com.mad.AbstractApplication;
 import com.mad.util.Data;
+import com.mad.util.Table;
 import com.mad.util.XmlToCsv;
+import com.mad.util.XmlWriter;
 import org.w3c.dom.Element;
 
 import javax.swing.*;
@@ -171,11 +173,13 @@ public class AddProgramListener extends AbstractApplication implements ActionLis
                         for (int i = 0; i < programs.size(); i++) {
                             t[i] = programs.get(i).toArray(blankArray);
                         }
-                        if (getXmlEditor().addProgram(getXmlEditor().generateProgram(t))) {
-                            getXmlEditor().save(TMP_PATH);
+                        if (XmlWriter.addProgram(XmlWriter.generateProgram(t))) {
+                            XmlWriter.save(TMP_PATH);
+                            Table.table.getModel().removeTableModelListener(modelListener);
                             XmlToCsv z = new XmlToCsv(TMP_PATH);
                             z.convert();
                             getComboBox().addItem(programIdField.getText());
+                            Table.table.getModel().addTableModelListener(modelListener);
 
                             getNorthPanel().repaint();
                             getNorthPanel().revalidate();

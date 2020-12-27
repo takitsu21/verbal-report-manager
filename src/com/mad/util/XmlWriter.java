@@ -80,7 +80,7 @@ public class XmlWriter {
         }
     }
 
-    public boolean addProgram(Node program) {
+    public static boolean addProgram(Node program) {
         try {
             Data.root.appendChild(program);
             return true;
@@ -89,24 +89,25 @@ public class XmlWriter {
         }
     }
 
-    public boolean modifyCourse(String studentId, String courseId, String val) {
+    public static boolean modifyCourse(String studentId, String courseId, String val) {
         Element student = (Element) getStudent(studentId);
         List<Element> grades = Data.getChildren(student, "grade");
         for (Element e : grades) {
             if (XmlToCsv.read(e, "item").equalsIgnoreCase(courseId)) {
-                student.removeChild(e);
+//                student.removeChild(e);
                 List<Element> values = Data.getChildren(e, "value");
                 for (Element v : values) {
                     v.setTextContent(val);
                 }
-                student.appendChild(e);
+//                student.appendChild(e);
+                System.out.println("student modified");
                 return true;
             }
         }
         return false;
     }
 
-    public boolean deleteCourse(String studentId, String courseId) {
+    public static boolean deleteCourse(String studentId, String courseId) {
         Element student = (Element) getStudent(studentId);
         List<Element> grades = Data.getChildren(student, "grade");
         for (Element e : grades) {
@@ -120,7 +121,7 @@ public class XmlWriter {
         return false;
     }
 
-    public boolean addCourse(String studentId, String courseId, String note) {
+    public static boolean addCourse(String studentId, String courseId, String note) {
         Element student = (Element) getStudent(studentId);
         List<Element> courses = Data.getChildren(Data.root, "course");
         for (Element e : courses) {
@@ -211,7 +212,7 @@ public class XmlWriter {
         return student;
     }
 
-    public Node generateProgram(String[][] dataset) {
+    public static Node generateProgram(String[][] dataset) {
         /*
         new String[][]{
                     {"identifier", "SLL info"}, {"name", "L5 INFO"},
@@ -264,7 +265,6 @@ public class XmlWriter {
     }
 
     public static boolean save(String dst) {
-        System.out.printf("saving at %s", dst);
         try {
             Transformer transformer = TransformerFactory.newInstance().newTransformer();
             Result output = new StreamResult(new File(dst));
@@ -275,9 +275,9 @@ public class XmlWriter {
 //            transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
 
             transformer.transform(input, output);
+            System.out.printf("Saved at %s\n", dst);
             return true;
         } catch (TransformerException e) {
-            e.printStackTrace();
             return false;
         }
     }
