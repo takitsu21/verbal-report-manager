@@ -18,5 +18,6 @@ public class ComboBoxListener extends AbstractApplication implements ActionListe
         Table.table.getModel().removeTableModelListener(modelListener);
         Table.setNewModelTable(Table.table, newArr);
         Table.table.getModel().addTableModelListener(modelListener);
+
     }
 }
