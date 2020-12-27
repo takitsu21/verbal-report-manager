@@ -21,11 +21,11 @@ public class GUI {
     public static void main(String[] args) {
         try {
             UIManager.setLookAndFeel((UIManager.getSystemLookAndFeelClassName()));
-        } catch (Exception ignored) {
-            ignored.printStackTrace();
+        } catch (Exception ign) {
+            ign.printStackTrace();
         }
         AbstractApplication.setFrame(new JFrame("MAD"));
-        AbstractApplication.getFrame().setSize(800, 600);
+        AbstractApplication.getFrame().setSize(882, 600);
         AbstractApplication.getFrame().setLocationRelativeTo(null);
         AbstractApplication.getFrame().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -56,7 +56,7 @@ public class GUI {
         AbstractApplication.setSouthPanel(new JPanel());
         AbstractApplication.setNorthPanel(new JPanel());
 
-        AbstractApplication.getSouthPanel().setLayout(new FlowLayout(FlowLayout.RIGHT));
+        AbstractApplication.getSouthPanel().setLayout(new FlowLayout(FlowLayout.LEFT));
         AbstractApplication.getNorthPanel().setLayout(new FlowLayout(FlowLayout.LEFT));
         AbstractApplication.setDisplayCsv(new Table());
 
