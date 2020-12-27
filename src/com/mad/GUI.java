@@ -95,6 +95,7 @@ public class GUI {
 
             }
         });
+
         AbstractApplication.getFrame().setVisible(true);
     }
 }

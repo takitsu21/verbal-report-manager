@@ -38,6 +38,7 @@ public class Table {
     }
 
     public void TableXML(String path, String data) {
+
         XmlToCsv xmlConverter = new XmlToCsv(path);
         xmlConverter.convert();
         setCsv(data);

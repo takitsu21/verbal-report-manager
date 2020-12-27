@@ -43,36 +43,43 @@ public class OpenFileListener extends AbstractApplication implements ActionListe
             } else {
                 XmlToCsv xmlConverter = new XmlToCsv(getPath());
                 xmlConverter.convert();
+
                 getDisplayCsv().TableXML(
                         getPath(), Data.dataSet.get(Data.dataSet.entrySet().iterator().next().getKey()));
 
+
                 if (getComboBox().getItemCount() > 0) {
-                    resetComboBox();
-                    setShowHierarchicTree(new JTree());
+
+                    setIsFirstFile(false);
+                }
+                resetComboBox();
+                /*    setShowHierarchicTree(new JTree());
                     setShowTree(new JButton("Vue hiérarchisé"));
                     getShowTree().addActionListener(new HierarchicalListener());
                     getNorthPanel().add(getShowTree());
-                    setIsFirstFile(false);
-                }
+                    setIsFirstFile(false);*/
+                //}
                 for (String key : Data.dataSet.keySet()) {
                     getComboBox().addItem(key);
+
                 }
 
-                if (isIsFirstFile()) {
+                //if (isIsFirstFile()) {
                     getComboBox().addActionListener(new ComboBoxListener());
+
                     getNorthPanel().add(getComboBox());
                     setShowHierarchicTree(new JTree());
                     setShowTree(new JButton("Vue hiérarchisé"));
                     getShowTree().addActionListener(new HierarchicalListener());
                     getNorthPanel().add(getShowTree());
-                }
+                //}
 
                 Table.table.getModel().addTableModelListener(new TableChangedListener());
 
             }
-            if (getResetTable() == null && getShowSelectedLines() == null && getSearchComboBox() == null) {
+            //if (getResetTable() == null && getShowSelectedLines() == null && getSearchComboBox() == null) {
                 initComponents();
-            }
+            //}
             clearJTables();
             getContent().add(getDisplayCsv().Jscroll, BorderLayout.CENTER);
 
@@ -140,9 +147,16 @@ public class OpenFileListener extends AbstractApplication implements ActionListe
     }
 
     private static void resetComboBox() {
+        if(!isIsFirstFile()) {
+            getNorthPanel().remove(getComboBox());
+            getNorthPanel().remove(getShowTree());
+            getNorthPanel().remove(getSearchComboBox());
+        }
+
         setComboBox(new JComboBox<>());
         getComboBox().setName("programs");
-        getNorthPanel().remove(getShowTree());
+
+
 
     }
 }
