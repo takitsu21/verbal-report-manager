@@ -5,9 +5,7 @@ import org.w3c.dom.Element;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 public class XmlToCsv {
 
@@ -26,9 +24,6 @@ public class XmlToCsv {
 
     }
 
-    public XmlToCsv() {
-
-    }
 
     public void convert() {
         List<Element> program = Data.getChildren(Data.root, "program");
@@ -54,6 +49,7 @@ public class XmlToCsv {
         String[][][] notes = new String[programid.size()][listStudents.get(0).size()][];
         String[][] moyennes = new String[programid.size()][listStudents.get(0).size()];
 
+
         for (List<Element> liste : listStudents) {
             for (Element element : liste) {
                 String programStud = read(element, "program");
@@ -63,8 +59,10 @@ public class XmlToCsv {
 
 
                 String[] note = listNoteStu(listCoursesProg.get(programid.indexOf(programStud)), listStudMat);
+                //System.out.println(Arrays.toString(note));
                 notes[programid.indexOf(programStud)][listStudents.get(programid.indexOf(programStud)).indexOf(element)] = note;
 
+                Arrays.fill(moyennes[programid.indexOf(programStud)], "0");
                 String moyenne = moyenne(listCourses, listCoursesProg.get(programid.indexOf(programStud)), note);
                 moyennes[programid.indexOf(programStud)][listStudents.get(programid.indexOf(programStud)).indexOf(element)] = moyenne;
                 moyenne = "\"" + moyenne + "\",";
@@ -103,7 +101,9 @@ public class XmlToCsv {
             data.set(i, data.get(i) + "\"" + "Note moyenne" + "\"," + "\"" + "\"," + "\"" + "\"," + noteMoyenne.substring(0, noteMoyenne.length() - 1) + "\n");
             data.set(i, data.get(i) + "\"" + "Écart-type" + "\"," + "\"" + "\"," + "\"" + "\"," + ecartType.substring(0, ecartType.length() - 1) + "\n");
         }
+        Data.setDataSet(new HashMap<>());
         for (int i = 0; i < programid.size(); i++) {
+            System.out.println(data.get(i));
             Data.dataSet.put(programid.get(i), data.get(i));
         }
 
@@ -184,7 +184,7 @@ public class XmlToCsv {
 
             }
         }
-        return cours.substring(0, cours.length() - 1);
+        return cours.length() - 1>=0?cours.substring(0, cours.length() - 1): String.valueOf(cours);
     }
 
     private List<List<Element>> listStudent(List<String> programid) {
@@ -214,12 +214,16 @@ public class XmlToCsv {
 
             String mat = read(element, "item");
 
-            while (j < listProg.size() - 1 && !mat.equals(listProg.get(j))) {
 
+
+            while (j < listProg.size() - 1 && !mat.equals(listProg.get(j))) {
+                System.out.println(j+ " "+ mat + " " + listProg.get(j));
                 j += 1;
             }
+            System.out.println(j + " " + mat + " " +read(element, "value"));
             note[j] = read(element, "value");
         }
+        System.out.println(Arrays.toString(note));
         for (int i = 0; i < note.length; i++) {
             if (note[i] == null) {
                 if (listProg.get(i).charAt(0) == ('*')) {
@@ -269,7 +273,7 @@ public class XmlToCsv {
         }
 
         for (int i = 0; i < note.length; i++) {
-            if (coef[i] != null && note[i] != null) {
+            if (coef[i] != null && note[i] != null && !note[i].equals("NaN") && !coef[i].equals("NaN")) {
                 if (!note[i].equalsIgnoreCase("ABI") && !note[i].equalsIgnoreCase("ABJ")) {
                     acc += (Double.parseDouble(note[i]) * Integer.parseInt(coef[i]));
                 }

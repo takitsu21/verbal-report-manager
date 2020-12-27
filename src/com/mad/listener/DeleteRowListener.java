@@ -17,15 +17,7 @@ public class DeleteRowListener extends AbstractApplication implements ActionList
         for (int i = 0; i < selectedRows.length; i++) {
             XmlWriter.deleteStudent(Data.dataArray[selectedRows[i] + 1][0]);
         }
-        XmlWriter.save(TMP_PATH);
-        setDisplayCsv(new Table());
-        getDisplayCsv().TableXML(TMP_PATH, Data.dataSet.get(Data.dataSet.entrySet().iterator().next().getKey()));
-        Table.table.getModel().addTableModelListener(new TableChangedListener());
-        clearJTables();
-        getContent().add(getDisplayCsv().Jscroll, BorderLayout.CENTER);
-
-//
-        getFrame().setVisible(true);
+        refreshTable();
 
 
     }

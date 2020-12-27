@@ -12,6 +12,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class AddStudentListener extends AbstractApplication implements ActionListener {
@@ -70,11 +71,11 @@ public class AddStudentListener extends AbstractApplication implements ActionLis
         sureNamePane.add(surname);
         pnl.add(sureNamePane);
 
-        program = getComboBox();
+        /*program = getComboBox();
         surname.setSize(60, 30);
         prog.add(new JLabel("Program:"));
         prog.add(program);
-        pnl.add(prog);
+        pnl.add(prog);*/
 
         tmp.add(pnl, BorderLayout.NORTH);
 
@@ -261,14 +262,14 @@ public class AddStudentListener extends AbstractApplication implements ActionLis
             String numEntry = getStudNumfield().getText();
             String nameEntry = getNamefield().getText();
             String surnameEntry = getSurnamefield().getText();
-            String programmeEntry = (String) getProgramfield().getSelectedItem();
+            String programmeEntry = Data.dataSet.entrySet().iterator().next().getKey();//(String) getProgramfield().getSelectedItem();
 
 
             String[][] student = new String[checkBoxes.size() + 4][3];
             for (int i = 4; i < checkBoxes.size() + 4; i++) {
                 if (checkBoxes.get(i - 4).isSelected()) {
                     student[i][0] = "grade";
-                    student[i][1] = checkBoxes.get(i - 4).getText();
+                    student[i][1] = checkBoxes.get(i - 4).getText().split(" - ")[0];
                     student[i][2] = "0.0";
                 }
             }
@@ -281,16 +282,12 @@ public class AddStudentListener extends AbstractApplication implements ActionLis
             student[2][1] = surnameEntry;
             student[3][0] = "program";
             student[3][1] = programmeEntry;
+            System.out.println(Arrays.deepToString(student));
 
             if (XmlWriter.addStudent(XmlWriter.generateStudentNode(student))) {
                 tmp.dispose();
-                XmlWriter.save(TMP_PATH);
-                setDisplayCsv(new Table());
-                getDisplayCsv().TableXML(TMP_PATH, Data.dataSet.get(Data.dataSet.entrySet().iterator().next().getKey()));
-                Table.table.getModel().addTableModelListener(new TableChangedListener());
-                clearJTables();
-                getContent().add(getDisplayCsv().Jscroll, BorderLayout.CENTER);
 
+                refreshTable();
 
             }
 

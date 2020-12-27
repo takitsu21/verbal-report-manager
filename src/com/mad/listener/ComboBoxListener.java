@@ -16,5 +16,6 @@ public class ComboBoxListener extends AbstractApplication implements ActionListe
         String[][] newArr = Table.sDataToArray(
                 Data.dataSet.get(Objects.requireNonNull(combo.getSelectedItem()).toString()));
         Table.setNewModelTable(getDisplayCsv().table, newArr);
+        System.out.println(getPath());
     }
 }

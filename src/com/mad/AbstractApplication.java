@@ -1,6 +1,9 @@
 package com.mad;
 
+import com.mad.listener.TableChangedListener;
+import com.mad.util.Data;
 import com.mad.util.Table;
+import com.mad.util.XmlToCsv;
 import com.mad.util.XmlWriter;
 
 import javax.swing.*;
@@ -193,5 +196,19 @@ public abstract class AbstractApplication extends JPanel {
                 getContent().remove(c);
             }
         }
+    }
+
+    public static void refreshTable(){
+        XmlWriter.save(TMP_PATH);
+        XmlToCsv xmlConverter = new XmlToCsv(TMP_PATH);
+        xmlConverter.convert();
+
+        setDisplayCsv(new Table());
+        getDisplayCsv().TableXML(TMP_PATH, Data.dataSet.get(Data.dataSet.entrySet().iterator().next().getKey()));
+        Table.table.getModel().addTableModelListener(new TableChangedListener());
+        clearJTables();
+        getContent().add(getDisplayCsv().Jscroll, BorderLayout.CENTER);
+        getFrame().setVisible(true);
+
     }
 }
