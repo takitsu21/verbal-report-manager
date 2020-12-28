@@ -26,6 +26,7 @@ public class AddProgramListener extends AbstractApplication implements ActionLis
         programFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         programFrame.setVisible(true);
 
+
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(5, 1, 20, 5));
         JPanel namePanel = new JPanel(new FlowLayout());
@@ -47,8 +48,8 @@ public class AddProgramListener extends AbstractApplication implements ActionLis
 
         JLabel programId = new JLabel("Id du programme");
         programId.setBounds(65, 31, 46, 14);
-
         JTextField programIdField = new JTextField();
+
         programIdField.setBounds(128, 65, 86, 20);
         programIdField.setColumns(15);
 
@@ -86,128 +87,151 @@ public class AddProgramListener extends AbstractApplication implements ActionLis
             int nbComposantes1 = Integer.parseInt(nbComposantesField.getText());
             CheckBoxGroup[] checkBoxGroupComposantes = new CheckBoxGroup[nbComposantes1];
             CheckBoxGroup[] checkBoxGroupOptions = new CheckBoxGroup[nbOptions1];
-            CheckBoxGroup checkBoxGroupsCourse = new CheckBoxGroup("COURS", stringCourses);
+            CheckBoxGroup checkBoxGroupsCourse = new CheckBoxGroup("COURS", false, stringCourses);
 
             JPanel nextPane = new JPanel();
             JPanel tmp = new JPanel();
+            JButton metaButton = new JButton();
+            metaButton.addActionListener(e1 -> {
+                List<List<String>> programs = new ArrayList<>();
+                List<String> tmp1 = new ArrayList<>();
+                tmp1.add("identifier");
+                tmp1.add(programIdField.getText());
+                programs.add(tmp1);
+                tmp1 = new ArrayList<>();
+                tmp1.add("name");
+                tmp1.add(textField.getText());
+                programs.add(tmp1);
+                for (CheckBoxGroup cb : checkBoxGroupComposantes) {
+                    tmp1 = new ArrayList<>();
+                    tmp1.add("composite");
+                    tmp1.add(cb.checkBoxGroupeId.getText());
+                    tmp1.add(cb.checkBoxGroupeName.getText());
+                    for (JCheckBox currentCb : cb.checkBoxes) {
+                        if (currentCb.isSelected()) {
+                            tmp1.add(currentCb.getText().split(" ")[0]);
+                        }
+                    }
+                    programs.add(tmp1);
+                }
+
+                for (CheckBoxGroup cb : checkBoxGroupOptions) {
+                    tmp1 = new ArrayList<>();
+                    tmp1.add("option");
+                    tmp1.add(cb.checkBoxGroupeId.getText());
+                    tmp1.add(cb.checkBoxGroupeName.getText());
+                    for (JCheckBox currentCb : cb.checkBoxes) {
+                        if (currentCb.isSelected()) {
+                            tmp1.add(currentCb.getText().split(" ")[0]);
+
+                        }
+                    }
+                    programs.add(tmp1);
+                }
+
+                for (JCheckBox currentCb : checkBoxGroupsCourse.checkBoxes) {
+                    if (currentCb.isSelected()) {
+                        tmp1 = new ArrayList<>();
+                        tmp1.add("item");
+                        tmp1.add(currentCb.getText().split(" ")[0]);
+                        programs.add(tmp1);
+                    }
+                }
+                String[][] t = new String[programs.size()][];
+                String[] blankArray = new String[0];
+                for (int i = 0; i < programs.size(); i++) {
+                    t[i] = programs.get(i).toArray(blankArray);
+                }
+                if (XmlWriter.addProgram(XmlWriter.generateProgram(t))) {
+                    XmlWriter.save(TMP_PATH);
+                    Table.table.getModel().removeTableModelListener(modelListener);
+                    XmlToCsv z = new XmlToCsv(TMP_PATH);
+                    z.convert();
+                    getComboBox().addItem(programIdField.getText());
+                    Table.table.getModel().addTableModelListener(modelListener);
+
+                    getNorthPanel().repaint();
+                    getNorthPanel().revalidate();
+                    OpenFileListener.openFile(new File(TMP_PATH));
+
+                    SwingUtilities.invokeLater(() -> programFrame.dispose());
+                }
+            });
+            ActionListener finishListener = metaButton.getActionListeners()[0];
+
 
             nextPane.setLayout(new GridLayout(2, 1));
 
             nextPane.add(checkBoxGroupsCourse);
-            JButton next12 = new JButton("Suivant");
-            next12.addActionListener(e13 -> {
-                JPanel tmp13 = new JPanel();
-                getProgramFrame().getContentPane().remove(nextPane);
-                refreshWindow();
-                JPanel nextPane12 = new JPanel();
+            JButton next12;
+            if (nbOptions1 == 0 && nbComposantes1 == 0) {
+                next12 = new JButton("Terminer");
+                next12.addActionListener(finishListener);
 
-                nextPane12.setLayout(new GridLayout(nbOptions1 + 1, 1));
+            } else {
 
-                for (int i = 0; i < nbOptions1; i++) {
-                    checkBoxGroupOptions[i] = new CheckBoxGroup("OPTIONS", stringCourses);
-                    nextPane12.add(checkBoxGroupOptions[i]);
-                }
-                JButton next1 = new JButton("Suivant");
-                next1.addActionListener(e12 -> {
-                    JPanel tmp12 = new JPanel();
-                    getProgramFrame().getContentPane().remove(nextPane12);
+                next12 = new JButton("Suivant");
+                next12.addActionListener(e13 -> {
+                    JPanel tmp13 = new JPanel();
+                    getProgramFrame().getContentPane().remove(nextPane);
                     refreshWindow();
+                    JPanel nextPane12 = new JPanel();
 
-                    JPanel nextPane1 = new JPanel();
+                    nextPane12.setLayout(new GridLayout(nbOptions1 + 1, 1));
 
-                    nextPane1.setLayout(new GridLayout(nbComposantes1 + 1, 1));
-
-                    for (int i = 0; i < nbComposantes1; i++) {
-                        checkBoxGroupComposantes[i] = new CheckBoxGroup("COMPOSANTES",
-                                stringCourses);
-                        nextPane1.add(checkBoxGroupComposantes[i]);
+                    for (int i = 0; i < nbOptions1; i++) {
+                        checkBoxGroupOptions[i] = new CheckBoxGroup("OPTIONS", true, stringCourses);
+                        nextPane12.add(checkBoxGroupOptions[i]);
                     }
-                    JButton finished = new JButton("Terminer");
-                    finished.addActionListener(e1 -> {
-                        List<List<String>> programs = new ArrayList<>();
-                        List<String> tmp1 = new ArrayList<>();
-                        tmp1.add("identifier");
-                        tmp1.add(programIdField.getText());
-                        programs.add(tmp1);
-                        tmp1 = new ArrayList<>();
-                        tmp1.add("name");
-                        tmp1.add(textField.getText());
-                        programs.add(tmp1);
-                        for (CheckBoxGroup cb : checkBoxGroupComposantes) {
-                            tmp1 = new ArrayList<>();
-                            tmp1.add("composite");
-                            tmp1.add(cb.checkBoxGroupeId.getText());
-                            tmp1.add(cb.checkBoxGroupeName.getText());
-                            for (JCheckBox currentCb : cb.checkBoxes) {
-                                if (currentCb.isSelected()) {
-                                    tmp1.add(currentCb.getText().split(" ")[0]);
-                                }
+                    if (nbComposantes1 > 0) {
+                        JButton next1 = new JButton("Suivant");
+                        next1.addActionListener(e12 -> {
+                            JPanel tmp12 = new JPanel();
+                            getProgramFrame().getContentPane().remove(nextPane12);
+                            refreshWindow();
+
+                            JPanel nextPane1 = new JPanel();
+
+                            nextPane1.setLayout(new GridLayout(nbComposantes1 + 1, 1));
+
+                            for (int i = 0; i < nbComposantes1; i++) {
+                                checkBoxGroupComposantes[i] = new CheckBoxGroup("COMPOSANTES", true, stringCourses);
+                                nextPane1.add(checkBoxGroupComposantes[i]);
                             }
-                            programs.add(tmp1);
+                            JButton finished = new JButton("Terminer");
+                            finished.addActionListener(finishListener);
+
+                            tmp12.add(finished);
+                            if (nbOptions1 == 0 && nbComposantes1 == 0) finished.doClick();
+
+                            nextPane1.add(tmp12);
+                            programFrame.getContentPane().add(nextPane1);
+                            refreshWindow();
+                        });
+
+
+                        tmp13.add(next1);
+                        nextPane12.add(tmp13);
+                        programFrame.getContentPane().add(nextPane12);
+                        refreshWindow();
+                        if (nbOptions1 == 0) {
+                            next1.doClick();
                         }
+                    } else {
+                        JButton next1 = new JButton("Terminer");
+                        next1.addActionListener(finishListener);
 
-                        for (CheckBoxGroup cb : checkBoxGroupOptions) {
-                            tmp1 = new ArrayList<>();
-                            tmp1.add("option");
-                            tmp1.add(cb.checkBoxGroupeId.getText());
-                            tmp1.add(cb.checkBoxGroupeName.getText());
-                            for (JCheckBox currentCb : cb.checkBoxes) {
-                                if (currentCb.isSelected()) {
-                                    tmp1.add(currentCb.getText().split(" ")[0]);
 
-                                }
-                            }
-                            programs.add(tmp1);
-                        }
-
-                        for (JCheckBox currentCb : checkBoxGroupsCourse.checkBoxes) {
-                            if (currentCb.isSelected()) {
-                                tmp1 = new ArrayList<>();
-                                tmp1.add("item");
-                                tmp1.add(currentCb.getText().split(" ")[0]);
-                                programs.add(tmp1);
-                            }
-                        }
-                        String[][] t = new String[programs.size()][];
-                        String[] blankArray = new String[0];
-                        for (int i = 0; i < programs.size(); i++) {
-                            t[i] = programs.get(i).toArray(blankArray);
-                        }
-                        if (XmlWriter.addProgram(XmlWriter.generateProgram(t))) {
-                            XmlWriter.save(TMP_PATH);
-                            Table.table.getModel().removeTableModelListener(modelListener);
-                            XmlToCsv z = new XmlToCsv(TMP_PATH);
-                            z.convert();
-                            getComboBox().addItem(programIdField.getText());
-                            Table.table.getModel().addTableModelListener(modelListener);
-
-                            getNorthPanel().repaint();
-                            getNorthPanel().revalidate();
-                            OpenFileListener.openFile(new File(TMP_PATH));
-
-                            SwingUtilities.invokeLater(() -> programFrame.dispose());
-                        }
-                    });
-                    tmp12.add(finished);
-                    if(nbOptions1 == 0 && nbComposantes1 == 0) finished.doClick();
-
-                    nextPane1.add(tmp12);
-                    programFrame.getContentPane().add(nextPane1);
-                    refreshWindow();
+                        tmp13.add(next1);
+                        nextPane12.add(tmp13);
+                        programFrame.getContentPane().add(nextPane12);
+                        refreshWindow();
+                    }
                 });
-
-
-                tmp13.add(next1);
-                nextPane12.add(tmp13);
-                programFrame.getContentPane().add(nextPane12);
-                refreshWindow();
-                if(nbOptions1 == 0){ next1.doClick();}
-            });
-
+            }
             tmp.add(next12);
             nextPane.add(tmp);
             programFrame.getContentPane().add(nextPane);
-            if(nbComposantes1 == 0){ next12.doClick();}
 
 
         });
@@ -250,7 +274,7 @@ public class AddProgramListener extends AbstractApplication implements ActionLis
         private final JTextField checkBoxGroupeName = new JTextField();
         private final JTextField checkBoxGroupeId = new JTextField();
 
-        public CheckBoxGroup(String labelChoice, String... options) {
+        public CheckBoxGroup(String labelChoice, Boolean txtfiel, String... options) {
             checkBoxes = new ArrayList<>(25);
             setLayout(new BorderLayout());
             JPanel header = new JPanel(new FlowLayout(FlowLayout.LEFT, 1, 1));
@@ -265,10 +289,12 @@ public class AddProgramListener extends AbstractApplication implements ActionLis
             header.add(new Label(labelChoice));
 
             header.add(all);
-            header.add(new Label("Nom:"));
-            header.add(checkBoxGroupeName, BorderLayout.EAST);
-            header.add(new Label("Id:"));
-            header.add(checkBoxGroupeId, BorderLayout.EAST);
+            if (txtfiel) {
+                header.add(new Label("Nom:"));
+                header.add(checkBoxGroupeName, BorderLayout.EAST);
+                header.add(new Label("Id:"));
+                header.add(checkBoxGroupeId, BorderLayout.EAST);
+            }
             add(header, BorderLayout.NORTH);
 
 
