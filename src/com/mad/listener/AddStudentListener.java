@@ -189,11 +189,11 @@ public class AddStudentListener extends AbstractApplication implements ActionLis
                     content.add(cb, gbc);
                 }
 
-                JCheckBox cb = new JCheckBox(options[options.length - 1]);
-                cb.setOpaque(false);
-                checkBoxes.add(cb);
-                gbc.weighty = 1;
-                content.add(cb, gbc);
+                //JCheckBox cb = new JCheckBox(options[options.length - 1]);
+                //cb.setOpaque(false);
+                //checkBoxes.add(cb);
+                //gbc.weighty = 1;
+                //content.add(cb, gbc);
 
             }
 
