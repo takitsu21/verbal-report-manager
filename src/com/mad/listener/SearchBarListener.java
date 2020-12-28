@@ -145,7 +145,7 @@ public class SearchBarListener extends AbstractApplication implements ActionList
                         String coursTest = XmlToCsv.read(cour, "item");
                         int trouver = 0;
                         for (int m = 3; m < data[0].length; m++) {
-                            if (coursTest.equals(data[0][m].split(" - ")[0])) {
+                            if (coursTest!=null && coursTest.equals(data[0][m].split(" - ")[0])) {
                                 trouver = 1;
                                 break;
                             }
@@ -155,7 +155,7 @@ public class SearchBarListener extends AbstractApplication implements ActionList
                                 data[i] = Arrays.copyOf(data[i], data[i].length + 1);
                             }
                             for (Element element : listCourses) {
-                                if (coursTest.equals(XmlToCsv.read(element, "identifier"))) {
+                                if (coursTest!=null && coursTest.equals(XmlToCsv.read(element, "identifier"))) {
                                     data[0][data[0].length - 1] = coursTest + " - " + XmlToCsv.read(element, "name");
                                     break;
                                 }

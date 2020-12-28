@@ -1,9 +1,6 @@
 package com.mad;
 
-import com.mad.listener.DragDropListener;
-import com.mad.listener.EnregistrerListener;
-import com.mad.listener.OpenFileListener;
-import com.mad.listener.SaveFileListener;
+import com.mad.listener.*;
 import com.mad.util.Data;
 import com.mad.util.Table;
 import com.mad.util.XmlWriter;
@@ -49,11 +46,14 @@ public class GUI {
         enregistrer.addActionListener(new EnregistrerListener());
         file.add(enregistrer);
 
-        JMenu export = new JMenu("Exporter");
+        JMenu export = new JMenu("Enregistrer sous");
         export.setMnemonic('E');
         JMenuItem xmlItem = new JMenuItem("xml");
         JMenuItem csvItem = new JMenuItem("csv");
+
         csvItem.addActionListener(new SaveFileListener());
+        xmlItem.addActionListener(new SaveFileXmlListener());
+
         file.add(export);
         export.add(xmlItem);
         export.add(csvItem);

@@ -13,6 +13,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class AddStudentListener extends AbstractApplication implements ActionListener {
@@ -289,7 +290,7 @@ public class AddStudentListener extends AbstractApplication implements ActionLis
             for (int i = 4; i < checkBoxes.size() + 4; i++) {
                 if (checkBoxes.get(i - 4).isSelected()) {
                     student[i][0] = "grade";
-                    student[i][1] = checkBoxes.get(i - 4).getText();
+                    student[i][1] = checkBoxes.get(i - 4).getText().split(" - ")[0];
                     student[i][2] = "0.0";
                 }
             }
@@ -304,6 +305,7 @@ public class AddStudentListener extends AbstractApplication implements ActionLis
             student[3][1] = programmeEntry;
 
             if (XmlWriter.addStudent(XmlWriter.generateStudentNode(student))) {
+                System.out.println(Arrays.deepToString(student));
                 refreshTable();
                 tmp.dispose();
 //                XmlWriter.save(TMP_PATH);
@@ -336,7 +338,6 @@ public class AddStudentListener extends AbstractApplication implements ActionLis
             cbg = new CheckBoxGroup("COURS", cours);
             tmp.add(cbg, BorderLayout.CENTER);
             tmp.setVisible(true);
-            System.out.println("dedans");
 //            Table.table.getModel().removeTableModelListener(new TableChangedListener());
 //            Table.table.getSelectionModel().removeListSelectionListener(new EnableButtonsRowsListener());
 //            Table.table.getSelectionModel().addListSelectionListener(new EnableButtonsRowsListener());

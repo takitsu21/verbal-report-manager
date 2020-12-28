@@ -103,7 +103,7 @@ public class OpenFileListener extends AbstractApplication implements ActionListe
 
 
     public static void initComponents() {
-        System.out.println("init");
+
         setResetTable(new JButton("Remise à zéro du tableau"));
         setShowSelectedLines(new JButton("Afficher ligne selectionné"));
         setDeleteLines(new JButton("Supprimer ligne selectionné"));
