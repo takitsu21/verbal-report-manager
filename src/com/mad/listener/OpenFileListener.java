@@ -27,6 +27,7 @@ public class OpenFileListener extends AbstractApplication implements ActionListe
     }
 
     public static void openFile(File file) {
+        if(getOriginPath() == null){setOriginPath(file.getPath());}
         setPath(file.getPath());
 
 
@@ -84,7 +85,6 @@ public class OpenFileListener extends AbstractApplication implements ActionListe
             if (getResetTable() == null && getShowSelectedLines() == null && getSearchComboBox() == null) {
                 initComponents();
             }
-
             clearJTables();
 
             getContent().add(getDisplayCsv().Jscroll, BorderLayout.CENTER);

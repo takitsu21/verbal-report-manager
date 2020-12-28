@@ -18,6 +18,7 @@ import java.util.EventListener;
 
 
 public abstract class AbstractApplication extends JPanel {
+    public static String ORIGIN_PATH;
     public static final String TMP_PATH = "./xml-editor.tmp.xml";
 //    protected final TableModelListener modelListener = new TableChangedListener();
     protected static String path;
@@ -38,8 +39,6 @@ public abstract class AbstractApplication extends JPanel {
     protected static JLabel dragAndDrop;
     protected static JTree showHierarchicTree;
     protected static JButton addProgramButton;
-
-    protected static XmlWriter xmlEditor = new XmlWriter();
 
 
     public AbstractApplication() {
@@ -189,6 +188,17 @@ public abstract class AbstractApplication extends JPanel {
         AbstractApplication.comboBox = comboBox;
     }
 
+    protected static XmlWriter xmlEditor = new XmlWriter();
+
+    public static String getOriginPath() {
+        return ORIGIN_PATH;
+    }
+
+    public static void setOriginPath(String originPath) {
+        ORIGIN_PATH = originPath;
+    }
+
+
     public static boolean isIsFirstFile() {
         return isFirstFile;
     }
@@ -205,7 +215,7 @@ public abstract class AbstractApplication extends JPanel {
         }
     }
 
-    public static void refreshTable(){
+    public static void refreshTable() {
         XmlWriter.save(TMP_PATH);
         XmlToCsv xmlConverter = new XmlToCsv(TMP_PATH);
         xmlConverter.convert();
