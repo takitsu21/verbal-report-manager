@@ -19,7 +19,7 @@ public class AddStudentListener extends AbstractApplication implements ActionLis
     private JTextField studNum;
     private JTextField name;
     private JTextField surname;
-    private JComboBox program;
+    private JComboBox<String> program;
 
     public JTextField getStudNumfield() {
         return studNum;
@@ -72,7 +72,6 @@ public class AddStudentListener extends AbstractApplication implements ActionLis
         pnl.add(sureNamePane);
 
         program = getComboBox();
-        surname.setSize(60, 30);
         prog.add(new JLabel("Program:"));
         prog.add(program);
         pnl.add(prog);
@@ -91,9 +90,9 @@ public class AddStudentListener extends AbstractApplication implements ActionLis
         tmp.add(cbg, BorderLayout.CENTER);
 
         JPanel sud = new JPanel(new GridLayout(1, 2));
-        JLabel l = new JLabel("Ce cours peut être ajouté mais ne fait pas parti du programme courant");
-        l.setForeground(Color.decode("0xf27e11"));
-        sud.add(l, BorderLayout.SOUTH);
+        JLabel legend = new JLabel("Ce cours peut être ajouté mais ne fait pas parti du programme courant");
+        legend.setForeground(Color.decode("0xf27e11"));
+        sud.add(legend, BorderLayout.SOUTH);
         JPanel bouton = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         JButton ajouter = new JButton("Ajouter");
         ajouter.addActionListener(new CheckboxAction(cbg, tmp));
