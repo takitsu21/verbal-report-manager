@@ -23,6 +23,7 @@ public class SearchBarListener extends AbstractApplication implements ActionList
         try {
 
             String searchText = (String) getSearchComboBox().getSelectedItem();
+
             try {
                 searchText = searchText.trim();
             } catch (NullPointerException exc) {
@@ -32,21 +33,59 @@ public class SearchBarListener extends AbstractApplication implements ActionList
             String[] listText = searchText.split(";");
 
 
-            String[] ligne = searchInTable(Table.table, listText[0]);
-            for (int j = 1; j < listText.length; j++) {
-                String[] etu = searchInTable(Table.table, listText[j]);
+            String[] ligne = {};
+            for (String s : listText) {
+
+                String[] etu = searchInTable(Table.table, s);
+
                 int oldLength = ligne.length;
                 ligne = Arrays.copyOf(ligne, (ligne.length + etu.length));
                 System.arraycopy(etu, 0, ligne, oldLength, etu.length);
 
             }
 
-            System.out.println(ligne.length);
-            if (ligne.length == 0) {
-                searchCourse(listText);
-            } else if (getPath().endsWith(".xml")) {
-                selectEtu(ligne);
+
+            String[] ligne2 = {};
+            for(int i=0;i<ligne.length;i++){
+                for(int j=0; j<ligne.length;j++){
+                    if(i!=j && ligne[i].equals(ligne[j])){
+                        System.out.println("ok");
+                        //System.arraycopy(ligne, 0, ligne2, 0, j);
+
+                        //System.arraycopy(ligne, j + 1, ligne2, j, ligne.length - 1);
+                        break;
+                    }
+                }
+                //ligne=ligne2;
             }
+
+
+
+
+            String[][] data=new String[ligne.length+1][];
+            if (ligne.length == 0) {
+                data=searchCourse(listText);
+                //System.out.println("1");
+            } else if (getPath().endsWith(".xml")) {
+                //System.out.println("xml");
+                data=selectEtu(ligne);
+            }else if (getPath().endsWith(".csv")){
+                //System.out.println(Arrays.toString(ligne));
+                //data=searchInCsv(ligne);
+                data[0]=Data.dataArray[0];
+                for (int i=0; i< ligne.length;i++){
+                    for (int j=1;j<Data.dataArray.length;j++){
+                        if(ligne[i].equals(Data.dataArray[j][0])){
+
+                            data[i+1]=Data.dataArray[j];
+                            break;
+                        }
+                    }
+                }
+
+            }
+            Table.setNewModelTable(Table.table, data);
+
 
         } catch (Exception ioException) {
             ioException.printStackTrace();
@@ -54,7 +93,7 @@ public class SearchBarListener extends AbstractApplication implements ActionList
     }
 
 
-    private void searchCourse(String[] names) {
+    private String[][] searchCourse(String[] names) {
         String[][] tableau_final = new String[Data.dataArray.length][names.length + 1];
 
         for (int i = 0; i < names.length; i++) {
@@ -77,14 +116,15 @@ public class SearchBarListener extends AbstractApplication implements ActionList
         tableau_final[finalTabLength - 3][0] = "Note min";
         tableau_final[finalTabLength - 4][0] = "Note max";
 
-        Table.setNewModelTable(Table.table, tableau_final);
+        return tableau_final;
     }
 
 
-    public static void selectEtu(String[] etu) {
+    public static String[][] selectEtu(String[] etu) {
         List<Element> listStudents = Data.getChildren(Data.root, "student");
         List<Element> listCourses = Data.getChildren(Data.root, "course");
         String[][] data = new String[etu.length + 1][Data.dataArray[0].length];
+
         for (int i = 0; i < Data.dataArray[0].length; i++) {
             data[0][i] = Data.dataArray[0][i];
         }
@@ -133,7 +173,7 @@ public class SearchBarListener extends AbstractApplication implements ActionList
                 }
             }
         }
-        Table.setNewModelTable(Table.table, data);
+        return data;
     }
 
 
@@ -161,5 +201,19 @@ public class SearchBarListener extends AbstractApplication implements ActionList
 
 
         return num;
+    }
+
+    private static String[][] searchInCsv(String[] etu) {
+        String[][] data=new String[etu.length][];
+        for (int i=0; i< etu.length;i++){
+            for (int j=0;j<Data.dataArray.length;j++){
+                if(etu[i].equals(Data.dataArray[j][0])){
+                    System.out.println(Arrays.toString(Data.dataArray[j]));
+                    data[i]=Data.dataArray[j];
+                    break;
+                }
+            }
+        }
+        return data;
     }
 }

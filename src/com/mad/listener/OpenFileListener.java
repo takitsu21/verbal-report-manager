@@ -35,10 +35,14 @@ public class OpenFileListener extends AbstractApplication implements ActionListe
 
             if (getPath().endsWith(".csv")) {
                 if (getComboBox().getItemCount() > 0) {
-                    getNorthPanel().remove(getComboBox());
-                    getNorthPanel().remove(getShowTree());
+                    //getNorthPanel().remove(getComboBox());
+                    //getNorthPanel().remove(getShowTree());
                     resetComboBox();
                 }
+                if(!isFirstFile) {
+                    getNorthPanel().remove(getSearchComboBox());
+                }
+                setIsFirstFile(false);
                 getDisplayCsv().TableCSV(getPath());
             } else {
                 XmlToCsv xmlConverter = new XmlToCsv(getPath());
@@ -51,8 +55,12 @@ public class OpenFileListener extends AbstractApplication implements ActionListe
                 if (getComboBox().getItemCount() > 0) {
 
                     setIsFirstFile(false);
+                    resetComboBox();
                 }
-                resetComboBox();
+                if(!isFirstFile) {
+                    getNorthPanel().remove(getSearchComboBox());
+                }
+
                 /*    setShowHierarchicTree(new JTree());
                     setShowTree(new JButton("Vue hiérarchisé"));
                     getShowTree().addActionListener(new HierarchicalListener());
@@ -88,6 +96,7 @@ public class OpenFileListener extends AbstractApplication implements ActionListe
 
 
     public static void initComponents() {
+        System.out.println("init");
         setResetTable(new JButton("Remise à zéro du tableau"));
         setShowSelectedLines(new JButton("Afficher ligne selectionné"));
         setDeleteLines(new JButton("Supprimer ligne selectionné"));
