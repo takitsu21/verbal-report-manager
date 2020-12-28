@@ -2,6 +2,7 @@ package com.mad.listener;
 
 import com.mad.AbstractApplication;
 import com.mad.util.Data;
+import com.mad.util.Table;
 import com.mad.util.XmlWriter;
 
 import java.awt.event.ActionEvent;
@@ -14,6 +15,8 @@ public class DeleteRowListener extends AbstractApplication implements ActionList
         for (int selectedRow : selectedRows) {
             XmlWriter.deleteStudent(Data.dataArray[selectedRow + 1][0]);
         }
+        Table.setNewModelTable(Table.table, Data.dataArray);
         refreshTable();
+
     }
 }

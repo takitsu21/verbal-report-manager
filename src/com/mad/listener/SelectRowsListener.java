@@ -18,10 +18,9 @@ public class SelectRowsListener extends AbstractApplication implements ActionLis
             for (int row : selectedRows) {
                 newModel[acc++] = Data.dataArray[row + 1];
             }
-            Table.table.getModel().addTableModelListener(modelListener);
-
+            Table.table.getModel().removeTableModelListener(new TableChangedListener());
             Table.setNewModelTable(Table.table, newModel);
-            Table.table.getModel().addTableModelListener(modelListener);
+            Table.table.getModel().addTableModelListener(new TableChangedListener());
         }
     }
 }

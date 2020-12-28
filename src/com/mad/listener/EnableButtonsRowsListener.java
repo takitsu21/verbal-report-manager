@@ -1,6 +1,7 @@
 package com.mad.listener;
 
 import com.mad.AbstractApplication;
+import com.mad.util.Table;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -11,7 +12,7 @@ public class EnableButtonsRowsListener extends AbstractApplication implements Li
     public void valueChanged(ListSelectionEvent e) {
         SwingUtilities.invokeLater(
                 () -> {
-                    if (getDisplayCsv().getSelectedRows().length > 0) {
+                    if (Table.table.getSelectedRows().length > 0) {
                         getShowSelectedLines().setEnabled(true);
                         getDeleteLines().setEnabled(true);
                     } else {
