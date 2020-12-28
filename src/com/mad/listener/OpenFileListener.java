@@ -38,10 +38,14 @@ public class OpenFileListener extends AbstractApplication implements ActionListe
 
             if (getPath().endsWith(".csv")) {
                 if (getComboBox().getItemCount() > 0) {
-                    getNorthPanel().remove(getComboBox());
-                    getNorthPanel().remove(getShowTree());
+                    //getNorthPanel().remove(getComboBox());
+                    //getNorthPanel().remove(getShowTree());
                     resetComboBox();
                 }
+                if(!isFirstFile) {
+                    getNorthPanel().remove(getSearchComboBox());
+                }
+                setIsFirstFile(false);
                 getDisplayCsv().TableCSV(getPath());
             } else {
                 XmlToCsv xmlConverter = new XmlToCsv(getPath());
@@ -52,13 +56,17 @@ public class OpenFileListener extends AbstractApplication implements ActionListe
 
 
                 if (getComboBox().getItemCount() > 0) {
+                    setIsFirstFile(false);
                     resetComboBox();
 //                    Table.table.getSelectionModel().addListSelectionListener(new EnableButtonsRowsListener());
 //                    getDeleteLines().addActionListener(new DeleteRowListener());
-                    setIsFirstFile(false);
-                    getNorthPanel().add(getShowTree());
-                    getNorthPanel().add(getSearchComboBox());
+                    
                 }
+                if(!isFirstFile) {
+                    getNorthPanel().remove(getSearchComboBox());
+                }
+                getNorthPanel().add(getShowTree());
+
 
                 /*    setShowHierarchicTree(new JTree());
                     setShowTree(new JButton("Vue hiérarchisé"));
@@ -97,6 +105,7 @@ public class OpenFileListener extends AbstractApplication implements ActionListe
 
 
     public static void initComponents() {
+        System.out.println("init");
         setResetTable(new JButton("Remise à zéro du tableau"));
         setShowSelectedLines(new JButton("Afficher ligne selectionné"));
         setDeleteLines(new JButton("Supprimer ligne selectionné"));
