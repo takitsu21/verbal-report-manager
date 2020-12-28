@@ -45,18 +45,15 @@ public class SearchBarListener extends AbstractApplication implements ActionList
             }
 
 
-            String[] ligne2 = {};
+
             for(int i=0;i<ligne.length;i++){
+
                 for(int j=0; j<ligne.length;j++){
                     if(i!=j && ligne[i].equals(ligne[j])){
-                        System.out.println("ok");
-                        //System.arraycopy(ligne, 0, ligne2, 0, j);
-
-                        //System.arraycopy(ligne, j + 1, ligne2, j, ligne.length - 1);
-                        break;
+                        ligne[j]=null;
                     }
                 }
-                //ligne=ligne2;
+
             }
 
 
@@ -75,7 +72,8 @@ public class SearchBarListener extends AbstractApplication implements ActionList
                 data[0]=Data.dataArray[0];
                 for (int i=0; i< ligne.length;i++){
                     for (int j=1;j<Data.dataArray.length;j++){
-                        if(ligne[i].equals(Data.dataArray[j][0])){
+
+                        if(ligne[i] != null && ligne[i].equals(Data.dataArray[j][0])){
 
                             data[i+1]=Data.dataArray[j];
                             break;
