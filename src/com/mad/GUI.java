@@ -5,6 +5,7 @@ import com.mad.util.Data;
 import com.mad.util.Table;
 import com.mad.util.XmlWriter;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -15,9 +16,10 @@ import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
+import java.io.IOException;
 
 public class GUI {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         try {
             UIManager.setLookAndFeel((UIManager.getSystemLookAndFeelClassName()));
         } catch (Exception ign) {
@@ -84,6 +86,7 @@ public class GUI {
         new DropTarget(AbstractApplication.getFrame(), dtl);
 
         AbstractApplication.getFrame().add(BorderLayout.CENTER, AbstractApplication.getDragAndDrop());
+        AbstractApplication.getFrame().setIconImage(ImageIO.read(new File("./MAD16x16.png")));
 
         AbstractApplication.getFrame().addWindowListener(new WindowAdapter() {
             @Override
