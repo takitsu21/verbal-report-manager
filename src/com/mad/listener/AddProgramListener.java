@@ -189,21 +189,27 @@ public class AddProgramListener extends AbstractApplication implements ActionLis
                         }
                     });
                     tmp12.add(finished);
+                    if(nbOptions1 == 0 && nbComposantes1 == 0) finished.doClick();
 
                     nextPane1.add(tmp12);
                     programFrame.getContentPane().add(nextPane1);
                     refreshWindow();
                 });
+
+
                 tmp13.add(next1);
                 nextPane12.add(tmp13);
                 programFrame.getContentPane().add(nextPane12);
                 refreshWindow();
+                if(nbOptions1 == 0){ next1.doClick();}
             });
+
             tmp.add(next12);
             nextPane.add(tmp);
-
             programFrame.getContentPane().add(nextPane);
-            refreshWindow();
+            if(nbComposantes1 == 0){ next12.doClick();}
+
+
         });
         nextPanel.add(next);
 
