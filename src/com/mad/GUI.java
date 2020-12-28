@@ -1,6 +1,7 @@
 package com.mad;
 
 import com.mad.listener.DragDropListener;
+import com.mad.listener.EnregistrerListener;
 import com.mad.listener.OpenFileListener;
 import com.mad.listener.SaveFileListener;
 import com.mad.util.Data;
@@ -45,7 +46,7 @@ public class GUI {
 
         JMenuItem enregistrer = new JMenuItem("Enregistrer", 's' );
         enregistrer.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, KeyEvent.CTRL_DOWN_MASK));
-        enregistrer.addActionListener(new SaveFileListener());
+        enregistrer.addActionListener(new EnregistrerListener());
         file.add(enregistrer);
 
         JMenu export = new JMenu("Exporter");

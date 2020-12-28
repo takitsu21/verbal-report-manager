@@ -25,6 +25,7 @@ public class OpenFileListener extends AbstractApplication implements ActionListe
     }
 
     public static void openFile(File file) {
+        if(getOriginPath() == null){setOriginPath(file.getPath());}
         setPath(file.getPath());
 
 
