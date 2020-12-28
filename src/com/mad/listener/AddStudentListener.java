@@ -77,9 +77,12 @@ public class AddStudentListener extends AbstractApplication implements ActionLis
 
         CheckBoxGroup cbg = new CheckBoxGroup("COURS", cours);
 
-        program = getComboBox();
-        for (ActionListener ae : program.getActionListeners()) {
-            program.removeActionListener(ae);
+        program = new JComboBox<>();
+//        for (ActionListener ae : program.getActionListeners()) {
+//            program.removeActionListener(ae);
+//        }
+        for (int i = 0; i < getComboBox().getItemCount();i++) {
+            program.addItem(getComboBox().getItemAt(i));
         }
         program.addActionListener(new ListCheckBox(cours, tmp, cbg));
 
