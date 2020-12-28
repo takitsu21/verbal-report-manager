@@ -1,16 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?><data>
-    <course>
-        <identifier>poire</identifier>
-        <name>Dylann le meilleur</name>
-        <credits>6</credits>
-    </course>
-    
-    <course>
-        <identifier>pomme</identifier>
-        <name>Antoine le meilleur</name>
-        <credits>6</credits>
-    </course>
-    
+<?xml version="1.0"?>
+<data>
     <course>
         <identifier>SLUIN501</identifier>
         <name>Automates et langages</name>
@@ -173,7 +162,109 @@
         <credits>6</credits>
     </course>
 
-    
+    <program>
+        <identifier>SLINF3 180</identifier>
+        <name>L3 Informatique</name>
+        <option>
+            <identifier>SLOIN501</identifier>
+            <name>OPTION 1 S5 INF</name>
+            <item>SLUIN504</item>
+            <item>SLUIN505</item>
+        </option>
+        <item>SLUIN501</item>
+        <composite>
+            <identifier>KCTSS5</identifier>
+            <name>Compétences transversales 5 (SCIENCES)</name>
+            <item>KLSANS5</item>
+            <item>KCINFS5</item>
+            <item>KCNUMS5</item>
+        </composite>
+        <item>SLUIN502</item>
+        <item>SLUIN503</item>
+        <option>
+            <identifier>SLOIN601</identifier>
+            <name>OPTION 1 S6 INF</name>
+            <item>SLUIN603</item>
+            <item>SLUIN604</item>
+        </option>
+        <option>
+            <identifier>SLOIN602</identifier>
+            <name>OPTION 2 S6 INF</name>
+            <item>SLUIN605</item>
+            <item>SLUIN606</item>
+        </option>
+        <item>SLUIN601</item>
+        <composite>
+            <identifier>KCTSS6</identifier>
+            <name>Compétences transversales 6 (SCIENCES)</name>
+            <item>KLSANS6</item>
+            <item>KCECRS6</item>
+            <item>KPPROS6</item>
+        </composite>
+        <item>SLUIN602</item>
+    </program>
+
+    <program>
+        <identifier>SLIMI3 180</identifier>
+        <name>L3 Informatique - Mathématiques</name>
+        <option>
+            <identifier>SLOMN501</identifier>
+            <name>OPTION 1 S5 M-I</name>
+            <item>SLUIN504</item>
+            <item>SLUIN505</item>
+        </option>
+        <option>
+            <identifier>SLOMN502</identifier>
+            <name>OPTION 1 S5 M-I</name>
+            <item>SLUMA501</item>
+            <item>SLUMA505</item>
+        </option>
+        <item>SLUIN501</item>
+        <composite>
+            <identifier>KCTSS5</identifier>
+            <name>Compétences transversales 5 (SCIENCES)</name>
+            <item>KLSANS5</item>
+            <item>KCINFS5</item>
+            <item>KCNUMS5</item>
+        </composite>
+        <composite>
+            <identifier>SLUMA503</identifier>
+            <name>Équations différentielles</name>
+            <item>SLEMA501</item>
+            <item>SLEMA502</item>
+        </composite>
+        <item>SLUMA504</item>
+        <item>SLUIN502</item>
+        <option>
+            <identifier>SLOMN601</identifier>
+            <name>OPTION 1 S6 M-I</name>
+            <item>SLUIN603</item>
+            <item>SLUIN604</item>
+        </option>
+        <option>
+            <identifier>SLOMN602</identifier>
+            <name>OPTION 2 S6 M-I</name>
+            <item>SLUMA602</item>
+            <item>SLUMA604</item>
+        </option>
+        <option>
+            <identifier>SLOMN603</identifier>
+            <name>OPTION 3 S6 M-I</name>
+            <item>SLUMA601</item>
+            <item>SLUMA603</item>
+        </option>
+        <item>SLUIN601</item>
+        <composite>
+            <identifier>KCTSS6</identifier>
+            <name>Compétences transversales 6 (SCIENCES)</name>
+            <item>KLSANS6</item>
+            <item>KCECRS6</item>
+            <item>KPPROS6</item>
+        </composite>
+        <item>SLUIN602</item>
+        <item>SLUMA605</item>
+    </program>
+
     <student>
         <identifier>21123983</identifier>
         <name>Derkenne</name>
@@ -181,7 +272,7 @@
         <program>SLINF3 180</program>
         <grade>
             <item>SLUIN501</item>
-            <value>ABJ</value>
+            <value>8.729</value>
         </grade>
         <grade>
             <item>SLUIN502</item>
@@ -2669,10 +2760,6 @@
         <name>Fagot</name>
         <surname>Germain</surname>
         <program>SLINF3 180</program>
-        <grade>
-            <item>poire</item>
-            <value>0.0</value>
-        </grade>
         <grade>
             <item>SLUIN501</item>
             <value>13.173</value>
@@ -10490,10 +10577,6 @@
         <surname>Alexandre</surname>
         <program>SLINF3 180</program>
         <grade>
-            <item>pomme</item>
-            <value>0.0</value>
-        </grade>
-        <grade>
             <item>SLUIN501</item>
             <value>16.903</value>
         </grade>
@@ -14422,16 +14505,4 @@
             <value>6.665</value>
         </grade>
     </student>
-<program>
-<identifier>z</identifier>
-<name>z</name>
-<item>pomme</item>
-<item>poire</item>
-</program><student>
-<identifier>a</identifier>
-<name>a</name>
-<surname>a</surname>
-<program>z</program>
-<grade><item>poire</item><value>0.0</value></grade>
-<grade><item>pomme</item><value>0.0</value></grade>
-</student></data>
+</data>
