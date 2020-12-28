@@ -58,6 +58,7 @@ public class OpenFileListener extends AbstractApplication implements ActionListe
                 if (getComboBox().getItemCount() > 0) {
                     setIsFirstFile(false);
                     resetComboBox();
+
 //                    Table.table.getSelectionModel().addListSelectionListener(new EnableButtonsRowsListener());
 //                    getDeleteLines().addActionListener(new DeleteRowListener());
                     
@@ -65,7 +66,7 @@ public class OpenFileListener extends AbstractApplication implements ActionListe
                 if(!isFirstFile) {
                     getNorthPanel().remove(getSearchComboBox());
                 }
-                getNorthPanel().add(getShowTree());
+
 
 
                 /*    setShowHierarchicTree(new JTree());

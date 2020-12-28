@@ -15,10 +15,11 @@ public class ComboBoxListener extends AbstractApplication implements ActionListe
         JComboBox<?> combo = (JComboBox<?>) e.getSource();
         String[][] newArr = Table.sDataToArray(
                 Data.dataSet.get(Objects.requireNonNull(combo.getSelectedItem()).toString()));
+
+        Table.setNewModelTable(Table.table, newArr);
         Table.table.getModel().removeTableModelListener(new TableChangedListener());
         Table.table.getSelectionModel().removeListSelectionListener(new EnableButtonsRowsListener());
         Table.table.getSelectionModel().addListSelectionListener(new EnableButtonsRowsListener());
-        Table.setNewModelTable(Table.table, newArr);
         Table.table.getModel().addTableModelListener(new TableChangedListener());
     }
 }
