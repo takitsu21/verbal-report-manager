@@ -2,6 +2,7 @@ package com.mad.listener;
 
 import com.mad.AbstractApplication;
 import com.mad.util.Data;
+import com.mad.util.Table;
 import com.mad.util.XmlToCsv;
 import com.mad.util.XmlWriter;
 import org.w3c.dom.Element;
@@ -10,6 +11,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +19,7 @@ public class AddStudentListener extends AbstractApplication implements ActionLis
     private JTextField studNum;
     private JTextField name;
     private JTextField surname;
-    private JComboBox<?> program;
+    private JComboBox program;
 
     public JTextField getStudNumfield() {
         return studNum;
@@ -29,6 +31,10 @@ public class AddStudentListener extends AbstractApplication implements ActionLis
 
     public JTextField getSurnamefield() {
         return surname;
+    }
+
+    public JComboBox getProgramfield() {
+        return program;
     }
 
     @Override
@@ -45,7 +51,7 @@ public class AddStudentListener extends AbstractApplication implements ActionLis
         JPanel namePanel = new JPanel();
         JPanel sureNamePane = new JPanel();
         JPanel prog = new JPanel();
-//        pnl.setLayout(new BorderLayout());
+        //pnl.setLayout(new BorderLayout());
 
         studNum = new JTextField(10);
         studNum.setSize(60, 30);
@@ -66,7 +72,7 @@ public class AddStudentListener extends AbstractApplication implements ActionLis
         pnl.add(sureNamePane);
 
         program = getComboBox();
-        program.setSize(60, 30);
+        surname.setSize(60, 30);
         prog.add(new JLabel("Program:"));
         prog.add(program);
         pnl.add(prog);
@@ -77,7 +83,9 @@ public class AddStudentListener extends AbstractApplication implements ActionLis
 
         String[] cours = generateCheckboxValues(listCourses);
 
-        /*container.add(new CheckBoxGroup("COURS", cours),:), BorderLayout.SOUTH);*/
+        /*container.add(new CheckBoxGroup("COURS", cours), BorderLayout.SOUTH);
+        container.add(new CheckBoxGroup("OPTIONS", cours), BorderLayout.SOUTH);
+        container.add(new CheckBoxGroup("COMPOSANTES", cours), BorderLayout.SOUTH);*/
 
         CheckBoxGroup cbg = new CheckBoxGroup("COURS", cours);
         tmp.add(cbg, BorderLayout.CENTER);
@@ -232,9 +240,9 @@ public class AddStudentListener extends AbstractApplication implements ActionLis
 
     }
 
-    public class CheckboxAction extends AbstractApplication implements ActionListener {
+    class CheckboxAction extends AbstractApplication implements ActionListener {
         private final List<JCheckBox> checkBoxes;
-        private JFrame tmp;
+        JFrame tmp;
 //        private final String studNum;
 //        private final String name;
 //        private final String surname;
@@ -254,18 +262,18 @@ public class AddStudentListener extends AbstractApplication implements ActionLis
             String numEntry = getStudNumfield().getText();
             String nameEntry = getNamefield().getText();
             String surnameEntry = getSurnamefield().getText();
-//            String programmeEntry = Data.dataSet.entrySet().iterator().next().getKey();//(String) getProgramfield().getSelectedItem();
-//            String programmeEntry = (String) getProgramfield().getSelectedItem();
-            String programmeEntry = (String) program.getSelectedItem();
+            String programmeEntry = (String) getProgramfield().getSelectedItem();
+
 
             String[][] student = new String[checkBoxes.size() + 4][3];
             for (int i = 4; i < checkBoxes.size() + 4; i++) {
                 if (checkBoxes.get(i - 4).isSelected()) {
                     student[i][0] = "grade";
-                    student[i][1] = checkBoxes.get(i - 4).getText().split(" - ")[0];
+                    student[i][1] = checkBoxes.get(i - 4).getText();
                     student[i][2] = "0.0";
                 }
             }
+            System.out.println(programmeEntry);
             student[0][0] = "identifier";
             student[0][1] = numEntry;
             student[1][0] = "name";
@@ -276,12 +284,19 @@ public class AddStudentListener extends AbstractApplication implements ActionLis
             student[3][1] = programmeEntry;
 
             if (XmlWriter.addStudent(XmlWriter.generateStudentNode(student))) {
-                refreshTable();
                 tmp.dispose();
+                XmlWriter.save(TMP_PATH);
+                setDisplayCsv(new Table());
+                getDisplayCsv().TableXML(TMP_PATH, Data.dataSet.get(Data.dataSet.entrySet().iterator().next().getKey()));
+                Table.table.getModel().addTableModelListener(new TableChangedListener());
+                clearJTables();
+                getContent().add(getDisplayCsv().Jscroll, BorderLayout.CENTER);
             }
 
         }
     }
+
+
 }
 
 
