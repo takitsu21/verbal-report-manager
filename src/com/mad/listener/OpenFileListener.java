@@ -27,88 +27,6 @@ public class OpenFileListener extends AbstractApplication implements ActionListe
         }
     }
 
-//    public static void openFile(File file) {
-//        if(getOriginPath() == null){setOriginPath(file.getPath());}
-//        setPath(file.getPath());
-//
-//
-//        try {
-//            if (getContent() == null) {
-//                setContent(getFrame().getContentPane());
-//            }
-//
-//            if (getPath().endsWith(".csv")) {
-//                if (getComboBox().getItemCount() > 0) {
-//                    //getNorthPanel().remove(getComboBox());
-//                    //getNorthPanel().remove(getShowTree());
-//                    resetComboBox();
-//                }
-//                if(!isFirstFile) {
-//                    getNorthPanel().remove(getSearchComboBox());
-//                }
-//                setIsFirstFile(false);
-//                getDisplayCsv().TableCSV(getPath());
-//            } else {
-//                XmlToCsv xmlConverter = new XmlToCsv(getPath());
-//                xmlConverter.convert();
-//
-//                getDisplayCsv().TableXML(
-//                        getPath(), Data.dataSet.get(Data.dataSet.entrySet().iterator().next().getKey()));
-//
-//
-//                if (getComboBox().getItemCount() > 0) {
-//                    setIsFirstFile(false);
-//                    resetComboBox();
-//
-////                    Table.table.getSelectionModel().addListSelectionListener(new EnableButtonsRowsListener());
-////                    getDeleteLines().addActionListener(new DeleteRowListener());
-//
-//                }
-//                if(!isFirstFile) {
-//                    getNorthPanel().remove(getSearchComboBox());
-//                }
-//
-//
-//
-//                /*    setShowHierarchicTree(new JTree());
-//                    setShowTree(new JButton("Vue hiérarchisé"));
-//                    getShowTree().addActionListener(new HierarchicalListener());
-//                    getNorthPanel().add(getShowTree());
-//                    setIsFirstFile(false);*/
-//                //}
-//                for (String key : Data.dataSet.keySet()) {
-//                    getComboBox().addItem(key);
-//                }
-//
-//                if (isIsFirstFile()) {
-//                    setShowHierarchicTree(new JTree());
-//                    setShowTree(new JButton("Vue hiérarchisé"));
-//                    getComboBox().addActionListener(new ComboBoxListener());
-//                    getShowTree().addActionListener(new HierarchicalListener());
-//                    getNorthPanel().add(getShowTree());
-//                    getNorthPanel().add(getComboBox());
-//
-//                }
-//            }
-//
-//
-//            if (getResetTable() == null && getShowSelectedLines() == null && getSearchComboBox() == null) {
-//                initComponents();
-//            }
-//            clearJTables();
-//
-//            getContent().add(getDisplayCsv().Jscroll, BorderLayout.CENTER);
-//            System.gc();
-//            getFrame().setVisible(true);
-//        } catch (Exception exc) {
-//            exc.printStackTrace();
-//        }
-//    }
-
-
-
-
-
     public static void initComponents() {
         System.out.println("init");
         String[] blocs = new String[Data.dataArray[0].length - 3];
@@ -121,12 +39,15 @@ public class OpenFileListener extends AbstractApplication implements ActionListe
         setAddCourse(new JButton("Ajouter Cours"));
         setAddProgramButton(new JButton("Ajouter un programme"));
         setSearchComboBox(new JComboBox<>(blocs));
+        setShowTree(new JButton("Vue hiérarchisé"));
+        setShowHierarchicTree(new JTree());
 
         getSearchComboBox().setEditable(true);
 
         Dimension d = getSearchComboBox().getPreferredSize();
         getSearchComboBox().setPreferredSize(new Dimension(250, (int) d.getHeight()));
 
+        getShowTree().addActionListener(new HierarchicalListener());
         getResetTable().addActionListener(new ResetTableListener());
         getShowSelectedLines().addActionListener(new SelectRowsListener());
         getDeleteLines().addActionListener(new DeleteRowListener());
@@ -135,18 +56,7 @@ public class OpenFileListener extends AbstractApplication implements ActionListe
         Table.table.getSelectionModel().addListSelectionListener(new EnableButtonsRowsListener());
         getAddProgramButton().addActionListener(new AddProgramListener());
         getAddCourse().addActionListener(new AddCourseListener());
-
-
-        setAddProgramButton(new JButton("Ajouter un programme"));
-//        getSouthPanel().add(getAddProgramButton());
-//        getSouthPanel().add(getAddCourse());
-//        getSouthPanel().add(getAddStudent());
-//
-//        getSouthPanel().add(getResetTable());
-//        getSouthPanel().add(getShowSelectedLines());
-//        getSouthPanel().add(getDeleteLines());
-//
-//        getNorthPanel().add(getSearchComboBox());
+        getComboBox().addActionListener(new ComboBoxListener());
 
         Table.table.getModel().removeTableModelListener(new TableChangedListener());
         Table.table.getModel().addTableModelListener(new TableChangedListener());
@@ -156,74 +66,49 @@ public class OpenFileListener extends AbstractApplication implements ActionListe
         Table.table.setAutoCreateRowSorter(true);
     }
 
-    private static void resetComboBox() {
-//        if (!isIsFirstFile()) {
-//            getNorthPanel().remove(getComboBox());
-//            getNorthPanel().remove(getShowTree());
-//            getNorthPanel().remove(getSearchComboBox());
-//        }
-//        setShowHierarchicTree(new JTree());
-//        setShowTree(new JButton("Vue hiérarchisé"));
-
-        setComboBox(new JComboBox<>());
-        getComboBox().setName("programs");
-
-
-    }
-
     public static void openFile(String fileName) {
         try {
-            if (getContent() == null) {
-                setContent(getFrame().getContentPane());
-            }
             if (getOriginPath() == null) {
                 setOriginPath(fileName);
             }
             setPath(fileName);
-
-
             if (fileName.endsWith(".csv")) {
-                clearNorthPanel();
-                clearSouthPanel();
-                getSouthPanel().add(getShowSelectedLines());
-                getNorthPanel().add(getSearchComboBox());
                 getDisplayCsv().TableCSV(fileName);
             } else {
                 XmlToCsv xmlConverter = new XmlToCsv(fileName);
                 xmlConverter.convert();
-                System.out.println(Data.dataSet.entrySet().iterator().next().getKey());
 
                 getDisplayCsv().TableXML(
                         fileName,
                         Data.dataSet.get(Data.dataSet.entrySet().iterator().next().getKey())
                 );
-//                refreshPanels(fileName);
+                setComboBox(new JComboBox<>());
+                for (String key : Data.dataSet.keySet()) {
+                    getComboBox().addItem(key);
+                }
             }
             if (!componentsInitialised) {
                 initComponents();
             }
+            refreshPanels(fileName);
+            clearJTables();
             getContent().add(getDisplayCsv().Jscroll, BorderLayout.CENTER);
-            System.gc();
             frame.setVisible(true);
+            System.gc();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     private static void clearNorthPanel() {
-
         for (Component c : getNorthPanel().getComponents()) {
-            if (c != null)
-                getNorthPanel().remove(c);
-                System.out.println("Removing" + c);
+            getNorthPanel().remove(c);
         }
     }
 
     private static void clearSouthPanel() {
         for (Component c : getSouthPanel().getComponents()) {
-            if (c != null)
-                getNorthPanel().remove(c);
-                System.out.println("Removing" + c);
+            getSouthPanel().remove(c);
         }
     }
 
@@ -231,14 +116,6 @@ public class OpenFileListener extends AbstractApplication implements ActionListe
         if (fileName.endsWith(".csv")) {
             getSouthPanel().add(getShowSelectedLines());
         } else {
-            System.out.println(getAddProgramButton());
-            System.out.println(getAddCourse());
-            System.out.println(getAddStudent());
-            System.out.println(getResetTable());
-            System.out.println(getShowSelectedLines());
-            System.out.println(getDeleteLines());
-
-
             getSouthPanel().add(getAddProgramButton());
             getSouthPanel().add(getAddCourse());
             getSouthPanel().add(getAddStudent());
@@ -252,6 +129,7 @@ public class OpenFileListener extends AbstractApplication implements ActionListe
         if (fileName.endsWith(".csv")) {
             getNorthPanel().add(getSearchComboBox());
         } else {
+            getNorthPanel().add(getSearchComboBox());
             getNorthPanel().add(getShowTree());
             getNorthPanel().add(getComboBox());
         }
@@ -262,8 +140,5 @@ public class OpenFileListener extends AbstractApplication implements ActionListe
         clearSouthPanel();
         fillSouthPanel(fileName);
         fillNorthPanel(fileName);
-
-
     }
-
 }
