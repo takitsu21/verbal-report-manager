@@ -115,6 +115,7 @@ public class OpenFileListener extends AbstractApplication implements ActionListe
     private static void fillSouthPanel(String fileName) {
         if (fileName.endsWith(".csv")) {
             getSouthPanel().add(getShowSelectedLines());
+            getSouthPanel().add(getResetTable());
         } else {
             getSouthPanel().add(getAddProgramButton());
             getSouthPanel().add(getAddCourse());
