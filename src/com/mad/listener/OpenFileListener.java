@@ -11,6 +11,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.EventListener;
 
@@ -22,144 +23,41 @@ public class OpenFileListener extends AbstractApplication implements ActionListe
 
         if (returnValue == JFileChooser.APPROVE_OPTION) {
             File selectedFile = jfc.getSelectedFile();
-            openFile(selectedFile);
+            openFile(selectedFile.getPath());
         }
     }
-
-    public static void openFile(File file) {
-        if(getOriginPath() == null){setOriginPath(file.getPath());}
-        setPath(file.getPath());
-
-
-        try {
-            if (getContent() == null) {
-                setContent(getFrame().getContentPane());
-            }
-
-            if (getPath().endsWith(".csv")) {
-                if (getComboBox().getItemCount() > 0) {
-                    //getNorthPanel().remove(getComboBox());
-                    //getNorthPanel().remove(getShowTree());
-                    resetComboBox();
-                }
-                //resetComboBox();
-                if(!isFirstFile) {
-                    getNorthPanel().remove(getSearchComboBox());
-                }
-                setIsFirstFile(false);
-                getDisplayCsv().TableCSV(getPath());
-            } else {
-                XmlToCsv xmlConverter = new XmlToCsv(getPath());
-                xmlConverter.convert();
-
-                getDisplayCsv().TableXML(
-                        getPath(), Data.dataSet.get(Data.dataSet.entrySet().iterator().next().getKey()));
-
-
-                if (getComboBox().getItemCount() > 0) {
-                    setIsFirstFile(false);
-                    resetComboBox();
-
-//                    Table.table.getSelectionModel().addListSelectionListener(new EnableButtonsRowsListener());
-//                    getDeleteLines().addActionListener(new DeleteRowListener());
-                    
-                }
-                if(!isFirstFile) {
-                    getNorthPanel().remove(getSearchComboBox());
-                }
-
-
-
-
-                //}
-                for (String key : Data.dataSet.keySet()) {
-                    getComboBox().addItem(key);
-                }
-
-                if (isIsFirstFile()) {
-                    /*setShowHierarchicTree(new JTree());
-                    setShowTree(new JButton("Vue hiérarchisé"));
-                    getComboBox().addActionListener(new ComboBoxListener());
-                    getShowTree().addActionListener(new HierarchicalListener());
-                    getNorthPanel().add(getShowTree());
-                    getNorthPanel().add(getComboBox());*/
-
-                }
-            }
-
-            if (getResetTable() == null && getShowSelectedLines() == null && getSearchComboBox() == null) {
-                //initComponents();
-            }
-            initComponents();
-            clearJTables();
-
-            getContent().add(getDisplayCsv().Jscroll, BorderLayout.CENTER);
-            System.gc();
-            getFrame().setVisible(true);
-        } catch (Exception exc) {
-            exc.printStackTrace();
-        }
-    }
-
 
     public static void initComponents() {
         System.out.println("init");
+        String[] blocs = new String[Data.dataArray[0].length - 3];
+
+        if (blocs.length >= 0) System.arraycopy(Data.dataArray[0], 3, blocs, 0, blocs.length);
         setResetTable(new JButton("Remise à zéro du tableau"));
         setShowSelectedLines(new JButton("Afficher ligne selectionné"));
         setDeleteLines(new JButton("Supprimer ligne selectionné"));
         setAddStudent(new JButton("Ajouter un élève"));
-
-
-        String[] blocs = new String[Data.dataArray[0].length - 3];
-
-        if (blocs.length >= 0) System.arraycopy(Data.dataArray[0], 3, blocs, 0, blocs.length);
-
+        setAddCourse(new JButton("Ajouter Cours"));
+        setAddProgramButton(new JButton("Ajouter un programme"));
         setSearchComboBox(new JComboBox<>(blocs));
-        getSearchComboBox().setEditable(true);
-        getSearchComboBox().addActionListener(new SearchBarListener());
+        setShowTree(new JButton("Vue hiérarchisé"));
+        setShowHierarchicTree(new JTree());
 
+        getSearchComboBox().setEditable(true);
 
         Dimension d = getSearchComboBox().getPreferredSize();
         getSearchComboBox().setPreferredSize(new Dimension(250, (int) d.getHeight()));
 
+        getShowTree().addActionListener(new HierarchicalListener());
         getResetTable().addActionListener(new ResetTableListener());
         getShowSelectedLines().addActionListener(new SelectRowsListener());
         getDeleteLines().addActionListener(new DeleteRowListener());
         getAddStudent().addActionListener(new AddStudentListener());
-
+        getSearchComboBox().addActionListener(new SearchBarListener());
         Table.table.getSelectionModel().addListSelectionListener(new EnableButtonsRowsListener());
-
-
-        getSouthPanel().add(getAddStudent());
-
-        setAddCourse(new JButton("Ajouter Cours"));
-        getAddCourse().addActionListener(new AddCourseListener());
-        getSouthPanel().add(getAddCourse());
-
-        setAddProgramButton(new JButton("Ajouter un programme"));
-        getSouthPanel().add(getAddProgramButton());
         getAddProgramButton().addActionListener(new AddProgramListener());
+        getAddCourse().addActionListener(new AddCourseListener());
+        getComboBox().addActionListener(new ComboBoxListener());
 
-        getSouthPanel().add(getResetTable());
-        getSouthPanel().add(getShowSelectedLines());
-        getSouthPanel().add(getDeleteLines());
-//        getNorthPanel().setLayout(new GridLayout(1, 8, 3, 0));
-//        getNorthPanel().add(new JPanel());
-//        getNorthPanel().add(new JPanel());
-//        getNorthPanel().add(new JPanel());
-//        getNorthPanel().add(new JPanel());
-
-        if (getPath().endsWith(".xml")){
-            setShowHierarchicTree(new JTree());
-            setShowTree(new JButton("Vue hiérarchisé"));
-            getComboBox().addActionListener(new ComboBoxListener());
-            getShowTree().addActionListener(new HierarchicalListener());
-            getNorthPanel().add(getShowTree());
-            getNorthPanel().add(getComboBox());
-
-        }
-
-        getNorthPanel().add(getSearchComboBox());
         Table.table.getModel().removeTableModelListener(new TableChangedListener());
         Table.table.getModel().addTableModelListener(new TableChangedListener());
         getShowSelectedLines().setEnabled(false);
@@ -168,25 +66,79 @@ public class OpenFileListener extends AbstractApplication implements ActionListe
         Table.table.setAutoCreateRowSorter(true);
     }
 
-    private static void resetComboBox() {
-        if (!isIsFirstFile()) {
-            try {
-                getNorthPanel().remove(getSearchComboBox());
-                getNorthPanel().remove(getComboBox());
-                getNorthPanel().remove(getShowTree());
-
+    public static void openFile(String fileName) {
+        try {
+            if (getOriginPath() == null) {
+                setOriginPath(fileName);
             }
-            catch(Exception e){
+            setPath(fileName);
+            if (fileName.endsWith(".csv")) {
+                getDisplayCsv().TableCSV(fileName);
+            } else {
+                XmlToCsv xmlConverter = new XmlToCsv(fileName);
+                xmlConverter.convert();
 
+                getDisplayCsv().TableXML(
+                        fileName,
+                        Data.dataSet.get(Data.dataSet.entrySet().iterator().next().getKey())
+                );
+                setComboBox(new JComboBox<>());
+                for (String key : Data.dataSet.keySet()) {
+                    getComboBox().addItem(key);
+                }
             }
+            if (!componentsInitialised) {
+                initComponents();
+            }
+            refreshPanels(fileName);
+            clearJTables();
+            getContent().add(getDisplayCsv().Jscroll, BorderLayout.CENTER);
+            frame.setVisible(true);
+            System.gc();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        setShowHierarchicTree(new JTree());
-        setShowTree(new JButton("Vue hiérarchisé"));
+    }
 
+    private static void clearNorthPanel() {
+        for (Component c : getNorthPanel().getComponents()) {
+            getNorthPanel().remove(c);
+        }
+    }
 
-        setComboBox(new JComboBox<>());
-        getComboBox().setName("programs");
+    private static void clearSouthPanel() {
+        for (Component c : getSouthPanel().getComponents()) {
+            getSouthPanel().remove(c);
+        }
+    }
 
+    private static void fillSouthPanel(String fileName) {
+        if (fileName.endsWith(".csv")) {
+            getSouthPanel().add(getShowSelectedLines());
+        } else {
+            getSouthPanel().add(getAddProgramButton());
+            getSouthPanel().add(getAddCourse());
+            getSouthPanel().add(getAddStudent());
+            getSouthPanel().add(getResetTable());
+            getSouthPanel().add(getShowSelectedLines());
+            getSouthPanel().add(getDeleteLines());
+        }
+    }
 
+    private static void fillNorthPanel(String fileName) {
+        if (fileName.endsWith(".csv")) {
+            getNorthPanel().add(getSearchComboBox());
+        } else {
+            getNorthPanel().add(getSearchComboBox());
+            getNorthPanel().add(getShowTree());
+            getNorthPanel().add(getComboBox());
+        }
+    }
+
+    private static void refreshPanels(String fileName) {
+        clearNorthPanel();
+        clearSouthPanel();
+        fillSouthPanel(fileName);
+        fillNorthPanel(fileName);
     }
 }

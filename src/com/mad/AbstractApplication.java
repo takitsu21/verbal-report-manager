@@ -39,6 +39,7 @@ public abstract class AbstractApplication extends JPanel {
     protected static JLabel dragAndDrop;
     protected static JTree showHierarchicTree;
     protected static JButton addProgramButton;
+    protected static boolean componentsInitialised = false;
 
 
     public AbstractApplication() {

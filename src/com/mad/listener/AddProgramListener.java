@@ -152,7 +152,7 @@ public class AddProgramListener extends AbstractApplication implements ActionLis
                     Table.table.getModel().addTableModelListener(new TableChangedListener());
                     Table.table.getSelectionModel().removeListSelectionListener(new EnableButtonsRowsListener());
                     Table.table.getSelectionModel().addListSelectionListener(new EnableButtonsRowsListener());
-                    OpenFileListener.openFile(new File(TMP_PATH));
+                    OpenFileListener.openFile(TMP_PATH);
                     getNorthPanel().revalidate();
                     getNorthPanel().repaint();
                     SwingUtilities.invokeLater(() -> programFrame.dispose());
