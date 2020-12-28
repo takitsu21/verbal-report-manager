@@ -42,7 +42,7 @@ public class DragDropListener extends AbstractApplication implements DropTargetL
                     List<File> files = (List) transferable.getTransferData(flavor);
 
                     for (File file : files) {
-                        OpenFileListener.openFile(file);
+                        OpenFileListener.openFile(file.getPath());
                     }
                     getDragAndDrop().setVisible(false);
                 }
