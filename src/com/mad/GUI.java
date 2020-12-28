@@ -1,6 +1,7 @@
 package com.mad;
 
 import com.mad.listener.DragDropListener;
+import com.mad.listener.EnregistrerListener;
 import com.mad.listener.OpenFileListener;
 import com.mad.listener.SaveFileListener;
 import com.mad.util.Data;
@@ -35,6 +36,19 @@ public class GUI {
         JMenu file = new JMenu("Fichiers");
         file.setMnemonic('F');
         menu.add(file);
+
+        JMenuItem ouvrir = new JMenuItem("Ouvrir...");
+        ouvrir.setMnemonic('O');
+        ouvrir.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, KeyEvent.CTRL_DOWN_MASK));
+        ouvrir.addActionListener(new OpenFileListener());
+
+        file.add(ouvrir);
+
+        JMenuItem enregistrer = new JMenuItem("Enregistrer", 's' );
+        enregistrer.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, KeyEvent.CTRL_DOWN_MASK));
+        enregistrer.addActionListener(new EnregistrerListener());
+        file.add(enregistrer);
+
         JMenu export = new JMenu("Exporter");
         export.setMnemonic('E');
         JMenuItem xmlItem = new JMenuItem("xml");
@@ -43,12 +57,7 @@ public class GUI {
         file.add(export);
         export.add(xmlItem);
         export.add(csvItem);
-        JMenuItem ouvrir = new JMenuItem("Ouvrir...");
-        ouvrir.setMnemonic('O');
-        ouvrir.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, KeyEvent.CTRL_DOWN_MASK));
-        ouvrir.addActionListener(new OpenFileListener());
 
-        file.add(ouvrir);
         JMenu help = new JMenu("Help");
         help.setMnemonic('H');
         menu.add(help);
