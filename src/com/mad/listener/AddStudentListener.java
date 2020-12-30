@@ -21,7 +21,15 @@ public class AddStudentListener extends AbstractApplication implements ActionLis
     private JTextField name;
     private JTextField surname;
     private JComboBox<String> program;
+    private static CheckBoxGroup cbg;
 
+    public static CheckBoxGroup getCbg() {
+        return cbg;
+    }
+
+    public static void setCbg(CheckBoxGroup cbg) {
+        AddStudentListener.cbg = cbg;
+    }
 
     public JTextField getStudNumfield() {
         return studNum;
@@ -42,7 +50,7 @@ public class AddStudentListener extends AbstractApplication implements ActionLis
     @Override
     public void actionPerformed(ActionEvent e) {
         JFrame tmp = new JFrame("Ajouter un étudiant");
-        tmp.setSize(800, 400);
+        tmp.setSize(860, 400);
         tmp.setLocationRelativeTo(null);
         tmp.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         tmp.setVisible(true);
@@ -76,7 +84,7 @@ public class AddStudentListener extends AbstractApplication implements ActionLis
         List<Element> listCourses = Data.getChildren(Data.root, "course");
         String[] cours = generateCheckboxValues(listCourses);
 
-        CheckBoxGroup cbg = new CheckBoxGroup("COURS", cours);
+        setCbg(new CheckBoxGroup("COURS", cours));
 
         program = new JComboBox<>();
 //        for (ActionListener ae : program.getActionListeners()) {
@@ -85,7 +93,7 @@ public class AddStudentListener extends AbstractApplication implements ActionLis
         for (int i = 0; i < getComboBox().getItemCount();i++) {
             program.addItem(getComboBox().getItemAt(i));
         }
-        program.addActionListener(new ListCheckBox(cours, tmp, cbg));
+        program.addActionListener(new ListCheckBox(cours, tmp));
 
 
         prog.add(new JLabel("Program:"));
@@ -95,15 +103,7 @@ public class AddStudentListener extends AbstractApplication implements ActionLis
         tmp.add(pnl, BorderLayout.NORTH);
 
 
-
-
-
-        /*container.add(new CheckBoxGroup("COURS", cours), BorderLayout.SOUTH);
-        container.add(new CheckBoxGroup("OPTIONS", cours), BorderLayout.SOUTH);
-        container.add(new CheckBoxGroup("COMPOSANTES", cours), BorderLayout.SOUTH);*/
-
-
-        tmp.add(cbg, BorderLayout.CENTER);
+        tmp.add(getCbg(), BorderLayout.CENTER);
 
         JPanel sud = new JPanel(new GridLayout(1, 2));
 
@@ -113,17 +113,12 @@ public class AddStudentListener extends AbstractApplication implements ActionLis
 
         JPanel bouton = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         JButton ajouter = new JButton("Ajouter");
-        ajouter.addActionListener(new CheckboxAction(cbg, tmp));
+        ajouter.addActionListener(new CheckboxAction(tmp));
         bouton.add(ajouter, BorderLayout.SOUTH);
         sud.add(bouton);
         tmp.add(sud, BorderLayout.SOUTH);
 
 
-        //       Container container = new Container();
-//        container.add(new JLabel("test"));
-////        name.add(new JTextField());
-//        tmp.getContentPane().add(container);
-//
 
         tmp.setVisible(true);
 
@@ -269,8 +264,8 @@ public class AddStudentListener extends AbstractApplication implements ActionLis
 //        private final String surname;
         // private final String prog;
 
-        public CheckboxAction(CheckBoxGroup checkBoxes, JFrame tmp) {
-            this.checkBoxes = checkBoxes.getCheckBoxs();
+        public CheckboxAction(JFrame tmp) {
+            this.checkBoxes = getCbg().getCheckBoxs();
             this.tmp = tmp;
 //            this.studNum = studNum.getText();
 //            this.name = name.getText();
@@ -287,14 +282,17 @@ public class AddStudentListener extends AbstractApplication implements ActionLis
 
 
             String[][] student = new String[checkBoxes.size() + 4][3];
+
             for (int i = 4; i < checkBoxes.size() + 4; i++) {
                 if (checkBoxes.get(i - 4).isSelected()) {
                     student[i][0] = "grade";
+                    System.out.println(checkBoxes.get(i - 4).getText());
                     student[i][1] = checkBoxes.get(i - 4).getText().split(" - ")[0];
                     student[i][2] = "0.0";
                 }
             }
             System.out.println(programmeEntry);
+            System.out.println(Arrays.deepToString(student));
             student[0][0] = "identifier";
             student[0][1] = numEntry;
             student[1][0] = "name";
@@ -322,21 +320,21 @@ public class AddStudentListener extends AbstractApplication implements ActionLis
     public static class ListCheckBox extends AbstractApplication implements ActionListener {
         private final String[] cours;
         private final JFrame tmp;
-        private CheckBoxGroup cbg;
 
 
-        public ListCheckBox(String[] cours, JFrame tmp, CheckBoxGroup cbg) {
+
+        public ListCheckBox(String[] cours, JFrame tmp) {
             this.cours=cours;
             this.tmp=tmp;
-            this.cbg=cbg;
+
         }
 
         @Override
         public void actionPerformed(ActionEvent e) {
             new ComboBoxListener().actionPerformed(e);
-            tmp.remove(cbg);
-            cbg = new CheckBoxGroup("COURS", cours);
-            tmp.add(cbg, BorderLayout.CENTER);
+            tmp.remove(getCbg());
+            setCbg(new CheckBoxGroup("COURS", cours));
+            tmp.add(getCbg(), BorderLayout.CENTER);
             tmp.setVisible(true);
 //            Table.table.getModel().removeTableModelListener(new TableChangedListener());
 //            Table.table.getSelectionModel().removeListSelectionListener(new EnableButtonsRowsListener());

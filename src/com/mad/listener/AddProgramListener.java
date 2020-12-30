@@ -21,7 +21,7 @@ public class AddProgramListener extends AbstractApplication implements ActionLis
     @Override
     public void actionPerformed(ActionEvent e) {
         programFrame = new JFrame("Ajouter un programme");
-        programFrame.setSize(185, 393);
+        programFrame.setSize(215, 393);
         programFrame.setLocationRelativeTo(null);
         programFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         programFrame.setVisible(true);
@@ -82,7 +82,7 @@ public class AddProgramListener extends AbstractApplication implements ActionLis
             List<Element> courses = Data.getChildren(Data.root, "course");
             String[] stringCourses = generateCheckboxValues(courses);
             getProgramFrame().getContentPane().remove(panel);
-            programFrame.setSize(500, 600);
+            programFrame.setSize(530, 400);
             int nbOptions1 = Integer.parseInt(nbOptionsField.getText());
             int nbComposantes1 = Integer.parseInt(nbComposantesField.getText());
             CheckBoxGroup[] checkBoxGroupComposantes = new CheckBoxGroup[nbComposantes1];
