@@ -100,19 +100,19 @@ public class OpenFileListener extends AbstractApplication implements ActionListe
         }
     }
 
-    private static void clearNorthPanel() {
+    public static void clearNorthPanel() {
         for (Component c : getNorthPanel().getComponents()) {
             getNorthPanel().remove(c);
         }
     }
 
-    private static void clearSouthPanel() {
+    public static void clearSouthPanel() {
         for (Component c : getSouthPanel().getComponents()) {
             getSouthPanel().remove(c);
         }
     }
 
-    private static void fillSouthPanel(String fileName) {
+    public static void fillSouthPanel(String fileName) {
         if (fileName.endsWith(".csv")) {
             getSouthPanel().add(getShowSelectedLines());
             getSouthPanel().add(getResetTable());
@@ -126,7 +126,7 @@ public class OpenFileListener extends AbstractApplication implements ActionListe
         }
     }
 
-    private static void fillNorthPanel(String fileName) {
+    public static void fillNorthPanel(String fileName) {
         if (fileName.endsWith(".csv")) {
             getNorthPanel().add(getSearchComboBox());
         } else {
@@ -136,7 +136,7 @@ public class OpenFileListener extends AbstractApplication implements ActionListe
         }
     }
 
-    private static void refreshPanels(String fileName) {
+    public static void refreshPanels(String fileName) {
         clearNorthPanel();
         clearSouthPanel();
         fillSouthPanel(fileName);
