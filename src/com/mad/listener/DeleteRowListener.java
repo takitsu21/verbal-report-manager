@@ -17,6 +17,5 @@ public class DeleteRowListener extends AbstractApplication implements ActionList
         }
         Table.setNewModelTable(Table.table, Data.dataArray);
         refreshTable();
-
     }
 }

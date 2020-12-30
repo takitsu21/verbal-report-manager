@@ -13,40 +13,6 @@ import java.util.List;
 
 
 public class XmlWriter {
-    public static void main(String[] args) {
-        try {
-            XmlWriter xml = new XmlWriter();
-//            boolean isDeleted = xml.deleteStudent("21781843");
-//            boolean isDeleted2 = xml.deleteStudent("21858682");
-//            System.out.println(isDeleted);
-//            xml.addStudent(xml.generateStudentNode(new String[][]{
-//                    {"identifier", "11111111"}, {"name", "dylannTest"},
-//                    {"surname", "didi"}, {"program", "SLTEST"},
-//                    {"grade", "SL3333", "9.4123"},
-//                    {"grade", "SL1111", "11.112"}
-//            }));
-            xml.addProgram(xml.generateProgram(new String[][]{
-                    {"identifier", "SLL info"}, {"name", "L5 INFO"},
-                    {"option", "1", "OPTION 4", "SL8666", "SL8666"},
-                    {"composite", "2", "OPTION 4", "SL8666", "SL8666"},
-                    {"item", "1"},
-                    {"item", "2"},
-                    {"option", "3", "OPTION 4", "SL8666", "SL8666"},
-                    {"option", "4", "OPTION 5", "123", "456"},
-                    {"item", "3"}
-            }));
-
-//            xml.deleteCourse("21232189", "SLUIN502");
-//            xml.deleteCourse("21674833", "SLUIN501");
-            xml.modifyCourse("21674833", "SLUIN501", "15.5555");
-//            xml.deleteStudent("21674833");
-            boolean isSave = xml.save("output.xml");
-            System.out.println(isSave);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     public static Node getStudent(String studentId) {
         NodeList nodeList = Data.root.getElementsByTagName("student");
         for (int i = 0; i < nodeList.getLength(); i++) {
@@ -93,7 +59,7 @@ public class XmlWriter {
         Element student = (Element) getStudent(studentId);
         List<Element> grades = Data.getChildren(student, "grade");
         for (Element e : grades) {
-            if (XmlToCsv.read(e, "item").equalsIgnoreCase(courseId)) {
+            if (Data.read(e, "item").equalsIgnoreCase(courseId)) {
 //                student.removeChild(e);
                 List<Element> values = Data.getChildren(e, "value");
                 for (Element v : values) {
@@ -111,7 +77,7 @@ public class XmlWriter {
         Element student = (Element) getStudent(studentId);
         List<Element> grades = Data.getChildren(student, "grade");
         for (Element e : grades) {
-            if (XmlToCsv.read(e, "item").equalsIgnoreCase(courseId)) {
+            if (Data.read(e, "item").equalsIgnoreCase(courseId)) {
                 Data.root.removeChild(student);
                 student.removeChild(e);
                 Data.root.appendChild(student);
@@ -125,7 +91,7 @@ public class XmlWriter {
         Element student = (Element) getStudent(studentId);
         List<Element> courses = Data.getChildren(Data.root, "course");
         for (Element e : courses) {
-            if (XmlToCsv.read(e, "identifier").equalsIgnoreCase(courseId)) {
+            if (Data.read(e, "identifier").equalsIgnoreCase(courseId)) {
                 Node composante = Data.doc.createElement("item");
                 Node value = Data.doc.createElement("value");
                 Node grade = Data.doc.createElement("grade");
@@ -141,7 +107,7 @@ public class XmlWriter {
         return false;
     }
 
-    public boolean addCourseGeneral(String CourseName, String courseId, String coef) {
+    public static boolean addCourseGeneral(String CourseName, String courseId, String coef) {
         ///Element student = (Element) getStudent(studentId);
         try {
             Node newCourse = Data.doc.createElement("course");
@@ -184,7 +150,7 @@ public class XmlWriter {
             Node item;
             String nodeType = s[0];
 
-            if(nodeType!=null) {
+            if (nodeType != null) {
                 switch (nodeType) {
                     case "identifier":
                     case "name":

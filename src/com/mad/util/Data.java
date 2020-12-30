@@ -8,8 +8,10 @@ import org.w3c.dom.NodeList;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Data {
     public static Map<String, String> dataSet = new HashMap<>();
@@ -53,6 +55,7 @@ public class Data {
         return children;
     }
 
-
-
+    public static String read(Element element, String tag) {
+        return element.getElementsByTagName(tag).item(0).getTextContent();
+    }
 }

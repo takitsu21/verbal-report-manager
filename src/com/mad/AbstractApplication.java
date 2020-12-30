@@ -1,27 +1,24 @@
 package com.mad;
 
-import com.mad.listener.*;
-
+import com.mad.listener.TableChangedListener;
 import com.mad.util.Data;
-
 import com.mad.util.Table;
 import com.mad.util.XmlToCsv;
 import com.mad.util.XmlWriter;
 
 import javax.swing.*;
-import javax.swing.event.TableModelListener;
-import javax.swing.table.TableModel;
 import java.awt.*;
+
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.EventListener;
 
 
+
 public abstract class AbstractApplication extends JPanel {
     public static String ORIGIN_PATH;
     public static final String TMP_PATH = "./xml-editor.tmp.xml";
-//    protected final TableModelListener modelListener = new TableChangedListener();
     protected static String path;
     protected static JFrame frame;
     protected static JPanel southPanel;
@@ -32,18 +29,16 @@ public abstract class AbstractApplication extends JPanel {
     protected static JButton resetTable;
     protected static JButton showTree;
     protected static JButton addCourse;
+    protected static JButton addProgramButton;
     protected static Table displayCsv;
     protected static Container content;
-    protected static JComboBox<String> comboBox = new JComboBox<>();
-    protected static boolean isFirstFile = true;
+    protected static JComboBox<String> comboBox;
     protected static JComboBox<String> searchComboBox;
     protected static JLabel dragAndDrop;
     protected static JTree showHierarchicTree;
-    protected static JButton addProgramButton;
     protected static boolean componentsInitialised = false;
     protected static String infoSearchComboBox;
     protected static JButton refresh;
-
 
     public AbstractApplication() {
     }
@@ -86,14 +81,6 @@ public abstract class AbstractApplication extends JPanel {
 
     public static void setInfoSearchComboBox(String infoSearchComboBox) {
         AbstractApplication.infoSearchComboBox = infoSearchComboBox;
-    }
-
-    public static XmlWriter getXmlEditor() {
-        return xmlEditor;
-    }
-
-    public static void setXmlEditor(XmlWriter xmlEditor) {
-        AbstractApplication.xmlEditor = xmlEditor;
     }
 
     public static JButton getShowTree() {
@@ -200,8 +187,6 @@ public abstract class AbstractApplication extends JPanel {
         AbstractApplication.comboBox = comboBox;
     }
 
-    protected static XmlWriter xmlEditor = new XmlWriter();
-
     public static String getOriginPath() {
         return ORIGIN_PATH;
     }
@@ -218,14 +203,6 @@ public abstract class AbstractApplication extends JPanel {
         AbstractApplication.refresh = refresh;
     }
 
-    public static boolean isIsFirstFile() {
-        return isFirstFile;
-    }
-
-    public static void setIsFirstFile(boolean isFirstFile) {
-        AbstractApplication.isFirstFile = isFirstFile;
-    }
-
     public static void clearJTables() {
         for (Component c : getContent().getComponents()) {
             if (c instanceof JTable || c instanceof JScrollPane) {
@@ -238,19 +215,9 @@ public abstract class AbstractApplication extends JPanel {
         XmlWriter.save(TMP_PATH);
         XmlToCsv xmlConverter = new XmlToCsv(TMP_PATH);
         xmlConverter.convert();
-        setDisplayCsv(new Table());
-        getDisplayCsv().TableXML(TMP_PATH, Data.dataSet.get(Data.dataSet.entrySet().iterator().next().getKey()));
-        Table.table.getModel().removeTableModelListener(new TableChangedListener());
-        Table.table.getModel().addTableModelListener(new TableChangedListener());
         clearJTables();
         getContent().add(getDisplayCsv().Jscroll, BorderLayout.CENTER);
         getComboBox().setSelectedItem(getComboBox().getSelectedItem());
-        try{
-        OpenFileListener.initComponents();
-           // XmlToCsv.convert();
-        }
-        catch (IOException ioException){}
-        getFrame().setVisible(true);
     }
 
 //    public static void refreshListeners() {

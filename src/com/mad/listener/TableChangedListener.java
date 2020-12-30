@@ -10,6 +10,7 @@ import javax.swing.event.TableModelListener;
 
 
 public class TableChangedListener extends AbstractApplication implements TableModelListener {
+
     public TableChangedListener() {
         //System.out.println("TableChangedListener added");
     }
@@ -18,6 +19,7 @@ public class TableChangedListener extends AbstractApplication implements TableMo
     public void tableChanged(TableModelEvent e) {
         if (e.getType() == TableModelEvent.UPDATE) {
             int col = Table.table.getSelectedColumn();
+
             String courseId = String.valueOf(Table.table.getModel().getColumnName(col)).split(" ")[0];
             String newVal = (String) Table.table.getModel().getValueAt(e.getFirstRow(), e.getColumn());
             String numEtu = (String) Table.table.getModel().getValueAt(e.getFirstRow(), 0);
@@ -30,7 +32,7 @@ public class TableChangedListener extends AbstractApplication implements TableMo
         }
     }
 
-    private void updateCell(String newVal, String numEtu, String courseId) {
+    public static void updateCell(String newVal, String numEtu, String courseId) {
         if (newVal.isEmpty()) {
             XmlWriter.deleteCourse(numEtu, courseId);
         } else {

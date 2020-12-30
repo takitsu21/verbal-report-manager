@@ -21,6 +21,5 @@ public class EnableButtonsRowsListener extends AbstractApplication implements Li
                     }
                 }
         );
-
     }
 }

@@ -11,7 +11,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -259,8 +258,8 @@ public class AddProgramListener extends AbstractApplication implements ActionLis
         String[] values = new String[courses.size()];
         int acc = 0;
         for (Element course : courses) {
-            String courseName = XmlToCsv.read(course, "name");
-            String courseId = XmlToCsv.read(course, "identifier");
+            String courseName = Data.read(course, "name");
+            String courseId = Data.read(course, "identifier");
             values[acc++] = String.format("%s - %s", courseId, courseName);
         }
         return values;

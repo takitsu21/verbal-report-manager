@@ -15,8 +15,6 @@ import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.EventListener;
 
 public class OpenFileListener extends AbstractApplication implements ActionListener {
     @Override
