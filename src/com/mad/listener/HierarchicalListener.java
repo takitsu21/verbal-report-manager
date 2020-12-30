@@ -20,32 +20,26 @@ public class HierarchicalListener extends AbstractApplication implements ActionL
         tmp.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         List<Element> program = Data.getChildren(Data.root, "program");
-        Element currentProgram = null;
+        DefaultMutableTreeNode programs = new DefaultMutableTreeNode("Programmes");
         for (Element elem : program) {
-            if (XmlToCsv.read(elem, "identifier").equals(getComboBox().getSelectedItem())) {
-                currentProgram = elem;
-                break;
+            DefaultMutableTreeNode programTree = new DefaultMutableTreeNode(String.format("%s - %s",
+                    XmlToCsv.read(elem, "identifier"), XmlToCsv.read(elem, "name")));
+            List<Element> courses = Data.getChildren(Data.root, "course");
+            List<Element> options = Data.getChildren(elem, "option");
+            List<Element> composites = Data.getChildren(elem, "composite");
+
+
+            for (Element course : Data.getChildren(elem, "item")) {
+                programTree.add(new DefaultMutableTreeNode(formatCourseName(courses,
+                        course.getTextContent())));
             }
+            addToProgramTree(programTree, options, courses);
+            addToProgramTree(programTree, composites, courses);
+
+            programs.add(programTree);
         }
-        DefaultMutableTreeNode programTree = new DefaultMutableTreeNode(String.format("%s - %s",
-                comboBox.getSelectedItem(), XmlToCsv.read(currentProgram, "name")));
-        List<Element> courses = Data.getChildren(Data.root, "course");
-        List<Element> options = Data.getChildren(currentProgram, "option");
-        List<Element> composites = Data.getChildren(currentProgram, "composite");
-
-
-        DefaultMutableTreeNode coursesTree = new DefaultMutableTreeNode("Cours " +
-                XmlToCsv.read(currentProgram, "identifier"));
-        for (Element course : Data.getChildren(currentProgram, "item")) {
-            coursesTree.add(new DefaultMutableTreeNode(formatCourseName(courses,
-                    course.getTextContent())));
-        }
-        programTree.add(coursesTree);
-        addToProgramTree(programTree, options, courses);
-        addToProgramTree(programTree, composites, courses);
-
         JScrollPane scrollPane = new JScrollPane();
-        setShowHierarchicTree(new JTree(programTree));
+        setShowHierarchicTree(new JTree(programs));
         scrollPane.setViewportView(getShowHierarchicTree());
         tmp.add(scrollPane);
 

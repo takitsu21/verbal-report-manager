@@ -4,9 +4,13 @@ import com.mad.AbstractApplication;
 import com.mad.util.Data;
 import com.mad.util.Table;
 import com.mad.util.XmlToCsv;
+import com.mad.util.XmlWriter;
 import org.w3c.dom.Element;
 
 import javax.swing.*;
+import javax.swing.event.RowSorterEvent;
+import javax.swing.event.RowSorterListener;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 import java.awt.event.ActionEvent;
@@ -193,9 +197,14 @@ public class SearchBarListener extends AbstractApplication implements ActionList
         if (searchText.length() == 0) {
             rowSorter.setRowFilter(null);
         } else {
-            Table.table.getModel().removeTableModelListener(new TableChangedListener());
+            rowSorter.addRowSorterListener(new RowSorterListener() {
+                @Override
+                public void sorterChanged(RowSorterEvent e) {
+                    table.getModel().addTableModelListener(new TableChangedListener());
+                }
+            });
             rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + Pattern.quote(searchText)));
-            Table.table.getModel().addTableModelListener(new TableChangedListener());
+
             num = new String[table.getRowCount()];
 
             for (int row = 0; row < table.getRowCount(); row++) {

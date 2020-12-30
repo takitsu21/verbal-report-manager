@@ -7,6 +7,7 @@ import com.mad.util.Table;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
 import java.util.Objects;
 
 public class ComboBoxListener extends AbstractApplication implements ActionListener {
@@ -17,9 +18,11 @@ public class ComboBoxListener extends AbstractApplication implements ActionListe
                 Data.dataSet.get(Objects.requireNonNull(combo.getSelectedItem()).toString()));
 
         Table.setNewModelTable(Table.table, newArr);
-        Table.table.getModel().removeTableModelListener(new TableChangedListener());
-        Table.table.getSelectionModel().removeListSelectionListener(new EnableButtonsRowsListener());
-        Table.table.getSelectionModel().addListSelectionListener(new EnableButtonsRowsListener());
-        Table.table.getModel().addTableModelListener(new TableChangedListener());
+        String[] blocs = new String[Data.dataArray[0].length - 3];
+        if (blocs.length >= 0) System.arraycopy(Data.dataArray[0], 3, blocs, 0, blocs.length);
+
+        DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>(blocs);
+        getSearchComboBox().setModel(model);
+
     }
 }
