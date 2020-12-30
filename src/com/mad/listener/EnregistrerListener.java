@@ -25,7 +25,6 @@ public class EnregistrerListener extends AbstractApplication implements ActionLi
                     for (String m : l) {
                         acc.append("\"").append(m).append("\",");
                     }
-                    System.out.println(acc);
                     pr.println(acc);
                 }
             } catch (FileNotFoundException fileNotFoundException) {
