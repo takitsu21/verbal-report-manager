@@ -84,14 +84,13 @@ public class AddProgramListener extends AbstractApplication implements ActionLis
             try {
                 int nbOptions1 = Integer.parseInt(nbOptionsField.getText());
                 int nbComposantes1 = Integer.parseInt(nbComposantesField.getText());
-                if(nbComposantes1 >= 10 || nbOptions1 >= 10){
+                if (nbComposantes1 >= 10 || nbOptions1 >= 10 || nbOptions1 < 0 || nbComposantes1 < 0) {
                     Toolkit.getDefaultToolkit().beep();
-                    JOptionPane.showMessageDialog(programFrame, "Veuillez selectionner une valeur < 10","Alerte",JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(programFrame, "Veuillez selectionner une valeur < 10", "Alerte", JOptionPane.WARNING_MESSAGE);
 
                     nbComposantesField.setText("");
                     nbOptionsField.setText("");
-                }
-                else {
+                } else {
 
                     List<Element> courses = Data.getChildren(Data.root, "course");
                     String[] stringCourses = generateCheckboxValues(courses);
@@ -236,15 +235,16 @@ public class AddProgramListener extends AbstractApplication implements ActionLis
                     programFrame.getContentPane().add(nextPane);
 
 
-                }}
-            catch (NumberFormatException ex  ){
+                }
+            } catch (NumberFormatException ex) {
                 Toolkit.getDefaultToolkit().beep();
-                JOptionPane.showMessageDialog(programFrame, "Valeur incrorrect","Erreur",JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(programFrame, "Valeur incrorrect", "Erreur", JOptionPane.WARNING_MESSAGE);
                 //programFrame.dispose();
                 nbComposantesField.setText("");
                 nbOptionsField.setText("");
 
-            }});
+            }
+        });
         nextPanel.add(next);
 
         panel.add(namePanel);
@@ -256,6 +256,7 @@ public class AddProgramListener extends AbstractApplication implements ActionLis
         programFrame.getContentPane().add(panel);
 
     }
+
     public JFrame getProgramFrame() {
         return programFrame;
     }
