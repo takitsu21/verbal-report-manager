@@ -156,18 +156,8 @@ public class AddProgramListener extends AbstractApplication implements ActionLis
                             t[i] = programs.get(i).toArray(blankArray);
                         }
                         if (XmlWriter.addProgram(XmlWriter.generateProgram(t))) {
-                            XmlWriter.save(TMP_PATH);
-                            XmlToCsv z = new XmlToCsv(TMP_PATH);
-                            z.convert();
                             getComboBox().addItem(programIdField.getText());
-
-                            Table.table.getModel().removeTableModelListener(new TableChangedListener());
-                            Table.table.getModel().addTableModelListener(new TableChangedListener());
-                            Table.table.getSelectionModel().removeListSelectionListener(new EnableButtonsRowsListener());
-                            Table.table.getSelectionModel().addListSelectionListener(new EnableButtonsRowsListener());
-                            OpenFileListener.openFile(TMP_PATH);
-                            getNorthPanel().revalidate();
-                            getNorthPanel().repaint();
+                            refreshTable();
                             SwingUtilities.invokeLater(() -> programFrame.dispose());
                         }
                     });
