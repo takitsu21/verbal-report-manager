@@ -9,6 +9,12 @@ import com.mad.util.XmlWriter;
 import javax.swing.*;
 import java.awt.*;
 
+import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.EventListener;
+
+
 
 public abstract class AbstractApplication extends JPanel {
     public static String ORIGIN_PATH;
@@ -32,6 +38,7 @@ public abstract class AbstractApplication extends JPanel {
     protected static JTree showHierarchicTree;
     protected static boolean componentsInitialised = false;
     protected static String infoSearchComboBox;
+    protected static JButton refresh;
 
     public AbstractApplication() {
     }
@@ -188,6 +195,14 @@ public abstract class AbstractApplication extends JPanel {
         ORIGIN_PATH = originPath;
     }
 
+    public static JButton getRefresh() {
+        return refresh;
+    }
+
+    public static void setRefresh(JButton refresh) {
+        AbstractApplication.refresh = refresh;
+    }
+
     public static void clearJTables() {
         for (Component c : getContent().getComponents()) {
             if (c instanceof JTable || c instanceof JScrollPane) {
@@ -196,7 +211,7 @@ public abstract class AbstractApplication extends JPanel {
         }
     }
 
-    public static void refreshTable() {
+    public static void refreshTable(){
         XmlWriter.save(TMP_PATH);
         XmlToCsv xmlConverter = new XmlToCsv(TMP_PATH);
         xmlConverter.convert();
