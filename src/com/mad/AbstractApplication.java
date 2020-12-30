@@ -33,7 +33,6 @@ public abstract class AbstractApplication extends JPanel {
     protected static boolean componentsInitialised = false;
     protected static String infoSearchComboBox;
 
-
     public AbstractApplication() {
     }
 
@@ -75,14 +74,6 @@ public abstract class AbstractApplication extends JPanel {
 
     public static void setInfoSearchComboBox(String infoSearchComboBox) {
         AbstractApplication.infoSearchComboBox = infoSearchComboBox;
-    }
-
-    public static XmlWriter getXmlEditor() {
-        return xmlEditor;
-    }
-
-    public static void setXmlEditor(XmlWriter xmlEditor) {
-        AbstractApplication.xmlEditor = xmlEditor;
     }
 
     public static JButton getShowTree() {
@@ -189,8 +180,6 @@ public abstract class AbstractApplication extends JPanel {
         AbstractApplication.comboBox = comboBox;
     }
 
-    protected static XmlWriter xmlEditor = new XmlWriter();
-
     public static String getOriginPath() {
         return ORIGIN_PATH;
     }
@@ -211,14 +200,9 @@ public abstract class AbstractApplication extends JPanel {
         XmlWriter.save(TMP_PATH);
         XmlToCsv xmlConverter = new XmlToCsv(TMP_PATH);
         xmlConverter.convert();
-        setDisplayCsv(new Table());
-        getDisplayCsv().TableXML(TMP_PATH, Data.dataSet.get(Data.dataSet.entrySet().iterator().next().getKey()));
-        Table.table.getModel().removeTableModelListener(new TableChangedListener());
-        Table.table.getModel().addTableModelListener(new TableChangedListener());
         clearJTables();
         getContent().add(getDisplayCsv().Jscroll, BorderLayout.CENTER);
         getComboBox().setSelectedItem(getComboBox().getSelectedItem());
-        getFrame().setVisible(true);
     }
 
 //    public static void refreshListeners() {

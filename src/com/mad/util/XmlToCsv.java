@@ -34,8 +34,8 @@ public class XmlToCsv {
         List<List<String>> listCoursesProg = new ArrayList<>();
 
         for (int i = 0; i < program.size(); i++) {
-            programid.add(read(program.get(i), "identifier"));
-            data.add("\"N° Étudiant\",\"Nom\",\"Prénom\",\"" + programid.get(i) + " - " + read(program.get(i), "name") + "\",");
+            programid.add(Data.read(program.get(i), "identifier"));
+            data.add("\"N° Étudiant\",\"Nom\",\"Prénom\",\"" + programid.get(i) + " - " + Data.read(program.get(i), "name") + "\",");
             listCoursesProg.add(listCrousesProg(program, programid.get(i)));
 
         }
@@ -52,7 +52,7 @@ public class XmlToCsv {
 
         for (List<Element> liste : listStudents) {
             for (Element element : liste) {
-                String programStud = read(element, "program");
+                String programStud = Data.read(element, "program");
 
                 StringBuilder d = new StringBuilder();
                 List<Element> listStudMat = Data.getChildren(element, "grade"); //liste des matiere d'un etudient
@@ -76,8 +76,8 @@ public class XmlToCsv {
                 }
 
                 data.set(programid.indexOf(programStud),
-                        data.get(programid.indexOf(programStud)) + ("\"" + read(element, "identifier") + "\"," +
-                                "\"" + read(element, "name") + "\"," + "\"" + read(element, "surname") + "\"," + moyenne + d.substring(0, d.length() - 1) + "\n" //liste des matiere d'un etudient //liste des matiere d'un etudient //liste des matiere d'un etudient
+                        data.get(programid.indexOf(programStud)) + ("\"" + Data.read(element, "identifier") + "\"," +
+                                "\"" + Data.read(element, "name") + "\"," + "\"" + Data.read(element, "surname") + "\"," + moyenne + d.substring(0, d.length() - 1) + "\n" //liste des matiere d'un etudient //liste des matiere d'un etudient //liste des matiere d'un etudient
                         ));
             }
         }
@@ -124,17 +124,13 @@ public class XmlToCsv {
 //    }
 
 
-    public static String read(Element element, String tag) {
-        return element.getElementsByTagName(tag).item(0).getTextContent();
-    }
-
     private List<String> listCrousesProg(List<Element> program, String programid) {
         List<String> item = new ArrayList<>();
         List<Element> composite = new ArrayList<>();
         List<Element> option = new ArrayList<>();
 
         for (Element element1 : program) {
-            if (read(element1, "identifier").equals(programid)) {
+            if (Data.read(element1, "identifier").equals(programid)) {
                 List<Element> item1 = Data.getChildren(element1, "item");
                 for (Element el : item1) {
                     item.add(el.getTextContent());
@@ -147,7 +143,7 @@ public class XmlToCsv {
         for (Element value : option) {
             List<Element> item2 = Data.getChildren(value, "item");
 
-            item.add("*" + read(value, "identifier") + " - " + read(value, "name"));
+            item.add("*" + Data.read(value, "identifier") + " - " + Data.read(value, "name"));
 
             for (Element el : item2) {
                 item.add(el.getTextContent());
@@ -157,7 +153,7 @@ public class XmlToCsv {
         for (Element element : composite) {
             List<Element> item3 = Data.getChildren(element, "item");
 
-            item.add("$" + read(element, "identifier") + " - " + read(element, "name"));
+            item.add("$" + Data.read(element, "identifier") + " - " + Data.read(element, "name"));
 
             for (Element el : item3) {
                 item.add(el.getTextContent());
@@ -175,15 +171,15 @@ public class XmlToCsv {
 
                     cours.append("\"").append(s.substring(1)).append("\",");
                     break;
-                } else if (s.equals(read(element, "identifier"))) {
-                    String a = "\"" + read(element, "identifier");
-                    String b = " - " + read(element, "name") + "\",";
+                } else if (s.equals(Data.read(element, "identifier"))) {
+                    String a = "\"" + Data.read(element, "identifier");
+                    String b = " - " + Data.read(element, "name") + "\",";
                     cours.append(a).append(b);
                 }
 
             }
         }
-        return cours.length() - 1>=0?cours.substring(0, cours.length() - 1): String.valueOf(cours);
+        return cours.length() - 1 >= 0 ? cours.substring(0, cours.length() - 1) : String.valueOf(cours);
     }
 
     private List<List<Element>> listStudent(List<String> programid) {
@@ -193,12 +189,12 @@ public class XmlToCsv {
         for (String s : programid) {
             List<Element> studProg = new ArrayList<>();
             for (Element student : listStudents) { //reparti les eleves selon leur program
-                if (s.equals(read(student, "program"))) {
+                if (s.equals(Data.read(student, "program"))) {
                     studProg.add(student);
                 }
             }
 
-            studProg.sort(Comparator.comparing(o -> read(o, "name"))); //tri les eleves dans l'ordre alphabetique
+            studProg.sort(Comparator.comparing(o -> Data.read(o, "name"))); //tri les eleves dans l'ordre alphabetique
 
             listStudentsFinal.add(studProg);
         }
@@ -211,14 +207,13 @@ public class XmlToCsv {
         for (Element element : listStudMat) {
             int j = 0;
 
-            String mat = read(element, "item");
-
+            String mat = Data.read(element, "item");
 
 
             while (j < listProg.size() - 1 && !mat.equals(listProg.get(j))) {
                 j += 1;
             }
-            note[j] = read(element, "value");
+            note[j] = Data.read(element, "value");
         }
         for (int i = 0; i < note.length; i++) {
             if (note[i] == null) {
@@ -262,8 +257,8 @@ public class XmlToCsv {
 
             for (Element element : listCourse) {
 
-                if (listCourses.get(i).equals(read(element, "identifier"))) {
-                    coef[i] = read(element, "credits");
+                if (listCourses.get(i).equals(Data.read(element, "identifier"))) {
+                    coef[i] = Data.read(element, "credits");
                 }
             }
         }
@@ -367,8 +362,8 @@ public class XmlToCsv {
     public static Element findCourseByCode(List<Element> courses, String item) {
         Element courseRet = null;
         for (Element course : courses) {
-//            System.out.printf("%s, %s", read(course, "identifier"), item);
-            if (read(course, "identifier").equalsIgnoreCase(item)) {
+//            System.out.printf("%s, %s", Data.read(course, "identifier"), item);
+            if (Data.read(course, "identifier").equalsIgnoreCase(item)) {
                 courseRet = course;
                 break;
             }

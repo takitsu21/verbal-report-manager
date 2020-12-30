@@ -59,7 +59,7 @@ public class XmlWriter {
         Element student = (Element) getStudent(studentId);
         List<Element> grades = Data.getChildren(student, "grade");
         for (Element e : grades) {
-            if (XmlToCsv.read(e, "item").equalsIgnoreCase(courseId)) {
+            if (Data.read(e, "item").equalsIgnoreCase(courseId)) {
 //                student.removeChild(e);
                 List<Element> values = Data.getChildren(e, "value");
                 for (Element v : values) {
@@ -77,7 +77,7 @@ public class XmlWriter {
         Element student = (Element) getStudent(studentId);
         List<Element> grades = Data.getChildren(student, "grade");
         for (Element e : grades) {
-            if (XmlToCsv.read(e, "item").equalsIgnoreCase(courseId)) {
+            if (Data.read(e, "item").equalsIgnoreCase(courseId)) {
                 Data.root.removeChild(student);
                 student.removeChild(e);
                 Data.root.appendChild(student);
@@ -91,7 +91,7 @@ public class XmlWriter {
         Element student = (Element) getStudent(studentId);
         List<Element> courses = Data.getChildren(Data.root, "course");
         for (Element e : courses) {
-            if (XmlToCsv.read(e, "identifier").equalsIgnoreCase(courseId)) {
+            if (Data.read(e, "identifier").equalsIgnoreCase(courseId)) {
                 Node composante = Data.doc.createElement("item");
                 Node value = Data.doc.createElement("value");
                 Node grade = Data.doc.createElement("grade");
@@ -107,7 +107,7 @@ public class XmlWriter {
         return false;
     }
 
-    public boolean addCourseGeneral(String CourseName, String courseId, String coef) {
+    public static boolean addCourseGeneral(String CourseName, String courseId, String coef) {
         ///Element student = (Element) getStudent(studentId);
         try {
             Node newCourse = Data.doc.createElement("course");

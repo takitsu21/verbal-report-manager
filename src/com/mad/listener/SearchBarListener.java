@@ -157,7 +157,7 @@ public class SearchBarListener extends AbstractApplication implements ActionList
         }
         for (int j = 1; j < etu.length + 1; j++) {
             for (Element studs : listStudents) {
-                if (etu[j - 1] != null && etu[j - 1].equalsIgnoreCase(XmlToCsv.read(studs, "identifier"))) {
+                if (etu[j - 1] != null && etu[j - 1].equalsIgnoreCase(Data.read(studs, "identifier"))) {
 
                     List<Element> cours = Data.getChildren(studs, "grade");
 
@@ -169,7 +169,7 @@ public class SearchBarListener extends AbstractApplication implements ActionList
                     }
 
                     for (Element cour : cours) {
-                        String coursTest = XmlToCsv.read(cour, "item");
+                        String coursTest = Data.read(cour, "item");
                         int trouver = 0;
                         for (int m = 3; m < data[0].length; m++) {
                             if (coursTest != null && coursTest.equals(data[0][m].split(" - ")[0])) {
@@ -182,13 +182,13 @@ public class SearchBarListener extends AbstractApplication implements ActionList
                                 data[i] = Arrays.copyOf(data[i], data[i].length + 1);
                             }
                             for (Element element : listCourses) {
-                                if (coursTest != null && coursTest.equals(XmlToCsv.read(element, "identifier"))) {
-                                    data[0][data[0].length - 1] = coursTest + " - " + XmlToCsv.read(element, "name");
+                                if (coursTest != null && coursTest.equals(Data.read(element, "identifier"))) {
+                                    data[0][data[0].length - 1] = coursTest + " - " + Data.read(element, "name");
                                     break;
                                 }
                             }
 
-                            data[j][data[0].length - 1] = XmlToCsv.read(cour, "value");
+                            data[j][data[0].length - 1] = Data.read(cour, "value");
                         }
                     }
                     break;

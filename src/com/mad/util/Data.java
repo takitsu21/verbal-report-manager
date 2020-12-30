@@ -55,5 +55,7 @@ public class Data {
         return children;
     }
 
-
+    public static String read(Element element, String tag) {
+        return element.getElementsByTagName(tag).item(0).getTextContent();
+    }
 }
