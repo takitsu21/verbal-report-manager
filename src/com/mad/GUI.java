@@ -26,7 +26,7 @@ public class GUI {
             ign.printStackTrace();
         }
         AbstractApplication.setFrame(new JFrame("MAD"));
-        AbstractApplication.getFrame().setSize(882, 600);
+        AbstractApplication.getFrame().setSize(1120, 600);
         AbstractApplication.getFrame().setLocationRelativeTo(null);
         AbstractApplication.getFrame().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 

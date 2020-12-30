@@ -28,7 +28,7 @@ public class OpenFileListener extends AbstractApplication implements ActionListe
     }
 
     public static void initComponents() {
-        System.out.println("init");
+
         String[] blocs = new String[Data.dataArray[0].length - 3];
 
         if (blocs.length >= 0) System.arraycopy(Data.dataArray[0], 3, blocs, 0, blocs.length);

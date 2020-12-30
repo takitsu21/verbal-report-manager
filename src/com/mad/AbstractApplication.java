@@ -40,6 +40,7 @@ public abstract class AbstractApplication extends JPanel {
     protected static JTree showHierarchicTree;
     protected static JButton addProgramButton;
     protected static boolean componentsInitialised = false;
+    protected static String infoSearchComboBox;
 
 
     public AbstractApplication() {
@@ -75,6 +76,14 @@ public abstract class AbstractApplication extends JPanel {
 
     public static void setSearchComboBox(JComboBox<String> searchComboBox) {
         AbstractApplication.searchComboBox = searchComboBox;
+    }
+
+    public static String getInfoSearchComboBox() {
+        return infoSearchComboBox;
+    }
+
+    public static void setInfoSearchComboBox(String infoSearchComboBox) {
+        AbstractApplication.infoSearchComboBox = infoSearchComboBox;
     }
 
     public static XmlWriter getXmlEditor() {

@@ -22,12 +22,19 @@ public class SearchBarListener extends AbstractApplication implements ActionList
     public void actionPerformed(ActionEvent e) {
         try {
 
-            String searchText = (String) getSearchComboBox().getSelectedItem();
+            String searchText;
+            if(getInfoSearchComboBox()!=null){
+                searchText=getInfoSearchComboBox();
+                setInfoSearchComboBox(null);
+            }
+            else {
+                searchText = (String) getSearchComboBox().getSelectedItem();
 
-            try {
-                searchText = searchText.trim();
-            } catch (NullPointerException exc) {
-                return;
+                try {
+                    searchText = searchText.trim();
+                } catch (NullPointerException exc) {
+                    return;
+                }
             }
 
             String[] listText = searchText.split(";");
