@@ -14,6 +14,9 @@ import java.util.Arrays;
 public class EnregistrerListener extends AbstractApplication implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
+        save();
+    }
+    public static  void save(){
         String path = getOriginPath();
         System.out.println(path);
         if (path.endsWith(".csv")) {
@@ -35,8 +38,5 @@ public class EnregistrerListener extends AbstractApplication implements ActionLi
         }
         if (path.endsWith(".xml")) {
             XmlWriter.save(path);
-        }
-
-
+}}
     }
-}
