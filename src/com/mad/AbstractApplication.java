@@ -13,6 +13,7 @@ import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.EventListener;
 
@@ -41,6 +42,7 @@ public abstract class AbstractApplication extends JPanel {
     protected static JButton addProgramButton;
     protected static boolean componentsInitialised = false;
     protected static String infoSearchComboBox;
+    protected static JButton refresh;
 
 
     public AbstractApplication() {
@@ -208,6 +210,13 @@ public abstract class AbstractApplication extends JPanel {
         ORIGIN_PATH = originPath;
     }
 
+    public static JButton getRefresh() {
+        return refresh;
+    }
+
+    public static void setRefresh(JButton refresh) {
+        AbstractApplication.refresh = refresh;
+    }
 
     public static boolean isIsFirstFile() {
         return isFirstFile;
@@ -225,7 +234,7 @@ public abstract class AbstractApplication extends JPanel {
         }
     }
 
-    public static void refreshTable() {
+    public static void refreshTable(){
         XmlWriter.save(TMP_PATH);
         XmlToCsv xmlConverter = new XmlToCsv(TMP_PATH);
         xmlConverter.convert();
@@ -236,6 +245,11 @@ public abstract class AbstractApplication extends JPanel {
         clearJTables();
         getContent().add(getDisplayCsv().Jscroll, BorderLayout.CENTER);
         getComboBox().setSelectedItem(getComboBox().getSelectedItem());
+        try{
+        OpenFileListener.initComponents();
+           // XmlToCsv.convert();
+        }
+        catch (IOException ioException){}
         getFrame().setVisible(true);
     }
 

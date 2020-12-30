@@ -5,11 +5,14 @@ import com.mad.util.Data;
 import com.mad.util.Table;
 import com.mad.util.XmlToCsv;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.filechooser.FileSystemView;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
@@ -27,7 +30,7 @@ public class OpenFileListener extends AbstractApplication implements ActionListe
         }
     }
 
-    public static void initComponents() {
+    public static void initComponents() throws IOException {
 
         String[] blocs = new String[Data.dataArray[0].length - 3];
 
@@ -41,6 +44,10 @@ public class OpenFileListener extends AbstractApplication implements ActionListe
         setSearchComboBox(new JComboBox<>(blocs));
         setShowTree(new JButton("Vue hiérarchisé"));
         setShowHierarchicTree(new JTree());
+        BufferedImage buttonIcon = ImageIO.read(new File("./refresh.png"));
+        setRefresh(new JButton(new ImageIcon(buttonIcon)));
+        getRefresh().addActionListener(new RefreshListener());
+
 
         getSearchComboBox().setEditable(true);
 
@@ -133,6 +140,7 @@ public class OpenFileListener extends AbstractApplication implements ActionListe
             getNorthPanel().add(getSearchComboBox());
             getNorthPanel().add(getShowTree());
             getNorthPanel().add(getComboBox());
+            getNorthPanel().add(getRefresh());
         }
     }
 
