@@ -145,5 +145,7 @@ public class OpenFileListener extends AbstractApplication implements ActionListe
         clearSouthPanel();
         fillSouthPanel(fileName);
         fillNorthPanel(fileName);
+        getFrame().revalidate();
+        getFrame().repaint();
     }
 }

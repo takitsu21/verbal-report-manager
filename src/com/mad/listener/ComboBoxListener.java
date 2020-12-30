@@ -22,5 +22,7 @@ public class ComboBoxListener extends AbstractApplication implements ActionListe
 
         DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>(blocs);
         getSearchComboBox().setModel(model);
+        Table.table.getModel().removeTableModelListener(new TableChangedListener());
+        Table.table.getModel().addTableModelListener(new TableChangedListener());
     }
 }
