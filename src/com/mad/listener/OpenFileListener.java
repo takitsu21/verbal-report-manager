@@ -33,7 +33,6 @@ public class OpenFileListener extends AbstractApplication implements ActionListe
         String[] blocs = new String[Data.dataArray[0].length - 3];
 
         if (blocs.length >= 0) System.arraycopy(Data.dataArray[0], 3, blocs, 0, blocs.length);
-        setResetTable(new JButton("Remise à zéro du tableau"));
         setShowSelectedLines(new JButton("Afficher ligne selectionné"));
         setDeleteLines(new JButton("Supprimer ligne selectionné"));
         setAddStudent(new JButton("Ajouter un élève"));
@@ -53,7 +52,6 @@ public class OpenFileListener extends AbstractApplication implements ActionListe
         getSearchComboBox().setPreferredSize(new Dimension(250, (int) d.getHeight()));
 
         getShowTree().addActionListener(new HierarchicalListener());
-        getResetTable().addActionListener(new ResetTableListener());
         getShowSelectedLines().addActionListener(new SelectRowsListener());
         getDeleteLines().addActionListener(new DeleteRowListener());
         getAddStudent().addActionListener(new AddStudentListener());
@@ -61,7 +59,7 @@ public class OpenFileListener extends AbstractApplication implements ActionListe
         Table.table.getSelectionModel().addListSelectionListener(new EnableButtonsRowsListener());
         getAddProgramButton().addActionListener(new AddProgramListener());
         getAddCourse().addActionListener(new AddCourseListener());
-        getComboBox().addActionListener(new ComboBoxListener());
+
 
         Table.table.getModel().removeTableModelListener(new TableChangedListener());
         Table.table.getModel().addTableModelListener(new TableChangedListener());
@@ -120,12 +118,10 @@ public class OpenFileListener extends AbstractApplication implements ActionListe
     private static void fillSouthPanel(String fileName) {
         if (fileName.endsWith(".csv")) {
             getSouthPanel().add(getShowSelectedLines());
-            getSouthPanel().add(getResetTable());
         } else {
             getSouthPanel().add(getAddProgramButton());
             getSouthPanel().add(getAddCourse());
             getSouthPanel().add(getAddStudent());
-            getSouthPanel().add(getResetTable());
             getSouthPanel().add(getShowSelectedLines());
             getSouthPanel().add(getDeleteLines());
         }
@@ -134,7 +130,9 @@ public class OpenFileListener extends AbstractApplication implements ActionListe
     private static void fillNorthPanel(String fileName) {
         if (fileName.endsWith(".csv")) {
             getNorthPanel().add(getSearchComboBox());
+            getNorthPanel().add(getRefresh());
         } else {
+            getComboBox().addActionListener(new ComboBoxListener());
             getNorthPanel().add(getSearchComboBox());
             getNorthPanel().add(getShowTree());
             getNorthPanel().add(getComboBox());

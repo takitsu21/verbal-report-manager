@@ -1,18 +1,11 @@
 package com.mad;
 
-import com.mad.listener.TableChangedListener;
-import com.mad.util.Data;
 import com.mad.util.Table;
 import com.mad.util.XmlToCsv;
 import com.mad.util.XmlWriter;
 
 import javax.swing.*;
 import java.awt.*;
-
-import java.awt.event.ActionListener;
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.EventListener;
 
 
 
@@ -26,7 +19,6 @@ public abstract class AbstractApplication extends JPanel {
     protected static JButton showSelectedLines;
     protected static JButton deleteLines;
     protected static JButton addStudent;
-    protected static JButton resetTable;
     protected static JButton showTree;
     protected static JButton addCourse;
     protected static JButton addProgramButton;
@@ -113,14 +105,6 @@ public abstract class AbstractApplication extends JPanel {
 
     public static void setShowSelectedLines(JButton showSelectedLines) {
         AbstractApplication.showSelectedLines = showSelectedLines;
-    }
-
-    public static JButton getResetTable() {
-        return resetTable;
-    }
-
-    public static void setResetTable(JButton resetTable) {
-        AbstractApplication.resetTable = resetTable;
     }
 
     public static JButton getDeleteLines() {
@@ -219,33 +203,4 @@ public abstract class AbstractApplication extends JPanel {
         getContent().add(getDisplayCsv().Jscroll, BorderLayout.CENTER);
         getComboBox().setSelectedItem(getComboBox().getSelectedItem());
     }
-
-//    public static void refreshListeners() {
-//        TableModel tm = Table.table.getModel();
-//        ListSelectionModel lsm = Table.table.getSelectionModel();
-//
-//        lsm.removeListSelectionListener(new EnableButtonsRowsListener());
-//        tm.removeTableModelListener(new TableChangedListener());
-//        comboBox.removeActionListener(new ComboBoxListener());
-//        showTree.removeActionListener(new HierarchicalListener());
-//        searchComboBox.removeActionListener(new SearchBarListener());
-//        resetTable.removeActionListener(new ResetTableListener());
-//        showSelectedLines.removeActionListener(new SelectRowsListener());
-//        deleteLines.removeActionListener(new DeleteRowListener());
-//        addProgramButton.removeActionListener(new AddProgramListener());
-//        addStudent.removeActionListener(new AddStudentListener());
-//
-//
-//        lsm.addListSelectionListener(new EnableButtonsRowsListener());
-//        tm.addTableModelListener(new TableChangedListener());
-//        comboBox.addActionListener(new ComboBoxListener());
-//        showTree.addActionListener(new HierarchicalListener());
-//        searchComboBox.addActionListener(new SearchBarListener());
-//        resetTable.addActionListener(new ResetTableListener());
-//        deleteLines.addActionListener(new DeleteRowListener());
-//        addProgramButton.addActionListener(new AddProgramListener());
-//        addStudent.addActionListener(new AddStudentListener());
-//        System.out.println("Listeners refreshed");
-//        System.gc();
-//    }
 }
