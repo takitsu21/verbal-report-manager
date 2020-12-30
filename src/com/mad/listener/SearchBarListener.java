@@ -11,10 +11,8 @@ import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.List;
+import java.awt.image.AreaAveragingScaleFilter;
+import java.util.*;
 import java.util.regex.Pattern;
 
 public class SearchBarListener extends AbstractApplication implements ActionListener {
@@ -53,9 +51,14 @@ public class SearchBarListener extends AbstractApplication implements ActionList
 
             }
 
-            HashSet set = new HashSet(Arrays.asList(ligne));
+            HashSet<String> set = new HashSet<>();
+            for (String s : ligne) {
+                if (!s.equals("Note max") && !s.equals("Note min") && !s.equals("Note moyenne") && !s.equals("Écart-type")) {
+                    set.add(s);
+                }
+            }
 
-            String[] listNumStud = (String[]) set.toArray(new String[set.size()]);
+            String[] listNumStud = set.toArray(new String[0]);
 
 
             String[][] data=new String[listNumStud.length+1][];
@@ -77,8 +80,12 @@ public class SearchBarListener extends AbstractApplication implements ActionList
                 }
 
             }
-            data.sort(Comparator.comparing(o -> data[o][1]));
-            Table.setNewModelTable(Table.table, data);
+            String[][] toSort = Arrays.copyOfRange(data, 1, data.length);
+            List<String[]> listData = new ArrayList<>();
+            listData.add(data[0]);
+            Arrays.sort(toSort, (o1, o2) -> CharSequence.compare(o1[1], o2[1]));
+            listData.addAll(Arrays.asList(toSort));
+            Table.setNewModelTable(Table.table, listData.toArray(new String[0][0]));
 
 
         } catch (Exception ioException) {
@@ -229,5 +236,18 @@ public class SearchBarListener extends AbstractApplication implements ActionList
             }
         }
         return data;
+    }
+}
+
+class StrinArrayComparator implements Comparator<String[]> {
+    @Override
+    public int compare(String[] array1, String[] array2) {
+        // get the second element of each array, andtransform it into a Double
+        Double d1 = Double.valueOf(array1[1]);
+        Double d2 = Double.valueOf(array2[1]);
+        // since you want a descending order, you need to negate the
+        // comparison of the double
+        return -d1.compareTo(d2);
+        // or : return d2.compareTo(d1);
     }
 }
