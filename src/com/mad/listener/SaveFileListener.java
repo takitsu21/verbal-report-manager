@@ -31,7 +31,12 @@ public class SaveFileListener extends AbstractApplication implements ActionListe
 
         int returnValue = jfc.showSaveDialog(null);
         if (returnValue == JFileChooser.APPROVE_OPTION) {
-            Data.save(Data.dataSet.get(getComboBox().getSelectedItem()), "" + jfc.getSelectedFile());
+            if (jfc.getSelectedFile().getPath().endsWith(".csv")) {
+                Data.save(Data.dataSet.get(getComboBox().getSelectedItem()), jfc.getSelectedFile().getPath());
+            } else {
+                Data.save(Data.dataSet.get(getComboBox().getSelectedItem()),
+                        jfc.getSelectedFile().getPath() + ".csv");
+            }
             if (jfc.getSelectedFile().isDirectory()) {
                 System.out.println("You selected the directory: " + jfc.getSelectedFile());
             }

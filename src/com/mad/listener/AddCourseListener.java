@@ -82,9 +82,7 @@ public class AddCourseListener extends AbstractApplication implements ActionList
 
             if (XmlWriter.addCourseGeneral(name, id, coef)) {
                 XmlWriter.save(TMP_PATH);
-                Table.table.getModel().removeTableModelListener(new TableChangedListener());
                 OpenFileListener.openFile(TMP_PATH);
-                Table.table.getSelectionModel().addListSelectionListener(new EnableButtonsRowsListener());
                 tmp.dispose();
             }
         }

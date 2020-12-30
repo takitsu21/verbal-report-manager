@@ -1,5 +1,6 @@
 package com.mad;
 
+import com.mad.listener.TableChangedListener;
 import com.mad.util.Table;
 import com.mad.util.XmlToCsv;
 import com.mad.util.XmlWriter;
@@ -199,8 +200,10 @@ public abstract class AbstractApplication extends JPanel {
         XmlWriter.save(TMP_PATH);
         XmlToCsv xmlConverter = new XmlToCsv(TMP_PATH);
         xmlConverter.convert();
-        clearJTables();
-        getContent().add(getDisplayCsv().Jscroll, BorderLayout.CENTER);
+//        clearJTables();
+//        getContent().add(getDisplayCsv().Jscroll, BorderLayout.CENTER);
         getComboBox().setSelectedItem(getComboBox().getSelectedItem());
+//        Table.table.getModel().removeTableModelListener(new TableChangedListener());
+//        Table.table.getModel().addTableModelListener(new TableChangedListener());
     }
 }
