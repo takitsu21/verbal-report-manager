@@ -2,7 +2,6 @@ package com.mad.listener;
 
 import com.mad.AbstractApplication;
 import com.mad.util.Data;
-import com.mad.util.Table;
 import com.mad.util.XmlToCsv;
 import com.mad.util.XmlWriter;
 import org.w3c.dom.Element;
@@ -11,7 +10,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -90,7 +88,7 @@ public class AddStudentListener extends AbstractApplication implements ActionLis
 //        for (ActionListener ae : program.getActionListeners()) {
 //            program.removeActionListener(ae);
 //        }
-        for (int i = 0; i < getComboBox().getItemCount();i++) {
+        for (int i = 0; i < getComboBox().getItemCount(); i++) {
             program.addItem(getComboBox().getItemAt(i));
         }
         program.addActionListener(new ListCheckBox(cours, tmp));
@@ -117,7 +115,6 @@ public class AddStudentListener extends AbstractApplication implements ActionLis
         bouton.add(ajouter, BorderLayout.SOUTH);
         sud.add(bouton);
         tmp.add(sud, BorderLayout.SOUTH);
-
 
 
         tmp.setVisible(true);
@@ -197,8 +194,6 @@ public class AddStudentListener extends AbstractApplication implements ActionLis
 
 
         }
-
-
 
 
         public List<JCheckBox> getCheckBoxs() {
@@ -322,10 +317,9 @@ public class AddStudentListener extends AbstractApplication implements ActionLis
         private final JFrame tmp;
 
 
-
         public ListCheckBox(String[] cours, JFrame tmp) {
-            this.cours=cours;
-            this.tmp=tmp;
+            this.cours = cours;
+            this.tmp = tmp;
 
         }
 
@@ -336,11 +330,6 @@ public class AddStudentListener extends AbstractApplication implements ActionLis
             setCbg(new CheckBoxGroup("COURS", cours));
             tmp.add(getCbg(), BorderLayout.CENTER);
             tmp.setVisible(true);
-//            Table.table.getModel().removeTableModelListener(new TableChangedListener());
-//            Table.table.getSelectionModel().removeListSelectionListener(new EnableButtonsRowsListener());
-//            Table.table.getSelectionModel().addListSelectionListener(new EnableButtonsRowsListener());
-//            Table.table.getModel().addTableModelListener(new TableChangedListener());
-
         }
     }
 }

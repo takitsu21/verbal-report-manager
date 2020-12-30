@@ -1,26 +1,18 @@
 package com.mad;
 
-import com.mad.listener.*;
-
+import com.mad.listener.TableChangedListener;
 import com.mad.util.Data;
-
 import com.mad.util.Table;
 import com.mad.util.XmlToCsv;
 import com.mad.util.XmlWriter;
 
 import javax.swing.*;
-import javax.swing.event.TableModelListener;
-import javax.swing.table.TableModel;
 import java.awt.*;
-import java.awt.event.ActionListener;
-import java.util.Arrays;
-import java.util.EventListener;
 
 
 public abstract class AbstractApplication extends JPanel {
     public static String ORIGIN_PATH;
     public static final String TMP_PATH = "./xml-editor.tmp.xml";
-//    protected final TableModelListener modelListener = new TableChangedListener();
     protected static String path;
     protected static JFrame frame;
     protected static JPanel southPanel;
@@ -31,14 +23,13 @@ public abstract class AbstractApplication extends JPanel {
     protected static JButton resetTable;
     protected static JButton showTree;
     protected static JButton addCourse;
+    protected static JButton addProgramButton;
     protected static Table displayCsv;
     protected static Container content;
-    protected static JComboBox<String> comboBox = new JComboBox<>();
-    protected static boolean isFirstFile = true;
+    protected static JComboBox<String> comboBox;
     protected static JComboBox<String> searchComboBox;
     protected static JLabel dragAndDrop;
     protected static JTree showHierarchicTree;
-    protected static JButton addProgramButton;
     protected static boolean componentsInitialised = false;
     protected static String infoSearchComboBox;
 
@@ -206,15 +197,6 @@ public abstract class AbstractApplication extends JPanel {
 
     public static void setOriginPath(String originPath) {
         ORIGIN_PATH = originPath;
-    }
-
-
-    public static boolean isIsFirstFile() {
-        return isFirstFile;
-    }
-
-    public static void setIsFirstFile(boolean isFirstFile) {
-        AbstractApplication.isFirstFile = isFirstFile;
     }
 
     public static void clearJTables() {

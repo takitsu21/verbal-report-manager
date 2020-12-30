@@ -43,7 +43,7 @@ public class GUI {
 
         file.add(ouvrir);
 
-        JMenuItem enregistrer = new JMenuItem("Enregistrer", 's' );
+        JMenuItem enregistrer = new JMenuItem("Enregistrer", 's');
         enregistrer.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, KeyEvent.CTRL_DOWN_MASK));
         enregistrer.addActionListener(new EnregistrerListener());
         file.add(enregistrer);

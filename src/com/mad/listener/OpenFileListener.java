@@ -12,8 +12,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.EventListener;
 
 public class OpenFileListener extends AbstractApplication implements ActionListener {
     @Override
@@ -100,19 +98,19 @@ public class OpenFileListener extends AbstractApplication implements ActionListe
         }
     }
 
-    public static void clearNorthPanel() {
+    private static void clearNorthPanel() {
         for (Component c : getNorthPanel().getComponents()) {
             getNorthPanel().remove(c);
         }
     }
 
-    public static void clearSouthPanel() {
+    private static void clearSouthPanel() {
         for (Component c : getSouthPanel().getComponents()) {
             getSouthPanel().remove(c);
         }
     }
 
-    public static void fillSouthPanel(String fileName) {
+    private static void fillSouthPanel(String fileName) {
         if (fileName.endsWith(".csv")) {
             getSouthPanel().add(getShowSelectedLines());
             getSouthPanel().add(getResetTable());
@@ -126,7 +124,7 @@ public class OpenFileListener extends AbstractApplication implements ActionListe
         }
     }
 
-    public static void fillNorthPanel(String fileName) {
+    private static void fillNorthPanel(String fileName) {
         if (fileName.endsWith(".csv")) {
             getNorthPanel().add(getSearchComboBox());
         } else {
@@ -136,7 +134,7 @@ public class OpenFileListener extends AbstractApplication implements ActionListe
         }
     }
 
-    public static void refreshPanels(String fileName) {
+    private static void refreshPanels(String fileName) {
         clearNorthPanel();
         clearSouthPanel();
         fillSouthPanel(fileName);

@@ -7,7 +7,6 @@ import com.mad.util.Table;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Arrays;
 import java.util.Objects;
 
 public class ComboBoxListener extends AbstractApplication implements ActionListener {
@@ -23,6 +22,5 @@ public class ComboBoxListener extends AbstractApplication implements ActionListe
 
         DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>(blocs);
         getSearchComboBox().setModel(model);
-
     }
 }

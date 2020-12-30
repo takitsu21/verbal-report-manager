@@ -8,7 +8,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 
 
 public class AddCourseListener extends AbstractApplication implements ActionListener {
@@ -70,10 +69,7 @@ public class AddCourseListener extends AbstractApplication implements ActionList
         southPane.add(validate);
         contentPane.add(southPane, BorderLayout.SOUTH);
 
-
         tmp.setVisible(true);
-
-
     }
 
 
@@ -83,9 +79,6 @@ public class AddCourseListener extends AbstractApplication implements ActionList
             String id = getIdField().getText();
             String name = getCourseNameFiled().getText();
             String coef = getCoefField().getText();
-//            System.out.println(id);
-//            System.out.println(name);
-//            System.out.println(coef);
 
             if (getXmlEditor().addCourseGeneral(name, id, coef)) {
                 XmlWriter.save(TMP_PATH);
@@ -94,8 +87,6 @@ public class AddCourseListener extends AbstractApplication implements ActionList
                 Table.table.getSelectionModel().addListSelectionListener(new EnableButtonsRowsListener());
                 tmp.dispose();
             }
-
-
         }
     }
 

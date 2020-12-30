@@ -1,7 +1,6 @@
 package com.mad.listener;
 
 import com.mad.AbstractApplication;
-import com.mad.util.Data;
 import com.mad.util.XmlWriter;
 
 import javax.swing.*;
@@ -11,10 +10,11 @@ import java.awt.event.ActionListener;
 import java.io.File;
 
 public class SaveFileXmlListener extends AbstractApplication implements ActionListener {
-    File f;
+    private File f;
+
     @Override
     public void actionPerformed(ActionEvent e) {
-        f=new File("data" + ".xml");
+        f = new File("data" + ".xml");
         JFileChooser jfc = new JFileChooser(f);
         jfc.setCurrentDirectory(new File(System.getProperty("user.dir")));
         jfc.setSelectedFile(f);
