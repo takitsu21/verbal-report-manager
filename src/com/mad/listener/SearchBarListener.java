@@ -12,6 +12,8 @@ import javax.swing.table.TableRowSorter;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Arrays;
+import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -21,7 +23,7 @@ public class SearchBarListener extends AbstractApplication implements ActionList
     @Override
     public void actionPerformed(ActionEvent e) {
         try {
-
+            Table.setNewModelTable(Table.table, Data.dataArray);
             String searchText;
             if(getInfoSearchComboBox()!=null){
                 searchText=getInfoSearchComboBox();
@@ -51,36 +53,22 @@ public class SearchBarListener extends AbstractApplication implements ActionList
 
             }
 
+            HashSet set = new HashSet(Arrays.asList(ligne));
+
+            String[] listNumStud = (String[]) set.toArray(new String[set.size()]);
 
 
-            for(int i=0;i<ligne.length;i++){
-
-                for(int j=0; j<ligne.length;j++){
-                    if(i!=j && ligne[i].equals(ligne[j])){
-                        ligne[j]=null;
-                    }
-                }
-
-            }
-
-
-
-
-            String[][] data=new String[ligne.length+1][];
-            if (ligne.length == 0) {
+            String[][] data=new String[listNumStud.length+1][];
+            if (listNumStud.length == 0) {
                 data=searchCourse(listText);
-                //System.out.println("1");
             } else if (getPath().endsWith(".xml")) {
-                //System.out.println("xml");
-                data=selectEtu(ligne);
+                data=selectEtu(listNumStud);
             }else if (getPath().endsWith(".csv")){
-                //System.out.println(Arrays.toString(ligne));
-                //data=searchInCsv(ligne);
                 data[0]=Data.dataArray[0];
-                for (int i=0; i< ligne.length;i++){
+                for (int i=0; i< listNumStud.length;i++){
                     for (int j=1;j<Data.dataArray.length;j++){
 
-                        if(ligne[i] != null && ligne[i].equals(Data.dataArray[j][0])){
+                        if(listNumStud[i] != null && listNumStud[i].equals(Data.dataArray[j][0])){
 
                             data[i+1]=Data.dataArray[j];
                             break;
@@ -89,6 +77,7 @@ public class SearchBarListener extends AbstractApplication implements ActionList
                 }
 
             }
+            data.sort(Comparator.comparing(o -> data[o][1]));
             Table.setNewModelTable(Table.table, data);
 
 
@@ -100,26 +89,47 @@ public class SearchBarListener extends AbstractApplication implements ActionList
 
     private String[][] searchCourse(String[] names) {
         String[][] tableau_final = new String[Data.dataArray.length][names.length + 1];
-
+        int[] decalage=new int[names.length];
+        String[][] tableauStat=new String[names.length][4];
         for (int i = 0; i < names.length; i++) {
-            for (int j = 0; j < Data.dataArray[0].length; j++) {
+            decalage[i]=0;
+            for (int j = 0; j < Data.dataArray[0].length -4; j++) {
                 String currentCheck = Data.dataArray[0][j];
                 String[] splited = currentCheck.split(" - "); //.map(String::toLowerCase).toArray(String[]::new);
                 if (currentCheck.equalsIgnoreCase(names[i]) || splited[0].equalsIgnoreCase(names[i]) || splited[splited.length - 1].equalsIgnoreCase(names[i])) {
-                    for (int k = 0; k < Data.dataArray.length; k++) {
-                        if (!Data.dataArray[k][j].isEmpty()) {
-                            tableau_final[k][i + 1] = Data.dataArray[k][j];
+                    for (int k = 0; k < Data.dataArray.length-4; k++) {
+                        if (!Data.dataArray[k][j].equals("")) {
+                            tableau_final[k-decalage[i]][i + 1] = Data.dataArray[k][j];
+                        }
+                        else{
+                            decalage[i]+=1;
                         }
                     }
+                    tableauStat[i][0]=Data.dataArray[Data.dataArray.length-1][j];
+                    tableauStat[i][1]=Data.dataArray[Data.dataArray.length-2][j];
+                    tableauStat[i][2]=Data.dataArray[Data.dataArray.length-3][j];
+                    tableauStat[i][3]=Data.dataArray[Data.dataArray.length-4][j];
                 }
             }
         }
+
+        int decalageMin = Integer.MAX_VALUE;
+
+        for(int i = 0; i < decalage.length; i++){
+            if(decalage[i] < decalageMin)
+                decalageMin = decalage[i];
+        }
         final int finalTabLength = tableau_final.length;
         tableau_final[0][0] = "Statistiques";
-        tableau_final[finalTabLength - 1][0] = "Écart-type";
-        tableau_final[finalTabLength - 2][0] = "Note moyenne";
-        tableau_final[finalTabLength - 3][0] = "Note min";
-        tableau_final[finalTabLength - 4][0] = "Note max";
+        tableau_final[finalTabLength - 1 - decalageMin][0] = "Écart-type";
+        tableau_final[finalTabLength - 2 - decalageMin][0] = "Note moyenne";
+        tableau_final[finalTabLength - 3 - decalageMin][0] = "Note min";
+        tableau_final[finalTabLength - 4 - decalageMin][0] = "Note max";
+        for (int i=0;i<tableauStat.length;i++){
+            for(int j=0;j<4;j++) {
+                tableau_final[finalTabLength - 1 - decalageMin-j][i + 1] = tableauStat[i][j];
+            }
+        }
 
         return tableau_final;
     }
@@ -133,10 +143,9 @@ public class SearchBarListener extends AbstractApplication implements ActionList
         for (int i = 0; i < Data.dataArray[0].length; i++) {
             data[0][i] = Data.dataArray[0][i];
         }
-
         for (int j = 1; j < etu.length + 1; j++) {
             for (Element studs : listStudents) {
-                if (etu[j - 1].equalsIgnoreCase(XmlToCsv.read(studs, "identifier"))) {
+                if (etu[j - 1]!=null && etu[j - 1].equalsIgnoreCase(XmlToCsv.read(studs, "identifier"))) {
 
                     List<Element> cours = Data.getChildren(studs, "grade");
 
