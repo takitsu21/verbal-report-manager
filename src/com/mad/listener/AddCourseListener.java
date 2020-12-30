@@ -41,6 +41,7 @@ public class AddCourseListener extends AbstractApplication implements ActionList
         courseNameFiled = new JTextField(10);
         JLabel coefLabel = new JLabel("coefficient:");
         coefField = new JTextField(10);
+        coefField.addKeyListener(new KeyWatcher());
 
 
         Container contentPane = tmp.getContentPane();
@@ -74,11 +75,22 @@ public class AddCourseListener extends AbstractApplication implements ActionList
 
 
     public class ValidateCourseListener implements ActionListener {
+        private void err(){
+            Toolkit.getDefaultToolkit().beep();
+            JOptionPane.showMessageDialog(tmp, "        Valeur incrorrect\nSelectionnez une valeur < 30","Erreur",JOptionPane.WARNING_MESSAGE);
+            getCoefField().setText("");
+
+        }
         @Override
         public void actionPerformed(ActionEvent e) {
+            try{
             String id = getIdField().getText();
             String name = getCourseNameFiled().getText();
             String coef = getCoefField().getText();
+            if(Integer.parseInt(coef) > 30){
+                err();
+            }
+            else{
 
             if (XmlWriter.addCourseGeneral(name, id, coef)) {
                 XmlWriter.save(TMP_PATH);
@@ -86,6 +98,9 @@ public class AddCourseListener extends AbstractApplication implements ActionList
                 OpenFileListener.openFile(TMP_PATH);
                 Table.table.getSelectionModel().addListSelectionListener(new EnableButtonsRowsListener());
                 tmp.dispose();
+            }}}
+            catch(NumberFormatException ex ){
+               err();
             }
         }
     }
