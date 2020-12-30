@@ -87,7 +87,7 @@ public class AddCourseListener extends AbstractApplication implements ActionList
             String id = getIdField().getText();
             String name = getCourseNameFiled().getText();
             String coef = getCoefField().getText();
-            if(Integer.parseInt(coef) > 30){
+            if(Integer.parseInt(coef) > 30 || Integer.parseInt(coef) < 0 ){
                 err();
             }
             else{
