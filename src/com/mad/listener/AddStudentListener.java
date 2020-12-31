@@ -2,7 +2,6 @@ package com.mad.listener;
 
 import com.mad.AbstractApplication;
 import com.mad.util.Data;
-import com.mad.util.XmlToCsv;
 import com.mad.util.XmlWriter;
 import org.w3c.dom.Element;
 
@@ -11,97 +10,107 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class AddStudentListener extends AbstractApplication implements ActionListener {
-    private JTextField studNum;
-    private JTextField name;
-    private JTextField surname;
-    private JComboBox<String> program;
-    private static CheckBoxGroup cbg;
+    protected JTextField studNum;
+    protected JTextField nameField;
+    protected JTextField surname;
+    protected JComboBox<String> program;
+    protected CheckBoxGroup cbg;
+    protected JFrame addStudentFrame;
+    protected String[] cours;
 
-    public static CheckBoxGroup getCbg() {
+    public void setStudNum(JTextField studNum) {
+        this.studNum = studNum;
+    }
+
+    public void setNameField(JTextField nameField) {
+        this.nameField = nameField;
+    }
+
+    public void setSurname(JTextField surname) {
+        this.surname = surname;
+    }
+
+    public JComboBox<String> getProgram() {
+        return program;
+    }
+
+    public void setProgram(JComboBox<String> program) {
+        this.program = program;
+    }
+
+    public CheckBoxGroup getCbg() {
         return cbg;
     }
 
-    public static void setCbg(CheckBoxGroup cbg) {
-        AddStudentListener.cbg = cbg;
+    public void setCbg(CheckBoxGroup cbg) {
+        this.cbg = cbg;
     }
 
-    public JTextField getStudNumfield() {
-        return studNum;
+    public void setAddStudentFrame(JFrame addStudentFrame) {
+        this.addStudentFrame = addStudentFrame;
     }
 
-    public JTextField getNamefield() {
-        return name;
+    public String[] getCours() {
+        return cours;
     }
 
-    public JTextField getSurnamefield() {
-        return surname;
-    }
-
-    public JComboBox getProgramfield() {
-        return program;
+    public void setCours(String[] cours) {
+        this.cours = cours;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        JFrame tmp = new JFrame("Ajouter un étudiant");
-        tmp.setSize(860, 400);
-        tmp.setLocationRelativeTo(null);
-        tmp.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        tmp.setVisible(true);
-        tmp.setLayout(new BorderLayout());
+        setAddStudentFrame(new JFrame("Ajouter un étudiant"));
+        addStudentFrame.setSize(860, 400);
+        addStudentFrame.setLocationRelativeTo(null);
+        addStudentFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        addStudentFrame.setVisible(true);
+        addStudentFrame.setLayout(new BorderLayout());
 
         JPanel pnl = new JPanel();
         JPanel stdNum = new JPanel();
         JPanel namePanel = new JPanel();
         JPanel sureNamePane = new JPanel();
         JPanel prog = new JPanel();
-        //pnl.setLayout(new BorderLayout());
 
-        studNum = new JTextField(10);
+        setStudNum(new JTextField(10));
         studNum.setSize(60, 30);
         stdNum.add(new JLabel("Student number:"));
         stdNum.add(studNum);
         pnl.add(stdNum);
 
-        name = new JTextField(10);
-        name.setSize(60, 30);
+        setNameField(new JTextField(10));
+        nameField.setSize(60, 30);
         namePanel.add(new JLabel("Name:"));
-        namePanel.add(name);
+        namePanel.add(nameField);
         pnl.add(namePanel);
 
-        surname = new JTextField(10);
+        setSurname(new JTextField(10));
         surname.setSize(60, 30);
         sureNamePane.add(new JLabel("Surname:"));
         sureNamePane.add(surname);
         pnl.add(sureNamePane);
 
         List<Element> listCourses = Data.getChildren(Data.root, "course");
-        String[] cours = generateCheckboxValues(listCourses);
+        cours = generateCheckboxValues(listCourses);
 
         setCbg(new CheckBoxGroup("COURS", cours));
 
         program = new JComboBox<>();
-//        for (ActionListener ae : program.getActionListeners()) {
-//            program.removeActionListener(ae);
-//        }
         for (int i = 0; i < getComboBox().getItemCount(); i++) {
             program.addItem(getComboBox().getItemAt(i));
         }
-        program.addActionListener(new ListCheckBox(cours, tmp));
-
+        program.addActionListener(new ListCheckBox());
 
         prog.add(new JLabel("Program:"));
         prog.add(program);
         pnl.add(prog);
 
-        tmp.add(pnl, BorderLayout.NORTH);
-
-
-        tmp.add(getCbg(), BorderLayout.CENTER);
+        addStudentFrame.add(pnl, BorderLayout.NORTH);
+        addStudentFrame.add(getCbg(), BorderLayout.CENTER);
 
         JPanel sud = new JPanel(new GridLayout(1, 2));
 
@@ -111,15 +120,11 @@ public class AddStudentListener extends AbstractApplication implements ActionLis
 
         JPanel bouton = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         JButton ajouter = new JButton("Ajouter");
-        ajouter.addActionListener(new CheckboxAction(tmp));
+        ajouter.addActionListener(new CheckboxAction());
         bouton.add(ajouter, BorderLayout.SOUTH);
         sud.add(bouton);
-        tmp.add(sud, BorderLayout.SOUTH);
-
-
-        tmp.setVisible(true);
-
-
+        addStudentFrame.add(sud, BorderLayout.SOUTH);
+        addStudentFrame.setVisible(true);
     }
 
     private String[] generateCheckboxValues(List<Element> courses) {
@@ -140,7 +145,6 @@ public class AddStudentListener extends AbstractApplication implements ActionLis
         private final List<JCheckBox> checkBoxes;
 
         public CheckBoxGroup(String labelChoice, String... options) {
-            System.out.println(Data.dataArray[0][3]);
             checkBoxes = new ArrayList<>(25);
             setLayout(new BorderLayout());
             JPanel header = new JPanel(new FlowLayout(FlowLayout.LEFT, 1, 1));
@@ -154,7 +158,6 @@ public class AddStudentListener extends AbstractApplication implements ActionLis
             header.add(all);
             add(header, BorderLayout.NORTH);
 
-
             JPanel content = new ScrollablePane(new GridBagLayout());
             content.setBackground(UIManager.getColor("List.background"));
             if (options.length > 0) {
@@ -167,38 +170,22 @@ public class AddStudentListener extends AbstractApplication implements ActionLis
 
                     JCheckBox cb = new JCheckBox(option);
                     cb.setOpaque(false);
-                    //cb.setBackground(Color.GRAY);
                     cb.setForeground(Color.decode("0xf27e11"));
                     for (int i = 0; i < Data.dataArray[0].length; i++) {
                         if (option.equals(Data.dataArray[0][i])) {
-
-                            //cb.setBackground(Color.WHITE);
                             cb.setForeground(Color.BLACK);
-
                         }
                     }
-
                     checkBoxes.add(cb);
                     content.add(cb, gbc);
                 }
-
-                //JCheckBox cb = new JCheckBox(options[options.length - 1]);
-                //cb.setOpaque(false);
-                //checkBoxes.add(cb);
-                //gbc.weighty = 1;
-                //content.add(cb, gbc);
-
             }
 
             add(new JScrollPane(content));
-
-
         }
-
 
         public List<JCheckBox> getCheckBoxs() {
             return checkBoxes;
-
         }
 
         public static class ScrollablePane extends JPanel implements Scrollable {
@@ -206,9 +193,6 @@ public class AddStudentListener extends AbstractApplication implements ActionLis
             public ScrollablePane(LayoutManager layout) {
                 super(layout);
             }
-
-//            public ScrollablePane() {
-//            }
 
             @Override
             public Dimension getPreferredScrollableViewportSize() {
@@ -246,43 +230,26 @@ public class AddStudentListener extends AbstractApplication implements ActionLis
                 }
                 return track;
             }
-
         }
 
     }
 
-    class CheckboxAction extends AbstractApplication implements ActionListener {
-        private final List<JCheckBox> checkBoxes;
-        JFrame tmp;
-//        private final String studNum;
-//        private final String name;
-//        private final String surname;
-        // private final String prog;
-
-        public CheckboxAction(JFrame tmp) {
-            this.checkBoxes = getCbg().getCheckBoxs();
-            this.tmp = tmp;
-//            this.studNum = studNum.getText();
-//            this.name = name.getText();
-//            this.surname = surname.getText();
-//            this.prog = prog.getText();
-        }
-
+    class CheckboxAction implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            String numEntry = getStudNumfield().getText();
-            String nameEntry = getNamefield().getText();
-            String surnameEntry = getSurnamefield().getText();
-            String programmeEntry = (String) getProgramfield().getSelectedItem();
+            String numEntry = studNum.getText();
+            String nameEntry = nameField.getText();
+            String surnameEntry = surname.getText();
+            String programmeEntry = (String) program.getSelectedItem();
 
 
-            String[][] student = new String[checkBoxes.size() + 4][3];
+            String[][] student = new String[cbg.getCheckBoxs().size() + 4][3];
 
-            for (int i = 4; i < checkBoxes.size() + 4; i++) {
-                if (checkBoxes.get(i - 4).isSelected()) {
+            for (int i = 0; i < cbg.getCheckBoxs().size(); i++) {
+                if (cbg.getCheckBoxs().get(i).isSelected()) {
                     student[i][0] = "grade";
-                    System.out.println(checkBoxes.get(i - 4).getText());
-                    student[i][1] = checkBoxes.get(i - 4).getText().split(" - ")[0];
+                    System.out.println(cbg.getCheckBoxs().get(i).getText());
+                    student[i][1] = cbg.getCheckBoxs().get(i).getText().split(" - ")[0];
                     student[i][2] = "0.0";
                 }
             }
@@ -297,38 +264,25 @@ public class AddStudentListener extends AbstractApplication implements ActionLis
             student[3][1] = programmeEntry;
 
             if (XmlWriter.addStudent(XmlWriter.generateStudentNode(student))) {
-
                 refreshTable();
-                tmp.dispose();
-//                XmlWriter.save(TMP_PATH);
-//                setDisplayCsv(new Table());
-//                getDisplayCsv().TableXML(TMP_PATH, Data.dataSet.get(Data.dataSet.entrySet().iterator().next().getKey()));
-//                Table.table.getModel().addTableModelListener(new TableChangedListener());
-//                clearJTables();
-//                getContent().add(getDisplayCsv().Jscroll, BorderLayout.CENTER);
+                addStudentFrame.dispose();
             }
 
         }
     }
 
-    public static class ListCheckBox extends AbstractApplication implements ActionListener {
-        private final String[] cours;
-        private final JFrame tmp;
-
-
-        public ListCheckBox(String[] cours, JFrame tmp) {
-            this.cours = cours;
-            this.tmp = tmp;
-
+    public class ListCheckBox implements ActionListener {
+        public ListCheckBox() {
         }
 
         @Override
         public void actionPerformed(ActionEvent e) {
             new ComboBoxListener().actionPerformed(e);
-            tmp.remove(getCbg());
+            addStudentFrame.remove(getCbg());
             setCbg(new CheckBoxGroup("COURS", cours));
-            tmp.add(getCbg(), BorderLayout.CENTER);
-            tmp.setVisible(true);
+            addStudentFrame.add(getCbg(), BorderLayout.CENTER);
+            addStudentFrame.revalidate();
+            addStudentFrame.repaint();
         }
     }
 }
