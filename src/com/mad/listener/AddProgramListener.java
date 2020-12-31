@@ -25,6 +25,7 @@ public class AddProgramListener extends AbstractApplication implements ActionLis
         programFrame.setLocationRelativeTo(null);
         programFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         programFrame.setVisible(true);
+        JPanel butNex = new JPanel();
 
 
         JPanel panel = new JPanel();
@@ -102,7 +103,6 @@ public class AddProgramListener extends AbstractApplication implements ActionLis
                     CheckBoxGroup checkBoxGroupsCourse = new CheckBoxGroup("COURS", false, stringCourses);
 
                     JPanel nextPane = new JPanel();
-                    JPanel tmp = new JPanel();
                     JButton metaButton = new JButton();
                     metaButton.addActionListener(e1 -> {
                         List<List<String>> programs = new ArrayList<>();
@@ -163,7 +163,7 @@ public class AddProgramListener extends AbstractApplication implements ActionLis
                     ActionListener finishListener = metaButton.getActionListeners()[0];
 
 
-                    nextPane.setLayout(new GridLayout(2, 1));
+                    nextPane.setLayout(new GridLayout(1, 1));
 
                     nextPane.add(checkBoxGroupsCourse);
                     JButton next12;
@@ -177,10 +177,11 @@ public class AddProgramListener extends AbstractApplication implements ActionLis
                         next12.addActionListener(e13 -> {
                             JPanel tmp13 = new JPanel();
                             getProgramFrame().getContentPane().remove(nextPane);
+                            butNex.remove(next12);
                             refreshWindow();
                             JPanel nextPane12 = new JPanel();
 
-                            nextPane12.setLayout(new GridLayout(nbOptions1 + 1, 1));
+                            nextPane12.setLayout(new GridLayout(nbOptions1, 1));
 
                             for (int i = 0; i < nbOptions1; i++) {
                                 checkBoxGroupOptions[i] = new CheckBoxGroup("OPTIONS", true, stringCourses);
@@ -191,11 +192,12 @@ public class AddProgramListener extends AbstractApplication implements ActionLis
                                 next1.addActionListener(e12 -> {
                                     JPanel tmp12 = new JPanel();
                                     getProgramFrame().getContentPane().remove(nextPane12);
+                                    butNex.remove(next1);
                                     refreshWindow();
 
                                     JPanel nextPane1 = new JPanel();
 
-                                    nextPane1.setLayout(new GridLayout(nbComposantes1 + 1, 1));
+                                    nextPane1.setLayout(new GridLayout(nbComposantes1, 1));
 
                                     for (int i = 0; i < nbComposantes1; i++) {
                                         checkBoxGroupComposantes[i] = new CheckBoxGroup("COMPOSANTES", true, stringCourses);
@@ -204,17 +206,17 @@ public class AddProgramListener extends AbstractApplication implements ActionLis
                                     JButton finished = new JButton("Terminer");
                                     finished.addActionListener(finishListener);
 
-                                    tmp12.add(finished);
+                                    butNex.add(finished);
                                     ///if (nbOptions1 == 0 && nbComposantes1 == 0) finished.doClick();
 
-                                    nextPane1.add(tmp12);
+                                    //nextPane1.add(tmp12);
                                     programFrame.getContentPane().add(nextPane1);
                                     refreshWindow();
                                 });
 
 
-                                tmp13.add(next1);
-                                nextPane12.add(tmp13);
+                                butNex.add(next1);
+                                //nextPane12.add(tmp13);
                                 programFrame.getContentPane().add(nextPane12);
                                 refreshWindow();
                                 if (nbOptions1 == 0) {
@@ -223,16 +225,17 @@ public class AddProgramListener extends AbstractApplication implements ActionLis
                             } else {
                                 JButton next1 = new JButton("Terminer");
                                 next1.addActionListener(finishListener);
-                                tmp13.add(next1);
-                                nextPane12.add(tmp13);
+                                butNex.add(next1);
+                                //nextPane12.add(tmp13);
                                 programFrame.getContentPane().add(nextPane12);
                                 refreshWindow();
                             }
                         });
                     }
-                    tmp.add(next12);
-                    nextPane.add(tmp);
-                    programFrame.getContentPane().add(nextPane);
+
+                    butNex.add(next12);
+                    programFrame.getContentPane().add(butNex, BorderLayout.SOUTH);
+                    programFrame.getContentPane().add(nextPane, BorderLayout.CENTER);
 
 
                 }
