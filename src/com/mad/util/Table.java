@@ -9,9 +9,11 @@ import java.io.IOException;
 import java.util.Arrays;
 
 public class Table {
+    private static String[][] temporaryTable;
     private StringBuilder csv = new StringBuilder();
     public static JTable table;
     public JScrollPane Jscroll;
+
 
     public String getCsv() {
         return csv.toString();
@@ -103,13 +105,22 @@ public class Table {
         Jscroll = new JScrollPane(table);
     }
 
+    public static void setTemporaryTable(String[][] newTableData){
+        temporaryTable = newTableData;
+    }
+
+    public static String[][] getTemporaryTable(){
+        return temporaryTable;
+    }
+
     public static void setNewModelTable(JTable table, String[][] newTableData) {
         TableModel tm = new DefaultTableModel(
                 Arrays.copyOfRange(newTableData, 1, newTableData.length), newTableData[0]);
+        setTemporaryTable(newTableData);
         table.setModel(tm);
     }
 
-    public int[] getSelectedRows() {
+    public static int[] getSelectedRows() {
         return table.getSelectedRows();
     }
 

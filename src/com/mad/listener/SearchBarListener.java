@@ -101,7 +101,7 @@ public class SearchBarListener extends AbstractApplication implements ActionList
                 refreshTable();
             }
             else{
-            Table.setNewModelTable(Table.table, strArr );}
+            Table.setNewModelTable(Table.table, strArr);}
 
 
         } catch (Exception ioException) {
