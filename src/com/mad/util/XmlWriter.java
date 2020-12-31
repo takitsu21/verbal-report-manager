@@ -14,18 +14,20 @@ import java.util.List;
 
 public class XmlWriter {
     public static Node getStudent(String studentId) {
+        Node node = null;
         NodeList nodeList = Data.root.getElementsByTagName("student");
         for (int i = 0; i < nodeList.getLength(); i++) {
-            Node node = nodeList.item(i);
+            node = nodeList.item(i);
             if (node.getNodeType() == Node.ELEMENT_NODE) {
                 Element element = (Element) nodeList.item(i);
                 String currentStudentId = element.getElementsByTagName("identifier").item(0).getTextContent();
                 if (studentId.equalsIgnoreCase(currentStudentId)) {
-                    return node;
+                    break;
                 }
             }
         }
-        throw new StudentNotFoundException(String.format("%s N'a pas été trouvé", studentId));
+        return node;
+//        throw new StudentNotFoundException(String.format("%s N'a pas été trouvé", studentId));
     }
 
     public static boolean deleteStudent(String studentId) {
