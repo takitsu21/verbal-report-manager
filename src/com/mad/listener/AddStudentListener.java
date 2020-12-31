@@ -253,7 +253,6 @@ public class AddStudentListener extends AbstractApplication implements ActionLis
                     student[i][2] = "0.0";
                 }
             }
-            System.out.println(Arrays.deepToString(student));
             student[0][0] = "identifier";
             student[0][1] = numEntry;
             student[1][0] = "surname";
@@ -277,7 +276,7 @@ public class AddStudentListener extends AbstractApplication implements ActionLis
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            getComboBox().setSelectedItem(getProgramfield().getSelectedItem());
+            getComboBox().setSelectedItem(program.getSelectedItem());
             new ComboBoxListener().actionPerformed(e);
             addStudentFrame.remove(getCbg());
             setCbg(new CheckBoxGroup("COURS", cours));
