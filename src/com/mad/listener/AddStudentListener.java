@@ -18,7 +18,7 @@ public class AddStudentListener extends AbstractApplication implements ActionLis
     private JTextField studNum;
     private JTextField name;
     private JTextField surname;
-    private JComboBox<String> program;
+    private static JComboBox<String> program;
     private static CheckBoxGroup cbg;
 
     public static CheckBoxGroup getCbg() {
@@ -41,7 +41,7 @@ public class AddStudentListener extends AbstractApplication implements ActionLis
         return surname;
     }
 
-    public JComboBox getProgramfield() {
+    public static JComboBox getProgramfield() {
         return program;
     }
 
@@ -140,7 +140,7 @@ public class AddStudentListener extends AbstractApplication implements ActionLis
         private final List<JCheckBox> checkBoxes;
 
         public CheckBoxGroup(String labelChoice, String... options) {
-            System.out.println(Data.dataArray[0][3]);
+            System.out.println("dedans");
             checkBoxes = new ArrayList<>(25);
             setLayout(new BorderLayout());
             JPanel header = new JPanel(new FlowLayout(FlowLayout.LEFT, 1, 1));
@@ -286,7 +286,7 @@ public class AddStudentListener extends AbstractApplication implements ActionLis
                     student[i][2] = "0.0";
                 }
             }
-
+            System.out.println(Arrays.deepToString(student));
             student[0][0] = "identifier";
             student[0][1] = numEntry;
             student[1][0] = "surname";
@@ -324,6 +324,7 @@ public class AddStudentListener extends AbstractApplication implements ActionLis
 
         @Override
         public void actionPerformed(ActionEvent e) {
+            getComboBox().setSelectedItem(getProgramfield().getSelectedItem());
             new ComboBoxListener().actionPerformed(e);
             tmp.remove(getCbg());
             setCbg(new CheckBoxGroup("COURS", cours));
