@@ -14,6 +14,7 @@ import javax.swing.table.TableRowSorter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -25,6 +26,8 @@ public class SearchBarListener extends AbstractApplication implements ActionList
 
     @Override
     public void actionPerformed(ActionEvent e) {
+//        System.out.println(Arrays.toString(getSearchComboBox().getActionListeners()));
+//        System.out.println(e.getSource());
         try {
             Table.setNewModelTable(Table.table, Data.dataArray);
             String searchText;
@@ -95,7 +98,7 @@ public class SearchBarListener extends AbstractApplication implements ActionList
             });
             listData.addAll(Arrays.asList(toSort));
             String[][] strArr =   listData.toArray(new String[0][0]);
-            System.out.println(strArr[0][1]);
+            //System.out.println(strArr[0][1]);
             if(strArr[0][1]== null){
                 Toolkit.getDefaultToolkit().beep();
                 JOptionPane.showMessageDialog(null, "Recherche incorrect","Erreur",JOptionPane.WARNING_MESSAGE);

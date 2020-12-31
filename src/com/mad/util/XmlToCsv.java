@@ -5,6 +5,7 @@ import org.w3c.dom.Element;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.File;
+import java.sql.SQLOutput;
 import java.util.*;
 
 public class XmlToCsv {
@@ -26,6 +27,7 @@ public class XmlToCsv {
 
 
     public void convert() {
+
         List<Element> program = Data.getChildren(Data.root, "program");
         List<String> programid = new ArrayList<>();
         List<String> data = new ArrayList<>();
@@ -34,6 +36,7 @@ public class XmlToCsv {
         List<List<String>> listCoursesProg = new ArrayList<>();
 
         for (int i = 0; i < program.size(); i++) {
+
             programid.add(Data.read(program.get(i), "identifier"));
             data.add("\"N° Étudiant\",\"Nom\",\"Prénom\",\"" + programid.get(i) + " - " + Data.read(program.get(i), "name") + "\",");
             listCoursesProg.add(listCrousesProg(program, programid.get(i)));
@@ -41,6 +44,7 @@ public class XmlToCsv {
         }
 
         for (int i = 0; i < data.size(); i++) {
+
             String cours = stringCoursesProg(listCourses, listCoursesProg.get(i));
             data.set(i, data.get(i) + cours + "\n");
         }
@@ -51,21 +55,24 @@ public class XmlToCsv {
 
 
         for (List<Element> liste : listStudents) {
+
+            try{
             for (Element element : liste) {
                 String programStud = Data.read(element, "program");
 
                 StringBuilder d = new StringBuilder();
                 List<Element> listStudMat = Data.getChildren(element, "grade"); //liste des matiere d'un etudient
 
-
+                try {
                 String[] note = listNoteStu(listCoursesProg.get(programid.indexOf(programStud)), listStudMat);
-                //System.out.println(Arrays.toString(note));
                 notes[programid.indexOf(programStud)][listStudents.get(programid.indexOf(programStud)).indexOf(element)] = note;
 
                 Arrays.fill(moyennes[programid.indexOf(programStud)], "0");
                 String moyenne = moyenne(listCourses, listCoursesProg.get(programid.indexOf(programStud)), note);
-                moyennes[programid.indexOf(programStud)][listStudents.get(programid.indexOf(programStud)).indexOf(element)] = moyenne;
-                moyenne = "\"" + moyenne + "\",";
+
+                    moyennes[programid.indexOf(programStud)][listStudents.get(programid.indexOf(programStud)).indexOf(element)] = moyenne;
+                    moyenne = "\"" + moyenne + "\",";
+
 
                 for (String s : note) {
                     if (s != null) {
@@ -79,6 +86,21 @@ public class XmlToCsv {
                         data.get(programid.indexOf(programStud)) + ("\"" + Data.read(element, "identifier") + "\"," +
                                 "\"" + Data.read(element, "surname") + "\"," + "\"" + Data.read(element, "name") + "\"," + moyenne + d.substring(0, d.length() - 1) + "\n" //liste des matiere d'un etudient //liste des matiere d'un etudient //liste des matiere d'un etudient
                         ));
+            }
+                catch(IndexOutOfBoundsException e ){
+                    System.out.println("pb" + e );
+                    System.out.println(programid.indexOf(programStud));
+                    System.out.println("moyenne lengt " + moyennes.length);
+                    System.out.println("notee len "+ notes.length);
+                }
+
+
+            }}
+            catch(Exception e ){
+                System.out.println("probleme");
+
+                System.out.println(liste);
+                System.out.println(e);
             }
         }
 
@@ -103,6 +125,8 @@ public class XmlToCsv {
         }
         Data.setDataSet(new HashMap<>());
         for (int i = 0; i < programid.size(); i++) {
+            //System.out.printf("hello world s=%s %n", data.get(i));
+
             Data.dataSet.put(programid.get(i), data.get(i));
         }
 
