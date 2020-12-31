@@ -50,8 +50,16 @@ public class XmlToCsv {
         }
 
         List<List<Element>> listStudents = listStudent(programid);
-        String[][][] notes = new String[programid.size()][listStudents.get(0).size()][];
-        String[][] moyennes = new String[programid.size()][listStudents.get(0).size()];
+
+        int max = Integer.MIN_VALUE;
+
+        for (int i = 0; i < listStudents.size(); i++) {
+            if (listStudents.get(i).size() > max)
+                max = listStudents.get(i).size();
+        }
+
+        String[][][] notes = new String[programid.size()][max][];
+        String[][] moyennes = new String[programid.size()][max];
 
 
         for (List<Element> liste : listStudents) {
@@ -65,6 +73,8 @@ public class XmlToCsv {
 
                     try {
                         String[] note = listNoteStu(listCoursesProg.get(programid.indexOf(programStud)), listStudMat);
+                        System.out.println(Data.read(element,"name"));
+
                         notes[programid.indexOf(programStud)][listStudents.get(programid.indexOf(programStud)).indexOf(element)] = note;
 
                         Arrays.fill(moyennes[programid.indexOf(programStud)], "0");
