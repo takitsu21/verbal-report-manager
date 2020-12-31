@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?><data>
+<?xml version="1.0"?>
+<data>
     <course>
         <identifier>SLUIN501</identifier>
         <name>Automates et langages</name>
@@ -266,8 +267,8 @@
 
     <student>
         <identifier>21123983</identifier>
-        <name>Derkenne</name>
-        <surname>Michele</surname>
+        <surname>Derkenne</surname>
+        <name>Michele</name>
         <program>SLINF3 180</program>
         <grade>
             <item>SLUIN501</item>
@@ -328,8 +329,8 @@
     </student>
     <student>
         <identifier>21232189</identifier>
-        <name>Broucke</name>
-        <surname>Sebastien</surname>
+        <surname>Broucke</surname>
+        <name>Sebastien</name>
         <program>SLINF3 180</program>
         <grade>
             <item>SLUIN501</item>
@@ -390,8 +391,8 @@
     </student>
     <student>
         <identifier>21766158</identifier>
-        <name>Benard</name>
-        <surname>Hadi</surname>
+        <surname>Benard</surname>
+        <name>Hadi</name>
         <program>SLIMI3 180</program>
         <grade>
             <item>SLEMA501</item>
@@ -472,8 +473,8 @@
     </student>
     <student>
         <identifier>21341741</identifier>
-        <name>Garric</name>
-        <surname>Julien</surname>
+        <surname>Garric</surname>
+        <name>Julien</name>
         <program>SLINF3 180</program>
         <grade>
             <item>SLUIN501</item>
@@ -534,8 +535,8 @@
     </student>
     <student>
         <identifier>21617019</identifier>
-        <name>Martin</name>
-        <surname>Josette</surname>
+        <surname>Martin</surname>
+        <name>Josette</name>
         <program>SLIMI3 180</program>
         <grade>
             <item>SLEMA501</item>
@@ -616,8 +617,8 @@
     </student>
     <student>
         <identifier>21616285</identifier>
-        <name>Pires</name>
-        <surname>Ginette</surname>
+        <surname>Pires</surname>
+        <name>Ginette</name>
         <program>SLIMI3 180</program>
         <grade>
             <item>SLEMA501</item>
@@ -698,8 +699,8 @@
     </student>
     <student>
         <identifier>21427172</identifier>
-        <name>Rabilloud</name>
-        <surname>Emmanuel</surname>
+        <surname>Rabilloud</surname>
+        <name>Emmanuel</name>
         <program>SLINF3 180</program>
         <grade>
             <item>SLUIN501</item>
@@ -760,8 +761,8 @@
     </student>
     <student>
         <identifier>21396583</identifier>
-        <name>Bazin</name>
-        <surname>Colas</surname>
+        <surname>Bazin</surname>
+        <name>Colas</name>
         <program>SLINF3 180</program>
         <grade>
             <item>SLUIN501</item>
@@ -822,8 +823,8 @@
     </student>
     <student>
         <identifier>21215296</identifier>
-        <name>Somme</name>
-        <surname>Alain</surname>
+        <surname>Somme</surname>
+        <name>Alain</name>
         <program>SLINF3 180</program>
         <grade>
             <item>SLUIN501</item>
@@ -884,8 +885,8 @@
     </student>
     <student>
         <identifier>21105084</identifier>
-        <name>Pasquini</name>
-        <surname>Cyril</surname>
+        <surname>Pasquini</surname>
+        <name>Cyril</name>
         <program>SLINF3 180</program>
         <grade>
             <item>SLUIN501</item>
@@ -946,8 +947,8 @@
     </student>
     <student>
         <identifier>21233286</identifier>
-        <name>Bounab</name>
-        <surname>Patrice</surname>
+        <surname>Bounab</surname>
+        <name>Patrice</name>
         <program>SLINF3 180</program>
         <grade>
             <item>SLUIN501</item>
@@ -1008,8 +1009,8 @@
     </student>
     <student>
         <identifier>21538599</identifier>
-        <name>Randriamalala</name>
-        <surname>Bernard</surname>
+        <surname>Randriamalala</surname>
+        <name>Bernard</name>
         <program>SLINF3 180</program>
         <grade>
             <item>SLUIN501</item>
@@ -1070,8 +1071,8 @@
     </student>
     <student>
         <identifier>21276311</identifier>
-        <name>Mazard</name>
-        <surname>Lucien</surname>
+        <surname>Mazard</surname>
+        <name>Lucien</name>
         <program>SLINF3 180</program>
         <grade>
             <item>SLUIN501</item>
@@ -1132,8 +1133,8 @@
     </student>
     <student>
         <identifier>21767233</identifier>
-        <name>Djeroro</name>
-        <surname>Nadia</surname>
+        <surname>Djeroro</surname>
+        <name>Nadia</name>
         <program>SLIMI3 180</program>
         <grade>
             <item>SLEMA501</item>
@@ -1214,8 +1215,8 @@
     </student>
     <student>
         <identifier>21118261</identifier>
-        <name>Devantay</name>
-        <surname>Danielle</surname>
+        <surname>Devantay</surname>
+        <name>Danielle</name>
         <program>SLINF3 180</program>
         <grade>
             <item>SLUIN501</item>
@@ -1276,8 +1277,8 @@
     </student>
     <student>
         <identifier>21194372</identifier>
-        <name>Da Silva Gameiro</name>
-        <surname>Jacques</surname>
+        <surname>Da Silva Gameiro</surname>
+        <name>Jacques</name>
         <program>SLINF3 180</program>
         <grade>
             <item>SLUIN501</item>
@@ -1338,8 +1339,8 @@
     </student>
     <student>
         <identifier>21008297</identifier>
-        <name>Barrier</name>
-        <surname>Amar</surname>
+        <surname>Barrier</surname>
+        <name>Amar</name>
         <program>SLIMI3 180</program>
         <grade>
             <item>SLEMA501</item>
@@ -1420,8 +1421,8 @@
     </student>
     <student>
         <identifier>21364851</identifier>
-        <name>Faoud</name>
-        <surname>Michel</surname>
+        <surname>Faoud</surname>
+        <name>Michel</name>
         <program>SLIMI3 180</program>
         <grade>
             <item>SLEMA501</item>
@@ -1502,8 +1503,8 @@
     </student>
     <student>
         <identifier>21052690</identifier>
-        <name>Yang</name>
-        <surname>Yvonne</surname>
+        <surname>Yang</surname>
+        <name>Yvonne</name>
         <program>SLIMI3 180</program>
         <grade>
             <item>SLEMA501</item>
@@ -1584,8 +1585,8 @@
     </student>
     <student>
         <identifier>21302703</identifier>
-        <name>Galand</name>
-        <surname>Marie</surname>
+        <surname>Galand</surname>
+        <name>Marie</name>
         <program>SLIMI3 180</program>
         <grade>
             <item>SLEMA501</item>
@@ -1666,8 +1667,8 @@
     </student>
     <student>
         <identifier>21874292</identifier>
-        <name>Ben Romdhane</name>
-        <surname>Paul</surname>
+        <surname>Ben Romdhane</surname>
+        <name>Paul</name>
         <program>SLIMI3 180</program>
         <grade>
             <item>SLEMA501</item>
@@ -1748,8 +1749,8 @@
     </student>
     <student>
         <identifier>21869701</identifier>
-        <name>Just</name>
-        <surname>Rene</surname>
+        <surname>Just</surname>
+        <name>Rene</name>
         <program>SLIMI3 180</program>
         <grade>
             <item>SLEMA501</item>
@@ -1830,8 +1831,8 @@
     </student>
     <student>
         <identifier>21606598</identifier>
-        <name>Idiri</name>
-        <surname>Guillemette</surname>
+        <surname>Idiri</surname>
+        <name>Guillemette</name>
         <program>SLINF3 180</program>
         <grade>
             <item>SLUIN501</item>
@@ -1892,8 +1893,8 @@
     </student>
     <student>
         <identifier>21033267</identifier>
-        <name>Jonnier</name>
-        <surname>Tekin</surname>
+        <surname>Jonnier</surname>
+        <name>Tekin</name>
         <program>SLINF3 180</program>
         <grade>
             <item>SLUIN501</item>
@@ -1954,8 +1955,8 @@
     </student>
     <student>
         <identifier>21722679</identifier>
-        <name>Bazoge</name>
-        <surname>Robert</surname>
+        <surname>Bazoge</surname>
+        <name>Robert</name>
         <program>SLIMI3 180</program>
         <grade>
             <item>SLEMA501</item>
@@ -2036,8 +2037,8 @@
     </student>
     <student>
         <identifier>21536961</identifier>
-        <name>Salmon</name>
-        <surname>Mohamed</surname>
+        <surname>Salmon</surname>
+        <name>Mohamed</name>
         <program>SLINF3 180</program>
         <grade>
             <item>SLUIN501</item>
@@ -2098,8 +2099,8 @@
     </student>
     <student>
         <identifier>21557688</identifier>
-        <name>Leblond</name>
-        <surname>Julie</surname>
+        <surname>Leblond</surname>
+        <name>Julie</name>
         <program>SLIMI3 180</program>
         <grade>
             <item>SLEMA501</item>
@@ -2180,8 +2181,8 @@
     </student>
     <student>
         <identifier>21174756</identifier>
-        <name>Chayata</name>
-        <surname>Mohamed</surname>
+        <surname>Chayata</surname>
+        <name>Mohamed</name>
         <program>SLINF3 180</program>
         <grade>
             <item>SLUIN501</item>
@@ -2242,8 +2243,8 @@
     </student>
     <student>
         <identifier>21127209</identifier>
-        <name>Mariette</name>
-        <surname>Gilbert</surname>
+        <surname>Mariette</surname>
+        <name>Gilbert</name>
         <program>SLIMI3 180</program>
         <grade>
             <item>SLEMA501</item>
@@ -2324,8 +2325,8 @@
     </student>
     <student>
         <identifier>21430237</identifier>
-        <name>Thunot</name>
-        <surname>Simon</surname>
+        <surname>Thunot</surname>
+        <name>Simon</name>
         <program>SLIMI3 180</program>
         <grade>
             <item>SLEMA501</item>
@@ -2406,8 +2407,8 @@
     </student>
     <student>
         <identifier>21413340</identifier>
-        <name>Bourdon</name>
-        <surname>Denis</surname>
+        <surname>Bourdon</surname>
+        <name>Denis</name>
         <program>SLINF3 180</program>
         <grade>
             <item>SLUIN501</item>
@@ -2468,8 +2469,8 @@
     </student>
     <student>
         <identifier>21391300</identifier>
-        <name>Ullmann</name>
-        <surname>Guy</surname>
+        <surname>Ullmann</surname>
+        <name>Guy</name>
         <program>SLINF3 180</program>
         <grade>
             <item>SLUIN501</item>
@@ -2530,8 +2531,8 @@
     </student>
     <student>
         <identifier>21173664</identifier>
-        <name>Vernay</name>
-        <surname>Clement</surname>
+        <surname>Vernay</surname>
+        <name>Clement</name>
         <program>SLINF3 180</program>
         <grade>
             <item>SLUIN501</item>
@@ -2592,8 +2593,8 @@
     </student>
     <student>
         <identifier>21435138</identifier>
-        <name>Huart</name>
-        <surname>Claire</surname>
+        <surname>Huart</surname>
+        <name>Claire</name>
         <program>SLIMI3 180</program>
         <grade>
             <item>SLEMA501</item>
@@ -2674,8 +2675,8 @@
     </student>
     <student>
         <identifier>21136159</identifier>
-        <name>Bouchy</name>
-        <surname>Alain</surname>
+        <surname>Bouchy</surname>
+        <name>Alain</name>
         <program>SLIMI3 180</program>
         <grade>
             <item>SLEMA501</item>
@@ -2756,8 +2757,8 @@
     </student>
     <student>
         <identifier>21592323</identifier>
-        <name>Fagot</name>
-        <surname>Germain</surname>
+        <surname>Fagot</surname>
+        <name>Germain</name>
         <program>SLINF3 180</program>
         <grade>
             <item>SLUIN501</item>
@@ -2818,8 +2819,8 @@
     </student>
     <student>
         <identifier>21800801</identifier>
-        <name>Carlier</name>
-        <surname>Chake</surname>
+        <surname>Carlier</surname>
+        <name>Chake</name>
         <program>SLIMI3 180</program>
         <grade>
             <item>SLEMA501</item>
@@ -2900,8 +2901,8 @@
     </student>
     <student>
         <identifier>21774004</identifier>
-        <name>Bienfait</name>
-        <surname>Dominique</surname>
+        <surname>Bienfait</surname>
+        <name>Dominique</name>
         <program>SLINF3 180</program>
         <grade>
             <item>SLUIN501</item>
@@ -2962,8 +2963,8 @@
     </student>
     <student>
         <identifier>21151305</identifier>
-        <name>Attar</name>
-        <surname>Emile</surname>
+        <surname>Attar</surname>
+        <name>Emile</name>
         <program>SLINF3 180</program>
         <grade>
             <item>SLUIN501</item>
@@ -3024,8 +3025,8 @@
     </student>
     <student>
         <identifier>21210964</identifier>
-        <name>Tanne</name>
-        <surname>Simonne</surname>
+        <surname>Tanne</surname>
+        <name>Simonne</name>
         <program>SLINF3 180</program>
         <grade>
             <item>SLUIN501</item>
@@ -3086,8 +3087,8 @@
     </student>
     <student>
         <identifier>21810723</identifier>
-        <name>Lamaignere</name>
-        <surname>Jerome</surname>
+        <surname>Lamaignere</surname>
+        <name>Jerome</name>
         <program>SLIMI3 180</program>
         <grade>
             <item>SLEMA501</item>
@@ -3168,8 +3169,8 @@
     </student>
     <student>
         <identifier>21148815</identifier>
-        <name>Sillion</name>
-        <surname>Lolita</surname>
+        <surname>Sillion</surname>
+        <name>Lolita</name>
         <program>SLINF3 180</program>
         <grade>
             <item>SLUIN501</item>
@@ -3230,8 +3231,8 @@
     </student>
     <student>
         <identifier>21373230</identifier>
-        <name>Huebra</name>
-        <surname>Roger</surname>
+        <surname>Huebra</surname>
+        <name>Roger</name>
         <program>SLINF3 180</program>
         <grade>
             <item>SLUIN501</item>
@@ -3292,8 +3293,8 @@
     </student>
     <student>
         <identifier>21761592</identifier>
-        <name>Nardese</name>
-        <surname>Marguerite</surname>
+        <surname>Nardese</surname>
+        <name>Marguerite</name>
         <program>SLINF3 180</program>
         <grade>
             <item>SLUIN501</item>
@@ -3354,8 +3355,8 @@
     </student>
     <student>
         <identifier>21563454</identifier>
-        <name>Lafaye</name>
-        <surname>Marie</surname>
+        <surname>Lafaye</surname>
+        <name>Marie</name>
         <program>SLIMI3 180</program>
         <grade>
             <item>SLEMA501</item>
@@ -3436,8 +3437,8 @@
     </student>
     <student>
         <identifier>21921150</identifier>
-        <name>Lesaffre</name>
-        <surname>Philippe</surname>
+        <surname>Lesaffre</surname>
+        <name>Philippe</name>
         <program>SLINF3 180</program>
         <grade>
             <item>SLUIN501</item>
@@ -3498,8 +3499,8 @@
     </student>
     <student>
         <identifier>21674833</identifier>
-        <name>Attoumani</name>
-        <surname>Beatrice</surname>
+        <surname>Attoumani</surname>
+        <name>Beatrice</name>
         <program>SLIMI3 180</program>
         <grade>
             <item>SLEMA501</item>
@@ -3580,8 +3581,8 @@
     </student>
     <student>
         <identifier>21782425</identifier>
-        <name>Boisson</name>
-        <surname>Armand</surname>
+        <surname>Boisson</surname>
+        <name>Armand</name>
         <program>SLIMI3 180</program>
         <grade>
             <item>SLEMA501</item>
@@ -3662,8 +3663,8 @@
     </student>
     <student>
         <identifier>21476553</identifier>
-        <name>Maintier Ducroz</name>
-        <surname>Gael</surname>
+        <surname>Maintier Ducroz</surname>
+        <name>Gael</name>
         <program>SLINF3 180</program>
         <grade>
             <item>SLUIN501</item>
@@ -3724,8 +3725,8 @@
     </student>
     <student>
         <identifier>21818451</identifier>
-        <name>Cathenoz</name>
-        <surname>Raissa</surname>
+        <surname>Cathenoz</surname>
+        <name>Raissa</name>
         <program>SLIMI3 180</program>
         <grade>
             <item>SLEMA501</item>
@@ -3806,8 +3807,8 @@
     </student>
     <student>
         <identifier>21682459</identifier>
-        <name>Dada</name>
-        <surname>Vincent</surname>
+        <surname>Dada</surname>
+        <name>Vincent</name>
         <program>SLINF3 180</program>
         <grade>
             <item>SLUIN501</item>
@@ -3868,8 +3869,8 @@
     </student>
     <student>
         <identifier>21034551</identifier>
-        <name>Scarbonchi</name>
-        <surname>Florence</surname>
+        <surname>Scarbonchi</surname>
+        <name>Florence</name>
         <program>SLINF3 180</program>
         <grade>
             <item>SLUIN501</item>
@@ -3930,8 +3931,8 @@
     </student>
     <student>
         <identifier>21846472</identifier>
-        <name>Nison</name>
-        <surname>Sarah</surname>
+        <surname>Nison</surname>
+        <name>Sarah</name>
         <program>SLIMI3 180</program>
         <grade>
             <item>SLEMA501</item>
@@ -4012,8 +4013,8 @@
     </student>
     <student>
         <identifier>21491771</identifier>
-        <name>Durand</name>
-        <surname>Louisette</surname>
+        <surname>Durand</surname>
+        <name>Louisette</name>
         <program>SLINF3 180</program>
         <grade>
             <item>SLUIN501</item>
@@ -4074,8 +4075,8 @@
     </student>
     <student>
         <identifier>21624947</identifier>
-        <name>Bouquet</name>
-        <surname>Marie</surname>
+        <surname>Bouquet</surname>
+        <name>Marie</name>
         <program>SLINF3 180</program>
         <grade>
             <item>SLUIN501</item>
@@ -4136,8 +4137,8 @@
     </student>
     <student>
         <identifier>21481684</identifier>
-        <name>Moutal</name>
-        <surname>Fatouma</surname>
+        <surname>Moutal</surname>
+        <name>Fatouma</name>
         <program>SLINF3 180</program>
         <grade>
             <item>SLUIN501</item>
@@ -4198,8 +4199,8 @@
     </student>
     <student>
         <identifier>21564047</identifier>
-        <name>Andreoni</name>
-        <surname>Dufour</surname>
+        <surname>Andreoni</surname>
+        <name>Dufour</name>
         <program>SLIMI3 180</program>
         <grade>
             <item>SLEMA501</item>
@@ -4280,8 +4281,8 @@
     </student>
     <student>
         <identifier>21163959</identifier>
-        <name>Marcely</name>
-        <surname>Armand</surname>
+        <surname>Marcely</surname>
+        <name>Armand</name>
         <program>SLIMI3 180</program>
         <grade>
             <item>SLEMA501</item>
@@ -4362,8 +4363,8 @@
     </student>
     <student>
         <identifier>21141009</identifier>
-        <name>Cosson</name>
-        <surname>Raymond</surname>
+        <surname>Cosson</surname>
+        <name>Raymond</name>
         <program>SLINF3 180</program>
         <grade>
             <item>SLUIN501</item>
@@ -4424,8 +4425,8 @@
     </student>
     <student>
         <identifier>21428341</identifier>
-        <name>Trotin</name>
-        <surname>Eutmane</surname>
+        <surname>Trotin</surname>
+        <name>Eutmane</name>
         <program>SLINF3 180</program>
         <grade>
             <item>SLUIN501</item>
@@ -4486,8 +4487,8 @@
     </student>
     <student>
         <identifier>21538712</identifier>
-        <name>Papurello</name>
-        <surname>Jamal</surname>
+        <surname>Papurello</surname>
+        <name>Jamal</name>
         <program>SLIMI3 180</program>
         <grade>
             <item>SLEMA501</item>
@@ -4568,8 +4569,8 @@
     </student>
     <student>
         <identifier>21912235</identifier>
-        <name>Bernadou</name>
-        <surname>Pascal</surname>
+        <surname>Bernadou</surname>
+        <name>Pascal</name>
         <program>SLIMI3 180</program>
         <grade>
             <item>SLEMA501</item>
@@ -4650,8 +4651,8 @@
     </student>
     <student>
         <identifier>21503830</identifier>
-        <name>Carnejac</name>
-        <surname>Jocelyne</surname>
+        <surname>Carnejac</surname>
+        <name>Jocelyne</name>
         <program>SLIMI3 180</program>
         <grade>
             <item>SLEMA501</item>
@@ -4732,8 +4733,8 @@
     </student>
     <student>
         <identifier>21192953</identifier>
-        <name>Donat</name>
-        <surname>Christophe</surname>
+        <surname>Donat</surname>
+        <name>Christophe</name>
         <program>SLINF3 180</program>
         <grade>
             <item>SLUIN501</item>
@@ -4794,8 +4795,8 @@
     </student>
     <student>
         <identifier>21317044</identifier>
-        <name>Fornasari</name>
-        <surname>Barhta</surname>
+        <surname>Fornasari</surname>
+        <name>Barhta</name>
         <program>SLIMI3 180</program>
         <grade>
             <item>SLEMA501</item>
@@ -4876,8 +4877,8 @@
     </student>
     <student>
         <identifier>21784991</identifier>
-        <name>Brachet</name>
-        <surname>Mehdi</surname>
+        <surname>Brachet</surname>
+        <name>Mehdi</name>
         <program>SLINF3 180</program>
         <grade>
             <item>SLUIN501</item>
@@ -4938,8 +4939,8 @@
     </student>
     <student>
         <identifier>21479238</identifier>
-        <name>Nicoletti</name>
-        <surname>Maurice</surname>
+        <surname>Nicoletti</surname>
+        <name>Maurice</name>
         <program>SLIMI3 180</program>
         <grade>
             <item>SLEMA501</item>
@@ -5020,8 +5021,8 @@
     </student>
     <student>
         <identifier>21614175</identifier>
-        <name>Julien</name>
-        <surname>Michel</surname>
+        <surname>Julien</surname>
+        <name>Michel</name>
         <program>SLINF3 180</program>
         <grade>
             <item>SLUIN501</item>
@@ -5082,8 +5083,8 @@
     </student>
     <student>
         <identifier>21197848</identifier>
-        <name>Raballand</name>
-        <surname>Christophe</surname>
+        <surname>Raballand</surname>
+        <name>Christophe</name>
         <program>SLIMI3 180</program>
         <grade>
             <item>SLEMA501</item>
@@ -5164,8 +5165,8 @@
     </student>
     <student>
         <identifier>21083435</identifier>
-        <name>Denais</name>
-        <surname>Stephane</surname>
+        <surname>Denais</surname>
+        <name>Stephane</name>
         <program>SLINF3 180</program>
         <grade>
             <item>SLUIN501</item>
@@ -5226,8 +5227,8 @@
     </student>
     <student>
         <identifier>21562420</identifier>
-        <name>Marquez</name>
-        <surname>Ghislaine</surname>
+        <surname>Marquez</surname>
+        <name>Ghislaine</name>
         <program>SLIMI3 180</program>
         <grade>
             <item>SLEMA501</item>
@@ -5308,8 +5309,8 @@
     </student>
     <student>
         <identifier>21954556</identifier>
-        <name>Bouchut</name>
-        <surname>Cindy</surname>
+        <surname>Bouchut</surname>
+        <name>Cindy</name>
         <program>SLIMI3 180</program>
         <grade>
             <item>SLEMA501</item>
@@ -5390,8 +5391,8 @@
     </student>
     <student>
         <identifier>21156974</identifier>
-        <name>Chinama</name>
-        <surname>Herve</surname>
+        <surname>Chinama</surname>
+        <name>Herve</name>
         <program>SLIMI3 180</program>
         <grade>
             <item>SLEMA501</item>
@@ -5472,8 +5473,8 @@
     </student>
     <student>
         <identifier>21235948</identifier>
-        <name>Penhouet</name>
-        <surname>Dominique</surname>
+        <surname>Penhouet</surname>
+        <name>Dominique</name>
         <program>SLINF3 180</program>
         <grade>
             <item>SLUIN501</item>
@@ -5534,8 +5535,8 @@
     </student>
     <student>
         <identifier>21945166</identifier>
-        <name>Modoux</name>
-        <surname>Pierre</surname>
+        <surname>Modoux</surname>
+        <name>Pierre</name>
         <program>SLINF3 180</program>
         <grade>
             <item>SLUIN501</item>
@@ -5596,8 +5597,8 @@
     </student>
     <student>
         <identifier>21141499</identifier>
-        <name>Deson</name>
-        <surname>Guy</surname>
+        <surname>Deson</surname>
+        <name>Guy</name>
         <program>SLIMI3 180</program>
         <grade>
             <item>SLEMA501</item>
@@ -5678,8 +5679,8 @@
     </student>
     <student>
         <identifier>21142103</identifier>
-        <name>Leroy</name>
-        <surname>Louis</surname>
+        <surname>Leroy</surname>
+        <name>Louis</name>
         <program>SLIMI3 180</program>
         <grade>
             <item>SLEMA501</item>
@@ -5760,8 +5761,8 @@
     </student>
     <student>
         <identifier>21537718</identifier>
-        <name>Loutrel</name>
-        <surname>Luc</surname>
+        <surname>Loutrel</surname>
+        <name>Luc</name>
         <program>SLIMI3 180</program>
         <grade>
             <item>SLEMA501</item>
@@ -5842,8 +5843,8 @@
     </student>
     <student>
         <identifier>21393409</identifier>
-        <name>Gauberti</name>
-        <surname>Melino</surname>
+        <surname>Gauberti</surname>
+        <name>Melino</name>
         <program>SLINF3 180</program>
         <grade>
             <item>SLUIN501</item>
@@ -5904,8 +5905,8 @@
     </student>
     <student>
         <identifier>21172897</identifier>
-        <name>Gerardot</name>
-        <surname>Pierre</surname>
+        <surname>Gerardot</surname>
+        <name>Pierre</name>
         <program>SLIMI3 180</program>
         <grade>
             <item>SLEMA501</item>
@@ -5986,8 +5987,8 @@
     </student>
     <student>
         <identifier>21856732</identifier>
-        <name>Didier</name>
-        <surname>Brigitte</surname>
+        <surname>Didier</surname>
+        <name>Brigitte</name>
         <program>SLIMI3 180</program>
         <grade>
             <item>SLEMA501</item>
@@ -6068,8 +6069,8 @@
     </student>
     <student>
         <identifier>21586529</identifier>
-        <name>Weiss</name>
-        <surname>Jean</surname>
+        <surname>Weiss</surname>
+        <name>Jean</name>
         <program>SLIMI3 180</program>
         <grade>
             <item>SLEMA501</item>
@@ -6150,8 +6151,8 @@
     </student>
     <student>
         <identifier>21497654</identifier>
-        <name>Konzolik</name>
-        <surname>Jean</surname>
+        <surname>Konzolik</surname>
+        <name>Jean</name>
         <program>SLINF3 180</program>
         <grade>
             <item>SLUIN501</item>
@@ -6212,8 +6213,8 @@
     </student>
     <student>
         <identifier>21745994</identifier>
-        <name>Mas</name>
-        <surname>Arnaud</surname>
+        <surname>Mas</surname>
+        <name>Arnaud</name>
         <program>SLINF3 180</program>
         <grade>
             <item>SLUIN501</item>
@@ -6274,8 +6275,8 @@
     </student>
     <student>
         <identifier>21411242</identifier>
-        <name>Carriere</name>
-        <surname>Maryline</surname>
+        <surname>Carriere</surname>
+        <name>Maryline</name>
         <program>SLIMI3 180</program>
         <grade>
             <item>SLEMA501</item>
@@ -6356,8 +6357,8 @@
     </student>
     <student>
         <identifier>21521257</identifier>
-        <name>Brosselin</name>
-        <surname>Marie</surname>
+        <surname>Brosselin</surname>
+        <name>Marie</name>
         <program>SLIMI3 180</program>
         <grade>
             <item>SLEMA501</item>
@@ -6438,8 +6439,8 @@
     </student>
     <student>
         <identifier>21805188</identifier>
-        <name>Bruggeman</name>
-        <surname>Andre</surname>
+        <surname>Bruggeman</surname>
+        <name>Andre</name>
         <program>SLINF3 180</program>
         <grade>
             <item>SLUIN501</item>
@@ -6500,8 +6501,8 @@
     </student>
     <student>
         <identifier>21022547</identifier>
-        <name>Capdevila</name>
-        <surname>Paul</surname>
+        <surname>Capdevila</surname>
+        <name>Paul</name>
         <program>SLIMI3 180</program>
         <grade>
             <item>SLEMA501</item>
@@ -6582,8 +6583,8 @@
     </student>
     <student>
         <identifier>21351490</identifier>
-        <name>Hulo</name>
-        <surname>Joel</surname>
+        <surname>Hulo</surname>
+        <name>Joel</name>
         <program>SLINF3 180</program>
         <grade>
             <item>SLUIN501</item>
@@ -6644,8 +6645,8 @@
     </student>
     <student>
         <identifier>21930353</identifier>
-        <name>Dormoy</name>
-        <surname>Didier</surname>
+        <surname>Dormoy</surname>
+        <name>Didier</name>
         <program>SLINF3 180</program>
         <grade>
             <item>SLUIN501</item>
@@ -6706,8 +6707,8 @@
     </student>
     <student>
         <identifier>21435336</identifier>
-        <name>Roupert</name>
-        <surname>Gerard</surname>
+        <surname>Roupert</surname>
+        <name>Gerard</name>
         <program>SLINF3 180</program>
         <grade>
             <item>SLUIN501</item>
@@ -6768,8 +6769,8 @@
     </student>
     <student>
         <identifier>21566246</identifier>
-        <name>Nivoix</name>
-        <surname>Elise</surname>
+        <surname>Nivoix</surname>
+        <name>Elise</name>
         <program>SLINF3 180</program>
         <grade>
             <item>SLUIN501</item>
@@ -6830,8 +6831,8 @@
     </student>
     <student>
         <identifier>21294402</identifier>
-        <name>Joly</name>
-        <surname>Maurice</surname>
+        <surname>Joly</surname>
+        <name>Maurice</name>
         <program>SLIMI3 180</program>
         <grade>
             <item>SLEMA501</item>
@@ -6912,8 +6913,8 @@
     </student>
     <student>
         <identifier>21779977</identifier>
-        <name>Destombes</name>
-        <surname>Francoise</surname>
+        <surname>Destombes</surname>
+        <name>Francoise</name>
         <program>SLIMI3 180</program>
         <grade>
             <item>SLEMA501</item>
@@ -6994,8 +6995,8 @@
     </student>
     <student>
         <identifier>21896028</identifier>
-        <name>Dhainaut</name>
-        <surname>Hamah</surname>
+        <surname>Dhainaut</surname>
+        <name>Hamah</name>
         <program>SLINF3 180</program>
         <grade>
             <item>SLUIN501</item>
@@ -7056,8 +7057,8 @@
     </student>
     <student>
         <identifier>21817855</identifier>
-        <name>Brossier</name>
-        <surname>Jacques</surname>
+        <surname>Brossier</surname>
+        <name>Jacques</name>
         <program>SLIMI3 180</program>
         <grade>
             <item>SLEMA501</item>
@@ -7138,8 +7139,8 @@
     </student>
     <student>
         <identifier>21720241</identifier>
-        <name>Gil</name>
-        <surname>Rene</surname>
+        <surname>Gil</surname>
+        <name>Rene</name>
         <program>SLIMI3 180</program>
         <grade>
             <item>SLEMA501</item>
@@ -7220,8 +7221,8 @@
     </student>
     <student>
         <identifier>21030181</identifier>
-        <name>Laforest</name>
-        <surname>Charles</surname>
+        <surname>Laforest</surname>
+        <name>Charles</name>
         <program>SLINF3 180</program>
         <grade>
             <item>SLUIN501</item>
@@ -7282,8 +7283,8 @@
     </student>
     <student>
         <identifier>21199685</identifier>
-        <name>Demirci</name>
-        <surname>Georges</surname>
+        <surname>Demirci</surname>
+        <name>Georges</name>
         <program>SLINF3 180</program>
         <grade>
             <item>SLUIN501</item>
@@ -7344,8 +7345,8 @@
     </student>
     <student>
         <identifier>21208588</identifier>
-        <name>Tobe</name>
-        <surname>Suzanne</surname>
+        <surname>Tobe</surname>
+        <name>Suzanne</name>
         <program>SLIMI3 180</program>
         <grade>
             <item>SLEMA501</item>
@@ -7426,8 +7427,8 @@
     </student>
     <student>
         <identifier>21587965</identifier>
-        <name>Ouakkouche</name>
-        <surname>Elodie</surname>
+        <surname>Ouakkouche</surname>
+        <name>Elodie</name>
         <program>SLINF3 180</program>
         <grade>
             <item>SLUIN501</item>
@@ -7488,8 +7489,8 @@
     </student>
     <student>
         <identifier>21357003</identifier>
-        <name>Enee</name>
-        <surname>Maria</surname>
+        <surname>Enee</surname>
+        <name>Maria</name>
         <program>SLIMI3 180</program>
         <grade>
             <item>SLEMA501</item>
@@ -7570,8 +7571,8 @@
     </student>
     <student>
         <identifier>21619961</identifier>
-        <name>Bernardeau</name>
-        <surname>Gerard</surname>
+        <surname>Bernardeau</surname>
+        <name>Gerard</name>
         <program>SLIMI3 180</program>
         <grade>
             <item>SLEMA501</item>
@@ -7652,8 +7653,8 @@
     </student>
     <student>
         <identifier>21542064</identifier>
-        <name>Hadj Abouda</name>
-        <surname>Yvette</surname>
+        <surname>Hadj Abouda</surname>
+        <name>Yvette</name>
         <program>SLINF3 180</program>
         <grade>
             <item>SLUIN501</item>
@@ -7714,8 +7715,8 @@
     </student>
     <student>
         <identifier>21391230</identifier>
-        <name>Vincent Falquet</name>
-        <surname>Pascal</surname>
+        <surname>Vincent Falquet</surname>
+        <name>Pascal</name>
         <program>SLIMI3 180</program>
         <grade>
             <item>SLEMA501</item>
@@ -7796,8 +7797,8 @@
     </student>
     <student>
         <identifier>21504386</identifier>
-        <name>Baltimore</name>
-        <surname>Cecile</surname>
+        <surname>Baltimore</surname>
+        <name>Cecile</name>
         <program>SLINF3 180</program>
         <grade>
             <item>SLUIN501</item>
@@ -7858,8 +7859,8 @@
     </student>
     <student>
         <identifier>21451231</identifier>
-        <name>Sube</name>
-        <surname>Etienne</surname>
+        <surname>Sube</surname>
+        <name>Etienne</name>
         <program>SLIMI3 180</program>
         <grade>
             <item>SLEMA501</item>
@@ -7940,8 +7941,8 @@
     </student>
     <student>
         <identifier>21347445</identifier>
-        <name>Michenaud</name>
-        <surname>Genevieve</surname>
+        <surname>Michenaud</surname>
+        <name>Genevieve</name>
         <program>SLIMI3 180</program>
         <grade>
             <item>SLEMA501</item>
@@ -8022,8 +8023,8 @@
     </student>
     <student>
         <identifier>21994190</identifier>
-        <name>Ples</name>
-        <surname>David</surname>
+        <surname>Ples</surname>
+        <name>David</name>
         <program>SLINF3 180</program>
         <grade>
             <item>SLUIN501</item>
@@ -8084,8 +8085,8 @@
     </student>
     <student>
         <identifier>21370436</identifier>
-        <name>Delcourt</name>
-        <surname>Georges</surname>
+        <surname>Delcourt</surname>
+        <name>Georges</name>
         <program>SLIMI3 180</program>
         <grade>
             <item>SLEMA501</item>
@@ -8166,8 +8167,8 @@
     </student>
     <student>
         <identifier>21033206</identifier>
-        <name>Sanchez</name>
-        <surname>Jeanne</surname>
+        <surname>Sanchez</surname>
+        <name>Jeanne</name>
         <program>SLIMI3 180</program>
         <grade>
             <item>SLEMA501</item>
@@ -8248,8 +8249,8 @@
     </student>
     <student>
         <identifier>21557666</identifier>
-        <name>Laveze</name>
-        <surname>Gaelle</surname>
+        <surname>Laveze</surname>
+        <name>Gaelle</name>
         <program>SLIMI3 180</program>
         <grade>
             <item>SLEMA501</item>
@@ -8330,8 +8331,8 @@
     </student>
     <student>
         <identifier>21006167</identifier>
-        <name>Liger</name>
-        <surname>Marika</surname>
+        <surname>Liger</surname>
+        <name>Marika</name>
         <program>SLINF3 180</program>
         <grade>
             <item>SLUIN501</item>
@@ -8392,8 +8393,8 @@
     </student>
     <student>
         <identifier>21756505</identifier>
-        <name>Longuechaud</name>
-        <surname>Bernard</surname>
+        <surname>Longuechaud</surname>
+        <name>Bernard</name>
         <program>SLINF3 180</program>
         <grade>
             <item>SLUIN501</item>
@@ -8454,8 +8455,8 @@
     </student>
     <student>
         <identifier>21028623</identifier>
-        <name>Bertrand</name>
-        <surname>Martine</surname>
+        <surname>Bertrand</surname>
+        <name>Martine</name>
         <program>SLIMI3 180</program>
         <grade>
             <item>SLEMA501</item>
@@ -8536,8 +8537,8 @@
     </student>
     <student>
         <identifier>21587245</identifier>
-        <name>Petit</name>
-        <surname>Bernard</surname>
+        <surname>Petit</surname>
+        <name>Bernard</name>
         <program>SLINF3 180</program>
         <grade>
             <item>SLUIN501</item>
@@ -8598,8 +8599,8 @@
     </student>
     <student>
         <identifier>21951629</identifier>
-        <name>Chahiri</name>
-        <surname>Bernadette</surname>
+        <surname>Chahiri</surname>
+        <name>Bernadette</name>
         <program>SLIMI3 180</program>
         <grade>
             <item>SLEMA501</item>
@@ -8680,8 +8681,8 @@
     </student>
     <student>
         <identifier>21967303</identifier>
-        <name>Renaud</name>
-        <surname>Gilles</surname>
+        <surname>Renaud</surname>
+        <name>Gilles</name>
         <program>SLIMI3 180</program>
         <grade>
             <item>SLEMA501</item>
@@ -8762,8 +8763,8 @@
     </student>
     <student>
         <identifier>21899515</identifier>
-        <name>Pingeot</name>
-        <surname>Joseph</surname>
+        <surname>Pingeot</surname>
+        <name>Joseph</name>
         <program>SLINF3 180</program>
         <grade>
             <item>SLUIN501</item>
@@ -8824,8 +8825,8 @@
     </student>
     <student>
         <identifier>21200863</identifier>
-        <name>Vinck</name>
-        <surname>Jean</surname>
+        <surname>Vinck</surname>
+        <name>Jean</name>
         <program>SLIMI3 180</program>
         <grade>
             <item>SLEMA501</item>
@@ -8906,8 +8907,8 @@
     </student>
     <student>
         <identifier>21290342</identifier>
-        <name>Pichon</name>
-        <surname>Francoise</surname>
+        <surname>Pichon</surname>
+        <name>Francoise</name>
         <program>SLINF3 180</program>
         <grade>
             <item>SLUIN501</item>
@@ -8968,8 +8969,8 @@
     </student>
     <student>
         <identifier>21665068</identifier>
-        <name>Scutenaire</name>
-        <surname>Philippe</surname>
+        <surname>Scutenaire</surname>
+        <name>Philippe</name>
         <program>SLIMI3 180</program>
         <grade>
             <item>SLEMA501</item>
@@ -9050,8 +9051,8 @@
     </student>
     <student>
         <identifier>21677050</identifier>
-        <name>Thomas</name>
-        <surname>Marcel</surname>
+        <surname>Thomas</surname>
+        <name>Marcel</name>
         <program>SLIMI3 180</program>
         <grade>
             <item>SLEMA501</item>
@@ -9132,8 +9133,8 @@
     </student>
     <student>
         <identifier>21781282</identifier>
-        <name>Garnier</name>
-        <surname>Henri</surname>
+        <surname>Garnier</surname>
+        <name>Henri</name>
         <program>SLINF3 180</program>
         <grade>
             <item>SLUIN501</item>
@@ -9194,8 +9195,8 @@
     </student>
     <student>
         <identifier>21587105</identifier>
-        <name>Bains</name>
-        <surname>Benoit</surname>
+        <surname>Bains</surname>
+        <name>Benoit</name>
         <program>SLIMI3 180</program>
         <grade>
             <item>SLEMA501</item>
@@ -9276,8 +9277,8 @@
     </student>
     <student>
         <identifier>21386707</identifier>
-        <name>Orfila</name>
-        <surname>Frederique</surname>
+        <surname>Orfila</surname>
+        <name>Frederique</name>
         <program>SLIMI3 180</program>
         <grade>
             <item>SLEMA501</item>
@@ -9358,8 +9359,8 @@
     </student>
     <student>
         <identifier>21172882</identifier>
-        <name>Azema</name>
-        <surname>Frederic</surname>
+        <surname>Azema</surname>
+        <name>Frederic</name>
         <program>SLINF3 180</program>
         <grade>
             <item>SLUIN501</item>
@@ -9420,8 +9421,8 @@
     </student>
     <student>
         <identifier>21870091</identifier>
-        <name>Vestia</name>
-        <surname>Faramarz</surname>
+        <surname>Vestia</surname>
+        <name>Faramarz</name>
         <program>SLIMI3 180</program>
         <grade>
             <item>SLEMA501</item>
@@ -9502,8 +9503,8 @@
     </student>
     <student>
         <identifier>21709193</identifier>
-        <name>Deckmyn</name>
-        <surname>Henri</surname>
+        <surname>Deckmyn</surname>
+        <name>Henri</name>
         <program>SLINF3 180</program>
         <grade>
             <item>SLUIN501</item>
@@ -9564,8 +9565,8 @@
     </student>
     <student>
         <identifier>21289014</identifier>
-        <name>Dubois</name>
-        <surname>Mohamed</surname>
+        <surname>Dubois</surname>
+        <name>Mohamed</name>
         <program>SLINF3 180</program>
         <grade>
             <item>SLUIN501</item>
@@ -9626,8 +9627,8 @@
     </student>
     <student>
         <identifier>21071264</identifier>
-        <name>Sinz</name>
-        <surname>Ahmed</surname>
+        <surname>Sinz</surname>
+        <name>Ahmed</name>
         <program>SLIMI3 180</program>
         <grade>
             <item>SLEMA501</item>
@@ -9708,8 +9709,8 @@
     </student>
     <student>
         <identifier>21382798</identifier>
-        <name>Prudnikovq</name>
-        <surname>Jerome</surname>
+        <surname>Prudnikovq</surname>
+        <name>Jerome</name>
         <program>SLINF3 180</program>
         <grade>
             <item>SLUIN501</item>
@@ -9770,8 +9771,8 @@
     </student>
     <student>
         <identifier>21641427</identifier>
-        <name>Ouldboukhittine</name>
-        <surname>Robert</surname>
+        <surname>Ouldboukhittine</surname>
+        <name>Robert</name>
         <program>SLIMI3 180</program>
         <grade>
             <item>SLEMA501</item>
@@ -9852,8 +9853,8 @@
     </student>
     <student>
         <identifier>21206751</identifier>
-        <name>Armanet</name>
-        <surname>Richard</surname>
+        <surname>Armanet</surname>
+        <name>Richard</name>
         <program>SLINF3 180</program>
         <grade>
             <item>SLUIN501</item>
@@ -9914,8 +9915,8 @@
     </student>
     <student>
         <identifier>21577331</identifier>
-        <name>Planas</name>
-        <surname>Michelle</surname>
+        <surname>Planas</surname>
+        <name>Michelle</name>
         <program>SLINF3 180</program>
         <grade>
             <item>SLUIN501</item>
@@ -9976,8 +9977,8 @@
     </student>
     <student>
         <identifier>21786068</identifier>
-        <name>Gibeau</name>
-        <surname>Oger</surname>
+        <surname>Gibeau</surname>
+        <name>Oger</name>
         <program>SLIMI3 180</program>
         <grade>
             <item>SLEMA501</item>
@@ -10058,8 +10059,8 @@
     </student>
     <student>
         <identifier>21116358</identifier>
-        <name>Berissi</name>
-        <surname>Cimar</surname>
+        <surname>Berissi</surname>
+        <name>Cimar</name>
         <program>SLINF3 180</program>
         <grade>
             <item>SLUIN501</item>
@@ -10120,8 +10121,8 @@
     </student>
     <student>
         <identifier>21487176</identifier>
-        <name>Fischer</name>
-        <surname>Jean</surname>
+        <surname>Fischer</surname>
+        <name>Jean</name>
         <program>SLINF3 180</program>
         <grade>
             <item>SLUIN501</item>
@@ -10182,8 +10183,8 @@
     </student>
     <student>
         <identifier>21132632</identifier>
-        <name>Atger</name>
-        <surname>Gabriel</surname>
+        <surname>Atger</surname>
+        <name>Gabriel</name>
         <program>SLIMI3 180</program>
         <grade>
             <item>SLEMA501</item>
@@ -10264,8 +10265,8 @@
     </student>
     <student>
         <identifier>21527159</identifier>
-        <name>Alphazan</name>
-        <surname>Francois</surname>
+        <surname>Alphazan</surname>
+        <name>Francois</name>
         <program>SLINF3 180</program>
         <grade>
             <item>SLUIN501</item>
@@ -10326,8 +10327,8 @@
     </student>
     <student>
         <identifier>21861053</identifier>
-        <name>Depierre</name>
-        <surname>Colette</surname>
+        <surname>Depierre</surname>
+        <name>Colette</name>
         <program>SLIMI3 180</program>
         <grade>
             <item>SLEMA501</item>
@@ -10408,8 +10409,8 @@
     </student>
     <student>
         <identifier>21476285</identifier>
-        <name>Chesneau</name>
-        <surname>Denis</surname>
+        <surname>Chesneau</surname>
+        <name>Denis</name>
         <program>SLIMI3 180</program>
         <grade>
             <item>SLEMA501</item>
@@ -10490,8 +10491,8 @@
     </student>
     <student>
         <identifier>21858682</identifier>
-        <name>Tran</name>
-        <surname>Mickael</surname>
+        <surname>Tran</surname>
+        <name>Mickael</name>
         <program>SLIMI3 180</program>
         <grade>
             <item>SLEMA501</item>
@@ -10572,8 +10573,8 @@
     </student>
     <student>
         <identifier>21781843</identifier>
-        <name>Agosti</name>
-        <surname>Alexandre</surname>
+        <surname>Agosti</surname>
+        <name>Alexandre</name>
         <program>SLINF3 180</program>
         <grade>
             <item>SLUIN501</item>
@@ -10634,8 +10635,8 @@
     </student>
     <student>
         <identifier>21482156</identifier>
-        <name>Yarde</name>
-        <surname>Joseph</surname>
+        <surname>Yarde</surname>
+        <name>Joseph</name>
         <program>SLIMI3 180</program>
         <grade>
             <item>SLEMA501</item>
@@ -10716,8 +10717,8 @@
     </student>
     <student>
         <identifier>21402056</identifier>
-        <name>Bouilland</name>
-        <surname>Sarah</surname>
+        <surname>Bouilland</surname>
+        <name>Sarah</name>
         <program>SLINF3 180</program>
         <grade>
             <item>SLUIN501</item>
@@ -10778,8 +10779,8 @@
     </student>
     <student>
         <identifier>21726402</identifier>
-        <name>Leriche</name>
-        <surname>Beatrice</surname>
+        <surname>Leriche</surname>
+        <name>Beatrice</name>
         <program>SLINF3 180</program>
         <grade>
             <item>SLUIN501</item>
@@ -10840,8 +10841,8 @@
     </student>
     <student>
         <identifier>21291571</identifier>
-        <name>Besnard</name>
-        <surname>Raymond</surname>
+        <surname>Besnard</surname>
+        <name>Raymond</name>
         <program>SLIMI3 180</program>
         <grade>
             <item>SLEMA501</item>
@@ -10922,8 +10923,8 @@
     </student>
     <student>
         <identifier>21830674</identifier>
-        <name>Chaumette</name>
-        <surname>Amandine</surname>
+        <surname>Chaumette</surname>
+        <name>Amandine</name>
         <program>SLIMI3 180</program>
         <grade>
             <item>SLEMA501</item>
@@ -11004,8 +11005,8 @@
     </student>
     <student>
         <identifier>21524570</identifier>
-        <name>Hagenauer</name>
-        <surname>Michel</surname>
+        <surname>Hagenauer</surname>
+        <name>Michel</name>
         <program>SLINF3 180</program>
         <grade>
             <item>SLUIN501</item>
@@ -11066,8 +11067,8 @@
     </student>
     <student>
         <identifier>21976580</identifier>
-        <name>Nargieu</name>
-        <surname>Laurette</surname>
+        <surname>Nargieu</surname>
+        <name>Laurette</name>
         <program>SLIMI3 180</program>
         <grade>
             <item>SLEMA501</item>
@@ -11148,8 +11149,8 @@
     </student>
     <student>
         <identifier>21098195</identifier>
-        <name>Roigneau</name>
-        <surname>Denis</surname>
+        <surname>Roigneau</surname>
+        <name>Denis</name>
         <program>SLINF3 180</program>
         <grade>
             <item>SLUIN501</item>
@@ -11210,8 +11211,8 @@
     </student>
     <student>
         <identifier>21320181</identifier>
-        <name>Gatland</name>
-        <surname>Pierre</surname>
+        <surname>Gatland</surname>
+        <name>Pierre</name>
         <program>SLIMI3 180</program>
         <grade>
             <item>SLEMA501</item>
@@ -11292,8 +11293,8 @@
     </student>
     <student>
         <identifier>21567663</identifier>
-        <name>Potot</name>
-        <surname>Gilberte</surname>
+        <surname>Potot</surname>
+        <name>Gilberte</name>
         <program>SLINF3 180</program>
         <grade>
             <item>SLUIN501</item>
@@ -11354,8 +11355,8 @@
     </student>
     <student>
         <identifier>21551926</identifier>
-        <name>Morel</name>
-        <surname>Arif</surname>
+        <surname>Morel</surname>
+        <name>Arif</name>
         <program>SLINF3 180</program>
         <grade>
             <item>SLUIN501</item>
@@ -11416,8 +11417,8 @@
     </student>
     <student>
         <identifier>21594698</identifier>
-        <name>Yvon</name>
-        <surname>Ep</surname>
+        <surname>Yvon</surname>
+        <name>Ep</name>
         <program>SLIMI3 180</program>
         <grade>
             <item>SLEMA501</item>
@@ -11498,8 +11499,8 @@
     </student>
     <student>
         <identifier>21448946</identifier>
-        <name>Charles</name>
-        <surname>Pascal</surname>
+        <surname>Charles</surname>
+        <name>Pascal</name>
         <program>SLIMI3 180</program>
         <grade>
             <item>SLEMA501</item>
@@ -11580,8 +11581,8 @@
     </student>
     <student>
         <identifier>21037687</identifier>
-        <name>Baudin</name>
-        <surname>Geraldine</surname>
+        <surname>Baudin</surname>
+        <name>Geraldine</name>
         <program>SLINF3 180</program>
         <grade>
             <item>SLUIN501</item>
@@ -11642,8 +11643,8 @@
     </student>
     <student>
         <identifier>21672074</identifier>
-        <name>Kairet</name>
-        <surname>Francois</surname>
+        <surname>Kairet</surname>
+        <name>Francois</name>
         <program>SLINF3 180</program>
         <grade>
             <item>SLUIN501</item>
@@ -11704,8 +11705,8 @@
     </student>
     <student>
         <identifier>21801689</identifier>
-        <name>Syda</name>
-        <surname>Nicolas</surname>
+        <surname>Syda</surname>
+        <name>Nicolas</name>
         <program>SLINF3 180</program>
         <grade>
             <item>SLUIN501</item>
@@ -11766,8 +11767,8 @@
     </student>
     <student>
         <identifier>21385409</identifier>
-        <name>Lauret</name>
-        <surname>Mario</surname>
+        <surname>Lauret</surname>
+        <name>Mario</name>
         <program>SLINF3 180</program>
         <grade>
             <item>SLUIN501</item>
@@ -11828,8 +11829,8 @@
     </student>
     <student>
         <identifier>21760093</identifier>
-        <name>Leroy</name>
-        <surname>Benjamin</surname>
+        <surname>Leroy</surname>
+        <name>Benjamin</name>
         <program>SLIMI3 180</program>
         <grade>
             <item>SLEMA501</item>
@@ -11910,8 +11911,8 @@
     </student>
     <student>
         <identifier>21840895</identifier>
-        <name>Rousseau</name>
-        <surname>Dominique</surname>
+        <surname>Rousseau</surname>
+        <name>Dominique</name>
         <program>SLINF3 180</program>
         <grade>
             <item>SLUIN501</item>
@@ -11972,8 +11973,8 @@
     </student>
     <student>
         <identifier>21781500</identifier>
-        <name>Blot</name>
-        <surname>Joseph</surname>
+        <surname>Blot</surname>
+        <name>Joseph</name>
         <program>SLINF3 180</program>
         <grade>
             <item>SLUIN501</item>
@@ -12034,8 +12035,8 @@
     </student>
     <student>
         <identifier>21588770</identifier>
-        <name>Fauque</name>
-        <surname>Rose</surname>
+        <surname>Fauque</surname>
+        <name>Rose</name>
         <program>SLINF3 180</program>
         <grade>
             <item>SLUIN501</item>
@@ -12096,8 +12097,8 @@
     </student>
     <student>
         <identifier>21325061</identifier>
-        <name>Dijon</name>
-        <surname>Michele</surname>
+        <surname>Dijon</surname>
+        <name>Michele</name>
         <program>SLINF3 180</program>
         <grade>
             <item>SLUIN501</item>
@@ -12158,8 +12159,8 @@
     </student>
     <student>
         <identifier>21566184</identifier>
-        <name>Pierron</name>
-        <surname>Henri</surname>
+        <surname>Pierron</surname>
+        <name>Henri</name>
         <program>SLINF3 180</program>
         <grade>
             <item>SLUIN501</item>
@@ -12220,8 +12221,8 @@
     </student>
     <student>
         <identifier>21871389</identifier>
-        <name>Dupont</name>
-        <surname>Marie</surname>
+        <surname>Dupont</surname>
+        <name>Marie</name>
         <program>SLINF3 180</program>
         <grade>
             <item>SLUIN501</item>
@@ -12282,8 +12283,8 @@
     </student>
     <student>
         <identifier>21706218</identifier>
-        <name>Toulet Suberbie Cousy</name>
-        <surname>Roberte</surname>
+        <surname>Toulet Suberbie Cousy</surname>
+        <name>Roberte</name>
         <program>SLINF3 180</program>
         <grade>
             <item>SLUIN501</item>
@@ -12344,8 +12345,8 @@
     </student>
     <student>
         <identifier>21279403</identifier>
-        <name>Foulet</name>
-        <surname>Jean</surname>
+        <surname>Foulet</surname>
+        <name>Jean</name>
         <program>SLINF3 180</program>
         <grade>
             <item>SLUIN501</item>
@@ -12406,8 +12407,8 @@
     </student>
     <student>
         <identifier>21830856</identifier>
-        <name>Ernst</name>
-        <surname>Roland</surname>
+        <surname>Ernst</surname>
+        <name>Roland</name>
         <program>SLINF3 180</program>
         <grade>
             <item>SLUIN501</item>
@@ -12468,8 +12469,8 @@
     </student>
     <student>
         <identifier>21676683</identifier>
-        <name>Galia</name>
-        <surname>Ismael</surname>
+        <surname>Galia</surname>
+        <name>Ismael</name>
         <program>SLIMI3 180</program>
         <grade>
             <item>SLEMA501</item>
@@ -12550,8 +12551,8 @@
     </student>
     <student>
         <identifier>21805496</identifier>
-        <name>Godeau</name>
-        <surname>Andre</surname>
+        <surname>Godeau</surname>
+        <name>Andre</name>
         <program>SLINF3 180</program>
         <grade>
             <item>SLUIN501</item>
@@ -12612,8 +12613,8 @@
     </student>
     <student>
         <identifier>21370010</identifier>
-        <name>Belabre</name>
-        <surname>Mariette</surname>
+        <surname>Belabre</surname>
+        <name>Mariette</name>
         <program>SLIMI3 180</program>
         <grade>
             <item>SLEMA501</item>
@@ -12694,8 +12695,8 @@
     </student>
     <student>
         <identifier>21559660</identifier>
-        <name>Debono</name>
-        <surname>Jane</surname>
+        <surname>Debono</surname>
+        <name>Jane</name>
         <program>SLINF3 180</program>
         <grade>
             <item>SLUIN501</item>
@@ -12756,8 +12757,8 @@
     </student>
     <student>
         <identifier>21968663</identifier>
-        <name>Collette</name>
-        <surname>Veronique</surname>
+        <surname>Collette</surname>
+        <name>Veronique</name>
         <program>SLINF3 180</program>
         <grade>
             <item>SLUIN501</item>
@@ -12818,8 +12819,8 @@
     </student>
     <student>
         <identifier>21540975</identifier>
-        <name>Morel</name>
-        <surname>Jean</surname>
+        <surname>Morel</surname>
+        <name>Jean</name>
         <program>SLINF3 180</program>
         <grade>
             <item>SLUIN501</item>
@@ -12880,8 +12881,8 @@
     </student>
     <student>
         <identifier>21738612</identifier>
-        <name>Wanner</name>
-        <surname>Renee</surname>
+        <surname>Wanner</surname>
+        <name>Renee</name>
         <program>SLIMI3 180</program>
         <grade>
             <item>SLEMA501</item>
@@ -12962,8 +12963,8 @@
     </student>
     <student>
         <identifier>21055871</identifier>
-        <name>Speccogna</name>
-        <surname>Alexandra</surname>
+        <surname>Speccogna</surname>
+        <name>Alexandra</name>
         <program>SLINF3 180</program>
         <grade>
             <item>SLUIN501</item>
@@ -13024,8 +13025,8 @@
     </student>
     <student>
         <identifier>21929179</identifier>
-        <name>Nottebaert</name>
-        <surname>Paul</surname>
+        <surname>Nottebaert</surname>
+        <name>Paul</name>
         <program>SLIMI3 180</program>
         <grade>
             <item>SLEMA501</item>
@@ -13106,8 +13107,8 @@
     </student>
     <student>
         <identifier>21445854</identifier>
-        <name>Belhronari</name>
-        <surname>Gilbert</surname>
+        <surname>Belhronari</surname>
+        <name>Gilbert</name>
         <program>SLINF3 180</program>
         <grade>
             <item>SLUIN501</item>
@@ -13168,8 +13169,8 @@
     </student>
     <student>
         <identifier>21789131</identifier>
-        <name>Molinier</name>
-        <surname>Claude</surname>
+        <surname>Molinier</surname>
+        <name>Claude</name>
         <program>SLIMI3 180</program>
         <grade>
             <item>SLEMA501</item>
@@ -13250,8 +13251,8 @@
     </student>
     <student>
         <identifier>21639027</identifier>
-        <name>Halasz</name>
-        <surname>Pierre</surname>
+        <surname>Halasz</surname>
+        <name>Pierre</name>
         <program>SLINF3 180</program>
         <grade>
             <item>SLUIN501</item>
@@ -13312,8 +13313,8 @@
     </student>
     <student>
         <identifier>21771840</identifier>
-        <name>Vaquez</name>
-        <surname>Henri</surname>
+        <surname>Vaquez</surname>
+        <name>Henri</name>
         <program>SLINF3 180</program>
         <grade>
             <item>SLUIN501</item>
@@ -13374,8 +13375,8 @@
     </student>
     <student>
         <identifier>21103514</identifier>
-        <name>Callais</name>
-        <surname>Henri</surname>
+        <surname>Callais</surname>
+        <name>Henri</name>
         <program>SLINF3 180</program>
         <grade>
             <item>SLUIN501</item>
@@ -13436,8 +13437,8 @@
     </student>
     <student>
         <identifier>21915598</identifier>
-        <name>Brunet</name>
-        <surname>Nicomedes</surname>
+        <surname>Brunet</surname>
+        <name>Nicomedes</name>
         <program>SLIMI3 180</program>
         <grade>
             <item>SLEMA501</item>
@@ -13518,8 +13519,8 @@
     </student>
     <student>
         <identifier>21673265</identifier>
-        <name>Di Rosa</name>
-        <surname>Henri</surname>
+        <surname>Di Rosa</surname>
+        <name>Henri</name>
         <program>SLINF3 180</program>
         <grade>
             <item>SLUIN501</item>
@@ -13580,8 +13581,8 @@
     </student>
     <student>
         <identifier>21480052</identifier>
-        <name>Collombet</name>
-        <surname>Eleonore</surname>
+        <surname>Collombet</surname>
+        <name>Eleonore</name>
         <program>SLINF3 180</program>
         <grade>
             <item>SLUIN501</item>
@@ -13642,8 +13643,8 @@
     </student>
     <student>
         <identifier>21188398</identifier>
-        <name>Bonic</name>
-        <surname>De</surname>
+        <surname>Bonic</surname>
+        <name>De</name>
         <program>SLIMI3 180</program>
         <grade>
             <item>SLEMA501</item>
@@ -13724,8 +13725,8 @@
     </student>
     <student>
         <identifier>21774683</identifier>
-        <name>Oukali</name>
-        <surname>Alban</surname>
+        <surname>Oukali</surname>
+        <name>Alban</name>
         <program>SLINF3 180</program>
         <grade>
             <item>SLUIN501</item>
@@ -13786,8 +13787,8 @@
     </student>
     <student>
         <identifier>21109186</identifier>
-        <name>Villamejeanne</name>
-        <surname>Paul</surname>
+        <surname>Villamejeanne</surname>
+        <name>Paul</name>
         <program>SLIMI3 180</program>
         <grade>
             <item>SLEMA501</item>
@@ -13868,8 +13869,8 @@
     </student>
     <student>
         <identifier>21440876</identifier>
-        <name>Joffre</name>
-        <surname>Georges</surname>
+        <surname>Joffre</surname>
+        <name>Georges</name>
         <program>SLIMI3 180</program>
         <grade>
             <item>SLEMA501</item>
@@ -13950,8 +13951,8 @@
     </student>
     <student>
         <identifier>21230199</identifier>
-        <name>Levine Abile</name>
-        <surname>Pascal</surname>
+        <surname>Levine Abile</surname>
+        <name>Pascal</name>
         <program>SLIMI3 180</program>
         <grade>
             <item>SLEMA501</item>
@@ -14032,8 +14033,8 @@
     </student>
     <student>
         <identifier>21636447</identifier>
-        <name>Lefebure</name>
-        <surname>Michel</surname>
+        <surname>Lefebure</surname>
+        <name>Michel</name>
         <program>SLIMI3 180</program>
         <grade>
             <item>SLEMA501</item>
@@ -14114,8 +14115,8 @@
     </student>
     <student>
         <identifier>21366697</identifier>
-        <name>Garnier</name>
-        <surname>Elisabetta</surname>
+        <surname>Garnier</surname>
+        <name>Elisabetta</name>
         <program>SLINF3 180</program>
         <grade>
             <item>SLUIN501</item>
@@ -14176,8 +14177,8 @@
     </student>
     <student>
         <identifier>21154616</identifier>
-        <name>Levert</name>
-        <surname>Edmond</surname>
+        <surname>Levert</surname>
+        <name>Edmond</name>
         <program>SLINF3 180</program>
         <grade>
             <item>SLUIN501</item>
@@ -14238,8 +14239,8 @@
     </student>
     <student>
         <identifier>21116266</identifier>
-        <name>Jamot</name>
-        <surname>Catherine</surname>
+        <surname>Jamot</surname>
+        <name>Catherine</name>
         <program>SLINF3 180</program>
         <grade>
             <item>SLUIN501</item>
@@ -14300,8 +14301,8 @@
     </student>
     <student>
         <identifier>21128473</identifier>
-        <name>Charbonneau</name>
-        <surname>Laurent</surname>
+        <surname>Charbonneau</surname>
+        <name>Laurent</name>
         <program>SLINF3 180</program>
         <grade>
             <item>SLUIN501</item>
@@ -14362,8 +14363,8 @@
     </student>
     <student>
         <identifier>21054765</identifier>
-        <name>Goehry</name>
-        <surname>Julien</surname>
+        <surname>Goehry</surname>
+        <name>Julien</name>
         <program>SLIMI3 180</program>
         <grade>
             <item>SLEMA501</item>
@@ -14444,8 +14445,8 @@
     </student>
     <student>
         <identifier>21019557</identifier>
-        <name>Buchta</name>
-        <surname>Roland</surname>
+        <surname>Buchta</surname>
+        <name>Roland</name>
         <program>SLINF3 180</program>
         <grade>
             <item>SLUIN501</item>
