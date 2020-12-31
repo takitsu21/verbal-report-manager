@@ -98,7 +98,7 @@ public class AddProgramListener extends AbstractApplication implements ActionLis
                 tmp1.add(programIdField.getText());
                 programs.add(tmp1);
                 tmp1 = new ArrayList<>();
-                tmp1.add("name");
+                tmp1.add("surname");
                 tmp1.add(textField.getText());
                 programs.add(tmp1);
                 for (CheckBoxGroup cb : checkBoxGroupComposantes) {
@@ -258,7 +258,7 @@ public class AddProgramListener extends AbstractApplication implements ActionLis
         String[] values = new String[courses.size()];
         int acc = 0;
         for (Element course : courses) {
-            String courseName = Data.read(course, "name");
+            String courseName = Data.read(course, "surname");
             String courseId = Data.read(course, "identifier");
             values[acc++] = String.format("%s - %s", courseId, courseName);
         }

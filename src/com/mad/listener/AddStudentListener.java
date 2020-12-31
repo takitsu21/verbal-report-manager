@@ -286,19 +286,18 @@ public class AddStudentListener extends AbstractApplication implements ActionLis
                     student[i][2] = "0.0";
                 }
             }
-            System.out.println(programmeEntry);
-            System.out.println(Arrays.deepToString(student));
+
             student[0][0] = "identifier";
             student[0][1] = numEntry;
-            student[1][0] = "name";
-            student[1][1] = nameEntry;
-            student[2][0] = "surname";
-            student[2][1] = surnameEntry;
+            student[1][0] = "surname";
+            student[1][1] = surnameEntry;
+            student[2][0] = "name";
+            student[2][1] = nameEntry;
             student[3][0] = "program";
             student[3][1] = programmeEntry;
 
             if (XmlWriter.addStudent(XmlWriter.generateStudentNode(student))) {
-                System.out.println(Arrays.deepToString(student));
+
                 refreshTable();
                 tmp.dispose();
 //                XmlWriter.save(TMP_PATH);

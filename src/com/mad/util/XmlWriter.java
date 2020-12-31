@@ -112,7 +112,7 @@ public class XmlWriter {
         try {
             Node newCourse = Data.doc.createElement("course");
             Node identifier = Data.doc.createElement("identifier");
-            Node name = Data.doc.createElement("name");
+            Node name = Data.doc.createElement("surname");
             Node coefNode = Data.doc.createElement("credits");
 
             identifier.appendChild(Data.doc.createTextNode(courseId));
@@ -136,8 +136,8 @@ public class XmlWriter {
     public static Node generateStudentNode(String[][] dataset) {
         /*
         new String[][]{
-                    {"identifier", "11111111"}, {"name", "dylannTest"},
-                    {"surname", "didi"}, {"program", "SLTEST"},
+                    {"identifier", "11111111"}, {"surname", "dylannTest"},
+                    {"name", "didi"}, {"program", "SLTEST"},
                     {"grade", "SL3333", "9.4123"},
                     {"grade", "SL1111", "11.112"}
             }
@@ -153,8 +153,8 @@ public class XmlWriter {
             if (nodeType != null) {
                 switch (nodeType) {
                     case "identifier":
-                    case "name":
                     case "surname":
+                    case "name":
                     case "program":
                         item = Data.doc.createElement(s[0]);
                         item.appendChild(Data.doc.createTextNode(s[1]));
@@ -181,7 +181,7 @@ public class XmlWriter {
     public static Node generateProgram(String[][] dataset) {
         /*
         new String[][]{
-                    {"identifier", "SLL info"}, {"name", "L5 INFO"},
+                    {"identifier", "SLL info"}, {"surname", "L5 INFO"},
                     {"option", "1", "OPTION 4", "SL8666", "SL8666"},
                     {"composite", "2", "OPTION 4", "SL8666", "SL8666"},
                     {"item", "1"},
@@ -199,7 +199,7 @@ public class XmlWriter {
             String nodeType = s[0];
             switch (nodeType) {
                 case "identifier":
-                case "name":
+                case "surname":
                 case "item":
                     item = Data.doc.createElement(s[0]);
                     item.appendChild(Data.doc.createTextNode(s[1]));
@@ -212,7 +212,7 @@ public class XmlWriter {
 
                     Node identifier = Data.doc.createElement("identifier");
                     identifier.appendChild(Data.doc.createTextNode(s[1]));
-                    Node name = Data.doc.createElement("name");
+                    Node name = Data.doc.createElement("surname");
                     name.appendChild(Data.doc.createTextNode(s[2]));
                     nodeIterator.appendChild(identifier);
                     nodeIterator.appendChild(name);

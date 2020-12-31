@@ -77,7 +77,7 @@ public class XmlToCsv {
 
                 data.set(programid.indexOf(programStud),
                         data.get(programid.indexOf(programStud)) + ("\"" + Data.read(element, "identifier") + "\"," +
-                                "\"" + Data.read(element, "name") + "\"," + "\"" + Data.read(element, "surname") + "\"," + moyenne + d.substring(0, d.length() - 1) + "\n" //liste des matiere d'un etudient //liste des matiere d'un etudient //liste des matiere d'un etudient
+                                "\"" + Data.read(element, "surname") + "\"," + "\"" + Data.read(element, "name") + "\"," + moyenne + d.substring(0, d.length() - 1) + "\n" //liste des matiere d'un etudient //liste des matiere d'un etudient //liste des matiere d'un etudient
                         ));
             }
         }
@@ -194,7 +194,7 @@ public class XmlToCsv {
                 }
             }
 
-            studProg.sort(Comparator.comparing(o -> Data.read(o, "name"))); //tri les eleves dans l'ordre alphabetique
+            studProg.sort(Comparator.comparing(o -> Data.read(o, "surname"))); //tri les eleves dans l'ordre alphabetique
 
             listStudentsFinal.add(studProg);
         }

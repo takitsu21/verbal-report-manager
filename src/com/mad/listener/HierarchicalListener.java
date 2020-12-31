@@ -23,7 +23,7 @@ public class HierarchicalListener extends AbstractApplication implements ActionL
         DefaultMutableTreeNode programs = new DefaultMutableTreeNode("Programmes");
         for (Element elem : program) {
             DefaultMutableTreeNode programTree = new DefaultMutableTreeNode(String.format("%s - %s",
-                    Data.read(elem, "identifier"), Data.read(elem, "name")));
+                    Data.read(elem, "identifier"), Data.read(elem, "surname")));
             List<Element> courses = Data.getChildren(Data.root, "course");
             List<Element> options = Data.getChildren(elem, "option");
             List<Element> composites = Data.getChildren(elem, "composite");
@@ -48,7 +48,7 @@ public class HierarchicalListener extends AbstractApplication implements ActionL
 
     private void addToProgramTree(DefaultMutableTreeNode programTree, List<Element> values, List<Element> courses) {
         for (Element val : values) {
-            DefaultMutableTreeNode currentValTree = new DefaultMutableTreeNode(Data.read(val, "name"));
+            DefaultMutableTreeNode currentValTree = new DefaultMutableTreeNode(Data.read(val, "surname"));
             List<Element> valChildrens = Data.getChildren(val, "item");
             for (Element valC : valChildrens) {
                 currentValTree.add(new DefaultMutableTreeNode(formatCourseName(courses, valC.getTextContent())));
@@ -61,7 +61,7 @@ public class HierarchicalListener extends AbstractApplication implements ActionL
         Element courseName = XmlToCsv.findCourseByCode(courses, courseCode);
         if (courseName != null) {
             return String.format("%s - %s",
-                    courseCode, Data.read(courseName, "name"));
+                    courseCode, Data.read(courseName, "surname"));
         }
         return String.format("%s", courseCode);
     }
