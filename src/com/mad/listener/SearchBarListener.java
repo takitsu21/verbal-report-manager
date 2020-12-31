@@ -193,7 +193,7 @@ public class SearchBarListener extends AbstractApplication implements ActionList
                             }
                             for (Element element : listCourses) {
                                 if (coursTest != null && coursTest.equals(Data.read(element, "identifier"))) {
-                                    data[0][data[0].length - 1] = coursTest + " - " + Data.read(element, "name");
+                                    data[0][data[0].length - 1] = coursTest + " - " + Data.read(element, "surname");
                                     break;
                                 }
                             }
