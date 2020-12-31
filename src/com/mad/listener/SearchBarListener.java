@@ -21,11 +21,15 @@ import java.util.regex.Pattern;
 
 public class SearchBarListener extends AbstractApplication implements ActionListener {
     private static boolean isListenerAdded = false;
+    private static boolean isDoubleCalled = false;
 
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        if (! isDoubleCalled){
         search();
+        isDoubleCalled = true;}
+        else{isDoubleCalled = false;}
     }
 
     public void search() {
