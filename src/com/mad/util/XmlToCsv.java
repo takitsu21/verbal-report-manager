@@ -56,47 +56,45 @@ public class XmlToCsv {
 
         for (List<Element> liste : listStudents) {
 
-            try{
-            for (Element element : liste) {
-                String programStud = Data.read(element, "program");
+            try {
+                for (Element element : liste) {
+                    String programStud = Data.read(element, "program");
 
-                StringBuilder d = new StringBuilder();
-                List<Element> listStudMat = Data.getChildren(element, "grade"); //liste des matiere d'un etudient
+                    StringBuilder d = new StringBuilder();
+                    List<Element> listStudMat = Data.getChildren(element, "grade"); //liste des matiere d'un etudient
 
-                try {
-                String[] note = listNoteStu(listCoursesProg.get(programid.indexOf(programStud)), listStudMat);
-                notes[programid.indexOf(programStud)][listStudents.get(programid.indexOf(programStud)).indexOf(element)] = note;
+                    try {
+                        String[] note = listNoteStu(listCoursesProg.get(programid.indexOf(programStud)), listStudMat);
+                        notes[programid.indexOf(programStud)][listStudents.get(programid.indexOf(programStud)).indexOf(element)] = note;
 
-                Arrays.fill(moyennes[programid.indexOf(programStud)], "0");
-                String moyenne = moyenne(listCourses, listCoursesProg.get(programid.indexOf(programStud)), note);
+                        Arrays.fill(moyennes[programid.indexOf(programStud)], "0");
+                        String moyenne = moyenne(listCourses, listCoursesProg.get(programid.indexOf(programStud)), note);
 
-                    moyennes[programid.indexOf(programStud)][listStudents.get(programid.indexOf(programStud)).indexOf(element)] = moyenne;
-                    moyenne = "\"" + moyenne + "\",";
+                        moyennes[programid.indexOf(programStud)][listStudents.get(programid.indexOf(programStud)).indexOf(element)] = moyenne;
+                        moyenne = "\"" + moyenne + "\",";
 
 
-                for (String s : note) {
-                    if (s != null) {
-                        d.append("\"").append(s).append("\",");
-                    } else {
-                        d.append("\"").append("\",");
+                        for (String s : note) {
+                            if (s != null) {
+                                d.append("\"").append(s).append("\",");
+                            } else {
+                                d.append("\"").append("\",");
+                            }
+                        }
+
+                        data.set(programid.indexOf(programStud),
+                                data.get(programid.indexOf(programStud)) + ("\"" + Data.read(element, "identifier") + "\"," +
+                                        "\"" + Data.read(element, "surname") + "\"," + "\"" + Data.read(element, "name") + "\"," + moyenne + d.substring(0, d.length() - 1) + "\n" //liste des matiere d'un etudient //liste des matiere d'un etudient //liste des matiere d'un etudient
+                                ));
+                    } catch (IndexOutOfBoundsException e) {
+                        System.out.println("pb" + e);
+                        System.out.println(programid.indexOf(programStud));
+                        System.out.println("moyenne lengt " + moyennes.length);
+                        System.out.println("list stud" + listStudents.get(programid.indexOf(programStud)).indexOf(element));
+                        System.out.println(element + Data.read(element, "name"));
                     }
                 }
-
-                data.set(programid.indexOf(programStud),
-                        data.get(programid.indexOf(programStud)) + ("\"" + Data.read(element, "identifier") + "\"," +
-                                "\"" + Data.read(element, "surname") + "\"," + "\"" + Data.read(element, "name") + "\"," + moyenne + d.substring(0, d.length() - 1) + "\n" //liste des matiere d'un etudient //liste des matiere d'un etudient //liste des matiere d'un etudient
-                        ));
-            }
-                catch(IndexOutOfBoundsException e ){
-                    System.out.println("pb" + e );
-                    System.out.println(programid.indexOf(programStud));
-                    System.out.println("moyenne lengt " + moyennes.length);
-                    System.out.println("notee len "+ notes.length);
-                }
-
-
-            }}
-            catch(Exception e ){
+            } catch (Exception e) {
                 System.out.println("probleme");
 
                 System.out.println(liste);
