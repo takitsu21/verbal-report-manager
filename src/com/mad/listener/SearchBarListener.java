@@ -3,7 +3,6 @@ package com.mad.listener;
 import com.mad.AbstractApplication;
 import com.mad.util.Data;
 import com.mad.util.Table;
-import com.mad.util.XmlToCsv;
 import org.w3c.dom.Element;
 
 import javax.swing.*;
@@ -22,12 +21,15 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 public class SearchBarListener extends AbstractApplication implements ActionListener {
+    private static boolean isListenerAdded = false;
 
 
     @Override
     public void actionPerformed(ActionEvent e) {
-//        System.out.println(Arrays.toString(getSearchComboBox().getActionListeners()));
-//        System.out.println(e.getSource());
+        search();
+    }
+
+    public void search() {
         try {
             Table.setNewModelTable(Table.table, Data.dataArray);
             String searchText;
@@ -97,15 +99,15 @@ public class SearchBarListener extends AbstractApplication implements ActionList
                 return 0;
             });
             listData.addAll(Arrays.asList(toSort));
-            String[][] strArr =   listData.toArray(new String[0][0]);
-            //System.out.println(strArr[0][1]);
-            if(strArr[0][1]== null){
+            String[][] strArr = listData.toArray(new String[0][0]);
+            System.out.println(strArr[0][1]);
+            if (strArr[0][1] == null) {
                 Toolkit.getDefaultToolkit().beep();
-                JOptionPane.showMessageDialog(null, "Recherche incorrect","Erreur",JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Recherche incorrect", "Erreur", JOptionPane.WARNING_MESSAGE);
                 refreshTable();
+            } else {
+                Table.setNewModelTable(Table.table, strArr);
             }
-            else{
-            Table.setNewModelTable(Table.table, strArr );}
 
 
         } catch (Exception ioException) {
@@ -114,7 +116,7 @@ public class SearchBarListener extends AbstractApplication implements ActionList
     }
 
 
-    private String[][] searchCourse(String[] names) {
+    private static String[][] searchCourse(String[] names) {
         String[][] tableau_final = new String[Data.dataArray.length][names.length + 1];
         int[] decalage = new int[names.length];
         String[][] tableauStat = new String[names.length][4];
@@ -212,9 +214,9 @@ public class SearchBarListener extends AbstractApplication implements ActionList
     }
 
 
-    private static String[] searchInTable(JTable table, String searchText) {
+    private String[] searchInTable(JTable table, String searchText) {
         String[] num = new String[0];
-        RowSorter<? extends TableModel> rs = table.getRowSorter();
+        RowSorter<? extends TableModel> rs = Table.table.getRowSorter();
         if (rs == null) {
             table.setAutoCreateRowSorter(true);
             rs = table.getRowSorter();

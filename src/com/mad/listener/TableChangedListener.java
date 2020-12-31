@@ -12,7 +12,7 @@ import javax.swing.event.TableModelListener;
 public class TableChangedListener extends AbstractApplication implements TableModelListener {
 
     public TableChangedListener() {
-        //System.out.println("TableChangedListener added");
+        System.out.println("TableChangedListener added");
     }
 
     @Override
@@ -24,8 +24,8 @@ public class TableChangedListener extends AbstractApplication implements TableMo
             String newVal = (String) Table.table.getModel().getValueAt(e.getFirstRow(), e.getColumn());
             String numEtu = (String) Table.table.getModel().getValueAt(e.getFirstRow(), 0);
             updateCell(newVal, numEtu, courseId);
-            XmlWriter.save(AbstractApplication.TMP_PATH);
-            XmlToCsv xmlConverter = new XmlToCsv(AbstractApplication.TMP_PATH);
+            XmlWriter.save(TMP_PATH);
+            XmlToCsv xmlConverter = new XmlToCsv(TMP_PATH);
             xmlConverter.convert();
             Table.table.getModel().removeTableModelListener(this);
             Table.table.getModel().addTableModelListener(this);
