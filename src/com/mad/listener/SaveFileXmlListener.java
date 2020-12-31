@@ -25,7 +25,11 @@ public class SaveFileXmlListener extends AbstractApplication implements ActionLi
 
         int returnValue = jfc.showSaveDialog(null);
         if (returnValue == JFileChooser.APPROVE_OPTION) {
-            XmlWriter.save("" + jfc.getSelectedFile());
+            if (jfc.getSelectedFile().getPath().endsWith(".xml")) {
+                XmlWriter.save(jfc.getSelectedFile().getPath());
+            } else {
+                XmlWriter.save(jfc.getSelectedFile().getPath() + ".xml");
+            }
             if (jfc.getSelectedFile().isDirectory()) {
                 System.out.println("You selected the directory: " + jfc.getSelectedFile());
             }

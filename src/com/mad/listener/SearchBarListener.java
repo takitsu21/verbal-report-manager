@@ -11,6 +11,7 @@ import javax.swing.event.RowSorterEvent;
 import javax.swing.event.RowSorterListener;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -54,6 +55,7 @@ public class SearchBarListener extends AbstractApplication implements ActionList
 
             }
 
+
             HashSet<String> set = new HashSet<>();
             for (String s : ligne) {
                 if (!s.equals("Note max") && !s.equals("Note min") && !s.equals("Note moyenne") && !s.equals("Écart-type")) {
@@ -92,7 +94,15 @@ public class SearchBarListener extends AbstractApplication implements ActionList
                 return 0;
             });
             listData.addAll(Arrays.asList(toSort));
-            Table.setNewModelTable(Table.table, listData.toArray(new String[0][0]));
+            String[][] strArr =   listData.toArray(new String[0][0]);
+            System.out.println(strArr[0][1]);
+            if(strArr[0][1]== null){
+                Toolkit.getDefaultToolkit().beep();
+                JOptionPane.showMessageDialog(null, "Recherche incorrect","Erreur",JOptionPane.WARNING_MESSAGE);
+                refreshTable();
+            }
+            else{
+            Table.setNewModelTable(Table.table, strArr );}
 
 
         } catch (Exception ioException) {
@@ -221,6 +231,7 @@ public class SearchBarListener extends AbstractApplication implements ActionList
             num = new String[table.getRowCount()];
 
             for (int row = 0; row < table.getRowCount(); row++) {
+
                 num[row] = (String) table.getModel().getValueAt(table.convertRowIndexToModel(row), 0);
             }
         }
