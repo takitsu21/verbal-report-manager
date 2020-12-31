@@ -112,7 +112,7 @@ public class XmlWriter {
         try {
             Node newCourse = Data.doc.createElement("course");
             Node identifier = Data.doc.createElement("identifier");
-            Node name = Data.doc.createElement("surname");
+            Node name = Data.doc.createElement("name");
             Node coefNode = Data.doc.createElement("credits");
 
             identifier.appendChild(Data.doc.createTextNode(courseId));
@@ -199,7 +199,7 @@ public class XmlWriter {
             String nodeType = s[0];
             switch (nodeType) {
                 case "identifier":
-                case "surname":
+                case "name":
                 case "item":
                     item = Data.doc.createElement(s[0]);
                     item.appendChild(Data.doc.createTextNode(s[1]));
@@ -212,7 +212,7 @@ public class XmlWriter {
 
                     Node identifier = Data.doc.createElement("identifier");
                     identifier.appendChild(Data.doc.createTextNode(s[1]));
-                    Node name = Data.doc.createElement("surname");
+                    Node name = Data.doc.createElement("name");
                     name.appendChild(Data.doc.createTextNode(s[2]));
                     nodeIterator.appendChild(identifier);
                     nodeIterator.appendChild(name);
