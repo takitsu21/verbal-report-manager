@@ -1,14 +1,10 @@
 package com.mad;
 
 import com.mad.listener.*;
-import com.mad.util.Data;
 import com.mad.util.Table;
-import com.mad.util.XmlWriter;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 import java.awt.*;
 import java.awt.dnd.DropTarget;
 import java.awt.dnd.DropTargetListener;
