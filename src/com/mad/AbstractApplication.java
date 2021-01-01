@@ -1,13 +1,18 @@
 package com.mad;
 
-import com.mad.listener.EnregistrerListener;
 import com.mad.util.Data;
 import com.mad.util.Table;
 import com.mad.util.XmlToCsv;
 import com.mad.util.XmlWriter;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.sql.Timestamp;
+import java.util.Arrays;
 
 
 public abstract class AbstractApplication extends JPanel {
@@ -32,8 +37,39 @@ public abstract class AbstractApplication extends JPanel {
     protected static boolean componentsInitialised = false;
     protected static String infoSearchComboBox;
     protected static JButton refresh;
+    protected static String savedAsName;
+    protected static Timestamp lastModificationAt;
+    protected static Timestamp lastTmpModificationAt;
 
     public AbstractApplication() {
+    }
+
+    public static Timestamp getLastModificationAt() {
+        return lastModificationAt;
+    }
+
+    public static void setLastModificationAt(Timestamp lastModificationAt) {
+        AbstractApplication.lastModificationAt = lastModificationAt;
+    }
+
+    public static Timestamp getLastTmpModificationAt() {
+        return lastTmpModificationAt;
+    }
+
+    public static void setLastTmpModificationAt(Timestamp lastTmpModificationAt) {
+        AbstractApplication.lastTmpModificationAt = lastTmpModificationAt;
+    }
+
+    public static String getTmpPath() {
+        return TMP_PATH;
+    }
+
+    public static String getSavedAsName() {
+        return savedAsName;
+    }
+
+    public static void setSavedAsName(String savedAsName) {
+        AbstractApplication.savedAsName = savedAsName;
     }
 
     public static JButton getAddProgramButton() {
@@ -196,21 +232,96 @@ public abstract class AbstractApplication extends JPanel {
         }
     }
 
-    public static void refreshTable(){
-        if(path.endsWith(".xml")) {
+    public static void refreshTable() {
+        if (path.endsWith(".xml")) {
             XmlWriter.save(TMP_PATH);
             XmlToCsv xmlConverter = new XmlToCsv(TMP_PATH);
             xmlConverter.convert();
             //clearJTables();
             //getContent().add(getDisplayCsv().Jscroll, BorderLayout.CENTER);
             getComboBox().setSelectedItem(getComboBox().getSelectedItem());
-        }
-        else if(path.endsWith(".csv")){
-            EnregistrerListener.save();
+        } else if (path.endsWith(".csv")) {
+            save(false);
             //Table.table.getModel().removeTableModelListener(new TableChangedListener());
             Table.setNewModelTable(Table.table, Data.dataArray);
             //Table.table.getModel().addTableModelListener(new TableChangedListener());
         }
     }
 
+    public static boolean save(boolean saveAs) {
+        String path = AbstractApplication.getOriginPath();
+        Timestamp currentSaveTimestamp = new Timestamp(System.currentTimeMillis());
+        if (path.endsWith(".csv")) {
+            System.out.println(Arrays.deepToString(Data.dataArray));
+            try {
+                PrintWriter pr = new PrintWriter(path);
+                for (String[] l : Data.dataArray) {
+                    StringBuilder acc = new StringBuilder();
+                    for (String m : l) {
+                        acc.append("\"").append(m).append("\",");
+                    }
+                    pr.println(acc);
+                }
+                return true;
+            } catch (FileNotFoundException fileNotFoundException) {
+                JOptionPane.showMessageDialog(AbstractApplication.getFrame(), "Erreur FATAL");
+            }
+        }
+        if (path.endsWith(".xml")) {
+            if (!saveAs) {
+                if (XmlWriter.save(path)) {
+                    setLastModificationAt(currentSaveTimestamp);
+                    setLastTmpModificationAt(currentSaveTimestamp);
+                    return true;
+                }
+
+            } else {
+                if (saveAs()) {
+                    setLastModificationAt(currentSaveTimestamp);
+                    setLastTmpModificationAt(currentSaveTimestamp);
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private static boolean saveAs() {
+        File f = new File(ORIGIN_PATH);
+        JFileChooser jfc = new JFileChooser(f);
+        jfc.setCurrentDirectory(new File(System.getProperty("user.dir")));
+        jfc.setSelectedFile(f);
+        jfc.setFileFilter(new FileNameExtensionFilter(".xml", "xml"));
+
+        jfc.setDialogTitle("Choississez un endroit pour sauvegarder votre fichier: ");
+        jfc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+
+        int returnValue = jfc.showSaveDialog(null);
+        System.out.println(returnValue);
+        if (returnValue == JFileChooser.APPROVE_OPTION) {
+            if (jfc.getSelectedFile().getPath().endsWith(".xml")) {
+                if (XmlWriter.save(jfc.getSelectedFile().getPath())) {
+                    setSavedAsName(jfc.getSelectedFile().getPath());
+                    return true;
+                }
+            } else {
+                if (XmlWriter.save(jfc.getSelectedFile().getPath() + ".xml")) {
+                    setSavedAsName(jfc.getSelectedFile().getPath() + ".xml");
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public static boolean isSaved() {
+        try {
+            if (getLastTmpModificationAt() == null) {
+                return true;
+            }
+            return getLastModificationAt().compareTo(getLastTmpModificationAt()) == 0;
+        } catch (Exception e) {
+            return true;
+        }
+    }
 }

@@ -11,32 +11,9 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.Arrays;
 
-public class EnregistrerListener extends AbstractApplication implements ActionListener {
+public class EnregistrerListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
-        save();
+        AbstractApplication.save(false);
     }
-    public static  void save(){
-        String path = getOriginPath();
-        System.out.println(path);
-        if (path.endsWith(".csv")) {
-            System.out.println(Arrays.deepToString(Data.dataArray));
-            try {
-                PrintWriter pr = new PrintWriter(path);
-                for (String[] l : Data.dataArray) {
-                    StringBuilder acc = new StringBuilder();
-                    for (String m : l) {
-                        acc.append("\"").append(m).append("\",");
-                    }
-                    pr.println(acc);
-                }
-            } catch (FileNotFoundException fileNotFoundException) {
-                JOptionPane.showMessageDialog(getFrame(), "Erreur FATAL");
-            }
-
-
-        }
-        if (path.endsWith(".xml")) {
-            XmlWriter.save(path);
-}}
-    }
+}

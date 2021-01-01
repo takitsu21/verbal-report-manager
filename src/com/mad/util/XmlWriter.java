@@ -1,5 +1,6 @@
 package com.mad.util;
 
+import com.mad.AbstractApplication;
 import com.mad.util.exceptions.StudentNotFoundException;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -9,6 +10,7 @@ import javax.xml.transform.*;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.File;
+import java.sql.Timestamp;
 import java.util.List;
 
 
@@ -237,13 +239,11 @@ public class XmlWriter {
             Transformer transformer = TransformerFactory.newInstance().newTransformer();
             Result output = new StreamResult(new File(dst));
             Source input = new DOMSource(Data.root);
-
             transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
-//            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-//            transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
 
             transformer.transform(input, output);
             System.out.printf("Saved at %s\n", dst);
+            AbstractApplication.setLastTmpModificationAt(new Timestamp(System.currentTimeMillis()));
             return true;
         } catch (TransformerException e) {
             return false;
