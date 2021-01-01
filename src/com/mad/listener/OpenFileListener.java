@@ -77,9 +77,16 @@ public class OpenFileListener extends AbstractApplication implements ActionListe
                 setOriginPath(fileName);
             }
             setPath(fileName);
+            if (! (fileName.endsWith(".xml")) && !(fileName.endsWith(".csv")) ){
+                Toolkit.getDefaultToolkit().beep();
+                JOptionPane.showMessageDialog(null, "Mauvais type de fichier","Alerte", JOptionPane.WARNING_MESSAGE);
+            }
+            else{
             if (fileName.endsWith(".csv")) {
                 getDisplayCsv().TableCSV(fileName);
-            } else {
+            }
+
+            else {
                 XmlToCsv xmlConverter = new XmlToCsv(fileName);
                 xmlConverter.convert();
 
@@ -100,7 +107,7 @@ public class OpenFileListener extends AbstractApplication implements ActionListe
             getContent().add(getDisplayCsv().Jscroll, BorderLayout.CENTER);
             setLastModificationAt(new Timestamp(System.currentTimeMillis()));
             frame.setVisible(true);
-            System.gc();
+            System.gc();}
         } catch (IOException e) {
             e.printStackTrace();
         }
