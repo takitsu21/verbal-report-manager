@@ -15,6 +15,7 @@ import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.util.Arrays;
 
 public class OpenFileListener extends AbstractApplication implements ActionListener {
@@ -104,6 +105,7 @@ public class OpenFileListener extends AbstractApplication implements ActionListe
             refreshPanels(fileName);
             clearJTables();
             getContent().add(getDisplayCsv().Jscroll, BorderLayout.CENTER);
+            setLastModificationAt(new Timestamp(System.currentTimeMillis()));
             frame.setVisible(true);
             System.gc();}
         } catch (IOException e) {

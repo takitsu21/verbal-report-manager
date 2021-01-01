@@ -28,7 +28,7 @@ public class GUI {
         AbstractApplication.setFrame(new JFrame("MAD"));
         AbstractApplication.getFrame().setSize(920, 600);
         AbstractApplication.getFrame().setLocationRelativeTo(null);
-        AbstractApplication.getFrame().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        AbstractApplication.getFrame().setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
         JMenuBar menu = new JMenuBar();
         AbstractApplication.getFrame().setJMenuBar(menu);
@@ -88,24 +88,12 @@ public class GUI {
         AbstractApplication.getFrame().add(BorderLayout.CENTER, AbstractApplication.getDragAndDrop());
         AbstractApplication.getFrame().setIconImage(ImageIO.read(new File("./MAD16x16.png")));
 
+        AbstractApplication.getFrame().addWindowListener(new SaveOnExitListener());
         AbstractApplication.getFrame().addWindowListener(new WindowAdapter() {
             @Override
-            public void windowClosing(WindowEvent e) {
-                try {
-                    File file = new File(AbstractApplication.TMP_PATH);
-                    DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-                    DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-                    Data.doc = dBuilder.parse(file); // ouverture et lecture du fichier XML
-                    Data.doc.getDocumentElement().normalize(); // normalise le contenu du fichier, opération très conseillée
-                    Data.root = Data.doc.getDocumentElement();
-                    XmlWriter.save("./data-new.xml");
-                    if (file.delete()) {
-                        System.out.println("Overwriting data.xml");
-                    }
-                } catch (Exception exc) {
-                    System.out.println("Cannot save");
-                }
-
+            public void windowClosed(WindowEvent e) {
+                new File(AbstractApplication.getTmpPath()).delete();
+                System.out.println("tmp file deleted");
             }
         });
 
