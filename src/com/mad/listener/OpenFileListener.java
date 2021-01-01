@@ -4,10 +4,13 @@ import com.mad.AbstractApplication;
 import com.mad.util.Data;
 import com.mad.util.Table;
 import com.mad.util.XmlToCsv;
+import org.w3c.dom.Document;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.filechooser.FileSystemView;
+import javax.swing.undo.UndoManager;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -21,7 +24,12 @@ import java.util.Arrays;
 public class OpenFileListener extends AbstractApplication implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
-        JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
+        JFileChooser jfc = new JFileChooser();
+        jfc.setCurrentDirectory(new File(System.getProperty("user.dir")));
+        jfc.setFileFilter(new FileNameExtensionFilter(".csv; .xml", "csv", "xml"));
+
+        jfc.setDialogTitle("Choisissez le fichier à ouvrir");
+        jfc.setFileSelectionMode(JFileChooser.FILES_ONLY);
         int returnValue = jfc.showOpenDialog(null);
 
         if (returnValue == JFileChooser.APPROVE_OPTION) {
