@@ -71,40 +71,47 @@ public class SearchBarListener extends AbstractApplication implements ActionList
             }
 
             String[] listNumStud = set.toArray(new String[0]);
-            String[][] data = new String[listNumStud.length + 1][];
+            String[][] strArr;
 
             if (listNumStud.length == 0) {
-                data = searchCourse(listText);
-            }
-            else if (getPath().endsWith(".xml")) {
-                data = selectEtu(listNumStud);
-            }
-            else if (getPath().endsWith(".csv")) {
-                data[0] = Data.dataArray[0];
-                for (int i = 0; i < listNumStud.length; i++) {
-                    for (int j = 1; j < Data.dataArray.length; j++) {
 
-                        if (listNumStud[i] != null && listNumStud[i].equals(Data.dataArray[j][0])) {
+                strArr = searchCourse(listText);
+            } else {
+                String[][] data = new String[listNumStud.length + 1][];
+                if (getPath().endsWith(".xml")) {
+                    data = selectEtu(listNumStud);
+                }
+                if (getPath().endsWith(".csv")) {
+                    data[0] = Data.dataArray[0];
+                    for (int i = 0; i < listNumStud.length; i++) {
+                        for (int j = 1; j < Data.dataArray.length; j++) {
 
-                            data[i + 1] = Data.dataArray[j];
-                            break;
+                            if (listNumStud[i] != null && listNumStud[i].equals(Data.dataArray[j][0])) {
+
+                                data[i + 1] = Data.dataArray[j];
+                                break;
+                            }
                         }
                     }
+
                 }
 
+                String[][] toSort = Arrays.copyOfRange(data, 1, data.length);
+                List<String[]> listData = new ArrayList<>();
+                listData.add(data[0]);
+                Arrays.sort(toSort, (o1, o2) -> {
+                    if (o1[1] != null && o2[1] != null) {
+                        return CharSequence.compare(o1[1], o2[1]);
+                    }
+                    return 0;
+                });
+                listData.addAll(Arrays.asList(toSort));
+                strArr = listData.toArray(new String[0][0]);
             }
-            String[][] toSort = Arrays.copyOfRange(data, 1, data.length);
-            List<String[]> listData = new ArrayList<>();
-            listData.add(data[0]);
-            Arrays.sort(toSort, (o1, o2) -> {
-                if (o1[1] != null && o2[1] != null) {
-                    return CharSequence.compare(o1[1], o2[1]);
-                }
-                return 0;
-            });
-            listData.addAll(Arrays.asList(toSort));
-            String[][] strArr = listData.toArray(new String[0][0]);
-            if (strArr[0][1] == null && strArr[1][1] == null ) {
+
+
+
+            if (strArr[0][1] == null) {
                 Toolkit.getDefaultToolkit().beep();
                 JOptionPane.showMessageDialog(null, "Recherche incorrect", "Erreur", JOptionPane.WARNING_MESSAGE);
                 refreshTable();
@@ -146,9 +153,9 @@ public class SearchBarListener extends AbstractApplication implements ActionList
 
         int decalageMin = Integer.MAX_VALUE;
 
-        for (int i = 0; i < decalage.length; i++) {
-            if (decalage[i] < decalageMin)
-                decalageMin = decalage[i];
+        for (int k : decalage) {
+            if (k < decalageMin)
+                decalageMin = k;
         }
         final int finalTabLength = tableau_final.length;
         tableau_final[0][0] = "Statistiques";
