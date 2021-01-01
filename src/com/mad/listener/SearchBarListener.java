@@ -48,7 +48,7 @@ public class SearchBarListener extends AbstractApplication implements ActionList
                 }
             }
 
-            String[] listText = searchText.split(";");
+            String[] listText = searchText.split("[ ]?;[ ]?");
 
 
             String[] ligne = {};
