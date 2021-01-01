@@ -22,6 +22,7 @@ import java.util.regex.Pattern;
 public class SearchBarListener extends AbstractApplication implements ActionListener {
     private static boolean isListenerAdded = false;
     private static boolean isDoubleCalled = false;
+    private static boolean isEmptyCourse = false;
 
 
     @Override
@@ -76,9 +77,11 @@ public class SearchBarListener extends AbstractApplication implements ActionList
 
             if (listNumStud.length == 0) {
                 data = searchCourse(listText);
-            } else if (getPath().endsWith(".xml")) {
+            }
+            else if (getPath().endsWith(".xml")) {
                 data = selectEtu(listNumStud);
-            } else if (getPath().endsWith(".csv")) {
+            }
+            else if (getPath().endsWith(".csv")) {
                 data[0] = Data.dataArray[0];
                 for (int i = 0; i < listNumStud.length; i++) {
                     for (int j = 1; j < Data.dataArray.length; j++) {
@@ -103,8 +106,7 @@ public class SearchBarListener extends AbstractApplication implements ActionList
             });
             listData.addAll(Arrays.asList(toSort));
             String[][] strArr = listData.toArray(new String[0][0]);
-            System.out.println(strArr[0][1]);
-            if (strArr[0][1] == null) {
+            if (strArr[0][1] == null && strArr[1][1] == null ) {
                 Toolkit.getDefaultToolkit().beep();
                 JOptionPane.showMessageDialog(null, "Recherche incorrect", "Erreur", JOptionPane.WARNING_MESSAGE);
                 refreshTable();
@@ -125,7 +127,7 @@ public class SearchBarListener extends AbstractApplication implements ActionList
         String[][] tableauStat = new String[names.length][4];
         for (int i = 0; i < names.length; i++) {
             decalage[i] = 0;
-            for (int j = 0; j < Data.dataArray[0].length - 4; j++) {
+            for (int j = 0; j < Data.dataArray[0].length; j++) {
                 String currentCheck = Data.dataArray[0][j];
                 String[] splited = currentCheck.split(" - "); //.map(String::toLowerCase).toArray(String[]::new);
                 if (currentCheck.equalsIgnoreCase(names[i]) || splited[0].equalsIgnoreCase(names[i]) || splited[splited.length - 1].equalsIgnoreCase(names[i])) {
@@ -251,7 +253,7 @@ public class SearchBarListener extends AbstractApplication implements ActionList
         for (int i = 0; i < etu.length; i++) {
             for (int j = 0; j < Data.dataArray.length; j++) {
                 if (etu[i].equals(Data.dataArray[j][0])) {
-                    System.out.println(Arrays.toString(Data.dataArray[j]));
+                    //System.out.println(Arrays.toString(Data.dataArray[j]));
                     data[i] = Data.dataArray[j];
                     break;
                 }
