@@ -35,7 +35,6 @@ public class XmlToCsv {
         List<List<String>> listCoursesProg = new ArrayList<>();
 
         for (int i = 0; i < program.size(); i++) {
-
             programid.add(Data.read(program.get(i), "identifier"));
             data.add("\"N° Étudiant\",\"Nom\",\"Prénom\",\"" + programid.get(i) + " - " + Data.read(program.get(i), "name") + "\",");
             listCoursesProg.add(listCrousesProg(program, programid.get(i)));
@@ -118,7 +117,7 @@ public class XmlToCsv {
         }
         Data.setDataSet(new HashMap<>());
         for (int i = 0; i < programid.size(); i++) {
-            //System.out.printf("hello world s=%s %n", data.get(i));
+
 
             Data.dataSet.put(programid.get(i), data.get(i));
         }

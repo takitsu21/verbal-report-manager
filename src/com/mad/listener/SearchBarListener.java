@@ -23,7 +23,6 @@ public class SearchBarListener extends AbstractApplication implements ActionList
     private static boolean isListenerAdded = false;
     private static boolean isDoubleCalled = false;
 
-
     @Override
     public void actionPerformed(ActionEvent e) {
         if (! isDoubleCalled){
@@ -75,6 +74,7 @@ public class SearchBarListener extends AbstractApplication implements ActionList
             String[][] strArr;
 
             if (listNumStud.length == 0) {
+
                 strArr = searchCourse(listText);
             } else {
                 String[][] data = new String[listNumStud.length + 1][];
@@ -95,6 +95,7 @@ public class SearchBarListener extends AbstractApplication implements ActionList
                     }
 
                 }
+
                 String[][] toSort = Arrays.copyOfRange(data, 1, data.length);
                 List<String[]> listData = new ArrayList<>();
                 listData.add(data[0]);
@@ -257,7 +258,7 @@ public class SearchBarListener extends AbstractApplication implements ActionList
         for (int i = 0; i < etu.length; i++) {
             for (int j = 0; j < Data.dataArray.length; j++) {
                 if (etu[i].equals(Data.dataArray[j][0])) {
-                    System.out.println(Arrays.toString(Data.dataArray[j]));
+                    //System.out.println(Arrays.toString(Data.dataArray[j]));
                     data[i] = Data.dataArray[j];
                     break;
                 }

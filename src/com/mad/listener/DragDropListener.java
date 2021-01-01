@@ -44,14 +44,9 @@ public class DragDropListener extends AbstractApplication implements DropTargetL
                     List<File> files = (List) transferable.getTransferData(flavor);
 
                     for (File file : files) {
-                        if(file.getPath().endsWith(".xml") || file.getPath().endsWith(".csv")) {
                             OpenFileListener.openFile(file.getPath());
                             getDragAndDrop().setVisible(false);
-                        }
-                        else{
-                            Toolkit.getDefaultToolkit().beep();
-                            JOptionPane.showMessageDialog(null, "Mauvais type de fichier","Alerte", JOptionPane.WARNING_MESSAGE);
-                        }
+
                     }
 
                 }
