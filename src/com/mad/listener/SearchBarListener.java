@@ -22,8 +22,6 @@ import java.util.regex.Pattern;
 public class SearchBarListener extends AbstractApplication implements ActionListener {
     private static boolean isListenerAdded = false;
     private static boolean isDoubleCalled = false;
-    private static boolean isEmptyCourse = false;
-
 
     @Override
     public void actionPerformed(ActionEvent e) {
