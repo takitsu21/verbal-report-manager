@@ -12,7 +12,7 @@ import javax.swing.event.TableModelListener;
 public class TableChangedListener extends AbstractApplication implements TableModelListener {
 
     public TableChangedListener() {
-        System.out.println("TableChangedListener added");
+//        System.out.println("TableChangedListener added");
     }
 
     @Override

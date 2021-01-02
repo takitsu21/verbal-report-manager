@@ -2,6 +2,7 @@ package com.mad.listener;
 
 import com.mad.AbstractApplication;
 import com.mad.util.Data;
+import com.mad.util.XmlMethodType;
 import com.mad.util.XmlWriter;
 import org.w3c.dom.Element;
 
@@ -261,11 +262,11 @@ public class AddStudentListener extends AbstractApplication implements ActionLis
             student[2][1] = nameEntry;
             student[3][0] = "program";
             student[3][1] = programmeEntry;
+            insertAction(
+                    () -> XmlWriter.addStudent(XmlWriter.generateStudentNode(student)),
+                    "student", numEntry, XmlMethodType.ADD, true);
 
-            if (XmlWriter.addStudent(XmlWriter.generateStudentNode(student))) {
-                refreshTable();
-                addStudentFrame.dispose();
-            }
+            addStudentFrame.dispose();
 
         }
     }

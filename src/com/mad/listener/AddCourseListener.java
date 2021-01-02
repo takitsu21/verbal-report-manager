@@ -1,7 +1,6 @@
 package com.mad.listener;
 
 import com.mad.AbstractApplication;
-import com.mad.util.Table;
 import com.mad.util.XmlWriter;
 
 import javax.swing.*;

@@ -29,16 +29,23 @@ public class XmlWriter {
             }
         }
         return node;
-//        throw new StudentNotFoundException(String.format("%s N'a pas été trouvé", studentId));
+    }
+    public static boolean deleteStudent(String studentId) {
+        return deleteStudent(getStudent(studentId));
     }
 
-    public static boolean deleteStudent(String studentId) {
+    public static boolean deleteStudent(Node student) {
         try {
-            Data.root.removeChild(getStudent(studentId));
+            Data.root.removeChild(student);
+            System.out.println("delete student");
             return true;
         } catch (StudentNotFoundException e) {
             return false;
         }
+    }
+
+    public static boolean addStudent(String studentId) {
+        return addStudent(getStudent(studentId));
     }
 
     public static boolean addStudent(Node newStudent) {
@@ -46,6 +53,7 @@ public class XmlWriter {
             Data.root.appendChild(newStudent);
             return true;
         } catch (Exception e) {
+            e.printStackTrace();
             return false;
         }
     }

@@ -8,26 +8,28 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.dnd.DropTarget;
 import java.awt.dnd.DropTargetListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.event.*;
 import java.io.File;
 import java.io.IOException;
 
-public class GUI {
+public class GUI extends AbstractApplication {
+    public GUI() {
+        super();
+    }
+
     public static void main(String[] args) throws IOException {
         try {
             UIManager.setLookAndFeel((UIManager.getSystemLookAndFeelClassName()));
         } catch (Exception ign) {
             ign.printStackTrace();
         }
-        AbstractApplication.setFrame(new JFrame("MAD"));
-        AbstractApplication.getFrame().setSize(920, 600);
-        AbstractApplication.getFrame().setLocationRelativeTo(null);
-        AbstractApplication.getFrame().setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        setFrame(new JFrame("MAD"));
+        getFrame().setSize(920, 600);
+        getFrame().setLocationRelativeTo(null);
+        getFrame().setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
         JMenuBar menu = new JMenuBar();
-        AbstractApplication.getFrame().setJMenuBar(menu);
+        getFrame().setJMenuBar(menu);
         JMenu file = new JMenu("Fichiers");
         file.setMnemonic('F');
         menu.add(file);
@@ -48,6 +50,28 @@ public class GUI {
         export.setMnemonic('E');
         JMenuItem xmlItem = new JMenuItem("xml");
         JMenuItem csvItem = new JMenuItem("csv");
+        JMenuItem undo = new JMenuItem("Undo");
+        JMenuItem redo = new JMenuItem("Redo");
+
+//        undo.setMnemonic('Z');
+        undo.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Z, KeyEvent.CTRL_DOWN_MASK));
+        redo.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Y, KeyEvent.CTRL_DOWN_MASK));
+//        redo.setMnemonic('Y');
+        undo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                undo();
+            }
+        });
+        redo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                redo();
+            }
+        });
+        file.add(undo);
+        file.add(redo);
+
 
         csvItem.addActionListener(new SaveFileListener());
         xmlItem.addActionListener(new SaveFileXmlListener());
@@ -61,39 +85,39 @@ public class GUI {
         menu.add(help);
         JMenuItem about = new JMenuItem("A propos");
         help.add(about);
-        AbstractApplication.setSouthPanel(new JPanel());
-        AbstractApplication.setNorthPanel(new JPanel());
+        setSouthPanel(new JPanel());
+        setNorthPanel(new JPanel());
 
-        AbstractApplication.getSouthPanel().setLayout(new FlowLayout(FlowLayout.LEFT));
-        AbstractApplication.getNorthPanel().setLayout(new FlowLayout(FlowLayout.LEFT));
-        AbstractApplication.setDisplayCsv(new Table());
+        getSouthPanel().setLayout(new FlowLayout(FlowLayout.LEFT));
+        getNorthPanel().setLayout(new FlowLayout(FlowLayout.LEFT));
+        setDisplayCsv(new Table());
 
-        AbstractApplication.setContent(AbstractApplication.getFrame().getContentPane());
+        setContent(getFrame().getContentPane());
 
-        if (AbstractApplication.getDisplayCsv().Jscroll != null) {
-            AbstractApplication.getContent().add(AbstractApplication.getDisplayCsv().Jscroll, BorderLayout.CENTER);
+        if (getDisplayCsv().Jscroll != null) {
+            getContent().add(getDisplayCsv().Jscroll, BorderLayout.CENTER);
         }
 
-        AbstractApplication.getContent().add(AbstractApplication.getNorthPanel(), BorderLayout.NORTH);
-        AbstractApplication.getContent().add(AbstractApplication.getSouthPanel(), BorderLayout.SOUTH);
+        getContent().add(getNorthPanel(), BorderLayout.NORTH);
+        getContent().add(getSouthPanel(), BorderLayout.SOUTH);
 
-        AbstractApplication.setDragAndDrop(new JLabel("Drag XML or CSV here.", SwingConstants.CENTER));
+        setDragAndDrop(new JLabel("Drag XML or CSV here.", SwingConstants.CENTER));
         DropTargetListener dtl = new DragDropListener();
-        new DropTarget(AbstractApplication.getFrame(), dtl);
+        new DropTarget(getFrame(), dtl);
 
-        AbstractApplication.getFrame().add(BorderLayout.CENTER, AbstractApplication.getDragAndDrop());
-        AbstractApplication.getFrame().setIconImage(ImageIO.read(new File("./MAD16x16.png")));
+        getFrame().add(BorderLayout.CENTER, getDragAndDrop());
+        getFrame().setIconImage(ImageIO.read(new File("./MAD16x16.png")));
 
-        AbstractApplication.getFrame().addWindowListener(new SaveOnExitListener());
-        AbstractApplication.getFrame().addWindowListener(new WindowAdapter() {
+        getFrame().addWindowListener(new SaveOnExitListener());
+        getFrame().addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosed(WindowEvent e) {
-                new File(AbstractApplication.getTmpPath()).delete();
+                new File(getTmpPath()).delete();
                 System.out.println("tmp file deleted");
             }
         });
 
-        AbstractApplication.getFrame().setVisible(true);
+        getFrame().setVisible(true);
     }
 }
 

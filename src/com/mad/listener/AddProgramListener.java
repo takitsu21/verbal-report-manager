@@ -2,10 +2,7 @@ package com.mad.listener;
 
 import com.mad.AbstractApplication;
 import com.mad.util.Data;
-import com.mad.util.Table;
-import com.mad.util.XmlToCsv;
 import com.mad.util.XmlWriter;
-import com.sun.jdi.IntegerValue;
 import org.w3c.dom.Element;
 
 import javax.swing.*;

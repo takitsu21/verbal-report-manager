@@ -1,9 +1,7 @@
 package com.mad;
 
-import com.mad.util.Data;
-import com.mad.util.Table;
-import com.mad.util.XmlToCsv;
-import com.mad.util.XmlWriter;
+import com.mad.util.Action;
+import com.mad.util.*;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -13,9 +11,10 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.sql.Timestamp;
 import java.util.Arrays;
+import java.util.Stack;
 
 
-public abstract class AbstractApplication extends JPanel {
+public abstract class AbstractApplication {
     public static String ORIGIN_PATH;
     public static final String TMP_PATH = "./xml-editor.tmp.xml";
     protected static String path;
@@ -40,6 +39,8 @@ public abstract class AbstractApplication extends JPanel {
     protected static String savedAsName;
     protected static Timestamp lastModificationAt;
     protected static Timestamp lastTmpModificationAt;
+    private static int undoRedoPointer = -1;
+    private static final Stack<Action> commandStack = new Stack<>();
 
     public AbstractApplication() {
     }
@@ -323,5 +324,38 @@ public abstract class AbstractApplication extends JPanel {
         } catch (Exception e) {
             return true;
         }
+    }
+
+    protected void insertAction(Runnable runner, String type, Object arg, XmlMethodType xmt, boolean refreshTable) {
+        deleteElementsAfterPointer(undoRedoPointer);
+        Action command =
+                new XmlUndoRedo(runner, type, arg, xmt, refreshTable);
+            command.execute();
+
+        commandStack.push(command);
+        undoRedoPointer++;
+        System.out.println(commandStack);
+    }
+
+    private void deleteElementsAfterPointer(int undoRedoPointer) {
+        if (commandStack.size() < 1) return;
+        for (int i = commandStack.size() - 1; i > undoRedoPointer; i--) {
+            commandStack.remove(i);
+        }
+    }
+
+    public static void undo() {
+        Action command = commandStack.get(undoRedoPointer);
+        command.unExecute();
+        undoRedoPointer--;
+    }
+
+    public static void redo() {
+        if (undoRedoPointer == commandStack.size() - 1) {
+            return;
+        }
+        undoRedoPointer++;
+        Action command = commandStack.get(undoRedoPointer);
+        command.execute();
     }
 }

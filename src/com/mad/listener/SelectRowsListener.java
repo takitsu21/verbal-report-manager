@@ -6,7 +6,6 @@ import com.mad.util.Table;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Arrays;
 
 public class SelectRowsListener extends AbstractApplication implements ActionListener {
     @Override
