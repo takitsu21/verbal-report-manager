@@ -20,14 +20,13 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 public class SearchBarListener extends AbstractApplication implements ActionListener {
-    private static boolean isListenerAdded = false;
     private static boolean isDoubleCalled = false;
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if (! isDoubleCalled){
-        search();
-        isDoubleCalled = true;}
+            search();
+            isDoubleCalled = true;}
         else{isDoubleCalled = false;}
     }
 
@@ -47,15 +46,12 @@ public class SearchBarListener extends AbstractApplication implements ActionList
                     return;
                 }
             }
-            String[] listSearchText=searchText.split("&");
+            String[] listSearchText=searchText.split("[ ]?&[ ]?");
             String[][] listStudents=new String[listSearchText.length][];
             String[][] listCourses=new String[listSearchText.length][];
 
             for(int index=0; index<listSearchText.length; index++) {
-
-                String[] listText = listSearchText[index].split(";");
-
-
+                String[] listText = searchText.split("[ ]?;[ ]?");
                 String[] ligne = {};
                 for (String s : listText) {
 
@@ -261,6 +257,7 @@ public class SearchBarListener extends AbstractApplication implements ActionList
             rowSorter.addRowSorterListener(new RowSorterListener() {
                 @Override
                 public void sorterChanged(RowSorterEvent e) {
+                    table.getModel().removeTableModelListener(new TableChangedListener());
                     table.getModel().addTableModelListener(new TableChangedListener());
                 }
             });

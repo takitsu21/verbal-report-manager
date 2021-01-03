@@ -2,11 +2,10 @@ package com.mad.listener;
 
 import com.mad.AbstractApplication;
 import com.mad.util.Data;
-import com.mad.util.Table;
-import com.mad.util.XmlToCsv;
+import com.mad.util.XmlMethodType;
 import com.mad.util.XmlWriter;
-import com.sun.jdi.IntegerValue;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 
 import javax.swing.*;
 import java.awt.*;
@@ -25,6 +24,7 @@ public class AddProgramListener extends AbstractApplication implements ActionLis
         programFrame.setLocationRelativeTo(null);
         programFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         programFrame.setVisible(true);
+        programFrame.setIconImage(getIco());
         JPanel butNex = new JPanel();
 
 
@@ -117,28 +117,13 @@ public class AddProgramListener extends AbstractApplication implements ActionLis
                         for (CheckBoxGroup cb : checkBoxGroupComposantes) {
                             tmp1 = new ArrayList<>();
                             tmp1.add("composite");
-                            tmp1.add(cb.checkBoxGroupeId.getText());
-                            tmp1.add(cb.checkBoxGroupeName.getText());
-                            for (JCheckBox currentCb : cb.checkBoxes) {
-                                if (currentCb.isSelected()) {
-                                    tmp1.add(currentCb.getText().split(" ")[0]);
-                                }
-                            }
-                            programs.add(tmp1);
+                            addCheckboxGroup(programs, tmp1, cb);
                         }
 
                         for (CheckBoxGroup cb : checkBoxGroupOptions) {
                             tmp1 = new ArrayList<>();
                             tmp1.add("option");
-                            tmp1.add(cb.checkBoxGroupeId.getText());
-                            tmp1.add(cb.checkBoxGroupeName.getText());
-                            for (JCheckBox currentCb : cb.checkBoxes) {
-                                if (currentCb.isSelected()) {
-                                    tmp1.add(currentCb.getText().split(" ")[0]);
-
-                                }
-                            }
-                            programs.add(tmp1);
+                            addCheckboxGroup(programs, tmp1, cb);
                         }
 
                         for (JCheckBox currentCb : checkBoxGroupsCourse.checkBoxes) {
@@ -258,6 +243,17 @@ public class AddProgramListener extends AbstractApplication implements ActionLis
 
         programFrame.getContentPane().add(panel);
 
+    }
+
+    private void addCheckboxGroup(List<List<String>> programs, List<String> tmp1, CheckBoxGroup cb) {
+        tmp1.add(cb.checkBoxGroupeId.getText());
+        tmp1.add(cb.checkBoxGroupeName.getText());
+        for (JCheckBox currentCb : cb.checkBoxes) {
+            if (currentCb.isSelected()) {
+                tmp1.add(currentCb.getText().split(" ")[0]);
+            }
+        }
+        programs.add(tmp1);
     }
 
     public JFrame getProgramFrame() {
