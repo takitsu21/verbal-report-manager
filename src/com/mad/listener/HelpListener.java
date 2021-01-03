@@ -55,9 +55,7 @@ public class HelpListener implements ActionListener {
                 "            pour ajouter des contraint à votre recherche vous pouvez utiliser le symbole \"&amp;\" entre chaque arguments\n" +
                 "        </li>\n" +
                 "        <ul>\n" +
-                "            <li>\n" +
-                "                <h2 style=\"color: orange;margin:0 0 0 20px;\"><u>Attention</u></h2>\n" +
-                "            </li>\n" +
+                "               <h2 style=\"color: orange;margin:0 0 0 20px;\"><u>⚠️Attention⚠</u></h2>\n" +
                 "            <li>Pour utiliser une recherche a contrainte il faut mettre la recherche associé à\n" +
                 "            l’etudiant avant celle du cours\n" +
                 "            </li>\n" +
@@ -74,13 +72,14 @@ public class HelpListener implements ActionListener {
                 "</li>\n" +
                 "\n" +
                 "<h1 style=\"color: orange;\">\n" +
-                "    <u><b>Attention<b></u>\n" +
+                "    <u><b>⚠Attention⚠<b></u>\n" +
                 "</h1>\n" +
                 "<li>Le C-Z (undo) et C-Y (redo) ne marche pas pour l’ajout de programme soyez sûr de vos action la face du monde\n" +
                 "    pourrait en être bouleversé\n" +
                 "</li>";
 
         pane.setText(text);
+        pane.setEditable(false);
         helpFrame.setIconImage(AbstractApplication.getIco());
         helpFrame.getContentPane().add(new JScrollPane(pane));
         helpFrame.setSize(700, 700);
