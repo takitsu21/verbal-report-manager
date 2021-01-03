@@ -5,9 +5,11 @@ import com.mad.util.Table;
 import com.mad.util.XmlToCsv;
 import com.mad.util.XmlWriter;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
@@ -40,6 +42,8 @@ public abstract class AbstractApplication extends JPanel {
     protected static String savedAsName;
     protected static Timestamp lastModificationAt;
     protected static Timestamp lastTmpModificationAt;
+    protected static BufferedImage ico;
+
 
     public AbstractApplication() {
     }
@@ -218,6 +222,14 @@ public abstract class AbstractApplication extends JPanel {
 
     public static JButton getRefresh() {
         return refresh;
+    }
+
+    public static BufferedImage getIco() {
+        return ico;
+    }
+
+    public static void setIco(BufferedImage ico) {
+        AbstractApplication.ico = ico;
     }
 
     public static void setRefresh(JButton refresh) {

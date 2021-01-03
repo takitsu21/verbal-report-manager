@@ -67,6 +67,7 @@ public class AddStudentListener extends AbstractApplication implements ActionLis
         addStudentFrame.setSize(860, 400);
         addStudentFrame.setLocationRelativeTo(null);
         addStudentFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        addStudentFrame.setIconImage(getIco());
         addStudentFrame.setVisible(true);
         addStudentFrame.setLayout(new BorderLayout());
 
