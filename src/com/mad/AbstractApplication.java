@@ -16,7 +16,7 @@ import java.util.Stack;
 
 public abstract class AbstractApplication {
     public static final String TMP_PATH = "./xml-editor.tmp.xml";
-    private static final Stack<Action> commandStack = new Stack();
+    private static final Stack<Action> commandStack = new Stack<>();
     public static String ORIGIN_PATH;
     protected static String path;
     protected static JFrame frame;
