@@ -11,28 +11,14 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Timestamp;
 
 public class OpenFileListener extends AbstractApplication implements ActionListener {
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        JFileChooser jfc = new JFileChooser();
-        jfc.setCurrentDirectory(new File(System.getProperty("user.dir")));
-        jfc.setFileFilter(new FileNameExtensionFilter(".csv; .xml", "csv", "xml"));
-
-        jfc.setDialogTitle("Choisissez le fichier à ouvrir");
-        jfc.setFileSelectionMode(JFileChooser.FILES_ONLY);
-        int returnValue = jfc.showOpenDialog(null);
-
-        if (returnValue == JFileChooser.APPROVE_OPTION) {
-            File selectedFile = jfc.getSelectedFile();
-            openFile(selectedFile.getPath());
-        }
-    }
-
     public static void initComponents() throws IOException {
 
         String[] blocs = new String[Data.dataArray[0].length - 3];
@@ -49,6 +35,12 @@ public class OpenFileListener extends AbstractApplication implements ActionListe
         BufferedImage buttonIcon = ImageIO.read(new File("./refresh.png"));
         setRefresh(new JButton(new ImageIcon(buttonIcon)));
         getRefresh().addActionListener(new RefreshListener());
+        getRefresh().setMnemonic(KeyEvent.VK_F5);
+        JMenuItem refreshItem = new JMenuItem("Refresh");
+        KeyStroke f5 = KeyStroke.getKeyStroke(KeyEvent.VK_F5, 0);
+        refreshItem.setAccelerator(f5);
+        refreshItem.addActionListener(e -> getRefresh().doClick());
+        getFrame().getJMenuBar().getMenu(0).add(refreshItem);
 
 
         getSearchComboBox().setEditable(true);
@@ -80,16 +72,13 @@ public class OpenFileListener extends AbstractApplication implements ActionListe
                 setOriginPath(fileName);
             }
             setPath(fileName);
-            if (! (fileName.endsWith(".xml")) && !(fileName.endsWith(".csv")) ){
+            if (!(fileName.endsWith(".xml")) && !(fileName.endsWith(".csv"))) {
                 Toolkit.getDefaultToolkit().beep();
-                JOptionPane.showMessageDialog(null, "Mauvais type de fichier","Alerte", JOptionPane.WARNING_MESSAGE);
-            }
-            else{
+                JOptionPane.showMessageDialog(null, "Mauvais type de fichier", "Alerte", JOptionPane.WARNING_MESSAGE);
+            } else {
                 if (fileName.endsWith(".csv")) {
                     getDisplayCsv().TableCSV(fileName);
-                }
-
-                else {
+                } else {
                     XmlToCsv xmlConverter = new XmlToCsv(fileName);
                     xmlConverter.convert();
 
@@ -110,7 +99,8 @@ public class OpenFileListener extends AbstractApplication implements ActionListe
                 getContent().add(getDisplayCsv().Jscroll, BorderLayout.CENTER);
                 setLastModificationAt(new Timestamp(System.currentTimeMillis()));
                 frame.setVisible(true);
-                System.gc();}
+                System.gc();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -160,5 +150,21 @@ public class OpenFileListener extends AbstractApplication implements ActionListe
         fillNorthPanel(fileName);
         getFrame().revalidate();
         getFrame().repaint();
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        JFileChooser jfc = new JFileChooser();
+        jfc.setCurrentDirectory(new File(System.getProperty("user.dir")));
+        jfc.setFileFilter(new FileNameExtensionFilter(".csv; .xml", "csv", "xml"));
+
+        jfc.setDialogTitle("Choisissez le fichier à ouvrir");
+        jfc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        int returnValue = jfc.showOpenDialog(null);
+
+        if (returnValue == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = jfc.getSelectedFile();
+            openFile(selectedFile.getPath());
+        }
     }
 }

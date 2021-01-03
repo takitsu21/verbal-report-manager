@@ -265,7 +265,7 @@ public class AddStudentListener extends AbstractApplication implements ActionLis
             student[3][0] = "program";
             student[3][1] = programmeEntry;
             insertAction(
-                    () -> XmlWriter.addStudent(XmlWriter.generateStudentNode(student)),
+                    () -> XmlWriter.addNode(XmlWriter.generateStudentNode(student)),
                     "student", numEntry, XmlMethodType.ADD, true);
 
             addStudentFrame.dispose();

@@ -24,6 +24,17 @@ public class XmlToCsv {
 
     }
 
+    public static Element findCourseByCode(List<Element> courses, String item) {
+        Element courseRet = null;
+        for (Element course : courses) {
+//            System.out.printf("%s, %s", Data.read(course, "identifier"), item);
+            if (Data.read(course, "identifier").equalsIgnoreCase(item)) {
+                courseRet = course;
+                break;
+            }
+        }
+        return courseRet;
+    }
 
     public void convert() {
 
@@ -124,21 +135,6 @@ public class XmlToCsv {
 
 
     }
-
-//    void save(String path_fichier) {
-//        /*for (int i=0; i<data.size(); i++) {
-//
-//            byte[] bs = data.get(i).getBytes();
-//            Path path = Paths.get(path_fichier + name[i] + ".csv");
-//
-//            Path writtenFilePath = Files.write(path, bs);
-//        }*/
-//        for (String i : dicoData.keySet()) {
-//            byte[] bs = dicoData.get(i).getBytes();
-//            Paths.get(path_fichier + i + ".csv");
-//        }
-//    }
-
 
     private List<String> listCrousesProg(List<Element> program, String programid) {
         List<String> item = new ArrayList<>();
@@ -322,7 +318,6 @@ public class XmlToCsv {
         };
     }
 
-
     private double noteMoyenne(String[] notes) {
         double acc = 0;
         int nb = 0;
@@ -373,17 +368,5 @@ public class XmlToCsv {
         ecartType = Math.sqrt(variance);
 
         return Double.parseDouble(String.format("%.3f", ecartType).replace(",", "."));
-    }
-
-    public static Element findCourseByCode(List<Element> courses, String item) {
-        Element courseRet = null;
-        for (Element course : courses) {
-//            System.out.printf("%s, %s", Data.read(course, "identifier"), item);
-            if (Data.read(course, "identifier").equalsIgnoreCase(item)) {
-                courseRet = course;
-                break;
-            }
-        }
-        return courseRet;
     }
 }

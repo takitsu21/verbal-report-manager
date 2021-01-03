@@ -5,6 +5,6 @@ public enum XmlMethodType {
     DELETE,
     MODIFY;
 
-    private XmlMethodType() {
+    XmlMethodType() {
     }
 }

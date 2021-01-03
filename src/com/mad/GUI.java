@@ -1,31 +1,18 @@
 package com.mad;
 
-import com.mad.listener.DragDropListener;
-import com.mad.listener.EnregistrerListener;
-import com.mad.listener.OpenFileListener;
-import com.mad.listener.SaveFileListener;
-import com.mad.listener.SaveFileXmlListener;
-import com.mad.listener.SaveOnExitListener;
+import com.mad.listener.*;
 import com.mad.util.Table;
 
+import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.awt.*;
 import java.awt.dnd.DropTarget;
 import java.awt.dnd.DropTargetListener;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.IOException;
-import javax.imageio.ImageIO;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JPanel;
-import javax.swing.KeyStroke;
-import javax.swing.UIManager;
 
 public class GUI extends AbstractApplication {
     public GUI() {
@@ -35,13 +22,13 @@ public class GUI extends AbstractApplication {
     public static void main(String[] args) throws IOException {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (Exception var13) {
-            var13.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
         setFrame(new JFrame("MAD"));
         getFrame().setSize(920, 600);
-        getFrame().setLocationRelativeTo((Component)null);
+        getFrame().setLocationRelativeTo(null);
         getFrame().setDefaultCloseOperation(0);
         JMenuBar menu = new JMenuBar();
         getFrame().setJMenuBar(menu);
@@ -50,11 +37,11 @@ public class GUI extends AbstractApplication {
         menu.add(file);
         JMenuItem ouvrir = new JMenuItem("Ouvrir...");
         ouvrir.setMnemonic('O');
-        ouvrir.setAccelerator(KeyStroke.getKeyStroke(79, 128));
+        ouvrir.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, KeyEvent.CTRL_DOWN_MASK));
         ouvrir.addActionListener(new OpenFileListener());
         file.add(ouvrir);
-        JMenuItem enregistrer = new JMenuItem("Enregistrer", 115);
-        enregistrer.setAccelerator(KeyStroke.getKeyStroke(83, 128));
+        JMenuItem enregistrer = new JMenuItem("Enregistrer", 'E');
+        enregistrer.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, KeyEvent.CTRL_DOWN_MASK));
         enregistrer.addActionListener(new EnregistrerListener());
         file.add(enregistrer);
         JMenu export = new JMenu("Enregistrer sous");
@@ -63,8 +50,8 @@ public class GUI extends AbstractApplication {
         JMenuItem csvItem = new JMenuItem("csv");
         JMenuItem undo = new JMenuItem("Undo");
         JMenuItem redo = new JMenuItem("Redo");
-        undo.setAccelerator(KeyStroke.getKeyStroke(90, 128));
-        redo.setAccelerator(KeyStroke.getKeyStroke(89, 128));
+        undo.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Z,  KeyEvent.CTRL_DOWN_MASK));
+        redo.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Y,  KeyEvent.CTRL_DOWN_MASK));
         undo.addActionListener(e -> undo());
         redo.addActionListener(e -> redo());
         file.add(undo);
@@ -78,6 +65,7 @@ public class GUI extends AbstractApplication {
         help.setMnemonic('H');
         menu.add(help);
         JMenuItem about = new JMenuItem("A propos");
+        about.addActionListener(new HelpListener());
         help.add(about);
         setSouthPanel(new JPanel());
         setNorthPanel(new JPanel());
