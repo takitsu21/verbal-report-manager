@@ -85,7 +85,6 @@ public class SearchBarListener extends AbstractApplication implements ActionList
 
                     String[][] data = new String[listNumStud.length + 1][];
                     if (getPath().endsWith(".xml")) {
-                        System.out.println(Arrays.toString(listNumStud));
                         data = selectEtu(listNumStud);
                     }
                     if (getPath().endsWith(".csv")) {
@@ -102,20 +101,19 @@ public class SearchBarListener extends AbstractApplication implements ActionList
                         }
 
                     }
-                    System.out.println(Arrays.deepToString(data));
+
                     HashSet<String[]> set2 = new HashSet<>();
                     for (int i=1;i<data.length;i++) {
                         if(data[i][0]!=null) {
                             set2.add(data[i]);
                         }
                     }
-                    //Arrays.copyOf(data,data.length-ligneNull-1);
                     String[][]t=set2.toArray(new String[0][]);
-                    System.out.println(Arrays.deepToString(t));
                     String [][]dataFinal= new String[t.length+1][];
+
                     dataFinal[0]=data[0];
                     System.arraycopy(t, 0, dataFinal, 1, t.length);
-                    System.out.println(Arrays.deepToString(dataFinal));
+
                     String[][] toSort = Arrays.copyOfRange(dataFinal, 1, dataFinal.length);
                     List<String[]> listData = new ArrayList<>();
                     listData.add(dataFinal[0]);
