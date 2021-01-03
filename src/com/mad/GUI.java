@@ -82,7 +82,8 @@ public class GUI {
         new DropTarget(AbstractApplication.getFrame(), dtl);
 
         AbstractApplication.getFrame().add(BorderLayout.CENTER, AbstractApplication.getDragAndDrop());
-        AbstractApplication.getFrame().setIconImage(ImageIO.read(new File("./MAD16x16.png")));
+        AbstractApplication.setIco(ImageIO.read(new File("./MAD16x16.png")));
+        AbstractApplication.getFrame().setIconImage(AbstractApplication.getIco());
 
         AbstractApplication.getFrame().addWindowListener(new SaveOnExitListener());
         AbstractApplication.getFrame().addWindowListener(new WindowAdapter() {
