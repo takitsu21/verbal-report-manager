@@ -24,6 +24,8 @@ public class SearchBarListener extends AbstractApplication implements ActionList
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        System.out.println("ok");
+
         if (! isDoubleCalled){
             search();
             isDoubleCalled = true;}
