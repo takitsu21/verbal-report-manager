@@ -7,8 +7,8 @@ import com.mad.listener.SaveFileListener;
 import com.mad.listener.SaveFileXmlListener;
 import com.mad.listener.SaveOnExitListener;
 import com.mad.util.Table;
-import java.awt.Component;
-import java.awt.FlowLayout;
+
+import java.awt.*;
 import java.awt.dnd.DropTarget;
 import java.awt.dnd.DropTargetListener;
 import java.awt.event.ActionEvent;
@@ -29,6 +29,7 @@ import javax.swing.UIManager;
 
 public class GUI extends AbstractApplication {
     public GUI() {
+        super();
     }
 
     public static void main(String[] args) throws IOException {
@@ -64,16 +65,8 @@ public class GUI extends AbstractApplication {
         JMenuItem redo = new JMenuItem("Redo");
         undo.setAccelerator(KeyStroke.getKeyStroke(90, 128));
         redo.setAccelerator(KeyStroke.getKeyStroke(89, 128));
-        undo.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                this.undo();
-            }
-        });
-        redo.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                this.redo();
-            }
-        });
+        undo.addActionListener(e -> undo());
+        redo.addActionListener(e -> redo());
         file.add(undo);
         file.add(redo);
         csvItem.addActionListener(new SaveFileListener());
