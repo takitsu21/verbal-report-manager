@@ -1,8 +1,11 @@
 package com.mad;
 
+import com.mad.util.Action;
 import com.mad.util.Data;
 import com.mad.util.Table;
+import com.mad.util.XmlMethodType;
 import com.mad.util.XmlToCsv;
+import com.mad.util.XmlUndoRedo;
 import com.mad.util.XmlWriter;
 
 import javax.imageio.ImageIO;
@@ -15,9 +18,20 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.sql.Timestamp;
 import java.util.Arrays;
+import java.util.Stack;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTree;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
-
-public abstract class AbstractApplication extends JPanel {
+public abstract class AbstractApplication {
     public static String ORIGIN_PATH;
     public static final String TMP_PATH = "./xml-editor.tmp.xml";
     protected static String path;
@@ -42,7 +56,10 @@ public abstract class AbstractApplication extends JPanel {
     protected static String savedAsName;
     protected static Timestamp lastModificationAt;
     protected static Timestamp lastTmpModificationAt;
+    private static int undoRedoPointer = -1;
+    private static final Stack<Action> commandStack = new Stack();
     protected static BufferedImage ico;
+
 
 
     public AbstractApplication() {
@@ -249,15 +266,12 @@ public abstract class AbstractApplication extends JPanel {
             XmlWriter.save(TMP_PATH);
             XmlToCsv xmlConverter = new XmlToCsv(TMP_PATH);
             xmlConverter.convert();
-            //clearJTables();
-            //getContent().add(getDisplayCsv().Jscroll, BorderLayout.CENTER);
             getComboBox().setSelectedItem(getComboBox().getSelectedItem());
         } else if (path.endsWith(".csv")) {
             save(false);
-            //Table.table.getModel().removeTableModelListener(new TableChangedListener());
             Table.setNewModelTable(Table.table, Data.dataArray);
-            //Table.table.getModel().addTableModelListener(new TableChangedListener());
         }
+
     }
 
     public static boolean save(boolean saveAs) {
@@ -304,25 +318,22 @@ public abstract class AbstractApplication extends JPanel {
         jfc.setCurrentDirectory(new File(System.getProperty("user.dir")));
         jfc.setSelectedFile(f);
         jfc.setFileFilter(new FileNameExtensionFilter(".xml", "xml"));
-
         jfc.setDialogTitle("Choississez un endroit pour sauvegarder votre fichier: ");
-        jfc.setFileSelectionMode(JFileChooser.FILES_ONLY);
-
-        int returnValue = jfc.showSaveDialog(null);
+        jfc.setFileSelectionMode(0);
+        int returnValue = jfc.showSaveDialog((Component) null);
         System.out.println(returnValue);
-        if (returnValue == JFileChooser.APPROVE_OPTION) {
+        if (returnValue == 0) {
             if (jfc.getSelectedFile().getPath().endsWith(".xml")) {
                 if (XmlWriter.save(jfc.getSelectedFile().getPath())) {
                     setSavedAsName(jfc.getSelectedFile().getPath());
                     return true;
                 }
-            } else {
-                if (XmlWriter.save(jfc.getSelectedFile().getPath() + ".xml")) {
-                    setSavedAsName(jfc.getSelectedFile().getPath() + ".xml");
-                    return true;
-                }
+            } else if (XmlWriter.save(jfc.getSelectedFile().getPath() + ".xml")) {
+                setSavedAsName(jfc.getSelectedFile().getPath() + ".xml");
+                return true;
             }
         }
+
         return false;
     }
 
@@ -330,10 +341,51 @@ public abstract class AbstractApplication extends JPanel {
         try {
             if (getLastTmpModificationAt() == null) {
                 return true;
+            } else {
+                return getLastModificationAt().compareTo(getLastTmpModificationAt()) == 0;
             }
-            return getLastModificationAt().compareTo(getLastTmpModificationAt()) == 0;
-        } catch (Exception e) {
+        } catch (Exception var1) {
             return true;
+        }
+    }
+
+    protected void insertAction(Runnable runner, String type, Object arg, XmlMethodType xmt, boolean refreshTable) {
+        this.deleteElementsAfterPointer(undoRedoPointer);
+        Action command = new XmlUndoRedo(runner, type, arg, xmt, refreshTable);
+        command.execute();
+        commandStack.push(command);
+        ++undoRedoPointer;
+        System.out.println(commandStack);
+    }
+
+    protected void insertAction(Runnable runner, String type, XmlMethodType xmt, boolean refreshTable, Object... args) {
+        this.deleteElementsAfterPointer(undoRedoPointer);
+        Action command = new XmlUndoRedo(runner, type, xmt, refreshTable, args);
+        command.execute();
+        commandStack.push(command);
+        ++undoRedoPointer;
+        System.out.println(commandStack);
+    }
+
+    private void deleteElementsAfterPointer(int undoRedoPointer) {
+        if (commandStack.size() >= 1) {
+            for (int i = commandStack.size() - 1; i > undoRedoPointer; --i) {
+                commandStack.remove(i);
+            }
+        }
+    }
+
+    public static void undo() {
+        Action command = (Action) commandStack.get(undoRedoPointer);
+        command.unExecute();
+        --undoRedoPointer;
+    }
+
+    public static void redo() {
+        if (undoRedoPointer != commandStack.size() - 1) {
+            ++undoRedoPointer;
+            Action command = (Action) commandStack.get(undoRedoPointer);
+            command.execute();
         }
     }
 }

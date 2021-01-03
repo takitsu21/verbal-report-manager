@@ -4,22 +4,17 @@ import com.mad.AbstractApplication;
 import com.mad.util.Data;
 import com.mad.util.Table;
 import com.mad.util.XmlToCsv;
-import org.w3c.dom.Document;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.swing.filechooser.FileSystemView;
-import javax.swing.undo.UndoManager;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Timestamp;
-import java.util.Arrays;
 
 public class OpenFileListener extends AbstractApplication implements ActionListener {
     @Override
@@ -90,32 +85,32 @@ public class OpenFileListener extends AbstractApplication implements ActionListe
                 JOptionPane.showMessageDialog(null, "Mauvais type de fichier","Alerte", JOptionPane.WARNING_MESSAGE);
             }
             else{
-            if (fileName.endsWith(".csv")) {
-                getDisplayCsv().TableCSV(fileName);
-            }
-
-            else {
-                XmlToCsv xmlConverter = new XmlToCsv(fileName);
-                xmlConverter.convert();
-
-                getDisplayCsv().TableXML(
-                        fileName,
-                        Data.dataSet.get(Data.dataSet.entrySet().iterator().next().getKey())
-                );
-                setComboBox(new JComboBox<>());
-                for (String key : Data.dataSet.keySet()) {
-                    getComboBox().addItem(key);
+                if (fileName.endsWith(".csv")) {
+                    getDisplayCsv().TableCSV(fileName);
                 }
-            }
-            if (!componentsInitialised) {
-                initComponents();
-            }
-            refreshPanels(fileName);
-            clearJTables();
-            getContent().add(getDisplayCsv().Jscroll, BorderLayout.CENTER);
-            setLastModificationAt(new Timestamp(System.currentTimeMillis()));
-            frame.setVisible(true);
-            System.gc();}
+
+                else {
+                    XmlToCsv xmlConverter = new XmlToCsv(fileName);
+                    xmlConverter.convert();
+
+                    getDisplayCsv().TableXML(
+                            fileName,
+                            Data.dataSet.get(Data.dataSet.entrySet().iterator().next().getKey())
+                    );
+                    setComboBox(new JComboBox<>());
+                    for (String key : Data.dataSet.keySet()) {
+                        getComboBox().addItem(key);
+                    }
+                }
+                if (!componentsInitialised) {
+                    initComponents();
+                }
+                refreshPanels(fileName);
+                clearJTables();
+                getContent().add(getDisplayCsv().Jscroll, BorderLayout.CENTER);
+                setLastModificationAt(new Timestamp(System.currentTimeMillis()));
+                frame.setVisible(true);
+                System.gc();}
         } catch (IOException e) {
             e.printStackTrace();
         }

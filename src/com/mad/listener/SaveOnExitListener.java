@@ -18,6 +18,8 @@ public class SaveOnExitListener extends WindowAdapter {
 
         JButton saveAs = new JButton("Enregistrer sous et quitter");
         JButton save = new JButton("Enregistrer et quitter");
+        JButton quitWithoutSave = new JButton("Quitter sans enregistrer");
+
         Toolkit.getDefaultToolkit().beep();
         save.addActionListener(e1 -> {
             if (AbstractApplication.save(false)) {
@@ -30,13 +32,16 @@ public class SaveOnExitListener extends WindowAdapter {
                 SwingUtilities.invokeLater(() -> AbstractApplication.getFrame().dispose());
             }
         });
+        quitWithoutSave.addActionListener(e13 -> {
+            SwingUtilities.invokeLater(() -> AbstractApplication.getFrame().dispose());
+        });
         JOptionPane.showOptionDialog(AbstractApplication.getFrame(),
                 "Vous n'avez pas enregistrer votre travail actuel",
                 "Travail non enregistrer",
                 JOptionPane.YES_NO_CANCEL_OPTION,
                 JOptionPane.WARNING_MESSAGE,
                 null,
-                new JButton[]{saveAs, save},
+                new JButton[]{saveAs, save, quitWithoutSave},
                 "test");
     }
 }

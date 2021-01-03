@@ -1,8 +1,9 @@
 package com.mad.listener;
 
 import com.mad.AbstractApplication;
-import com.mad.util.Table;
+import com.mad.util.XmlMethodType;
 import com.mad.util.XmlWriter;
+import org.w3c.dom.Node;
 
 import javax.swing.*;
 import java.awt.*;
@@ -76,30 +77,31 @@ public class AddCourseListener extends AbstractApplication implements ActionList
 
 
     public class ValidateCourseListener implements ActionListener {
-        private void err(){
+        private void err() {
             Toolkit.getDefaultToolkit().beep();
-            JOptionPane.showMessageDialog(tmp, "        Valeur incrorrect\nSelectionnez une valeur < 30","Erreur",JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(tmp, "        Valeur incrorrect\nSelectionnez une valeur < 30", "Erreur", JOptionPane.WARNING_MESSAGE);
             getCoefField().setText("");
 
         }
+
         @Override
         public void actionPerformed(ActionEvent e) {
-            try{
-            String id = getIdField().getText();
-            String name = getCourseNameFiled().getText();
-            String coef = getCoefField().getText();
-            if(Integer.parseInt(coef) > 30 || Integer.parseInt(coef) < 0 ){
-                err();
-            }
-            else{
+            try {
+                String id = getIdField().getText();
+                String name = getCourseNameFiled().getText();
+                String coef = getCoefField().getText();
+                if (Integer.parseInt(coef) > 30 || Integer.parseInt(coef) < 0) {
+                    err();
+                } else {
 
-            if (XmlWriter.addCourseGeneral(name, id, coef)) {
-                XmlWriter.save(TMP_PATH);
-                OpenFileListener.openFile(TMP_PATH);
-                tmp.dispose();
-            }}}
-            catch(NumberFormatException ex ){
-               err();
+                    Node newCourse = XmlWriter.addNewCourseNode(name, id, coef);
+                    insertAction(() -> XmlWriter.addNode(newCourse),
+                            "course", newCourse, XmlMethodType.ADD, true);
+                    tmp.dispose();
+
+                }
+            } catch (NumberFormatException ex) {
+                err();
             }
         }
     }

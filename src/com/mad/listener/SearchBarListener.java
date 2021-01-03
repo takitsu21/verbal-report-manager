@@ -25,8 +25,8 @@ public class SearchBarListener extends AbstractApplication implements ActionList
     @Override
     public void actionPerformed(ActionEvent e) {
         if (! isDoubleCalled){
-        search();
-        isDoubleCalled = true;}
+            search();
+            isDoubleCalled = true;}
         else{isDoubleCalled = false;}
     }
 
@@ -237,6 +237,7 @@ public class SearchBarListener extends AbstractApplication implements ActionList
             rowSorter.addRowSorterListener(new RowSorterListener() {
                 @Override
                 public void sorterChanged(RowSorterEvent e) {
+                    table.getModel().removeTableModelListener(new TableChangedListener());
                     table.getModel().addTableModelListener(new TableChangedListener());
                 }
             });
