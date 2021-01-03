@@ -15,6 +15,7 @@ public class HierarchicalListener extends AbstractApplication implements ActionL
     @Override
     public void actionPerformed(ActionEvent e) {
         JFrame tmp = new JFrame("Vue hiérarchisé");
+        tmp.setIconImage(getIco());
         tmp.setSize(600, 300);
         tmp.setLocationRelativeTo(null);
         tmp.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

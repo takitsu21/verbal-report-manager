@@ -65,6 +65,7 @@ public class AddStudentListener extends AbstractApplication implements ActionLis
     @Override
     public void actionPerformed(ActionEvent e) {
         setAddStudentFrame(new JFrame("Ajouter un étudiant"));
+        addStudentFrame.setIconImage(getIco());
         addStudentFrame.setSize(860, 400);
         addStudentFrame.setLocationRelativeTo(null);
         addStudentFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

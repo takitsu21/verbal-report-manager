@@ -5,6 +5,7 @@ import com.mad.util.Data;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -21,7 +22,14 @@ public class SaveFileListener extends AbstractApplication implements ActionListe
         } else {
             return;
         }
-        JFileChooser jfc = new JFileChooser(userDir);
+        JFileChooser jfc = new JFileChooser(userDir) {
+            @Override
+            protected JDialog createDialog(Component parent) throws HeadlessException {
+                JDialog dialog = super.createDialog( parent );
+                dialog.setIconImage(getIco());
+                return dialog;
+            }
+        };
         jfc.setCurrentDirectory(new File(System.getProperty("user.dir")));
         jfc.setSelectedFile(userDir);
         jfc.setFileFilter(new FileNameExtensionFilter(".csv", "csv"));

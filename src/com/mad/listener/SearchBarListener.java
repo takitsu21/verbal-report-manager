@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 public class SearchBarListener extends AbstractApplication implements ActionListener {
+    private static boolean isListenerAdded = false;
     private static boolean isDoubleCalled = false;
 
     @Override
@@ -49,11 +50,10 @@ public class SearchBarListener extends AbstractApplication implements ActionList
                 }
             }
             String[] listSearchText=searchText.split("[ ]?&[ ]?");
-            String[][] listStudents=new String[listSearchText.length][];
-            String[][] listCourses=new String[listSearchText.length][];
+
 
             for(int index=0; index<listSearchText.length; index++) {
-                String[] listText = searchText.split("[ ]?;[ ]?");
+                String[] listText = listSearchText[index].split("[ ]?;[ ]?");
                 String[] ligne = {};
                 for (String s : listText) {
 
@@ -259,7 +259,6 @@ public class SearchBarListener extends AbstractApplication implements ActionList
             rowSorter.addRowSorterListener(new RowSorterListener() {
                 @Override
                 public void sorterChanged(RowSorterEvent e) {
-                    table.getModel().removeTableModelListener(new TableChangedListener());
                     table.getModel().addTableModelListener(new TableChangedListener());
                 }
             });

@@ -314,7 +314,14 @@ public abstract class AbstractApplication {
 
     private static boolean saveAs() {
         File f = new File(ORIGIN_PATH);
-        JFileChooser jfc = new JFileChooser(f);
+        JFileChooser jfc = new JFileChooser(f) {
+            @Override
+            protected JDialog createDialog(Component parent) throws HeadlessException {
+                JDialog dialog = super.createDialog( parent );
+                dialog.setIconImage(getIco());
+                return dialog;
+            }
+        };
         jfc.setCurrentDirectory(new File(System.getProperty("user.dir")));
         jfc.setSelectedFile(f);
         jfc.setFileFilter(new FileNameExtensionFilter(".xml", "xml"));

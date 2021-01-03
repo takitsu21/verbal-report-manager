@@ -35,6 +35,7 @@ public class AddCourseListener extends AbstractApplication implements ActionList
         tmp = new JFrame("Ajouter un Cours");
         tmp.setSize(300, 200);
         tmp.setLocationRelativeTo(null);
+        tmp.setIconImage(getIco());
         tmp.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         JLabel idLabel = new JLabel("Identifiant:");
         idField = new JTextField(10);

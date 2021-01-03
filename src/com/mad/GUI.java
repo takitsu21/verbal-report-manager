@@ -96,7 +96,8 @@ public class GUI extends AbstractApplication {
 
         new DropTarget(getFrame(), dtl);
         getFrame().add(BorderLayout.CENTER, getDragAndDrop());
-        getFrame().setIconImage(ImageIO.read(new File("./MAD16x16.png")));
+        setIco(ImageIO.read(new File("./MAD16x16.png")));
+        getFrame().setIconImage(getIco());
         getFrame().addWindowListener(new SaveOnExitListener());
         getFrame().addWindowListener(new WindowAdapter() {
             @Override
