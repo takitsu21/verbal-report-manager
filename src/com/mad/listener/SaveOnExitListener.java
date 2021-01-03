@@ -40,7 +40,7 @@ public class SaveOnExitListener extends WindowAdapter {
                 "Travail non enregistrer",
                 JOptionPane.YES_NO_CANCEL_OPTION,
                 JOptionPane.WARNING_MESSAGE,
-                (Icon) AbstractApplication.getIco(),
+                null,
                 new JButton[]{saveAs, save, quitWithoutSave},
                 "test");
     }

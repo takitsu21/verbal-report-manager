@@ -44,7 +44,7 @@ public class XmlWriter {
         try {
             Data.root.removeChild(student);
             return true;
-        } catch (StudentNotFoundException e) {
+        } catch (Exception e) {
             return false;
         }
     }

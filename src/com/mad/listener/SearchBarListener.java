@@ -20,7 +20,6 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 public class SearchBarListener extends AbstractApplication implements ActionListener {
-    private static final boolean isListenerAdded = false;
     private static boolean isDoubleCalled = false;
 
     private static String[][] searchCourse(String[] names) {
@@ -76,9 +75,7 @@ public class SearchBarListener extends AbstractApplication implements ActionList
         List<Element> listCourses = Data.getChildren(Data.root, "course");
         String[][] data = new String[etu.length + 1][Table.getTemporaryTable()[0].length];
 
-        for (int i = 0; i < Table.getTemporaryTable()[0].length; i++) {
-            data[0][i] = Table.getTemporaryTable()[0][i];
-        }
+        System.arraycopy(Table.getTemporaryTable()[0], 0, data[0], 0, Table.getTemporaryTable()[0].length);
         for (int j = 1; j < etu.length + 1; j++) {
             for (Element studs : listStudents) {
                 if (Table.getTemporaryTable()[1][0] != null && etu[j - 1] != null && etu[j - 1].equalsIgnoreCase(Data.read(studs, "identifier"))) {
