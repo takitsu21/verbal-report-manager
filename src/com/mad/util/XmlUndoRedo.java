@@ -1,67 +1,96 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
 package com.mad.util;
 
-
+import com.mad.listener.TableChangedListener;
+import java.util.Arrays;
 import org.w3c.dom.Node;
 
 public class XmlUndoRedo extends Action {
     private final String type;
-    private final Object arg;
+    private Object arg;
     private final XmlMethodType xmt;
     private final Runnable runner;
     boolean refreshTable;
+    private Object[] args;
 
-    public XmlUndoRedo(
-            Runnable runner, String type, Object arg, XmlMethodType xmt, boolean refreshTable) {
+    public XmlUndoRedo(Runnable runner, String type, Object arg, XmlMethodType xmt, boolean refreshTable) {
         this.type = type;
         this.arg = arg;
         this.xmt = xmt;
         this.runner = runner;
         this.refreshTable = refreshTable;
-        this.memento = memento == null ? new Memento() : memento;
+        this.memento = this.memento == null ? new Memento() : this.memento;
     }
 
+    public XmlUndoRedo(Runnable runner, String type, XmlMethodType xmt, boolean refreshTable, Object... args) {
+        this.type = type;
+        this.args = args;
+        this.xmt = xmt;
+        this.runner = runner;
+        this.refreshTable = refreshTable;
+        this.memento = this.memento == null ? new Memento() : this.memento;
+    }
 
-    @Override
     public void execute() {
-        memento.setState(runner);
-        memento.getState().run();
-        if (refreshTable) {
+        this.memento.setState(this.runner);
+        this.memento.getState().run();
+        if (this.refreshTable) {
             refreshTable();
         }
+
     }
 
-    @Override
     public void unExecute() {
-        memento.setState(getExactMethodType());
-        memento.getState().run();
+        this.memento.setState(this.getExactMethodType());
+        this.memento.getState().run();
         refreshTable();
     }
 
     private Runnable getExactMethodType() {
         Runnable redoRunner = null;
-        switch (xmt) {
+        Node n;
+        switch(this.xmt) {
             case ADD:
-                if (type.equalsIgnoreCase("student")) {
-                    redoRunner = () -> XmlWriter.deleteStudent((String) arg);
+                if (this.type.equalsIgnoreCase("student")) {
+                    redoRunner = () -> {
+                        XmlWriter.deleteStudent((String)this.arg);
+                    };
+                } else if (this.type.equalsIgnoreCase("course")) {
+                    n = XmlWriter.getCourseDoc((Node)this.arg);
+                    redoRunner = () -> {
+                        XmlWriter.removeNode(n);
+                    };
+                } else if (this.type.equalsIgnoreCase("program")) {
+                    n = XmlWriter.getProgramDoc((Node)this.arg);
+                    redoRunner = () -> {
+                        XmlWriter.removeNode(n);
+                    };
                 }
                 break;
             case DELETE:
-                if (type.equalsIgnoreCase("student")) {
-                    Node firstDocImportedNode = Data.doc.importNode((Node) arg, true);
-                    redoRunner = () -> XmlWriter.addStudent(firstDocImportedNode);
+                if (this.type.equalsIgnoreCase("student")) {
+                    n = Data.doc.importNode((Node)this.arg, true);
+                    redoRunner = () -> {
+                        XmlWriter.addNode(n);
+                    };
                 }
                 break;
             case MODIFY:
-                if (type.equalsIgnoreCase("course")) {
-//                    redoRunner = () -> XmlWriter.mod
+                if (this.type.equalsIgnoreCase("course")) {
+                    System.out.println(Arrays.toString(this.args));
+                    redoRunner = () -> {
+                        TableChangedListener.updateCell((String)this.args[0], (String)this.args[1], (String)this.args[2]);
+                    };
                 }
                 break;
             default:
                 return null;
         }
+
         return redoRunner;
     }
-
 }
-
-

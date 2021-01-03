@@ -2,8 +2,10 @@ package com.mad.listener;
 
 import com.mad.AbstractApplication;
 import com.mad.util.Data;
+import com.mad.util.XmlMethodType;
 import com.mad.util.XmlWriter;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 
 import javax.swing.*;
 import java.awt.*;
@@ -151,11 +153,13 @@ public class AddProgramListener extends AbstractApplication implements ActionLis
                         for (int i = 0; i < programs.size(); i++) {
                             t[i] = programs.get(i).toArray(blankArray);
                         }
-                        if (XmlWriter.addProgram(XmlWriter.generateProgram(t))) {
-                            getComboBox().addItem(programIdField.getText());
-                            refreshTable();
-                            SwingUtilities.invokeLater(() -> programFrame.dispose());
-                        }
+                        Node n = XmlWriter.generateProgram(t);
+                        insertAction(() -> XmlWriter.addProgram(n),
+                                "program", n, XmlMethodType.ADD, true);
+                        getComboBox().addItem(programIdField.getText());
+                        SwingUtilities.invokeLater(() -> {
+                            this.programFrame.dispose();
+                        });
                     });
                     ActionListener finishListener = metaButton.getActionListeners()[0];
 

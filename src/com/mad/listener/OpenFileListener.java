@@ -85,32 +85,32 @@ public class OpenFileListener extends AbstractApplication implements ActionListe
                 JOptionPane.showMessageDialog(null, "Mauvais type de fichier","Alerte", JOptionPane.WARNING_MESSAGE);
             }
             else{
-            if (fileName.endsWith(".csv")) {
-                getDisplayCsv().TableCSV(fileName);
-            }
-
-            else {
-                XmlToCsv xmlConverter = new XmlToCsv(fileName);
-                xmlConverter.convert();
-
-                getDisplayCsv().TableXML(
-                        fileName,
-                        Data.dataSet.get(Data.dataSet.entrySet().iterator().next().getKey())
-                );
-                setComboBox(new JComboBox<>());
-                for (String key : Data.dataSet.keySet()) {
-                    getComboBox().addItem(key);
+                if (fileName.endsWith(".csv")) {
+                    getDisplayCsv().TableCSV(fileName);
                 }
-            }
-            if (!componentsInitialised) {
-                initComponents();
-            }
-            refreshPanels(fileName);
-            clearJTables();
-            getContent().add(getDisplayCsv().Jscroll, BorderLayout.CENTER);
-            setLastModificationAt(new Timestamp(System.currentTimeMillis()));
-            frame.setVisible(true);
-            System.gc();}
+
+                else {
+                    XmlToCsv xmlConverter = new XmlToCsv(fileName);
+                    xmlConverter.convert();
+
+                    getDisplayCsv().TableXML(
+                            fileName,
+                            Data.dataSet.get(Data.dataSet.entrySet().iterator().next().getKey())
+                    );
+                    setComboBox(new JComboBox<>());
+                    for (String key : Data.dataSet.keySet()) {
+                        getComboBox().addItem(key);
+                    }
+                }
+                if (!componentsInitialised) {
+                    initComponents();
+                }
+                refreshPanels(fileName);
+                clearJTables();
+                getContent().add(getDisplayCsv().Jscroll, BorderLayout.CENTER);
+                setLastModificationAt(new Timestamp(System.currentTimeMillis()));
+                frame.setVisible(true);
+                System.gc();}
         } catch (IOException e) {
             e.printStackTrace();
         }

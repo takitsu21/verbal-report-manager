@@ -21,6 +21,7 @@ public class SelectRowsListener extends AbstractApplication implements ActionLis
                 newModel[acc++] = Table.getTemporaryTable() != null ? Table.getTemporaryTable()[row + 1] : Data.dataArray[row + 1];
             }
             Table.setNewModelTable(Table.table, newModel);
+            Table.table.getModel().removeTableModelListener(new TableChangedListener());
             Table.table.getModel().addTableModelListener(new TableChangedListener());
 //            String[] stud = new String[selectedRows.length];
 //            int acc = 0;

@@ -1,18 +1,37 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
 package com.mad;
 
 import com.mad.util.Action;
-import com.mad.util.*;
+import com.mad.util.Data;
+import com.mad.util.Table;
+import com.mad.util.XmlMethodType;
+import com.mad.util.XmlToCsv;
+import com.mad.util.XmlUndoRedo;
+import com.mad.util.XmlWriter;
 
-import javax.swing.*;
-import javax.swing.filechooser.FileNameExtensionFilter;
-import java.awt.*;
+import java.awt.Component;
+import java.awt.Container;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.Stack;
-
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTree;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 public abstract class AbstractApplication {
     public static String ORIGIN_PATH;
@@ -40,7 +59,7 @@ public abstract class AbstractApplication {
     protected static Timestamp lastModificationAt;
     protected static Timestamp lastTmpModificationAt;
     private static int undoRedoPointer = -1;
-    private static final Stack<Action> commandStack = new Stack<>();
+    private static final Stack<Action> commandStack = new Stack();
 
     public AbstractApplication() {
     }
@@ -238,36 +257,45 @@ public abstract class AbstractApplication {
             XmlWriter.save(TMP_PATH);
             XmlToCsv xmlConverter = new XmlToCsv(TMP_PATH);
             xmlConverter.convert();
-            //clearJTables();
-            //getContent().add(getDisplayCsv().Jscroll, BorderLayout.CENTER);
             getComboBox().setSelectedItem(getComboBox().getSelectedItem());
         } else if (path.endsWith(".csv")) {
             save(false);
-            //Table.table.getModel().removeTableModelListener(new TableChangedListener());
             Table.setNewModelTable(Table.table, Data.dataArray);
-            //Table.table.getModel().addTableModelListener(new TableChangedListener());
         }
+
     }
 
     public static boolean save(boolean saveAs) {
-        String path = AbstractApplication.getOriginPath();
+        String path = getOriginPath();
         Timestamp currentSaveTimestamp = new Timestamp(System.currentTimeMillis());
         if (path.endsWith(".csv")) {
             System.out.println(Arrays.deepToString(Data.dataArray));
+
             try {
                 PrintWriter pr = new PrintWriter(path);
-                for (String[] l : Data.dataArray) {
+                String[][] var4 = Data.dataArray;
+                int var5 = var4.length;
+
+                for (int var6 = 0; var6 < var5; ++var6) {
+                    String[] l = var4[var6];
                     StringBuilder acc = new StringBuilder();
-                    for (String m : l) {
+                    String[] var9 = l;
+                    int var10 = l.length;
+
+                    for (int var11 = 0; var11 < var10; ++var11) {
+                        String m = var9[var11];
                         acc.append("\"").append(m).append("\",");
                     }
+
                     pr.println(acc);
                 }
+
                 return true;
-            } catch (FileNotFoundException fileNotFoundException) {
-                JOptionPane.showMessageDialog(AbstractApplication.getFrame(), "Erreur FATAL");
+            } catch (FileNotFoundException var13) {
+                JOptionPane.showMessageDialog(getFrame(), "Erreur FATAL");
             }
         }
+
         if (path.endsWith(".xml")) {
             if (!saveAs) {
                 if (XmlWriter.save(path)) {
@@ -275,15 +303,13 @@ public abstract class AbstractApplication {
                     setLastTmpModificationAt(currentSaveTimestamp);
                     return true;
                 }
-
-            } else {
-                if (saveAs()) {
-                    setLastModificationAt(currentSaveTimestamp);
-                    setLastTmpModificationAt(currentSaveTimestamp);
-                    return true;
-                }
+            } else if (saveAs()) {
+                setLastModificationAt(currentSaveTimestamp);
+                setLastTmpModificationAt(currentSaveTimestamp);
+                return true;
             }
         }
+
         return false;
     }
 
@@ -293,25 +319,22 @@ public abstract class AbstractApplication {
         jfc.setCurrentDirectory(new File(System.getProperty("user.dir")));
         jfc.setSelectedFile(f);
         jfc.setFileFilter(new FileNameExtensionFilter(".xml", "xml"));
-
         jfc.setDialogTitle("Choississez un endroit pour sauvegarder votre fichier: ");
-        jfc.setFileSelectionMode(JFileChooser.FILES_ONLY);
-
-        int returnValue = jfc.showSaveDialog(null);
+        jfc.setFileSelectionMode(0);
+        int returnValue = jfc.showSaveDialog((Component) null);
         System.out.println(returnValue);
-        if (returnValue == JFileChooser.APPROVE_OPTION) {
+        if (returnValue == 0) {
             if (jfc.getSelectedFile().getPath().endsWith(".xml")) {
                 if (XmlWriter.save(jfc.getSelectedFile().getPath())) {
                     setSavedAsName(jfc.getSelectedFile().getPath());
                     return true;
                 }
-            } else {
-                if (XmlWriter.save(jfc.getSelectedFile().getPath() + ".xml")) {
-                    setSavedAsName(jfc.getSelectedFile().getPath() + ".xml");
-                    return true;
-                }
+            } else if (XmlWriter.save(jfc.getSelectedFile().getPath() + ".xml")) {
+                setSavedAsName(jfc.getSelectedFile().getPath() + ".xml");
+                return true;
             }
         }
+
         return false;
     }
 
@@ -319,43 +342,51 @@ public abstract class AbstractApplication {
         try {
             if (getLastTmpModificationAt() == null) {
                 return true;
+            } else {
+                return getLastModificationAt().compareTo(getLastTmpModificationAt()) == 0;
             }
-            return getLastModificationAt().compareTo(getLastTmpModificationAt()) == 0;
-        } catch (Exception e) {
+        } catch (Exception var1) {
             return true;
         }
     }
 
     protected void insertAction(Runnable runner, String type, Object arg, XmlMethodType xmt, boolean refreshTable) {
-        deleteElementsAfterPointer(undoRedoPointer);
-        Action command =
-                new XmlUndoRedo(runner, type, arg, xmt, refreshTable);
-            command.execute();
-
+        this.deleteElementsAfterPointer(undoRedoPointer);
+        Action command = new XmlUndoRedo(runner, type, arg, xmt, refreshTable);
+        command.execute();
         commandStack.push(command);
-        undoRedoPointer++;
+        ++undoRedoPointer;
+        System.out.println(commandStack);
+    }
+
+    protected void insertAction(Runnable runner, String type, XmlMethodType xmt, boolean refreshTable, Object... args) {
+        this.deleteElementsAfterPointer(undoRedoPointer);
+        Action command = new XmlUndoRedo(runner, type, xmt, refreshTable, args);
+        command.execute();
+        commandStack.push(command);
+        ++undoRedoPointer;
         System.out.println(commandStack);
     }
 
     private void deleteElementsAfterPointer(int undoRedoPointer) {
-        if (commandStack.size() < 1) return;
-        for (int i = commandStack.size() - 1; i > undoRedoPointer; i--) {
-            commandStack.remove(i);
+        if (commandStack.size() >= 1) {
+            for (int i = commandStack.size() - 1; i > undoRedoPointer; --i) {
+                commandStack.remove(i);
+            }
         }
     }
 
     public static void undo() {
-        Action command = commandStack.get(undoRedoPointer);
+        Action command = (Action) commandStack.get(undoRedoPointer);
         command.unExecute();
-        undoRedoPointer--;
+        --undoRedoPointer;
     }
 
     public static void redo() {
-        if (undoRedoPointer == commandStack.size() - 1) {
-            return;
+        if (undoRedoPointer != commandStack.size() - 1) {
+            ++undoRedoPointer;
+            Action command = (Action) commandStack.get(undoRedoPointer);
+            command.execute();
         }
-        undoRedoPointer++;
-        Action command = commandStack.get(undoRedoPointer);
-        command.execute();
     }
 }
