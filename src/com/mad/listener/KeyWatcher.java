@@ -1,12 +1,10 @@
 package com.mad.listener;
 
-import com.mad.AbstractApplication;
-
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-public class KeyWatcher extends AbstractApplication implements KeyListener {
+public class KeyWatcher implements KeyListener {
     @Override
     public void keyTyped(KeyEvent e) {
 
