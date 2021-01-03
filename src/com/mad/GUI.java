@@ -1,8 +1,3 @@
-//
-// Source code recreated from a .class file by IntelliJ IDEA
-// (powered by FernFlower decompiler)
-//
-
 package com.mad;
 
 import com.mad.listener.DragDropListener;
@@ -71,12 +66,12 @@ public class GUI extends AbstractApplication {
         redo.setAccelerator(KeyStroke.getKeyStroke(89, 128));
         undo.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                AbstractApplication.undo();
+                this.undo();
             }
         });
         redo.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                AbstractApplication.redo();
+                this.redo();
             }
         });
         file.add(undo);
@@ -105,11 +100,13 @@ public class GUI extends AbstractApplication {
         getContent().add(getSouthPanel(), "South");
         setDragAndDrop(new JLabel("Drag XML or CSV here.", 0));
         DropTargetListener dtl = new DragDropListener();
+
         new DropTarget(getFrame(), dtl);
-        getFrame().add("Center", getDragAndDrop());
+        getFrame().add(BorderLayout.CENTER, getDragAndDrop());
         getFrame().setIconImage(ImageIO.read(new File("./MAD16x16.png")));
         getFrame().addWindowListener(new SaveOnExitListener());
         getFrame().addWindowListener(new WindowAdapter() {
+            @Override
             public void windowClosed(WindowEvent e) {
                 (new File(AbstractApplication.getTmpPath())).delete();
                 System.out.println("tmp file deleted");

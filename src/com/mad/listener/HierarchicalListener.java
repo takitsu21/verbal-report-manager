@@ -18,6 +18,7 @@ public class HierarchicalListener extends AbstractApplication implements ActionL
         tmp.setSize(600, 300);
         tmp.setLocationRelativeTo(null);
         tmp.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        tmp.setIconImage(getIco());
 
         List<Element> program = Data.getChildren(Data.root, "program");
         DefaultMutableTreeNode programs = new DefaultMutableTreeNode("Programmes");

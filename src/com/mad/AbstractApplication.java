@@ -1,8 +1,3 @@
-//
-// Source code recreated from a .class file by IntelliJ IDEA
-// (powered by FernFlower decompiler)
-//
-
 package com.mad;
 
 import com.mad.util.Action;
@@ -13,8 +8,11 @@ import com.mad.util.XmlToCsv;
 import com.mad.util.XmlUndoRedo;
 import com.mad.util.XmlWriter;
 
-import java.awt.Component;
-import java.awt.Container;
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
@@ -60,6 +58,9 @@ public abstract class AbstractApplication {
     protected static Timestamp lastTmpModificationAt;
     private static int undoRedoPointer = -1;
     private static final Stack<Action> commandStack = new Stack();
+    protected static BufferedImage ico;
+
+
 
     public AbstractApplication() {
     }
@@ -240,6 +241,14 @@ public abstract class AbstractApplication {
         return refresh;
     }
 
+    public static BufferedImage getIco() {
+        return ico;
+    }
+
+    public static void setIco(BufferedImage ico) {
+        AbstractApplication.ico = ico;
+    }
+
     public static void setRefresh(JButton refresh) {
         AbstractApplication.refresh = refresh;
     }
@@ -266,36 +275,24 @@ public abstract class AbstractApplication {
     }
 
     public static boolean save(boolean saveAs) {
-        String path = getOriginPath();
+        String path = AbstractApplication.getOriginPath();
         Timestamp currentSaveTimestamp = new Timestamp(System.currentTimeMillis());
         if (path.endsWith(".csv")) {
             System.out.println(Arrays.deepToString(Data.dataArray));
-
             try {
                 PrintWriter pr = new PrintWriter(path);
-                String[][] var4 = Data.dataArray;
-                int var5 = var4.length;
-
-                for (int var6 = 0; var6 < var5; ++var6) {
-                    String[] l = var4[var6];
+                for (String[] l : Data.dataArray) {
                     StringBuilder acc = new StringBuilder();
-                    String[] var9 = l;
-                    int var10 = l.length;
-
-                    for (int var11 = 0; var11 < var10; ++var11) {
-                        String m = var9[var11];
+                    for (String m : l) {
                         acc.append("\"").append(m).append("\",");
                     }
-
                     pr.println(acc);
                 }
-
                 return true;
-            } catch (FileNotFoundException var13) {
-                JOptionPane.showMessageDialog(getFrame(), "Erreur FATAL");
+            } catch (FileNotFoundException fileNotFoundException) {
+                JOptionPane.showMessageDialog(AbstractApplication.getFrame(), "Erreur FATAL");
             }
         }
-
         if (path.endsWith(".xml")) {
             if (!saveAs) {
                 if (XmlWriter.save(path)) {
@@ -303,13 +300,15 @@ public abstract class AbstractApplication {
                     setLastTmpModificationAt(currentSaveTimestamp);
                     return true;
                 }
-            } else if (saveAs()) {
-                setLastModificationAt(currentSaveTimestamp);
-                setLastTmpModificationAt(currentSaveTimestamp);
-                return true;
+
+            } else {
+                if (saveAs()) {
+                    setLastModificationAt(currentSaveTimestamp);
+                    setLastTmpModificationAt(currentSaveTimestamp);
+                    return true;
+                }
             }
         }
-
         return false;
     }
 

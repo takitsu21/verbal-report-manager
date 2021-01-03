@@ -24,6 +24,7 @@ public class AddProgramListener extends AbstractApplication implements ActionLis
         programFrame.setLocationRelativeTo(null);
         programFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         programFrame.setVisible(true);
+        programFrame.setIconImage(getIco());
         JPanel butNex = new JPanel();
 
 

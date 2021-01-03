@@ -43,6 +43,7 @@ public class AddCourseListener extends AbstractApplication implements ActionList
         JLabel coefLabel = new JLabel("coefficient:");
         coefField = new JTextField(10);
         coefField.addKeyListener(new KeyWatcher());
+        tmp.setIconImage(getIco());
 
 
         Container contentPane = tmp.getContentPane();
