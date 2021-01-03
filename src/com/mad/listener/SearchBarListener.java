@@ -20,7 +20,6 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 public class SearchBarListener extends AbstractApplication implements ActionListener {
-    private static boolean isListenerAdded = false;
     private static boolean isDoubleCalled = false;
 
     @Override
@@ -54,10 +53,7 @@ public class SearchBarListener extends AbstractApplication implements ActionList
             String[][] listCourses=new String[listSearchText.length][];
 
             for(int index=0; index<listSearchText.length; index++) {
-
-                String[] listText = listSearchText[index].split(";");
-
-
+                String[] listText = searchText.split("[ ]?;[ ]?");
                 String[] ligne = {};
                 for (String s : listText) {
 
