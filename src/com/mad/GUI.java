@@ -1,31 +1,17 @@
 package com.mad;
 
-import com.mad.listener.DragDropListener;
-import com.mad.listener.EnregistrerListener;
-import com.mad.listener.OpenFileListener;
-import com.mad.listener.SaveFileListener;
-import com.mad.listener.SaveFileXmlListener;
-import com.mad.listener.SaveOnExitListener;
+import com.mad.listener.*;
 import com.mad.util.Table;
 
+import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.awt.*;
 import java.awt.dnd.DropTarget;
 import java.awt.dnd.DropTargetListener;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.IOException;
-import javax.imageio.ImageIO;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JPanel;
-import javax.swing.KeyStroke;
-import javax.swing.UIManager;
 
 public class GUI extends AbstractApplication {
     public GUI() {
@@ -35,13 +21,13 @@ public class GUI extends AbstractApplication {
     public static void main(String[] args) throws IOException {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (Exception var13) {
-            var13.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
         setFrame(new JFrame("MAD"));
         getFrame().setSize(920, 600);
-        getFrame().setLocationRelativeTo((Component)null);
+        getFrame().setLocationRelativeTo(null);
         getFrame().setDefaultCloseOperation(0);
         JMenuBar menu = new JMenuBar();
         getFrame().setJMenuBar(menu);

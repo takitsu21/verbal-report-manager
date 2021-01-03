@@ -1,14 +1,8 @@
 package com.mad;
 
 import com.mad.util.Action;
-import com.mad.util.Data;
-import com.mad.util.Table;
-import com.mad.util.XmlMethodType;
-import com.mad.util.XmlToCsv;
-import com.mad.util.XmlUndoRedo;
-import com.mad.util.XmlWriter;
+import com.mad.util.*;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
@@ -19,21 +13,11 @@ import java.io.PrintWriter;
 import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.Stack;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JTree;
-import javax.swing.filechooser.FileNameExtensionFilter;
 
 public abstract class AbstractApplication {
-    public static String ORIGIN_PATH;
     public static final String TMP_PATH = "./xml-editor.tmp.xml";
+    private static final Stack<Action> commandStack = new Stack();
+    public static String ORIGIN_PATH;
     protected static String path;
     protected static JFrame frame;
     protected static JPanel southPanel;
@@ -56,10 +40,8 @@ public abstract class AbstractApplication {
     protected static String savedAsName;
     protected static Timestamp lastModificationAt;
     protected static Timestamp lastTmpModificationAt;
-    private static int undoRedoPointer = -1;
-    private static final Stack<Action> commandStack = new Stack();
     protected static BufferedImage ico;
-
+    private static int undoRedoPointer = -1;
 
 
     public AbstractApplication() {
@@ -241,16 +223,16 @@ public abstract class AbstractApplication {
         return refresh;
     }
 
+    public static void setRefresh(JButton refresh) {
+        AbstractApplication.refresh = refresh;
+    }
+
     public static BufferedImage getIco() {
         return ico;
     }
 
     public static void setIco(BufferedImage ico) {
         AbstractApplication.ico = ico;
-    }
-
-    public static void setRefresh(JButton refresh) {
-        AbstractApplication.refresh = refresh;
     }
 
     public static void clearJTables() {
@@ -317,7 +299,7 @@ public abstract class AbstractApplication {
         JFileChooser jfc = new JFileChooser(f) {
             @Override
             protected JDialog createDialog(Component parent) throws HeadlessException {
-                JDialog dialog = super.createDialog( parent );
+                JDialog dialog = super.createDialog(parent);
                 dialog.setIconImage(getIco());
                 return dialog;
             }
@@ -327,7 +309,7 @@ public abstract class AbstractApplication {
         jfc.setFileFilter(new FileNameExtensionFilter(".xml", "xml"));
         jfc.setDialogTitle("Choississez un endroit pour sauvegarder votre fichier: ");
         jfc.setFileSelectionMode(0);
-        int returnValue = jfc.showSaveDialog((Component) null);
+        int returnValue = jfc.showSaveDialog(null);
         System.out.println(returnValue);
         if (returnValue == 0) {
             if (jfc.getSelectedFile().getPath().endsWith(".xml")) {
@@ -351,8 +333,22 @@ public abstract class AbstractApplication {
             } else {
                 return getLastModificationAt().compareTo(getLastTmpModificationAt()) == 0;
             }
-        } catch (Exception var1) {
+        } catch (Exception e) {
             return true;
+        }
+    }
+
+    public static void undo() {
+        Action command = commandStack.get(undoRedoPointer);
+        command.unExecute();
+        --undoRedoPointer;
+    }
+
+    public static void redo() {
+        if (undoRedoPointer != commandStack.size() - 1) {
+            ++undoRedoPointer;
+            Action command = commandStack.get(undoRedoPointer);
+            command.execute();
         }
     }
 
@@ -379,20 +375,6 @@ public abstract class AbstractApplication {
             for (int i = commandStack.size() - 1; i > undoRedoPointer; --i) {
                 commandStack.remove(i);
             }
-        }
-    }
-
-    public static void undo() {
-        Action command = (Action) commandStack.get(undoRedoPointer);
-        command.unExecute();
-        --undoRedoPointer;
-    }
-
-    public static void redo() {
-        if (undoRedoPointer != commandStack.size() - 1) {
-            ++undoRedoPointer;
-            Action command = (Action) commandStack.get(undoRedoPointer);
-            command.execute();
         }
     }
 }

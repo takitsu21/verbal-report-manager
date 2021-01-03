@@ -1,26 +1,18 @@
-//
-// Source code recreated from a .class file by IntelliJ IDEA
-// (powered by FernFlower decompiler)
-//
-
 package com.mad.util;
 
 import com.mad.AbstractApplication;
 import com.mad.util.exceptions.StudentNotFoundException;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
+import javax.xml.transform.*;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 import java.io.File;
 import java.sql.Timestamp;
 import java.util.Iterator;
 import java.util.List;
-import javax.xml.transform.Result;
-import javax.xml.transform.Source;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 
 public class XmlWriter {
     public XmlWriter() {
@@ -30,10 +22,10 @@ public class XmlWriter {
         Node node = null;
         NodeList nodeList = Data.root.getElementsByTagName("student");
 
-        for(int i = 0; i < nodeList.getLength(); ++i) {
+        for (int i = 0; i < nodeList.getLength(); ++i) {
             node = nodeList.item(i);
             if (node.getNodeType() == 1) {
-                Element element = (Element)nodeList.item(i);
+                Element element = (Element) nodeList.item(i);
                 String currentStudentId = element.getElementsByTagName("identifier").item(0).getTextContent();
                 if (studentId.equalsIgnoreCase(currentStudentId)) {
                     break;
@@ -44,22 +36,6 @@ public class XmlWriter {
         return node;
     }
 
-    public static Node getCourse(String courseId) {
-        List<Element> courses = Data.getChildren(Data.root, "course");
-        Node ret = null;
-        Iterator var3 = courses.iterator();
-
-        while(var3.hasNext()) {
-            Element course = (Element)var3.next();
-            if (Data.read(course, "identifier").equalsIgnoreCase(courseId)) {
-                ret = course;
-                break;
-            }
-        }
-
-        return ret;
-    }
-
     public static boolean deleteStudent(String studentId) {
         return deleteStudent(getStudent(studentId));
     }
@@ -68,7 +44,7 @@ public class XmlWriter {
         try {
             Data.root.removeChild(student);
             return true;
-        } catch (StudentNotFoundException var2) {
+        } catch (StudentNotFoundException e) {
             return false;
         }
     }
@@ -81,18 +57,8 @@ public class XmlWriter {
         try {
             Data.root.appendChild(newStudent);
             return true;
-        } catch (Exception var2) {
-            var2.printStackTrace();
-            return false;
-        }
-    }
-
-    public static boolean deleteCourse(Node course) {
-        try {
-            Data.root.removeChild(course);
-            return true;
-        } catch (Exception var2) {
-            var2.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
             return false;
         }
     }
@@ -102,103 +68,75 @@ public class XmlWriter {
             n = Data.doc.importNode(n, true);
             n.getParentNode().appendChild(n);
             return true;
-        } catch (Exception var4) {
+        } catch (Exception e) {
             try {
                 Data.root.appendChild(n);
                 return true;
-            } catch (Exception var3) {
+            } catch (Exception exc) {
                 return false;
             }
         }
     }
 
-    public static boolean addProgram(Node program) {
+    public static boolean removeNode(Node n) {
         try {
-            Data.root.appendChild(program);
+            n.getParentNode().removeChild(n);
             return true;
-        } catch (Exception var2) {
-            return false;
+        } catch (Exception e) {
+            try {
+                Data.root.removeChild(n);
+                return true;
+            } catch (Exception exc) {
+                return false;
+            }
         }
     }
 
     public static boolean modifyCourse(String studentId, String courseId, String val) {
-        Element student = (Element)getStudent(studentId);
+        Element student = (Element) getStudent(studentId);
         List<Element> grades = Data.getChildren(student, "grade");
-        Iterator var5 = grades.iterator();
-
-        Element e;
-        do {
-            if (!var5.hasNext()) {
-                return false;
+        for (Element e : grades) {
+            if (Data.read(e, "item").equalsIgnoreCase(courseId)) {
+                List<Element> values = Data.getChildren(e, "value");
+                for (Element v : values) {
+                    v.setTextContent(val);
+                }
+                System.out.println("student modified");
+                return true;
             }
-
-            e = (Element)var5.next();
-        } while(!Data.read(e, "item").equalsIgnoreCase(courseId));
-
-        List<Element> values = Data.getChildren(e, "value");
-        Iterator var8 = values.iterator();
-
-        while(var8.hasNext()) {
-            Element v = (Element)var8.next();
-            v.setTextContent(val);
         }
-
-        System.out.println("student modified");
-        return true;
+        return false;
     }
 
     public static boolean deleteCourse(String studentId, String courseId) {
-        Element student = (Element)getStudent(studentId);
+        Element student = (Element) getStudent(studentId);
         List<Element> grades = Data.getChildren(student, "grade");
-        Iterator var4 = grades.iterator();
-
-        Element e;
-        do {
-            if (!var4.hasNext()) {
-                return false;
+        for (Element e : grades) {
+            if (Data.read(e, "item").equalsIgnoreCase(courseId)) {
+                student.removeChild(e);
+                return true;
             }
-
-            e = (Element)var4.next();
-        } while(!Data.read(e, "item").equalsIgnoreCase(courseId));
-
-        Data.root.removeChild(student);
-        student.removeChild(e);
-        Data.root.appendChild(student);
-        return true;
+        }
+        return false;
     }
 
     public static boolean addCourse(String studentId, String courseId, String note) {
-        Element student = (Element)getStudent(studentId);
+        Element student = (Element) getStudent(studentId);
         List<Element> courses = Data.getChildren(Data.root, "course");
-        Iterator var5 = courses.iterator();
-
-        Element e;
-        do {
-            if (!var5.hasNext()) {
-                return false;
+        for (Element e : courses) {
+            if (Data.read(e, "identifier").equalsIgnoreCase(courseId)) {
+                Node composante = Data.doc.createElement("item");
+                Node value = Data.doc.createElement("value");
+                Node grade = Data.doc.createElement("grade");
+                composante.appendChild(Data.doc.createTextNode(courseId));
+                value.appendChild(Data.doc.createTextNode(note));
+                grade.appendChild(composante);
+                grade.appendChild(value);
+                student.appendChild(grade);
+                return true;
             }
-
-            e = (Element)var5.next();
-        } while(!Data.read(e, "identifier").equalsIgnoreCase(courseId));
-
-        Node composante = Data.doc.createElement("item");
-        Node value = Data.doc.createElement("value");
-        Node grade = Data.doc.createElement("grade");
-        composante.appendChild(Data.doc.createTextNode(courseId));
-        value.appendChild(Data.doc.createTextNode(note));
-        grade.appendChild(composante);
-        grade.appendChild(value);
-        student.appendChild(grade);
-        return true;
-    }
-
-    public static boolean addCourseGeneral(String courseName, String courseId, String coef) {
-        try {
-            Data.root.appendChild(addNewCourseNode(courseName, courseId, coef));
-            return true;
-        } catch (Exception var4) {
-            return false;
         }
+        return false;
     }
 
     public static Node addNewCourseNode(String courseName, String courseId, String coef) {
@@ -214,19 +152,34 @@ public class XmlWriter {
             coefNode.appendChild(Data.doc.createTextNode(coef));
             newCourse.appendChild(coefNode);
             return newCourse;
-        } catch (Exception var7) {
+        } catch (Exception e) {
             return null;
         }
+    }
+
+    public static Node getProgramDoc(Node n) {
+        List<Element> programs = Data.getChildren(Data.root, "program");
+        Node ret = null;
+        Iterator<Element> iterator = programs.iterator();
+
+        while (iterator.hasNext()) {
+            Element program = (Element) iterator.next();
+            if (Data.read(program, "identifier").equalsIgnoreCase(Data.read((Element) n, "identifier"))) {
+                ret = program;
+                break;
+            }
+        }
+        return ret;
     }
 
     public static Node getCourseDoc(Node n) {
         List<Element> courses = Data.getChildren(Data.root, "course");
         Node ret = null;
-        Iterator var3 = courses.iterator();
+        Iterator<Element> iterator = courses.iterator();
 
-        while(var3.hasNext()) {
-            Element course = (Element)var3.next();
-            if (Data.read(course, "identifier").equalsIgnoreCase(Data.read((Element)n, "identifier"))) {
+        while (iterator.hasNext()) {
+            Element course = (Element) iterator.next();
+            if (Data.read(course, "identifier").equalsIgnoreCase(Data.read((Element) n, "identifier"))) {
                 ret = course;
                 break;
             }
@@ -235,35 +188,7 @@ public class XmlWriter {
         return ret;
     }
 
-    public static Node getProgramDoc(Node n) {
-        List<Element> courses = Data.getChildren(Data.root, "program");
-        Node ret = null;
-        Iterator var3 = courses.iterator();
 
-        while(var3.hasNext()) {
-            Element course = (Element)var3.next();
-            if (Data.read(course, "identifier").equalsIgnoreCase(Data.read((Element)n, "identifier"))) {
-                ret = course;
-                break;
-            }
-        }
-
-        return ret;
-    }
-
-    public static boolean removeNode(Node n) {
-        try {
-            n.getParentNode().removeChild(n);
-            return true;
-        } catch (Exception var4) {
-            try {
-                Data.root.removeChild(n);
-                return true;
-            } catch (Exception var3) {
-                return false;
-            }
-        }
-    }
 
     private static void breakLine(Node node) {
         node.appendChild(Data.doc.createTextNode("\n"));
@@ -272,53 +197,22 @@ public class XmlWriter {
     public static Node generateStudentNode(String[][] dataset) {
         Node student = Data.doc.createElement("student");
         breakLine(student);
-        String[][] var2 = dataset;
-        int var3 = dataset.length;
-
-        for(int var4 = 0; var4 < var3; ++var4) {
-            String[] s = var2[var4];
+        for (String[] s : dataset) {
+            Node item;
             String nodeType = s[0];
-            if (nodeType != null) {
-                byte var9 = -1;
-                switch(nodeType.hashCode()) {
-                    case -1852993317:
-                        if (nodeType.equals("surname")) {
-                            var9 = 1;
-                        }
-                        break;
-                    case -1618432855:
-                        if (nodeType.equals("identifier")) {
-                            var9 = 0;
-                        }
-                        break;
-                    case -309387644:
-                        if (nodeType.equals("program")) {
-                            var9 = 3;
-                        }
-                        break;
-                    case 3373707:
-                        if (nodeType.equals("name")) {
-                            var9 = 2;
-                        }
-                        break;
-                    case 98615255:
-                        if (nodeType.equals("grade")) {
-                            var9 = 4;
-                        }
-                }
 
-                Element item;
-                switch(var9) {
-                    case 0:
-                    case 1:
-                    case 2:
-                    case 3:
+            if (nodeType != null) {
+                switch (nodeType) {
+                    case "identifier":
+                    case "surname":
+                    case "name":
+                    case "program":
                         item = Data.doc.createElement(s[0]);
                         item.appendChild(Data.doc.createTextNode(s[1]));
                         student.appendChild(item);
                         breakLine(student);
                         break;
-                    case 4:
+                    case "grade":
                         item = Data.doc.createElement(s[0]);
                         Node composante = Data.doc.createElement("item");
                         Node value = Data.doc.createElement("value");
@@ -328,62 +222,32 @@ public class XmlWriter {
                         item.appendChild(value);
                         student.appendChild(item);
                         breakLine(student);
+                        break;
                 }
             }
         }
-
         return student;
     }
 
     public static Node generateProgram(String[][] dataset) {
         Node program = Data.doc.createElement("program");
         breakLine(program);
-        String[][] var2 = dataset;
-        int var3 = dataset.length;
-
-        for(int var4 = 0; var4 < var3; ++var4) {
-            String[] s = var2[var4];
+        for (String[] s : dataset) {
+            Node item;
             String nodeType = s[0];
-            byte var9 = -1;
-            switch(nodeType.hashCode()) {
-                case -1618432855:
-                    if (nodeType.equals("identifier")) {
-                        var9 = 0;
-                    }
-                    break;
-                case -1399754105:
-                    if (nodeType.equals("composite")) {
-                        var9 = 4;
-                    }
-                    break;
-                case -1010136971:
-                    if (nodeType.equals("option")) {
-                        var9 = 3;
-                    }
-                    break;
-                case 3242771:
-                    if (nodeType.equals("item")) {
-                        var9 = 2;
-                    }
-                    break;
-                case 3373707:
-                    if (nodeType.equals("name")) {
-                        var9 = 1;
-                    }
-            }
-
-            switch(var9) {
-                case 0:
-                case 1:
-                case 2:
-                    Node item = Data.doc.createElement(s[0]);
+            switch (nodeType) {
+                case "identifier":
+                case "name":
+                case "item":
+                    item = Data.doc.createElement(s[0]);
                     item.appendChild(Data.doc.createTextNode(s[1]));
                     program.appendChild(item);
                     breakLine(program);
                     break;
-                case 3:
-                case 4:
+                case "option":
+                case "composite":
                     Node nodeIterator = Data.doc.createElement(nodeType);
+
                     Node identifier = Data.doc.createElement("identifier");
                     identifier.appendChild(Data.doc.createTextNode(s[1]));
                     Node name = Data.doc.createElement("name");
@@ -391,16 +255,16 @@ public class XmlWriter {
                     nodeIterator.appendChild(identifier);
                     nodeIterator.appendChild(name);
 
-                    for(int i = 3; i < s.length; ++i) {
+                    for (int i = 3; i < s.length; i++) {
                         Node innerItem = Data.doc.createElement("item");
                         innerItem.appendChild(Data.doc.createTextNode(s[i]));
                         nodeIterator.appendChild(innerItem);
+//                        breakLine(program);
                     }
-
                     program.appendChild(nodeIterator);
+                    break;
             }
         }
-
         return program;
     }
 
@@ -414,7 +278,7 @@ public class XmlWriter {
             System.out.printf("Saved at %s\n", dst);
             AbstractApplication.setLastTmpModificationAt(new Timestamp(System.currentTimeMillis()));
             return true;
-        } catch (TransformerException var4) {
+        } catch (TransformerException e) {
             return false;
         }
     }

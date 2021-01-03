@@ -17,22 +17,6 @@ import java.io.IOException;
 import java.sql.Timestamp;
 
 public class OpenFileListener extends AbstractApplication implements ActionListener {
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        JFileChooser jfc = new JFileChooser();
-        jfc.setCurrentDirectory(new File(System.getProperty("user.dir")));
-        jfc.setFileFilter(new FileNameExtensionFilter(".csv; .xml", "csv", "xml"));
-
-        jfc.setDialogTitle("Choisissez le fichier à ouvrir");
-        jfc.setFileSelectionMode(JFileChooser.FILES_ONLY);
-        int returnValue = jfc.showOpenDialog(null);
-
-        if (returnValue == JFileChooser.APPROVE_OPTION) {
-            File selectedFile = jfc.getSelectedFile();
-            openFile(selectedFile.getPath());
-        }
-    }
-
     public static void initComponents() throws IOException {
 
         String[] blocs = new String[Data.dataArray[0].length - 3];
@@ -80,16 +64,13 @@ public class OpenFileListener extends AbstractApplication implements ActionListe
                 setOriginPath(fileName);
             }
             setPath(fileName);
-            if (! (fileName.endsWith(".xml")) && !(fileName.endsWith(".csv")) ){
+            if (!(fileName.endsWith(".xml")) && !(fileName.endsWith(".csv"))) {
                 Toolkit.getDefaultToolkit().beep();
-                JOptionPane.showMessageDialog(null, "Mauvais type de fichier","Alerte", JOptionPane.WARNING_MESSAGE);
-            }
-            else{
+                JOptionPane.showMessageDialog(null, "Mauvais type de fichier", "Alerte", JOptionPane.WARNING_MESSAGE);
+            } else {
                 if (fileName.endsWith(".csv")) {
                     getDisplayCsv().TableCSV(fileName);
-                }
-
-                else {
+                } else {
                     XmlToCsv xmlConverter = new XmlToCsv(fileName);
                     xmlConverter.convert();
 
@@ -110,7 +91,8 @@ public class OpenFileListener extends AbstractApplication implements ActionListe
                 getContent().add(getDisplayCsv().Jscroll, BorderLayout.CENTER);
                 setLastModificationAt(new Timestamp(System.currentTimeMillis()));
                 frame.setVisible(true);
-                System.gc();}
+                System.gc();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -160,5 +142,21 @@ public class OpenFileListener extends AbstractApplication implements ActionListe
         fillNorthPanel(fileName);
         getFrame().revalidate();
         getFrame().repaint();
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        JFileChooser jfc = new JFileChooser();
+        jfc.setCurrentDirectory(new File(System.getProperty("user.dir")));
+        jfc.setFileFilter(new FileNameExtensionFilter(".csv; .xml", "csv", "xml"));
+
+        jfc.setDialogTitle("Choisissez le fichier à ouvrir");
+        jfc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        int returnValue = jfc.showOpenDialog(null);
+
+        if (returnValue == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = jfc.getSelectedFile();
+            openFile(selectedFile.getPath());
+        }
     }
 }

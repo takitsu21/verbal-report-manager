@@ -20,129 +20,8 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 public class SearchBarListener extends AbstractApplication implements ActionListener {
-    private static boolean isListenerAdded = false;
+    private static final boolean isListenerAdded = false;
     private static boolean isDoubleCalled = false;
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        System.out.println("ok");
-
-        if (! isDoubleCalled){
-            search();
-            isDoubleCalled = true;}
-        else{isDoubleCalled = false;}
-    }
-
-    public void search() {
-        try {
-            Table.setNewModelTable(Table.table, Data.dataArray);
-            String searchText;
-            if (getInfoSearchComboBox() != null) {
-                searchText = getInfoSearchComboBox();
-                setInfoSearchComboBox(null);
-            } else {
-                searchText = (String) getSearchComboBox().getSelectedItem();
-
-                try {
-                    searchText = searchText.trim();
-                } catch (NullPointerException exc) {
-                    return;
-                }
-            }
-            String[] listSearchText=searchText.split("[ ]?&[ ]?");
-
-
-            for(int index=0; index<listSearchText.length; index++) {
-                String[] listText = listSearchText[index].split("[ ]?;[ ]?");
-                String[] ligne = {};
-                for (String s : listText) {
-
-                    String[] etu = searchInTable(Table.table, s);
-
-                    int oldLength = ligne.length;
-                    ligne = Arrays.copyOf(ligne, (ligne.length + etu.length));
-                    System.arraycopy(etu, 0, ligne, oldLength, etu.length);
-
-                }
-
-
-                HashSet<String> set = new HashSet<>();
-                for (String s : ligne) {
-                    if (!s.equals("Note max") && !s.equals("Note min") && !s.equals("Note moyenne") && !s.equals("Écart-type")) {
-                        set.add(s);
-                    }
-                }
-
-                String[] listNumStud = set.toArray(new String[0]);
-                String[][] strArr;
-
-                if (listNumStud.length == 0) {
-
-                    strArr = searchCourse(listText);
-                } else {
-
-                    String[][] data = new String[listNumStud.length + 1][];
-                    if (getPath().endsWith(".xml")) {
-                        data = selectEtu(listNumStud);
-                    }
-                    if (getPath().endsWith(".csv")) {
-                        data[0] = Table.getTemporaryTable()[0];
-                        for (int i = 0; i < listNumStud.length; i++) {
-                            for (int j = 1; j < Table.getTemporaryTable().length; j++) {
-
-                                if (listNumStud[i] != null && listNumStud[i].equals(Table.getTemporaryTable()[j][0])) {
-
-                                    data[i + 1] = Table.getTemporaryTable()[j];
-                                    break;
-                                }
-                            }
-                        }
-
-                    }
-
-                    HashSet<String[]> set2 = new HashSet<>();
-                    for (int i=1;i<data.length;i++) {
-                        if(data[i][0]!=null) {
-                            set2.add(data[i]);
-                        }
-                    }
-                    String[][]t=set2.toArray(new String[0][]);
-                    String [][]dataFinal= new String[t.length+1][];
-
-                    dataFinal[0]=data[0];
-                    System.arraycopy(t, 0, dataFinal, 1, t.length);
-
-                    String[][] toSort = Arrays.copyOfRange(dataFinal, 1, dataFinal.length);
-                    List<String[]> listData = new ArrayList<>();
-                    listData.add(dataFinal[0]);
-                    Arrays.sort(toSort, (o1, o2) -> {
-                        if (o1!=null && o2!=null && o1[1] != null && o2[1] != null) {
-                            return CharSequence.compare(o1[1], o2[1]);
-                        }
-                        return 0;
-                    });
-                    listData.addAll(Arrays.asList(toSort));
-                    strArr = listData.toArray(new String[0][0]);
-                }
-
-
-                if (strArr[0][0] == null) {
-
-                    Toolkit.getDefaultToolkit().beep();
-                    JOptionPane.showMessageDialog(null, "Recherche incorrect", "Erreur", JOptionPane.WARNING_MESSAGE);
-                    refreshTable();
-                } else {
-                    //Table.setNewModelTable(Table.table, strArr);
-                    Table.setTemporaryTable(strArr);
-                }
-            }
-            Table.setNewModelTable(Table.table, Table.getTemporaryTable());
-
-        } catch (Exception ioException) {
-            ioException.printStackTrace();
-        }
-    }
-
 
     private static String[][] searchCourse(String[] names) {
 
@@ -192,7 +71,6 @@ public class SearchBarListener extends AbstractApplication implements ActionList
         return tableau_final;
     }
 
-
     public static String[][] selectEtu(String[] etu) {
         List<Element> listStudents = Data.getChildren(Data.root, "student");
         List<Element> listCourses = Data.getChildren(Data.root, "course");
@@ -203,12 +81,12 @@ public class SearchBarListener extends AbstractApplication implements ActionList
         }
         for (int j = 1; j < etu.length + 1; j++) {
             for (Element studs : listStudents) {
-                if (Table.getTemporaryTable()[1][0]!=null && etu[j - 1] != null && etu[j - 1].equalsIgnoreCase(Data.read(studs, "identifier"))) {
+                if (Table.getTemporaryTable()[1][0] != null && etu[j - 1] != null && etu[j - 1].equalsIgnoreCase(Data.read(studs, "identifier"))) {
 
                     List<Element> cours = Data.getChildren(studs, "grade");
 
                     for (int id = 0; id < Table.getTemporaryTable().length; id++) {
-                        if (Table.getTemporaryTable()[id]!=null && etu[j - 1].equals(Table.getTemporaryTable()[id][0])) {
+                        if (Table.getTemporaryTable()[id] != null && etu[j - 1].equals(Table.getTemporaryTable()[id][0])) {
                             data[j] = Table.getTemporaryTable()[id];
                             break;
                         }
@@ -244,6 +122,140 @@ public class SearchBarListener extends AbstractApplication implements ActionList
         return data;
     }
 
+    private static String[][] searchInCsv(String[] etu) {
+        String[][] data = new String[etu.length][];
+        for (int i = 0; i < etu.length; i++) {
+            for (int j = 0; j < Table.getTemporaryTable().length; j++) {
+                if (etu[i].equals(Table.getTemporaryTable()[j][0])) {
+                    data[i] = Table.getTemporaryTable()[j];
+                    break;
+                }
+            }
+        }
+        return data;
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        System.out.println("ok");
+
+        if (!isDoubleCalled) {
+            search();
+            isDoubleCalled = true;
+        } else {
+            isDoubleCalled = false;
+        }
+    }
+
+    public void search() {
+        try {
+            Table.setNewModelTable(Table.table, Data.dataArray);
+            String searchText;
+            if (getInfoSearchComboBox() != null) {
+                searchText = getInfoSearchComboBox();
+                setInfoSearchComboBox(null);
+            } else {
+                searchText = (String) getSearchComboBox().getSelectedItem();
+
+                try {
+                    searchText = searchText.trim();
+                } catch (NullPointerException exc) {
+                    return;
+                }
+            }
+            String[] listSearchText = searchText.split("[ ]?&[ ]?");
+
+
+            for (int index = 0; index < listSearchText.length; index++) {
+                String[] listText = listSearchText[index].split("[ ]?;[ ]?");
+                String[] ligne = {};
+                for (String s : listText) {
+
+                    String[] etu = searchInTable(Table.table, s);
+
+                    int oldLength = ligne.length;
+                    ligne = Arrays.copyOf(ligne, (ligne.length + etu.length));
+                    System.arraycopy(etu, 0, ligne, oldLength, etu.length);
+
+                }
+
+
+                HashSet<String> set = new HashSet<>();
+                for (String s : ligne) {
+                    if (!s.equals("Note max") && !s.equals("Note min") && !s.equals("Note moyenne") && !s.equals("Écart-type")) {
+                        set.add(s);
+                    }
+                }
+
+                String[] listNumStud = set.toArray(new String[0]);
+                String[][] strArr;
+
+                if (listNumStud.length == 0) {
+
+                    strArr = searchCourse(listText);
+                } else {
+
+                    String[][] data = new String[listNumStud.length + 1][];
+                    if (getPath().endsWith(".xml")) {
+                        data = selectEtu(listNumStud);
+                    }
+                    if (getPath().endsWith(".csv")) {
+                        data[0] = Table.getTemporaryTable()[0];
+                        for (int i = 0; i < listNumStud.length; i++) {
+                            for (int j = 1; j < Table.getTemporaryTable().length; j++) {
+
+                                if (listNumStud[i] != null && listNumStud[i].equals(Table.getTemporaryTable()[j][0])) {
+
+                                    data[i + 1] = Table.getTemporaryTable()[j];
+                                    break;
+                                }
+                            }
+                        }
+
+                    }
+
+                    HashSet<String[]> set2 = new HashSet<>();
+                    for (int i = 1; i < data.length; i++) {
+                        if (data[i][0] != null) {
+                            set2.add(data[i]);
+                        }
+                    }
+                    String[][] t = set2.toArray(new String[0][]);
+                    String[][] dataFinal = new String[t.length + 1][];
+
+                    dataFinal[0] = data[0];
+                    System.arraycopy(t, 0, dataFinal, 1, t.length);
+
+                    String[][] toSort = Arrays.copyOfRange(dataFinal, 1, dataFinal.length);
+                    List<String[]> listData = new ArrayList<>();
+                    listData.add(dataFinal[0]);
+                    Arrays.sort(toSort, (o1, o2) -> {
+                        if (o1 != null && o2 != null && o1[1] != null && o2[1] != null) {
+                            return CharSequence.compare(o1[1], o2[1]);
+                        }
+                        return 0;
+                    });
+                    listData.addAll(Arrays.asList(toSort));
+                    strArr = listData.toArray(new String[0][0]);
+                }
+
+
+                if (strArr[0][0] == null) {
+
+                    Toolkit.getDefaultToolkit().beep();
+                    JOptionPane.showMessageDialog(null, "Recherche incorrect", "Erreur", JOptionPane.WARNING_MESSAGE);
+                    refreshTable();
+                } else {
+                    //Table.setNewModelTable(Table.table, strArr);
+                    Table.setTemporaryTable(strArr);
+                }
+            }
+            Table.setNewModelTable(Table.table, Table.getTemporaryTable());
+
+        } catch (Exception ioException) {
+            ioException.printStackTrace();
+        }
+    }
 
     private String[] searchInTable(JTable table, String searchText) {
         String[] num = new String[0];
@@ -272,18 +284,5 @@ public class SearchBarListener extends AbstractApplication implements ActionList
             }
         }
         return num;
-    }
-
-    private static String[][] searchInCsv(String[] etu) {
-        String[][] data = new String[etu.length][];
-        for (int i = 0; i < etu.length; i++) {
-            for (int j = 0; j < Table.getTemporaryTable().length; j++) {
-                if (etu[i].equals(Table.getTemporaryTable()[j][0])) {
-                    data[i] = Table.getTemporaryTable()[j];
-                    break;
-                }
-            }
-        }
-        return data;
     }
 }

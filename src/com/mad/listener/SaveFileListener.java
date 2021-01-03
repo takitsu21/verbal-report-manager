@@ -25,7 +25,7 @@ public class SaveFileListener extends AbstractApplication implements ActionListe
         JFileChooser jfc = new JFileChooser(userDir) {
             @Override
             protected JDialog createDialog(Component parent) throws HeadlessException {
-                JDialog dialog = super.createDialog( parent );
+                JDialog dialog = super.createDialog(parent);
                 dialog.setIconImage(getIco());
                 return dialog;
             }

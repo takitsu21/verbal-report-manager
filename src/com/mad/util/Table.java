@@ -1,26 +1,54 @@
-//
-// Source code recreated from a .class file by IntelliJ IDEA
-// (powered by FernFlower decompiler)
-//
+
 
 package com.mad.util;
 
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Arrays;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 
 public class Table {
-    private static String[][] temporaryTable;
-    private StringBuilder csv = new StringBuilder();
     public static JTable table;
+    private static String[][] temporaryTable;
     public JScrollPane Jscroll;
+    private StringBuilder csv = new StringBuilder();
 
     public Table() {
+    }
+
+    public static String[][] sDataToArray(String data) {
+        String[] ligne = data.split("\"\n\"");
+        String[][] tableau = new String[ligne.length][];
+
+        for (int i = 0; i < ligne.length; ++i) {
+            tableau[i] = ligne[i].split("\",\"");
+        }
+
+        tableau[0][0] = tableau[0][0].replace("\"", "");
+        tableau[tableau.length - 1][tableau[0].length - 1] = tableau[tableau.length - 1][tableau[0].length - 1].replace("\"", "");
+        Data.setDataArray(tableau);
+        return tableau;
+    }
+
+    public static String[][] getTemporaryTable() {
+        return temporaryTable;
+    }
+
+    public static void setTemporaryTable(String[][] newTableData) {
+        temporaryTable = newTableData;
+    }
+
+    public static void setNewModelTable(JTable table, String[][] newTableData) {
+        TableModel tm = new DefaultTableModel(Arrays.copyOfRange(newTableData, 1, newTableData.length), newTableData[0]);
+        setTemporaryTable(newTableData);
+        table.setModel(tm);
+    }
+
+    public static int[] getSelectedRows() {
+        return table.getSelectedRows();
     }
 
     public String getCsv() {
@@ -31,26 +59,12 @@ public class Table {
         this.csv = new StringBuilder(csv);
     }
 
-    public static String[][] sDataToArray(String data) {
-        String[] ligne = data.split("\"\n\"");
-        String[][] tableau = new String[ligne.length][];
-
-        for(int i = 0; i < ligne.length; ++i) {
-            tableau[i] = ligne[i].split("\",\"");
-        }
-
-        tableau[0][0] = tableau[0][0].replace("\"", "");
-        tableau[tableau.length - 1][tableau[0].length - 1] = tableau[tableau.length - 1][tableau[0].length - 1].replace("\"", "");
-        Data.setDataArray(tableau);
-        return tableau;
-    }
-
     public void TableXML(String path, String data) {
         XmlToCsv xmlConverter = new XmlToCsv(path);
         xmlConverter.convert();
         this.setCsv(data);
         String[][] tableau = sDataToArray(data);
-        TableModel tm = new DefaultTableModel((Object[][])Arrays.copyOfRange(tableau, 1, tableau.length), tableau[0]);
+        TableModel tm = new DefaultTableModel(Arrays.copyOfRange(tableau, 1, tableau.length), tableau[0]);
         table = new JTable(tm);
         table.setAutoResizeMode(0);
         this.Jscroll = new JScrollPane(table);
@@ -64,7 +78,7 @@ public class Table {
         String ln = br_count.readLine();
 
         int nbline;
-        for(nbline = 1; ln != null; ln = br_count.readLine()) {
+        for (nbline = 1; ln != null; ln = br_count.readLine()) {
             ++nbline;
         }
 
@@ -79,7 +93,7 @@ public class Table {
         line = br.readLine();
         String[] temp = line.split("\",\"");
 
-        while(line != null) {
+        while (line != null) {
             this.csv.append(line).append('\n');
             System.arraycopy(temp, 0, data[i], 0, temp.length);
             data[i][temp.length - 1] = data[i][temp.length - 1].replace("\"", "");
@@ -101,23 +115,5 @@ public class Table {
         table = new JTable(data, column);
         table.setAutoResizeMode(0);
         this.Jscroll = new JScrollPane(table);
-    }
-
-    public static void setTemporaryTable(String[][] newTableData) {
-        temporaryTable = newTableData;
-    }
-
-    public static String[][] getTemporaryTable() {
-        return temporaryTable;
-    }
-
-    public static void setNewModelTable(JTable table, String[][] newTableData) {
-        TableModel tm = new DefaultTableModel((Object[][])Arrays.copyOfRange(newTableData, 1, newTableData.length), newTableData[0]);
-        setTemporaryTable(newTableData);
-        table.setModel(tm);
-    }
-
-    public static int[] getSelectedRows() {
-        return table.getSelectedRows();
     }
 }

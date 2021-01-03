@@ -11,7 +11,7 @@ public class KeyWatcher extends AbstractApplication implements KeyListener {
     public void keyTyped(KeyEvent e) {
 
         char c = e.getKeyChar();
-        if(!(Character.isDigit(c))){
+        if (!(Character.isDigit(c))) {
             Toolkit.getDefaultToolkit().beep();
             e.consume();
         }
