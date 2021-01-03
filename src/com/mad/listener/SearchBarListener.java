@@ -145,8 +145,16 @@ public class SearchBarListener extends AbstractApplication implements ActionList
 
 
     private static String[][] searchCourse(String[] names) {
+        String[][] tableau_final;
+        boolean affichuerStat=true;
+        if (Table.getTemporaryTable().length<Data.dataArray.length) {
+            tableau_final = new String[Table.getTemporaryTable().length][names.length + 1];
+            affichuerStat=false;
+        }
+        else{
+            tableau_final = new String[Data.dataArray.length][names.length + 1];
 
-        String[][] tableau_final = new String[Data.dataArray.length][names.length + 1];
+        }
         int[] decalage = new int[names.length];
         String[][] tableauStat = new String[names.length][4];
         for (int i = 0; i < names.length; i++) {
@@ -158,35 +166,41 @@ public class SearchBarListener extends AbstractApplication implements ActionList
                 if (currentCheck.equalsIgnoreCase(names[i]) || splited[0].equalsIgnoreCase(names[i]) || splited[splited.length - 1].equalsIgnoreCase(names[i])) {
 
                     for (int k = 0; k < Table.getTemporaryTable().length; k++) {
-                        if (!Table.getTemporaryTable()[k][j].equals("")) {
+
+                        if (Table.getTemporaryTable()[k][j]!=null && !Table.getTemporaryTable()[k][j].equals("")) {
                             tableau_final[k - decalage[i]][i + 1] = Table.getTemporaryTable()[k][j];
                         } else {
                             decalage[i] += 1;
                         }
                     }
-                    tableauStat[i][0] = Data.dataArray[Data.dataArray.length - 1][j];
-                    tableauStat[i][1] = Data.dataArray[Data.dataArray.length - 2][j];
-                    tableauStat[i][2] = Data.dataArray[Data.dataArray.length - 3][j];
-                    tableauStat[i][3] = Data.dataArray[Data.dataArray.length - 4][j];
+                    if(affichuerStat) {
+                        tableauStat[i][0] = Data.dataArray[Data.dataArray.length - 1][j];
+                        tableauStat[i][1] = Data.dataArray[Data.dataArray.length - 2][j];
+                        tableauStat[i][2] = Data.dataArray[Data.dataArray.length - 3][j];
+                        tableauStat[i][3] = Data.dataArray[Data.dataArray.length - 4][j];
+                    }
                 }
             }
         }
-
-        int decalageMin = Integer.MAX_VALUE;
-
-        for (int k : decalage) {
-            if (k < decalageMin)
-                decalageMin = k;
-        }
-        final int finalTabLength = tableau_final.length;
         tableau_final[0][0] = "Statistiques";
-        tableau_final[finalTabLength - 1 - decalageMin][0] = "Écart-type";
-        tableau_final[finalTabLength - 2 - decalageMin][0] = "Note moyenne";
-        tableau_final[finalTabLength - 3 - decalageMin][0] = "Note min";
-        tableau_final[finalTabLength - 4 - decalageMin][0] = "Note max";
-        for (int i = 0; i < tableauStat.length; i++) {
-            for (int j = 0; j < 4; j++) {
-                tableau_final[finalTabLength - 1 - decalageMin - j][i + 1] = tableauStat[i][j];
+        if(affichuerStat) {
+            int decalageMin = Integer.MAX_VALUE;
+
+            for (int k : decalage) {
+                if (k < decalageMin)
+                    decalageMin = k;
+            }
+            final int finalTabLength = tableau_final.length;
+            System.out.println(tableau_final.length);
+
+            tableau_final[finalTabLength - 1 - decalageMin][0] = "Écart-type";
+            tableau_final[finalTabLength - 2 - decalageMin][0] = "Note moyenne";
+            tableau_final[finalTabLength - 3 - decalageMin][0] = "Note min";
+            tableau_final[finalTabLength - 4 - decalageMin][0] = "Note max";
+            for (int i = 0; i < tableauStat.length; i++) {
+                for (int j = 0; j < 4; j++) {
+                    tableau_final[finalTabLength - 1 - decalageMin - j][i + 1] = tableauStat[i][j];
+                }
             }
         }
         return tableau_final;
