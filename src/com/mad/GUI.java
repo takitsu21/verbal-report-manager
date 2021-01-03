@@ -64,6 +64,7 @@ public class GUI extends AbstractApplication {
         help.setMnemonic('H');
         menu.add(help);
         JMenuItem about = new JMenuItem("A propos");
+        about.addActionListener(new HelpListener());
         help.add(about);
         setSouthPanel(new JPanel());
         setNorthPanel(new JPanel());
