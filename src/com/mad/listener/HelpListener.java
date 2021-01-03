@@ -3,6 +3,10 @@ package com.mad.listener;
 import com.mad.AbstractApplication;
 
 import javax.swing.*;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.Style;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyledDocument;
 import javax.swing.text.html.HTMLEditorKit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -29,9 +33,6 @@ public class HelpListener implements ActionListener {
                 "        font-size: 18;\n" +
                 "    }\n" +
                 "\n" +
-                "    li li {\n" +
-                "        font-size: 18;\n" +
-                "    }\n" +
                 "</style>\n" +
                 "<h1>\n" +
                 "    <u><b>Changer de programme<b></u>\n" +
@@ -50,9 +51,10 @@ public class HelpListener implements ActionListener {
                 "    <u><b>Recherche<b></u>\n" +
                 "    <ul>\n" +
                 "        <li>Pour utiliser la searchbar vous pouvez coupler les recherches avec le \";\"\n" +
-                "            pour ajouter des contraint à votre recherche vous pouvez utiliser le symbole \"&amp;\" entre chaque arguments\n" +
+                "            pour ajouter des contraint à votre recherche vous pouvez utiliser le symbole \"&amp;\" entre chaque arguments \n\n" +
                 "        </li>\n" +
-                "        <h2 style=\"color: orange;margin:0 0 0 20px;\"><u>⚠Attention⚠</u></h2>\n" +
+                "               <h4> </h4>                  "+
+                "        </br><h2 style=\"color: orange;margin:0 0 0 20px;\"><u></br>⚠Attention⚠</u></h2>\n" +
                 "        <li>Pour utiliser une recherche a contrainte il faut mettre la recherche associé à\n" +
                 "            l’etudiant avant celle du cours\n" +
                 "        </li>\n" +
@@ -78,6 +80,15 @@ public class HelpListener implements ActionListener {
         pane.setText(text);
         pane.setEditable(false);
         helpFrame.setIconImage(AbstractApplication.getIco());
+        StyledDocument doc = (StyledDocument) pane.getDocument();
+        Style style = doc.addStyle("StyleName", null);
+
+        StyleConstants.setIcon(style, new ImageIcon("example_recherche.gif"));
+        try {
+            doc.insertString((doc.getLength() / 2) + 87, "gif recherche", style);
+        } catch (BadLocationException badLocationException) {
+            badLocationException.printStackTrace();
+        }
         helpFrame.getContentPane().add(new JScrollPane(pane));
         helpFrame.setSize(700, 700);
         helpFrame.setLocationRelativeTo(null);
