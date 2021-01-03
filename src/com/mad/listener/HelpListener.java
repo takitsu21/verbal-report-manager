@@ -3,8 +3,6 @@ package com.mad.listener;
 import com.mad.AbstractApplication;
 
 import javax.swing.*;
-import javax.swing.text.DefaultStyledDocument;
-import javax.swing.text.StyleContext;
 import javax.swing.text.html.HTMLEditorKit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,15 +13,14 @@ public class HelpListener implements ActionListener {
         JFrame helpFrame = new JFrame("Help");
         helpFrame.setSize(200, 200);
         helpFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        StyleContext sc = new StyleContext();
-        final DefaultStyledDocument doc = new DefaultStyledDocument(sc);
-        JTextPane pane = new JTextPane();
 
+        JTextPane pane = new JTextPane();
         pane.setEditorKit(new HTMLEditorKit());
         String text = "<style>\n" +
                 "    h1 {\n" +
                 "        font-size: 26;\n" +
                 "    }\n" +
+                "\n" +
                 "    h2 {\n" +
                 "        font-size: 22;\n" +
                 "    }\n" +
@@ -31,6 +28,7 @@ public class HelpListener implements ActionListener {
                 "    li {\n" +
                 "        font-size: 18;\n" +
                 "    }\n" +
+                "\n" +
                 "    li li {\n" +
                 "        font-size: 18;\n" +
                 "    }\n" +
@@ -54,12 +52,11 @@ public class HelpListener implements ActionListener {
                 "        <li>Pour utiliser la searchbar vous pouvez coupler les recherches avec le \";\"\n" +
                 "            pour ajouter des contraint à votre recherche vous pouvez utiliser le symbole \"&amp;\" entre chaque arguments\n" +
                 "        </li>\n" +
-                "        <ul>\n" +
-                "               <h2 style=\"color: orange;margin:0 0 0 20px;\"><u>⚠️Attention⚠</u></h2>\n" +
-                "            <li>Pour utiliser une recherche a contrainte il faut mettre la recherche associé à\n" +
+                "        <h2 style=\"color: orange;margin:0 0 0 20px;\"><u>⚠Attention⚠</u></h2>\n" +
+                "        <li>Pour utiliser une recherche a contrainte il faut mettre la recherche associé à\n" +
                 "            l’etudiant avant celle du cours\n" +
-                "            </li>\n" +
-                "        </ul>\n" +
+                "        </li>\n" +
+                "    </ul>\n" +
                 "    </ul>\n" +
                 "\n" +
                 "</h1>\n" +
