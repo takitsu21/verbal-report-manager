@@ -116,28 +116,13 @@ public class AddProgramListener extends AbstractApplication implements ActionLis
                         for (CheckBoxGroup cb : checkBoxGroupComposantes) {
                             tmp1 = new ArrayList<>();
                             tmp1.add("composite");
-                            tmp1.add(cb.checkBoxGroupeId.getText());
-                            tmp1.add(cb.checkBoxGroupeName.getText());
-                            for (JCheckBox currentCb : cb.checkBoxes) {
-                                if (currentCb.isSelected()) {
-                                    tmp1.add(currentCb.getText().split(" ")[0]);
-                                }
-                            }
-                            programs.add(tmp1);
+                            addCheckboxGroup(programs, tmp1, cb);
                         }
 
                         for (CheckBoxGroup cb : checkBoxGroupOptions) {
                             tmp1 = new ArrayList<>();
                             tmp1.add("option");
-                            tmp1.add(cb.checkBoxGroupeId.getText());
-                            tmp1.add(cb.checkBoxGroupeName.getText());
-                            for (JCheckBox currentCb : cb.checkBoxes) {
-                                if (currentCb.isSelected()) {
-                                    tmp1.add(currentCb.getText().split(" ")[0]);
-
-                                }
-                            }
-                            programs.add(tmp1);
+                            addCheckboxGroup(programs, tmp1, cb);
                         }
 
                         for (JCheckBox currentCb : checkBoxGroupsCourse.checkBoxes) {
@@ -153,13 +138,11 @@ public class AddProgramListener extends AbstractApplication implements ActionLis
                         for (int i = 0; i < programs.size(); i++) {
                             t[i] = programs.get(i).toArray(blankArray);
                         }
-                        Node n = XmlWriter.generateProgram(t);
-                        insertAction(() -> XmlWriter.addProgram(n),
-                                "program", n, XmlMethodType.ADD, true);
-                        getComboBox().addItem(programIdField.getText());
-                        SwingUtilities.invokeLater(() -> {
-                            this.programFrame.dispose();
-                        });
+                        if (XmlWriter.addProgram(XmlWriter.generateProgram(t))) {
+                            getComboBox().addItem(programIdField.getText());
+                            refreshTable();
+                            SwingUtilities.invokeLater(() -> programFrame.dispose());
+                        }
                     });
                     ActionListener finishListener = metaButton.getActionListeners()[0];
 
@@ -259,6 +242,17 @@ public class AddProgramListener extends AbstractApplication implements ActionLis
 
         programFrame.getContentPane().add(panel);
 
+    }
+
+    private void addCheckboxGroup(List<List<String>> programs, List<String> tmp1, CheckBoxGroup cb) {
+        tmp1.add(cb.checkBoxGroupeId.getText());
+        tmp1.add(cb.checkBoxGroupeName.getText());
+        for (JCheckBox currentCb : cb.checkBoxes) {
+            if (currentCb.isSelected()) {
+                tmp1.add(currentCb.getText().split(" ")[0]);
+            }
+        }
+        programs.add(tmp1);
     }
 
     public JFrame getProgramFrame() {
