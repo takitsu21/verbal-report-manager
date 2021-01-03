@@ -37,6 +37,7 @@ public class GUI {
         ouvrir.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, KeyEvent.CTRL_DOWN_MASK));
         ouvrir.addActionListener(new OpenFileListener());
 
+
         file.add(ouvrir);
 
         JMenuItem enregistrer = new JMenuItem("Enregistrer", 's');
