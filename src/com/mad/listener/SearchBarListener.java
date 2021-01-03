@@ -254,6 +254,119 @@ public class SearchBarListener extends AbstractApplication implements ActionList
         }
     }
 
+    private static String[][] searchCourse(String[] names) {
+        String[][] tableau_final;
+        boolean affichuerStat=true;
+        if (Table.getTemporaryTable().length<Data.dataArray.length) {
+            tableau_final = new String[Table.getTemporaryTable().length][names.length + 1];
+            affichuerStat=false;
+        }
+        else{
+            tableau_final = new String[Data.dataArray.length][names.length + 1];
+
+        }
+        int[] decalage = new int[names.length];
+        String[][] tableauStat = new String[names.length][4];
+        for (int i = 0; i < names.length; i++) {
+            decalage[i] = 0;
+
+            for (int j = 0; j < Table.getTemporaryTable()[0].length; j++) {
+                String currentCheck = Table.getTemporaryTable()[0][j];
+                String[] splited = currentCheck.split(" - "); //.map(String::toLowerCase).toArray(String[]::new);
+                if (currentCheck.equalsIgnoreCase(names[i]) || splited[0].equalsIgnoreCase(names[i]) || splited[splited.length - 1].equalsIgnoreCase(names[i])) {
+
+                    for (int k = 0; k < Table.getTemporaryTable().length; k++) {
+
+                        if (Table.getTemporaryTable()[k][j]!=null && !Table.getTemporaryTable()[k][j].equals("")) {
+                            tableau_final[k - decalage[i]][i + 1] = Table.getTemporaryTable()[k][j];
+                        } else {
+                            decalage[i] += 1;
+                        }
+                    }
+                    if(affichuerStat) {
+                        tableauStat[i][0] = Data.dataArray[Data.dataArray.length - 1][j];
+                        tableauStat[i][1] = Data.dataArray[Data.dataArray.length - 2][j];
+                        tableauStat[i][2] = Data.dataArray[Data.dataArray.length - 3][j];
+                        tableauStat[i][3] = Data.dataArray[Data.dataArray.length - 4][j];
+                    }
+                }
+            }
+        }
+        tableau_final[0][0] = "Statistiques";
+        if(affichuerStat) {
+            int decalageMin = Integer.MAX_VALUE;
+
+            for (int k : decalage) {
+                if (k < decalageMin)
+                    decalageMin = k;
+            }
+            final int finalTabLength = tableau_final.length;
+            System.out.println(tableau_final.length);
+
+            tableau_final[finalTabLength - 1 - decalageMin][0] = "Écart-type";
+            tableau_final[finalTabLength - 2 - decalageMin][0] = "Note moyenne";
+            tableau_final[finalTabLength - 3 - decalageMin][0] = "Note min";
+            tableau_final[finalTabLength - 4 - decalageMin][0] = "Note max";
+            for (int i = 0; i < tableauStat.length; i++) {
+                for (int j = 0; j < 4; j++) {
+                    tableau_final[finalTabLength - 1 - decalageMin - j][i + 1] = tableauStat[i][j];
+                }
+            }
+        }
+        return tableau_final;
+    }
+
+
+    public static String[][] selectEtu(String[] etu) {
+        List<Element> listStudents = Data.getChildren(Data.root, "student");
+        List<Element> listCourses = Data.getChildren(Data.root, "course");
+        String[][] data = new String[etu.length + 1][Table.getTemporaryTable()[0].length];
+
+        for (int i = 0; i < Table.getTemporaryTable()[0].length; i++) {
+            data[0][i] = Table.getTemporaryTable()[0][i];
+        }
+        for (int j = 1; j < etu.length + 1; j++) {
+            for (Element studs : listStudents) {
+                if (Table.getTemporaryTable()[1][0]!=null && etu[j - 1] != null && etu[j - 1].equalsIgnoreCase(Data.read(studs, "identifier"))) {
+
+                    List<Element> cours = Data.getChildren(studs, "grade");
+
+                    for (int id = 0; id < Table.getTemporaryTable().length; id++) {
+                        if (Table.getTemporaryTable()[id]!=null && etu[j - 1].equals(Table.getTemporaryTable()[id][0])) {
+                            data[j] = Table.getTemporaryTable()[id];
+                            break;
+                        }
+                    }
+
+                    for (Element cour : cours) {
+                        String coursTest = Data.read(cour, "item");
+                        int trouver = 0;
+                        for (int m = 3; m < data[0].length; m++) {
+                            if (coursTest != null && coursTest.equals(data[0][m].split(" - ")[0])) {
+                                trouver = 1;
+                                break;
+                            }
+                        }
+                        if (trouver == 0) {
+                            for (int i = 0; i < data.length; i++) {
+                                data[i] = Arrays.copyOf(data[i], data[i].length + 1);
+                            }
+                            for (Element element : listCourses) {
+                                if (coursTest != null && coursTest.equals(Data.read(element, "identifier"))) {
+                                    data[0][data[0].length - 1] = coursTest + " - " + Data.read(element, "surname");
+                                    break;
+                                }
+                            }
+
+                            data[j][data[0].length - 1] = Data.read(cour, "value");
+                        }
+                    }
+                    break;
+                }
+            }
+        }
+        return data;
+    }
     private String[] searchInTable(JTable table, String searchText) {
         String[] num = new String[0];
         RowSorter<? extends TableModel> rs = Table.table.getRowSorter();
