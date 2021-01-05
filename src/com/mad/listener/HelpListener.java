@@ -37,8 +37,8 @@ public class HelpListener implements ActionListener {
                 "<h1>\n" +
                 "    <u><b>Changer de programme<b></u>\n" +
                 "</h1>\n" +
-                "<li>Une fois votre fichier ouvert il vous suffit de cliquer sur le combobox situé au dessus du tableau et aillant\n" +
-                "    comme nom le nom d’un programme et de sélectionner le programme voulu.\n" +
+                "<li>Une fois votre fichier ouvert il vous suffit de cliquer sur la combobox situé au dessus du tableau affichant les \n" +
+                " programmes disponible et sélectionner le programme voulu.\n" +
                 "</li>\n" +
                 "<h1>\n" +
                 "    <u><b>Selection<b></u>\n" +
@@ -51,12 +51,12 @@ public class HelpListener implements ActionListener {
                 "    <u><b>Recherche<b></u>\n" +
                 "    <ul>\n" +
                 "        <li>Pour utiliser la searchbar vous pouvez coupler les recherches avec le \";\"\n" +
-                "            pour ajouter des contraint à votre recherche vous pouvez utiliser le symbole \"&amp;\" entre chaque arguments \n\n" +
+                "            pour ajouter des contraintes à votre recherche vous pouvez utiliser le symbole \"&amp;\" entre chaque arguments \n\n" +
                 "        </li>\n" +
                 "               <h4> </h4>                  "+
                 "        </br><h2 style=\"color: orange;margin:0 0 0 20px;\"><u></br>⚠Attention⚠</u></h2>\n" +
                 "        <li>Pour utiliser une recherche a contrainte il faut mettre la recherche associé à\n" +
-                "            l’etudiant avant celle du cours\n" +
+                "             l’etudiant avant celle du cours\n" +
                 "        </li>\n" +
                 "    </ul>\n" +
                 "    </ul>\n" +
@@ -73,7 +73,7 @@ public class HelpListener implements ActionListener {
                 "<h1 style=\"color: orange;\">\n" +
                 "    <u><b>⚠Attention⚠<b></u>\n" +
                 "</h1>\n" +
-                "<li>Le C-Z (undo) et C-Y (redo) ne marche pas pour l’ajout de programme soyez sûr de vos action la face du monde\n" +
+                "<li>Le C-Z (undo) et C-Y (redo) ne marche pas pour l’ajout de programme soyez sûr de vos actions la face du monde\n" +
                 "    pourrait en être bouleversé\n" +
                 "</li>";
 
@@ -85,7 +85,7 @@ public class HelpListener implements ActionListener {
 
         StyleConstants.setIcon(style, new ImageIcon("example_recherche.gif"));
         try {
-            doc.insertString((doc.getLength() / 2) + 87, "gif recherche", style);
+            doc.insertString((doc.getLength() / 2) + 82, "gif recherche", style);
         } catch (BadLocationException badLocationException) {
             badLocationException.printStackTrace();
         }
