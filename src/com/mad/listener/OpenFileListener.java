@@ -36,6 +36,8 @@ public class OpenFileListener extends AbstractApplication implements ActionListe
         setRefresh(new JButton(new ImageIcon(buttonIcon)));
         getRefresh().addActionListener(new RefreshListener());
         getRefresh().setMnemonic(KeyEvent.VK_F5);
+        setAfficheEtu( new JCheckBox("Masquer étudiants"));
+        getAfficheEtu().addActionListener(new MasqueListener());
         JMenuItem refreshItem = new JMenuItem("Refresh");
         KeyStroke f5 = KeyStroke.getKeyStroke(KeyEvent.VK_F5, 0);
         refreshItem.setAccelerator(f5);
@@ -140,6 +142,7 @@ public class OpenFileListener extends AbstractApplication implements ActionListe
             getNorthPanel().add(getShowTree());
             getNorthPanel().add(getComboBox());
             getNorthPanel().add(getRefresh());
+            getNorthPanel().add(getAfficheEtu());
         }
     }
 

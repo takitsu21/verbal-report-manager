@@ -36,6 +36,7 @@ public abstract class AbstractApplication {
     protected static JTree showHierarchicTree;
     protected static boolean componentsInitialised = false;
     protected static String infoSearchComboBox;
+    protected static JCheckBox afficheEtu;
     protected static JButton refresh;
     protected static String savedAsName;
     protected static Timestamp lastModificationAt;
@@ -81,6 +82,14 @@ public abstract class AbstractApplication {
 
     public static void setAddProgramButton(JButton addProgramButton) {
         AbstractApplication.addProgramButton = addProgramButton;
+    }
+
+    public static JCheckBox getAfficheEtu() {
+        return afficheEtu;
+    }
+
+    public static void setAfficheEtu(JCheckBox afficheEtu) {
+        AbstractApplication.afficheEtu = afficheEtu;
     }
 
     public static JButton getAddCourse() {
@@ -249,6 +258,9 @@ public abstract class AbstractApplication {
             XmlToCsv xmlConverter = new XmlToCsv(TMP_PATH);
             xmlConverter.convert();
             getComboBox().setSelectedItem(getComboBox().getSelectedItem());
+            if(getAfficheEtu().isSelected()){
+                getAfficheEtu().setSelected(false);
+            }
         } else if (path.endsWith(".csv")) {
             save(false);
             Table.setNewModelTable(Table.table, Data.dataArray);
