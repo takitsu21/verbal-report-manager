@@ -48,8 +48,8 @@ public class GUI extends AbstractApplication {
         export.setMnemonic('E');
         JMenuItem xmlItem = new JMenuItem("xml");
         JMenuItem csvItem = new JMenuItem("csv");
-        JMenuItem undo = new JMenuItem("Undo");
-        JMenuItem redo = new JMenuItem("Redo");
+        JMenuItem undo = new JMenuItem("Annuler");
+        JMenuItem redo = new JMenuItem("Refaire");
         undo.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Z, KeyEvent.CTRL_DOWN_MASK));
         redo.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Y, KeyEvent.CTRL_DOWN_MASK));
         undo.addActionListener(e -> undo());
@@ -61,10 +61,10 @@ public class GUI extends AbstractApplication {
         file.add(export);
         export.add(xmlItem);
         export.add(csvItem);
-        JMenu help = new JMenu("Help");
+        JMenu help = new JMenu("Aide");
         help.setMnemonic('H');
         menu.add(help);
-        JMenuItem about = new JMenuItem("A propos");
+        JMenuItem about = new JMenuItem("À propos");
         about.addActionListener(new HelpListener());
         help.add(about);
         setSouthPanel(new JPanel());
@@ -79,7 +79,7 @@ public class GUI extends AbstractApplication {
 
         getContent().add(getNorthPanel(), "North");
         getContent().add(getSouthPanel(), "South");
-        setDragAndDrop(new JLabel("Drag XML or CSV here.", 0));
+        setDragAndDrop(new JLabel("Glissez le fichier XML ou CSV.", 0));
         DropTargetListener dtl = new DragDropListener();
 
         new DropTarget(getFrame(), dtl);

@@ -24,10 +24,10 @@ public class OpenFileListener extends AbstractApplication implements ActionListe
         Table.setTemporaryTable(Data.dataArray);
 
         if (blocs.length >= 0) System.arraycopy(Data.dataArray[0], 3, blocs, 0, blocs.length);
-        setShowSelectedLines(new JButton("Afficher ligne selectionné"));
-        setDeleteLines(new JButton("Supprimer ligne selectionné"));
+        setShowSelectedLines(new JButton("Afficher ligne(s) selectionnée(s)"));
+        setDeleteLines(new JButton("Supprimer ligne(s) selectionnée(s)"));
         setAddStudent(new JButton("Ajouter un élève"));
-        setAddCourse(new JButton("Ajouter Cours"));
+        setAddCourse(new JButton("Ajouter un cours"));
         setAddProgramButton(new JButton("Ajouter un programme"));
         setSearchComboBox(new JComboBox<>(blocs));
         setShowTree(new JButton("Vue hiérarchisé"));
@@ -36,9 +36,9 @@ public class OpenFileListener extends AbstractApplication implements ActionListe
         setRefresh(new JButton(new ImageIcon(buttonIcon)));
         getRefresh().addActionListener(new RefreshListener());
         getRefresh().setMnemonic(KeyEvent.VK_F5);
-        setAfficheEtu(new JCheckBox("Masquer étudiants"));
+        setAfficheEtu(new JCheckBox("Masquer les informations personnelles"));
         getAfficheEtu().addActionListener(new MasqueListener());
-        JMenuItem refreshItem = new JMenuItem("Refresh");
+        JMenuItem refreshItem = new JMenuItem("Actualiser");
         KeyStroke f5 = KeyStroke.getKeyStroke(KeyEvent.VK_F5, 0);
         refreshItem.setAccelerator(f5);
         refreshItem.addActionListener(e -> getRefresh().doClick());
