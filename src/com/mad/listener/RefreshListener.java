@@ -9,6 +9,5 @@ public class RefreshListener extends AbstractApplication implements ActionListen
     @Override
     public void actionPerformed(ActionEvent e) {
         refreshTable();
-
     }
 }

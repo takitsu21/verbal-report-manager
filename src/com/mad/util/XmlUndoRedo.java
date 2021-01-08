@@ -50,34 +50,24 @@ public class XmlUndoRedo extends Action {
         switch (this.xmt) {
             case ADD:
                 if (this.type.equalsIgnoreCase("student")) {
-                    redoRunner = () -> {
-                        XmlWriter.deleteStudent((String) this.arg);
-                    };
+                    redoRunner = () -> XmlWriter.deleteStudent((String) this.arg);
                 } else if (this.type.equalsIgnoreCase("course")) {
                     n = XmlWriter.getCourseDoc((Node) this.arg);
-                    redoRunner = () -> {
-                        XmlWriter.removeNode(n);
-                    };
+                    redoRunner = () -> XmlWriter.removeNode(n);
                 } else if (this.type.equalsIgnoreCase("program")) {
                     n = XmlWriter.getProgramDoc((Node) this.arg);
-                    redoRunner = () -> {
-                        XmlWriter.removeNode(n);
-                    };
+                    redoRunner = () -> XmlWriter.removeNode(n);
                 }
                 break;
             case DELETE:
                 if (this.type.equalsIgnoreCase("student")) {
                     n = Data.doc.importNode((Node) this.arg, true);
-                    redoRunner = () -> {
-                        XmlWriter.addNode(n);
-                    };
+                    redoRunner = () -> XmlWriter.addNode(n);
                 }
                 break;
             case MODIFY:
                 if (this.type.equalsIgnoreCase("course")) {
-                    redoRunner = () -> {
-                        TableChangedListener.updateCell((String) this.args[0], (String) this.args[1], (String) this.args[2]);
-                    };
+                    redoRunner = () -> TableChangedListener.updateCell((String) this.args[0], (String) this.args[1], (String) this.args[2]);
                 }
                 break;
             default:

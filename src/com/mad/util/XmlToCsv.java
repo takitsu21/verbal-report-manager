@@ -61,9 +61,9 @@ public class XmlToCsv {
 
         int max = Integer.MIN_VALUE;
 
-        for (int i = 0; i < listStudents.size(); i++) {
-            if (listStudents.get(i).size() > max)
-                max = listStudents.get(i).size();
+        for (List<Element> listStudent : listStudents) {
+            if (listStudent.size() > max)
+                max = listStudent.size();
         }
 
         String[][][] notes = new String[programid.size()][max][];

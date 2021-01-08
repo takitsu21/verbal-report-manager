@@ -6,8 +6,6 @@ import com.mad.util.Table;
 import org.w3c.dom.Element;
 
 import javax.swing.*;
-import javax.swing.event.RowSorterEvent;
-import javax.swing.event.RowSorterListener;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 import java.awt.*;
@@ -43,6 +41,7 @@ public class SearchBarListener extends AbstractApplication implements ActionList
 
             for (int j = 0; j < Table.getTemporaryTable()[0].length; j++) {
                 String currentCheck = Table.getTemporaryTable()[0][j];
+                System.out.println(currentCheck);
                 String[] splited = currentCheck.split(" - ");
                 if (currentCheck.equalsIgnoreCase(names[i]) || splited[0].equalsIgnoreCase(names[i])
                         || splited[splited.length - 1].equalsIgnoreCase(names[i])) {
@@ -112,9 +111,7 @@ public class SearchBarListener extends AbstractApplication implements ActionList
         List<Element> listCourses = Data.getChildren(Data.root, "course");
         String[][] data = new String[etu.length + 1][Table.getTemporaryTable()[0].length];
 
-        for (int i = 0; i < Table.getTemporaryTable()[0].length; i++) {
-            data[0][i] = Table.getTemporaryTable()[0][i];
-        }
+        System.arraycopy(Table.getTemporaryTable()[0], 0, data[0], 0, Table.getTemporaryTable()[0].length);
         for (int j = 1; j < etu.length + 1; j++) {
             for (Element studs : listStudents) {
                 if (Table.getTemporaryTable()[1][0] != null && etu[j - 1] != null && etu[j - 1].equalsIgnoreCase(Data.read(studs, "identifier"))) {
@@ -191,8 +188,8 @@ public class SearchBarListener extends AbstractApplication implements ActionList
             String[] listSearchText = searchText.split("[ ]?&[ ]?");
 
 
-            for (int index = 0; index < listSearchText.length; index++) {
-                String[] listText = listSearchText[index].split("[ ]?;[ ]?");
+            for (String value : listSearchText) {
+                String[] listText = value.split("[ ]?;[ ]?");
                 String[] ligne = {};
                 for (String s : listText) {
 
@@ -293,12 +290,7 @@ public class SearchBarListener extends AbstractApplication implements ActionList
         if (searchText.length() == 0) {
             rowSorter.setRowFilter(null);
         } else {
-            rowSorter.addRowSorterListener(new RowSorterListener() {
-                @Override
-                public void sorterChanged(RowSorterEvent e) {
-                    table.getModel().addTableModelListener(new TableChangedListener());
-                }
-            });
+            rowSorter.addRowSorterListener(e -> table.getModel().addTableModelListener(new TableChangedListener()));
             rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + Pattern.quote(searchText)));
 
             num = new String[table.getRowCount()];

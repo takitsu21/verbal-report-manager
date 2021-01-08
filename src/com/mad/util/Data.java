@@ -33,7 +33,7 @@ public class Data {
 
         try {
             Files.write(path, bs);
-        } catch (Exception e) {
+        } catch (Exception ignored) {
         }
     }
 

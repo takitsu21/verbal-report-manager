@@ -156,7 +156,6 @@ public class AddProgramListener extends AbstractApplication implements ActionLis
 
                         next12 = new JButton("Suivant");
                         next12.addActionListener(e13 -> {
-                            JPanel tmp13 = new JPanel();
                             getProgramFrame().getContentPane().remove(nextPane);
                             butNex.remove(next12);
                             refreshWindow();
@@ -171,7 +170,6 @@ public class AddProgramListener extends AbstractApplication implements ActionLis
                             if (nbComposantes1 > 0) {
                                 JButton next1 = new JButton("Suivant");
                                 next1.addActionListener(e12 -> {
-                                    JPanel tmp12 = new JPanel();
                                     getProgramFrame().getContentPane().remove(nextPane12);
                                     butNex.remove(next1);
                                     refreshWindow();

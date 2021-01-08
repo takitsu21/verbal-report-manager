@@ -10,7 +10,6 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.File;
 import java.sql.Timestamp;
-import java.util.Iterator;
 import java.util.List;
 
 public class XmlWriter {
@@ -44,20 +43,6 @@ public class XmlWriter {
             Data.root.removeChild(student);
             return true;
         } catch (Exception e) {
-            return false;
-        }
-    }
-
-    public static boolean addStudent(String studentId) {
-        return addStudent(getStudent(studentId));
-    }
-
-    public static boolean addStudent(Node newStudent) {
-        try {
-            Data.root.appendChild(newStudent);
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
             return false;
         }
     }
@@ -158,10 +143,8 @@ public class XmlWriter {
     public static Node getProgramDoc(Node n) {
         List<Element> programs = Data.getChildren(Data.root, "program");
         Node ret = null;
-        Iterator<Element> iterator = programs.iterator();
 
-        while (iterator.hasNext()) {
-            Element program = iterator.next();
+        for (Element program : programs) {
             if (Data.read(program, "identifier").equalsIgnoreCase(Data.read((Element) n, "identifier"))) {
                 ret = program;
                 break;
@@ -173,10 +156,8 @@ public class XmlWriter {
     public static Node getCourseDoc(Node n) {
         List<Element> courses = Data.getChildren(Data.root, "course");
         Node ret = null;
-        Iterator<Element> iterator = courses.iterator();
 
-        while (iterator.hasNext()) {
-            Element course = iterator.next();
+        for (Element course : courses) {
             if (Data.read(course, "identifier").equalsIgnoreCase(Data.read((Element) n, "identifier"))) {
                 ret = course;
                 break;
@@ -200,16 +181,13 @@ public class XmlWriter {
 
             if (nodeType != null) {
                 switch (nodeType) {
-                    case "identifier":
-                    case "surname":
-                    case "name":
-                    case "program":
+                    case "identifier", "surname", "name", "program" -> {
                         item = Data.doc.createElement(s[0]);
                         item.appendChild(Data.doc.createTextNode(s[1]));
                         student.appendChild(item);
                         breakLine(student);
-                        break;
-                    case "grade":
+                    }
+                    case "grade" -> {
                         item = Data.doc.createElement(s[0]);
                         Node composante = Data.doc.createElement("item");
                         Node value = Data.doc.createElement("value");
@@ -219,7 +197,7 @@ public class XmlWriter {
                         item.appendChild(value);
                         student.appendChild(item);
                         breakLine(student);
-                        break;
+                    }
                 }
             }
         }

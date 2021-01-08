@@ -48,10 +48,6 @@ public class Table {
         return table.getSelectedRows();
     }
 
-    public String getCsv() {
-        return this.csv.toString();
-    }
-
     public void setCsv(String csv) {
         this.csv = new StringBuilder(csv);
     }

@@ -32,9 +32,7 @@ public class SaveOnExitListener extends WindowAdapter {
                 SwingUtilities.invokeLater(() -> AbstractApplication.getFrame().dispose());
             }
         });
-        quitWithoutSave.addActionListener(e13 -> {
-            SwingUtilities.invokeLater(() -> AbstractApplication.getFrame().dispose());
-        });
+        quitWithoutSave.addActionListener(e13 -> SwingUtilities.invokeLater(() -> AbstractApplication.getFrame().dispose()));
         JOptionPane.showOptionDialog(AbstractApplication.getFrame(),
                 "Vous n'avez pas enregistrer votre travail actuel",
                 "Travail non enregistrer",

@@ -31,7 +31,7 @@ public class TableChangedListener extends AbstractApplication implements TableMo
     }
 
     public void tableChanged(TableModelEvent e) {
-        if (e.getType() == 0) {
+        if (e.getType() == TableModelEvent.UPDATE) {
             int col = Table.table.getSelectedColumn();
             String oldValue = Data.dataArray[e.getFirstRow() + 1][e.getColumn()];
             String courseId = String.valueOf(Table.table.getModel().getColumnName(col)).split(" ")[0];
@@ -40,9 +40,7 @@ public class TableChangedListener extends AbstractApplication implements TableMo
             if (oldValue.equalsIgnoreCase(newVal)) {
                 return;
             }
-            this.insertAction(() -> {
-                updateCell(newVal, numEtu, courseId);
-            }, "course", XmlMethodType.MODIFY, false, oldValue, numEtu, courseId);
+            this.insertAction(() -> updateCell(newVal, numEtu, courseId), "course", XmlMethodType.MODIFY, false, oldValue, numEtu, courseId);
             Table.table.getModel().removeTableModelListener(this);
             Table.table.getModel().addTableModelListener(this);
         }

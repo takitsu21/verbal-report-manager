@@ -352,8 +352,7 @@ public abstract class AbstractApplication {
             Action command = commandStack.get(undoRedoPointer);
             command.unExecute();
             --undoRedoPointer;
-        }
-        catch (RuntimeException ignored) {
+        } catch (RuntimeException ignored) {
 
         }
     }
