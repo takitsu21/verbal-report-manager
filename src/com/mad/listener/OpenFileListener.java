@@ -22,6 +22,7 @@ public class OpenFileListener extends AbstractApplication implements ActionListe
     public static void initComponents() throws IOException {
 
         String[] blocs = new String[Data.dataArray[0].length - 3];
+        Table.setTemporaryTable(Data.dataArray);
 
         if (blocs.length >= 0) System.arraycopy(Data.dataArray[0], 3, blocs, 0, blocs.length);
         setShowSelectedLines(new JButton("Afficher ligne selectionné"));

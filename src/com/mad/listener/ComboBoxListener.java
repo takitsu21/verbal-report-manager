@@ -16,6 +16,7 @@ public class ComboBoxListener extends AbstractApplication implements ActionListe
         String[][] newArr = Table.sDataToArray(
                 Data.dataSet.get(Objects.requireNonNull(combo.getSelectedItem()).toString()));
 
+        Table.setTemporaryTable(newArr);
         Table.setNewModelTable(Table.table, newArr);
         String[] blocs = new String[Data.dataArray[0].length - 3];
         if (blocs.length >= 0) System.arraycopy(Data.dataArray[0], 3, blocs, 0, blocs.length);

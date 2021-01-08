@@ -263,6 +263,7 @@ public abstract class AbstractApplication {
             }
         } else if (path.endsWith(".csv")) {
             save(false);
+            Table.setTemporaryTable(Data.dataArray);
             Table.setNewModelTable(Table.table, Data.dataArray);
         }
 

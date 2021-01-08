@@ -22,6 +22,7 @@ public class DeleteRowListener extends AbstractApplication implements ActionList
                     "student", studentNode, XmlMethodType.DELETE, false);
         }
         refreshTable();
+        Table.setTemporaryTable(Data.dataArray);
         Table.setNewModelTable(Table.table, Data.dataArray);
     }
 }

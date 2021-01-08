@@ -36,6 +36,8 @@ public class SearchBarListener extends AbstractApplication implements ActionList
 
     public void search() {
         try {
+            getAfficheEtu().setSelected(false);
+            Table.setTemporaryTable(Data.dataArray);
             Table.setNewModelTable(Table.table, Data.dataArray);
             String searchText;
             if (getInfoSearchComboBox() != null) {
@@ -137,6 +139,7 @@ public class SearchBarListener extends AbstractApplication implements ActionList
                     Table.setTemporaryTable(strArr);
                 }
             }
+
             Table.setNewModelTable(Table.table, Table.getTemporaryTable());
 
         } catch (Exception ioException) {
@@ -155,10 +158,14 @@ public class SearchBarListener extends AbstractApplication implements ActionList
             tableau_final = new String[Data.dataArray.length][names.length + 3];
 
         }
-        int[] decalage = new int[names.length];
+        if(getAfficheEtu().isSelected()){
+            tableau_final[0][0] = "Statistiques";
+        }
+
+
         String[][] tableauStat = new String[names.length][4];
         for (int i = 0; i < names.length; i++) {
-            decalage[i] = 0;
+
 
             for (int j = 0; j < Table.getTemporaryTable()[0].length; j++) {
                 String currentCheck = Table.getTemporaryTable()[0][j];
@@ -171,8 +178,6 @@ public class SearchBarListener extends AbstractApplication implements ActionList
                         tableau_final[k][2] = Table.getTemporaryTable()[k][2];
                         if (Table.getTemporaryTable()[k][j]!=null && !Table.getTemporaryTable()[k][j].equals("")) {
                             tableau_final[k][i + 3] = Table.getTemporaryTable()[k][j];
-                        } else {
-                            decalage[i] += 1;
                         }
                     }
                     if(affichuerStat) {
@@ -209,7 +214,7 @@ public class SearchBarListener extends AbstractApplication implements ActionList
 
         }
 
-        tableau_final[0][0] = "Statistiques";
+
         if(affichuerStat) {
 
             final int finalTabLength = tableau_final.length;

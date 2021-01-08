@@ -15,23 +15,40 @@ public class MasqueListener extends AbstractApplication implements ActionListene
         if (getAfficheEtu().isSelected()) {
             String[][] newTable;
 
-            try {
-                newTable = new String[Table.getTemporaryTable().length][];
-                for (int i = 0; i < Table.getTemporaryTable().length; i++) {
+            //try {
+                newTable = new String[Table.getTemporaryTable().length][Table.getTemporaryTable()[0].length - 2];
+                if(Table.getTemporaryTable()[Table.getTemporaryTable().length-1][0].equals("Écart-type")){
 
-                    newTable[i] = Arrays.copyOfRange(Table.getTemporaryTable()[i], 3, Table.getTemporaryTable().length);
+                    for (int i = 0; i < Table.getTemporaryTable().length; i++) {
+                        System.arraycopy(Table.getTemporaryTable()[i],3,newTable[i],1 , Table.getTemporaryTable()[i].length-3);
+                    }
+
+                    newTable[0][0]="Statistiques";
+
+                    newTable[newTable.length - 1][0] = "Écart-type";
+                    newTable[newTable.length - 2][0] = "Note moyenne";
+                    newTable[newTable.length - 3][0] = "Note min";
+                    newTable[newTable.length - 4][0] = "Note max";
                 }
-            } catch (NullPointerException exc) {
+                else {
+                    for (int i = 0; i < Table.getTemporaryTable().length; i++) {
+                        newTable[i] = Arrays.copyOfRange(Table.getTemporaryTable()[i], 3, Table.getTemporaryTable()[i].length);
+                    }
+                }
+             /*catch (NullPointerException exc) {
                 System.out.println(exc.getMessage());
                 newTable = new String[Data.dataArray.length][];
                 for (int i = 0; i < Data.dataArray.length; i++) {
 
                     newTable[i] = Arrays.copyOfRange(Data.dataArray[i], 3, Data.dataArray.length);
                 }
-            }
+            }*/
             Table.setNewModelTable(Table.table, newTable);
         } else {
-            Table.setNewModelTable(Table.table, Data.dataArray);
+
+            Table.setNewModelTable(Table.table, Table.getTemporaryTable());
+            Table.table.getModel().removeTableModelListener(new TableChangedListener());
+            Table.table.getModel().addTableModelListener(new TableChangedListener());
         }
     }
 

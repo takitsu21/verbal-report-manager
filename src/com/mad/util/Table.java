@@ -43,7 +43,7 @@ public class Table {
 
     public static void setNewModelTable(JTable table, String[][] newTableData) {
         TableModel tm = new DefaultTableModel(Arrays.copyOfRange(newTableData, 1, newTableData.length), newTableData[0]);
-        setTemporaryTable(newTableData);
+        //setTemporaryTable(newTableData);
         table.setModel(tm);
     }
 
