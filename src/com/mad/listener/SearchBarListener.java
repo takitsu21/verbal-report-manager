@@ -24,7 +24,7 @@ public class SearchBarListener extends AbstractApplication implements ActionList
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        System.out.println("ok");
+
 
         if (!isDoubleCalled) {
             search();
@@ -148,11 +148,11 @@ public class SearchBarListener extends AbstractApplication implements ActionList
         String[][] tableau_final;
         boolean affichuerStat=true;
         if (Table.getTemporaryTable().length<Data.dataArray.length) {
-            tableau_final = new String[Table.getTemporaryTable().length][names.length + 1];
+            tableau_final = new String[Table.getTemporaryTable().length][names.length + 3];
             affichuerStat=false;
         }
         else{
-            tableau_final = new String[Data.dataArray.length][names.length + 1];
+            tableau_final = new String[Data.dataArray.length][names.length + 3];
 
         }
         int[] decalage = new int[names.length];
@@ -166,9 +166,11 @@ public class SearchBarListener extends AbstractApplication implements ActionList
                 if (currentCheck.equalsIgnoreCase(names[i]) || splited[0].equalsIgnoreCase(names[i]) || splited[splited.length - 1].equalsIgnoreCase(names[i])) {
 
                     for (int k = 0; k < Table.getTemporaryTable().length; k++) {
-
+                        tableau_final[k][0] = Table.getTemporaryTable()[k][0];
+                        tableau_final[k][1] = Table.getTemporaryTable()[k][1];
+                        tableau_final[k][2] = Table.getTemporaryTable()[k][2];
                         if (Table.getTemporaryTable()[k][j]!=null && !Table.getTemporaryTable()[k][j].equals("")) {
-                            tableau_final[k - decalage[i]][i + 1] = Table.getTemporaryTable()[k][j];
+                            tableau_final[k][i + 3] = Table.getTemporaryTable()[k][j];
                         } else {
                             decalage[i] += 1;
                         }
@@ -182,27 +184,47 @@ public class SearchBarListener extends AbstractApplication implements ActionList
                 }
             }
         }
+
+        for (int i = 0; i < tableau_final.length; i++) {
+            boolean enleverLigne=true;
+            for (int j=3; j<tableau_final[i].length; j++){
+
+                if (tableau_final[i][j] != null) {
+                    enleverLigne = false;
+                    break;
+                }
+
+
+
+            }
+            if (enleverLigne){
+
+                List<String[]> list = new ArrayList<>(Arrays.asList(tableau_final));
+
+                list.remove(i);
+
+                tableau_final = list.toArray(new String[0][0]);
+                i=i-1;
+            }
+
+        }
+
         tableau_final[0][0] = "Statistiques";
         if(affichuerStat) {
-            int decalageMin = Integer.MAX_VALUE;
 
-            for (int k : decalage) {
-                if (k < decalageMin)
-                    decalageMin = k;
-            }
             final int finalTabLength = tableau_final.length;
-            System.out.println(tableau_final.length);
 
-            tableau_final[finalTabLength - 1 - decalageMin][0] = "Écart-type";
-            tableau_final[finalTabLength - 2 - decalageMin][0] = "Note moyenne";
-            tableau_final[finalTabLength - 3 - decalageMin][0] = "Note min";
-            tableau_final[finalTabLength - 4 - decalageMin][0] = "Note max";
+            tableau_final[finalTabLength - 1][0] = "Écart-type";
+            tableau_final[finalTabLength - 2][0] = "Note moyenne";
+            tableau_final[finalTabLength - 3][0] = "Note min";
+            tableau_final[finalTabLength - 4][0] = "Note max";
             for (int i = 0; i < tableauStat.length; i++) {
                 for (int j = 0; j < 4; j++) {
-                    tableau_final[finalTabLength - 1 - decalageMin - j][i + 1] = tableauStat[i][j];
+                    tableau_final[finalTabLength - 1 - j][i + 3] = tableauStat[i][j];
                 }
             }
         }
+
         return tableau_final;
     }
 
