@@ -90,7 +90,7 @@ public class GUI extends AbstractApplication {
         getFrame().addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosed(WindowEvent e) {
-                (new File(AbstractApplication.getTmpPath())).delete();
+                (new File(getTmpPath())).delete();
                 System.out.println("tmp file deleted");
             }
         });
