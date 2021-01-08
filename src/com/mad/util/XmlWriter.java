@@ -100,7 +100,6 @@ public class XmlWriter {
                 for (Element v : values) {
                     v.setTextContent(val);
                 }
-                System.out.println("student modified");
                 return true;
             }
         }
@@ -162,7 +161,7 @@ public class XmlWriter {
         Iterator<Element> iterator = programs.iterator();
 
         while (iterator.hasNext()) {
-            Element program = (Element) iterator.next();
+            Element program = iterator.next();
             if (Data.read(program, "identifier").equalsIgnoreCase(Data.read((Element) n, "identifier"))) {
                 ret = program;
                 break;
@@ -177,7 +176,7 @@ public class XmlWriter {
         Iterator<Element> iterator = courses.iterator();
 
         while (iterator.hasNext()) {
-            Element course = (Element) iterator.next();
+            Element course = iterator.next();
             if (Data.read(course, "identifier").equalsIgnoreCase(Data.read((Element) n, "identifier"))) {
                 ret = course;
                 break;
@@ -186,7 +185,6 @@ public class XmlWriter {
 
         return ret;
     }
-
 
 
     private static void breakLine(Node node) {
@@ -258,7 +256,6 @@ public class XmlWriter {
                         Node innerItem = Data.doc.createElement("item");
                         innerItem.appendChild(Data.doc.createTextNode(s[i]));
                         nodeIterator.appendChild(innerItem);
-//                        breakLine(program);
                     }
                     program.appendChild(nodeIterator);
                     break;
@@ -274,7 +271,6 @@ public class XmlWriter {
             Source input = new DOMSource(Data.root);
             transformer.setOutputProperty("encoding", "UTF-8");
             transformer.transform(input, output);
-            System.out.printf("Saved at %s\n", dst);
             AbstractApplication.setLastTmpModificationAt(new Timestamp(System.currentTimeMillis()));
             return true;
         } catch (TransformerException e) {

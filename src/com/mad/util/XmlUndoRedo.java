@@ -1,11 +1,7 @@
-
-
 package com.mad.util;
 
 import com.mad.listener.TableChangedListener;
 import org.w3c.dom.Node;
-
-import java.util.Arrays;
 
 public class XmlUndoRedo extends Action {
     private final String type;
@@ -79,7 +75,6 @@ public class XmlUndoRedo extends Action {
                 break;
             case MODIFY:
                 if (this.type.equalsIgnoreCase("course")) {
-                    System.out.println(Arrays.toString(this.args));
                     redoRunner = () -> {
                         TableChangedListener.updateCell((String) this.args[0], (String) this.args[1], (String) this.args[2]);
                     };

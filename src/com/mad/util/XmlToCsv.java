@@ -27,7 +27,6 @@ public class XmlToCsv {
     public static Element findCourseByCode(List<Element> courses, String item) {
         Element courseRet = null;
         for (Element course : courses) {
-//            System.out.printf("%s, %s", Data.read(course, "identifier"), item);
             if (Data.read(course, "identifier").equalsIgnoreCase(item)) {
                 courseRet = course;
                 break;

@@ -1,7 +1,6 @@
 package com.mad.listener;
 
 import com.mad.AbstractApplication;
-import com.mad.util.Data;
 import com.mad.util.Table;
 
 import java.awt.event.ActionEvent;
@@ -13,10 +12,10 @@ public class SelectRowsListener extends AbstractApplication implements ActionLis
         int[] selectedRows = Table.getSelectedRows();
         if (selectedRows.length > 0) {
             String[][] newModel = new String[selectedRows.length + 1][];
-            newModel[0] = Data.dataArray[0];
+            newModel[0] = Table.getTemporaryTable()[0];
             int acc = 1;
             for (int row : selectedRows) {
-                newModel[acc++] = Table.getTemporaryTable() != null ? Table.getTemporaryTable()[row + 1] : Data.dataArray[row + 1];
+                newModel[acc++] = Table.getTemporaryTable()[row + 1];
             }
             Table.setTemporaryTable(newModel);
             Table.setNewModelTable(Table.table, newModel);

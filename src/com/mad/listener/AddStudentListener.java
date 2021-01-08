@@ -251,7 +251,6 @@ public class AddStudentListener extends AbstractApplication implements ActionLis
             for (int i = 0; i < cbg.getCheckBoxs().size(); i++) {
                 if (cbg.getCheckBoxs().get(i).isSelected()) {
                     student[i][0] = "grade";
-                    System.out.println(cbg.getCheckBoxs().get(i).getText());
                     student[i][1] = cbg.getCheckBoxs().get(i).getText().split(" - ")[0];
                     student[i][2] = "0.0";
                 }

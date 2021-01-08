@@ -12,7 +12,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -37,7 +36,7 @@ public class OpenFileListener extends AbstractApplication implements ActionListe
         setRefresh(new JButton(new ImageIcon(buttonIcon)));
         getRefresh().addActionListener(new RefreshListener());
         getRefresh().setMnemonic(KeyEvent.VK_F5);
-        setAfficheEtu( new JCheckBox("Masquer étudiants"));
+        setAfficheEtu(new JCheckBox("Masquer étudiants"));
         getAfficheEtu().addActionListener(new MasqueListener());
         JMenuItem refreshItem = new JMenuItem("Refresh");
         KeyStroke f5 = KeyStroke.getKeyStroke(KeyEvent.VK_F5, 0);

@@ -50,8 +50,8 @@ public class GUI extends AbstractApplication {
         JMenuItem csvItem = new JMenuItem("csv");
         JMenuItem undo = new JMenuItem("Undo");
         JMenuItem redo = new JMenuItem("Redo");
-        undo.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Z,  KeyEvent.CTRL_DOWN_MASK));
-        redo.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Y,  KeyEvent.CTRL_DOWN_MASK));
+        undo.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Z, KeyEvent.CTRL_DOWN_MASK));
+        redo.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Y, KeyEvent.CTRL_DOWN_MASK));
         undo.addActionListener(e -> undo());
         redo.addActionListener(e -> redo());
         file.add(undo);
@@ -91,7 +91,6 @@ public class GUI extends AbstractApplication {
             @Override
             public void windowClosed(WindowEvent e) {
                 (new File(getTmpPath())).delete();
-                System.out.println("tmp file deleted");
             }
         });
         getFrame().setVisible(true);

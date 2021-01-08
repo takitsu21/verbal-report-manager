@@ -11,7 +11,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.sql.Timestamp;
-import java.util.Arrays;
 import java.util.Stack;
 
 public abstract class AbstractApplication {
@@ -258,7 +257,7 @@ public abstract class AbstractApplication {
             XmlToCsv xmlConverter = new XmlToCsv(TMP_PATH);
             xmlConverter.convert();
             getComboBox().setSelectedItem(getComboBox().getSelectedItem());
-            if(getAfficheEtu().isSelected()){
+            if (getAfficheEtu().isSelected()) {
                 getAfficheEtu().setSelected(false);
             }
         } else if (path.endsWith(".csv")) {
@@ -273,7 +272,6 @@ public abstract class AbstractApplication {
         String path = AbstractApplication.getOriginPath();
         Timestamp currentSaveTimestamp = new Timestamp(System.currentTimeMillis());
         if (path.endsWith(".csv")) {
-            System.out.println(Arrays.deepToString(Data.dataArray));
             try {
                 PrintWriter pr = new PrintWriter(path);
                 for (String[] l : Data.dataArray) {
@@ -323,7 +321,6 @@ public abstract class AbstractApplication {
         jfc.setDialogTitle("Choississez un endroit pour sauvegarder votre fichier: ");
         jfc.setFileSelectionMode(0);
         int returnValue = jfc.showSaveDialog(null);
-        System.out.println(returnValue);
         if (returnValue == 0) {
             if (jfc.getSelectedFile().getPath().endsWith(".xml")) {
                 if (XmlWriter.save(jfc.getSelectedFile().getPath())) {
@@ -371,7 +368,6 @@ public abstract class AbstractApplication {
         command.execute();
         commandStack.push(command);
         ++undoRedoPointer;
-        System.out.println(commandStack);
     }
 
     protected void insertAction(Runnable runner, String type, XmlMethodType xmt, boolean refreshTable, Object... args) {
@@ -380,7 +376,6 @@ public abstract class AbstractApplication {
         command.execute();
         commandStack.push(command);
         ++undoRedoPointer;
-        System.out.println(commandStack);
     }
 
     private void deleteElementsAfterPointer(int undoRedoPointer) {

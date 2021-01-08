@@ -53,7 +53,7 @@ public class HelpListener implements ActionListener {
                 "        <li>Pour utiliser la searchbar vous pouvez coupler les recherches avec le \";\"\n" +
                 "            pour ajouter des contraintes à votre recherche vous pouvez utiliser le symbole \"&amp;\" entre chaque arguments \n\n" +
                 "        </li>\n" +
-                "               <h4> </h4>                  "+
+                "               <h4> </h4>                  " +
                 "        </br><h2 style=\"color: orange;margin:0 0 0 20px;\"><u></br>⚠Attention⚠</u></h2>\n" +
                 "        <li>Pour utiliser une recherche a contrainte il faut mettre la recherche associé à\n" +
                 "             l’etudiant avant celle du cours\n" +

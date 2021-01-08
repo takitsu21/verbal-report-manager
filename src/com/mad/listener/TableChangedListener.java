@@ -42,7 +42,7 @@ public class TableChangedListener extends AbstractApplication implements TableMo
             }
             this.insertAction(() -> {
                 updateCell(newVal, numEtu, courseId);
-            }, "course", XmlMethodType.MODIFY, true, oldValue, numEtu, courseId);
+            }, "course", XmlMethodType.MODIFY, false, oldValue, numEtu, courseId);
             Table.table.getModel().removeTableModelListener(this);
             Table.table.getModel().addTableModelListener(this);
         }

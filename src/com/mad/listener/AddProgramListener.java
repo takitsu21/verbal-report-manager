@@ -36,11 +36,9 @@ public class AddProgramListener extends AbstractApplication implements ActionLis
 
 
         JTextField textField = new JTextField();
-//        textField.setBounds(128, 28, 86, 20);
         textField.setColumns(15);
 
         JLabel programName = new JLabel("Nom du programme");
-//        programName.setBounds(65, 31, 46, 14);
 
         namePanel.add(programName);
         namePanel.add(textField);
@@ -190,16 +188,13 @@ public class AddProgramListener extends AbstractApplication implements ActionLis
                                     finished.addActionListener(finishListener);
 
                                     butNex.add(finished);
-                                    ///if (nbOptions1 == 0 && nbComposantes1 == 0) finished.doClick();
 
-                                    //nextPane1.add(tmp12);
                                     programFrame.getContentPane().add(nextPane1);
                                     refreshWindow();
                                 });
 
 
                                 butNex.add(next1);
-                                //nextPane12.add(tmp13);
                                 programFrame.getContentPane().add(nextPane12);
                                 refreshWindow();
                                 if (nbOptions1 == 0) {
@@ -209,7 +204,6 @@ public class AddProgramListener extends AbstractApplication implements ActionLis
                                 JButton next1 = new JButton("Terminer");
                                 next1.addActionListener(finishListener);
                                 butNex.add(next1);
-                                //nextPane12.add(tmp13);
                                 programFrame.getContentPane().add(nextPane12);
                                 refreshWindow();
                             }
@@ -225,7 +219,6 @@ public class AddProgramListener extends AbstractApplication implements ActionLis
             } catch (NumberFormatException ex) {
                 Toolkit.getDefaultToolkit().beep();
                 JOptionPane.showMessageDialog(programFrame, "Valeur incrorrect", "Erreur", JOptionPane.WARNING_MESSAGE);
-                //programFrame.dispose();
                 nbComposantesField.setText("");
                 nbOptionsField.setText("");
 

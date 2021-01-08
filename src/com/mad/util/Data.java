@@ -33,9 +33,7 @@ public class Data {
 
         try {
             Files.write(path, bs);
-            System.out.println("save " + name);
         } catch (Exception e) {
-            System.out.println("Erreur: " + e);
         }
     }
 
