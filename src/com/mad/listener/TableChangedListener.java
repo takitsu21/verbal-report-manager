@@ -37,7 +37,9 @@ public class TableChangedListener extends AbstractApplication implements TableMo
             String courseId = String.valueOf(Table.table.getModel().getColumnName(col)).split(" ")[0];
             String newVal = (String) Table.table.getModel().getValueAt(e.getFirstRow(), e.getColumn());
             String numEtu = (String) Table.table.getModel().getValueAt(e.getFirstRow(), 0);
-            System.out.printf("old value : %s new val : %s\n", oldValue, newVal);
+            if (oldValue.equalsIgnoreCase(newVal)) {
+                return;
+            }
             this.insertAction(() -> {
                 updateCell(newVal, numEtu, courseId);
             }, "course", XmlMethodType.MODIFY, true, oldValue, numEtu, courseId);
