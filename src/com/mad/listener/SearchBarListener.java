@@ -41,7 +41,6 @@ public class SearchBarListener extends AbstractApplication implements ActionList
 
             for (int j = 0; j < Table.getTemporaryTable()[0].length; j++) {
                 String currentCheck = Table.getTemporaryTable()[0][j];
-                System.out.println(currentCheck);
                 String[] splited = currentCheck.split(" - ");
                 if (currentCheck.equalsIgnoreCase(names[i]) || splited[0].equalsIgnoreCase(names[i])
                         || splited[splited.length - 1].equalsIgnoreCase(names[i])) {
