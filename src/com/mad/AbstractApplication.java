@@ -33,7 +33,6 @@ public abstract class AbstractApplication {
     protected static JComboBox<String> searchComboBox;
     protected static JLabel dragAndDrop;
     protected static JTree showHierarchicTree;
-    protected static boolean componentsInitialised = false;
     protected static String infoSearchComboBox;
     protected static JCheckBox afficheEtu;
     protected static JButton refresh;
@@ -349,9 +348,14 @@ public abstract class AbstractApplication {
     }
 
     public static void undo() {
-        Action command = commandStack.get(undoRedoPointer);
-        command.unExecute();
-        --undoRedoPointer;
+        try {
+            Action command = commandStack.get(undoRedoPointer);
+            command.unExecute();
+            --undoRedoPointer;
+        }
+        catch (RuntimeException ignored) {
+
+        }
     }
 
     public static void redo() {
@@ -359,6 +363,7 @@ public abstract class AbstractApplication {
             ++undoRedoPointer;
             Action command = commandStack.get(undoRedoPointer);
             command.execute();
+            refreshTable();
         }
     }
 

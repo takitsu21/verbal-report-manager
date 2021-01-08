@@ -18,11 +18,11 @@ public class TableChangedListener extends AbstractApplication implements TableMo
             XmlWriter.deleteCourse(numEtu, courseId);
         } else {
             try {
-                if (Double.parseDouble(newVal) <= 20.0D && Double.parseDouble(newVal) >= 0.0D && !XmlWriter.modifyCourse(numEtu, courseId, newVal)) {
+                if (Double.parseDouble(newVal) <= 20.0 && Double.parseDouble(newVal) >= 0.0 && !XmlWriter.modifyCourse(numEtu, courseId, newVal)) {
                     XmlWriter.addCourse(numEtu, courseId, newVal);
                 }
             } catch (NumberFormatException exc) {
-                if ((newVal.equalsIgnoreCase("abi") || newVal.equalsIgnoreCase("abj")) && XmlWriter.modifyCourse(numEtu, courseId, newVal.toUpperCase())) {
+                if ((newVal.equalsIgnoreCase("abi") || newVal.equalsIgnoreCase("abj")) && !XmlWriter.modifyCourse(numEtu, courseId, newVal.toUpperCase())) {
                     XmlWriter.addCourse(numEtu, courseId, newVal.toUpperCase());
                 }
             }

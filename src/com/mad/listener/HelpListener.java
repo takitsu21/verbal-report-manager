@@ -75,6 +75,9 @@ public class HelpListener implements ActionListener {
                 "</h1>\n" +
                 "<li>Le C-Z (undo) et C-Y (redo) ne marche pas pour l’ajout de programme soyez sûr de vos actions la face du monde\n" +
                 "    pourrait en être bouleversé\n" +
+                "</li>" +
+                "<li>\n" +
+                "Si une modification ne s'affiche pas veuillez utiliser le bouton d'actualisation ou faire F5.\n" +
                 "</li>";
 
         pane.setText(text);
@@ -85,7 +88,7 @@ public class HelpListener implements ActionListener {
 
         StyleConstants.setIcon(style, new ImageIcon("example_recherche.gif"));
         try {
-            doc.insertString((doc.getLength() / 2) + 82, "gif recherche", style);
+            doc.insertString((doc.getLength() / 2) + 35, "gif recherche", style);
         } catch (BadLocationException badLocationException) {
             badLocationException.printStackTrace();
         }

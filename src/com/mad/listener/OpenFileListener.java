@@ -93,9 +93,7 @@ public class OpenFileListener extends AbstractApplication implements ActionListe
                         getComboBox().addItem(key);
                     }
                 }
-                if (!componentsInitialised) {
-                    initComponents();
-                }
+                initComponents();
                 refreshPanels(fileName);
                 clearJTables();
                 getContent().add(getDisplayCsv().Jscroll, BorderLayout.CENTER);

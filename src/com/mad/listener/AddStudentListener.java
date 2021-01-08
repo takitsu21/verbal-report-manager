@@ -107,6 +107,7 @@ public class AddStudentListener extends AbstractApplication implements ActionLis
             program.addItem(getComboBox().getItemAt(i));
         }
         program.addActionListener(new ListCheckBox());
+        program.setSelectedItem(getComboBox().getSelectedItem());
 
         prog.add(new JLabel("Program:"));
         prog.add(program);
